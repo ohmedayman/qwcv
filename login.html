@@ -1180,7 +1180,7 @@
                 <h3 data-i18n="reset_password">استعادة كلمة المرور</h3>
                 <p data-i18n="reset_subtitle">أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور</p>
                 <form class="form" id="resetForm">
-                    <div clasig">
+                    <div class="ig">
                         <div class="label-row">
                             <label>
                                 البريد الإلكتروني
@@ -1506,11 +1506,13 @@
             const btn = document.getElementById('resetSubmitBtn');
             setLoading(btn, true);
             try {
-                await sendPasswordResetEmail(auth, email);
-                showToast('successToast', 'تم إرسال رابط الاستعادة على بريدك', 'success');
-                setTimeout(showLoginBox, 1800);
+                const actionCodeSettings = { url: window.location.origin + '/login.html', handleCodeInApp: true };
+                await sendPasswordResetEmail(auth, email, actionCodeSettings);
+                document.getElementById('resetForm').innerHTML = '<div style="text-align:center;padding:20px 0"><div style="width:60px;height:60px;border-radius:50%;background:#10b98120;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="fas fa-check" style="color:#10b981;font-size:1.5rem"></i></div><h4 style="font-weight:800;margin-bottom:8px">تم الإرسال!</h4><p style="font-size:0.85rem;color:var(--muted,#6b7280)">تم إرسال رابط إعادة تعيين كلمة المرور على بريدك<br><strong>' + email + '</strong><br><br>ابحث في صندوق الوارد أو Spam</p></div>';
+                setTimeout(showLoginBox, 4000);
             } catch (err) {
-                showToast('errorToast', err.message, 'error');
+                const m = { 'auth/user-not-found': 'البريد الإلكتروني غير مسجل عندنا', 'auth/invalid-email': 'البريد الإلكتروني غير صالح', 'auth/too-many-requests': 'طلبات كثيرة، حاول بعد 5 دقائق' };
+                showToast('errorToast', m[err.code] || 'حدث خطأ: ' + err.message, 'error');
             }
             setLoading(btn, false);
         });
