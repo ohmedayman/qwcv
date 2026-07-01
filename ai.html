@@ -8,8 +8,10 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="components.css">
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>
@@ -244,8 +246,8 @@
 <script src="js/maintenance.js"></script>
 <script src="js/site-settings.js"></script>
 <script src="js/auto-reload.js"></script>
-<script src="js/analytics.js"></script>
-<script src="js/notify-sounds.js"></script>
+<script defer src="js/analytics.js"></script>
+<script defer src="js/notify-sounds.js"></script>
 <script>
     let currentStep = 1;
     let selectedTemplate = 'classic';

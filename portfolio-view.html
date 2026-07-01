@@ -21,9 +21,11 @@
     <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -228,9 +230,9 @@
     <script src="js/maintenance.js"></script>
     <script src="js/site-settings.js"></script>
     <script src="js/auto-reload.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/analytics.js"></script>
-    <script src="js/notify-sounds.js"></script>
+    <script defer src="js/animations.js"></script>
+    <script defer src="js/analytics.js"></script>
+    <script defer src="js/notify-sounds.js"></script>
 <div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
     <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
     <div style="flex:1;text-align:right">
