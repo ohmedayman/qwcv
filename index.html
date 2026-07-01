@@ -987,6 +987,7 @@ function toggleFaq(el){
     <script src="js/maintenance.js"></script>
     <script src="js/site-settings.js"></script>
     <script src="js/auto-reload.js"></script>
+    <script src="js/animations.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 
@@ -995,76 +996,28 @@ function toggleFaq(el){
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Stats Counter Animation -->
+<!-- Stats Counter Animation (Firebase live data) -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const counters = document.querySelectorAll('.stat-num[data-target]');
-    let animated = false;
-
-    function animateCounters() {
-        counters.forEach(counter => {
-            const target = parseFloat(counter.dataset.target);
-            const prefix = counter.dataset.prefix || '';
-            const suffix = counter.dataset.suffix || '';
-            const duration = 2000;
-            const startTime = performance.now();
-            const isFloat = target % 1 !== 0;
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const current = eased * target;
-                if (target >= 1000) {
-                    counter.textContent = prefix + Math.floor(current / 1000) + 'K' + suffix;
-                } else if (isFloat) {
-                    counter.textContent = prefix + current.toFixed(1) + suffix;
-                } else {
-                    counter.textContent = prefix + Math.floor(current) + suffix;
-                }
-                if (progress < 1) requestAnimationFrame(update);
-            }
-            requestAnimationFrame(update);
-        });
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !animated) {
-                animated = true;
-                animateCounters();
-            }
-        });
-    }, { threshold: 0.3 });
-    const statsBar = document.querySelector('.stats-bar');
-    if (statsBar) observer.observe(statsBar);
-
+document.addEventListener('DOMContentLoaded', function() {
+    var counters = document.querySelectorAll('.stat-num[data-target]');
     async function loadRealStats() {
         try {
-            const usersRes = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/users.json?shallow=true');
-            const usersData = await usersRes.json();
-            const userCount = usersData ? Object.keys(usersData).length : 0;
-
-            const fullRes = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/users.json');
-            const fullData = await fullRes.json();
-            let cvCount = 0;
+            var usersRes = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/users.json?shallow=true');
+            var usersData = await usersRes.json();
+            var userCount = usersData ? Object.keys(usersData).length : 0;
+            var fullRes = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/users.json');
+            var fullData = await fullRes.json();
+            var cvCount = 0;
             if (fullData) {
-                for (const uid in fullData) {
-                    const user = fullData[uid];
+                for (var uid in fullData) {
+                    var user = fullData[uid];
                     if (user.cvData || user.cvs) cvCount++;
                 }
             }
-
-            if (userCount > 0) {
-                counters[counters.length - 1].dataset.target = userCount;
-            }
-            if (cvCount > 0) {
-                counters[0].dataset.target = cvCount;
-            }
-
-            if (animated) animateCounters();
+            if (cvCount > 0 && counters[0]) counters[0].dataset.target = cvCount;
+            if (userCount > 0 && counters[3]) counters[3].dataset.target = userCount;
         } catch (e) {}
     }
-
     loadRealStats();
 });
 </script>
