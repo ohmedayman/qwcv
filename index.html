@@ -96,6 +96,10 @@
                     }
                 } catch (e) { }
 
+                // compute yearly as monthly*12 then minus 5% discount if not explicitly provided
+                try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12 * 0.95); } catch (e) { proY = Math.round(proM * 12 * 0.95); }
+                try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12 * 0.95); } catch (e) { unY = Math.round(unM * 12 * 0.95); }
+
                 var obj = {
                     "@context": "https://schema.org",
                     "@type": "SoftwareApplication",
@@ -2067,7 +2071,7 @@
             </div>
             <span id="yearlyLabel" style="font-weight:700;font-size:0.88rem;color:var(--muted)">سنوي <span
                     style="background:var(--green);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.65rem;margin-right:4px">وفّر
-                    20%</span></span>
+                    5%</span></span>
         </div>
         <div class="pricing-grid">
             <div class="price-card">
@@ -3128,7 +3132,10 @@
             }
             if (m.match(/سعر|السعر|باق|التسعير|كم|price|cost|egp|جنيه/)) {
                 var pr = getPrices();
-                return 'الباقة المجانية: مجاناً ✅ | الاحترافية: ' + pr.proM + ' ج.م/شهر (' + pr.proY + ' سنوي) | غير محدودة: ' + pr.unM + ' ج.م/شهر (' + pr.unY + ' سنوي). وفّر 20% بالاشتراك السنوي! تفاصيل على pay.html 🎯';
+                // compute yearly if missing using monthly * 12 then 5% discount
+                try { pr.proY = (pr.proY && parseInt(pr.proY)) ? parseInt(pr.proY) : Math.round(pr.proM * 12 * 0.95); } catch (e) { pr.proY = Math.round(pr.proM * 12 * 0.95); }
+                try { pr.unY = (pr.unY && parseInt(pr.unY)) ? parseInt(pr.unY) : Math.round(pr.unM * 12 * 0.95); } catch (e) { pr.unY = Math.round(pr.unM * 12 * 0.95); }
+                return 'الباقة المجانية: مجاناً ✅ | الاحترافية: ' + pr.proM + ' ج.م/شهر (' + pr.proY + ' سنوي) | غير محدودة: ' + pr.unM + ' ج.م/شهر (' + pr.unY + ' سنوي). وفّر 5% بالاشتراك السنوي! تفاصيل على pay.html 🎯';
             }
             if (m.match(/template|قالب|تصميم|شكل/)) return 'عندنا أكثر من 15 قالب احترافي متوافق مع ATS! جرّبهم على templates.html واختار اللي يناسبك 🎨';
             if (m.match(/ats|توافق|نظام تتبع|resume score/)) return 'ATS هو نظام تتبع المتقدمين اللي الشركات بتستخدمه. قوالبنا مصممة عشان تجتازه. جرّب فحص ATS المجاني على ats-checker.html 🔍';
@@ -3161,7 +3168,13 @@
                         overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100001;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);animation:popupFadeIn 0.3s ease';
                         var popup = document.createElement('div');
                         popup.style.cssText = 'background:var(--card,#fff);border-radius:20px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);animation:popupSlideUp 0.3s cubic-bezier(0.16,1,0.3,1);text-align:center;position:relative';
-                        popup.innerHTML = '<div style="background:linear-gradient(135deg,#0003c9,#0005a0);padding:30px 24px;color:#fff"><div style="font-size:2.5rem;margin-bottom:8px">&#127881;</div><h3 style="font-size:1.2rem;font-weight:900;margin-bottom:6px">عرض خاص — 20% خصم</h3><p style="font-size:0.85rem;opacity:0.85">احصل على الباقة الاحترافية بسعر مخفض!</p></div><div style="padding:24px"><div style="font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:4px">79 <span style="font-size:0.9rem;font-weight:600;color:var(--muted)">ج.م / شهرياً</span></div><div style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;text-decoration:line-through">99 ج.م / شهرياً</div><a href="pay.html" style="display:inline-block;padding:14px 36px;background:var(--accent);color:#fff;border-radius:50px;font-weight:800;font-size:0.95rem;text-decoration:none;margin-bottom:12px;transition:all 0.2s">احصل على العرض</a><div style="font-size:0.72rem;color:var(--muted)">عرض محدود — ينتهي قريباً</div></div><button onclick="this.closest(\'div\').parentElement.parentElement.remove();localStorage.setItem(\'qcv_exit_shown\',\'1\')" style="position:absolute;top:12px;left:12px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>';
+                        // dynamic promo: compute discounted yearly (5% off) and monthly equivalent
+                        var proM = 99;
+                        try { if (window.allSettings && window.allSettings.proPrice) proM = parseInt(window.allSettings.proPrice) || proM; } catch (e) { }
+                        try { if (window.QCVSettings && window.QCVSettings.pricing && window.QCVSettings.pricing.proMonthly) proM = parseInt(window.QCVSettings.pricing.proMonthly) || proM; } catch (e) { }
+                        var annual = Math.round(proM * 12 * 0.95);
+                        var monthlyEq = Math.round(annual / 12);
+                        popup.innerHTML = '<div style="background:linear-gradient(135deg,#0003c9,#0005a0);padding:30px 24px;color:#fff"><div style="font-size:2.5rem;margin-bottom:8px">&#127881;</div><h3 style="font-size:1.2rem;font-weight:900;margin-bottom:6px">عرض خاص — خصم 5% سنوياً</h3><p style="font-size:0.85rem;opacity:0.85">احصل على الباقة الاحترافية بسعر مخفض عند الاشتراك السنوي!</p></div><div style="padding:24px"><div style="font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:4px">' + monthlyEq + ' <span style="font-size:0.9rem;font-weight:600;color:var(--muted)">ج.م / شهرياً (مكافئ سنوي)</span></div><div style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;text-decoration:line-through">' + proM + ' ج.م / شهرياً</div><a href="pay.html" style="display:inline-block;padding:14px 36px;background:var(--accent);color:#fff;border-radius:50px;font-weight:800;font-size:0.95rem;text-decoration:none;margin-bottom:12px;transition:all 0.2s">احصل على العرض</a><div style="font-size:0.72rem;color:var(--muted)">عرض محدود — ينتهي قريباً</div></div><button onclick="this.closest(\'div\').parentElement.parentElement.remove();localStorage.setItem(\'qcv_exit_shown\',\'1\')" style="position:absolute;top:12px;left:12px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>';
                         overlay.appendChild(popup);
                         document.body.appendChild(overlay);
                         localStorage.setItem('qcv_exit_shown', '1');

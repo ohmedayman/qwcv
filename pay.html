@@ -1376,7 +1376,7 @@
                 </div>
                 <span id="payYearlyLabel" style="font-weight:700;font-size:0.88rem;color:var(--muted)">سنوي <span
                         style="background:var(--green);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.65rem;margin-right:4px">وفّر
-                        20%</span></span>
+                        5%</span></span>
             </div>
             <div class="plans-grid">
                 <div class="plan-card" onclick="selectPlan(this,'free')">
@@ -1712,6 +1712,17 @@
                 }
             } catch (e) { }
 
+            // compute yearly prices from monthly if yearly not explicitly provided
+            try {
+                proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12 * 0.95);
+            } catch (e) { proY = Math.round(proM * 12 * 0.95); }
+            try {
+                unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12 * 0.95);
+            } catch (e) { unY = Math.round(unM * 12 * 0.95); }
+
+            // expose current prices globally for other functions
+            window.currentPrices = { proMonthly: proM, proYearly: proY, unMonthly: unM, unYearly: unY, quick: quick };
+
             // update dataset attrs so togglePayPricing can use them
             document.querySelectorAll('.plan-price[data-monthly]').forEach(function (el) {
                 var cls = el.closest('.plan-card') || el;
@@ -1800,8 +1811,9 @@
             });
 
             if (step === 2) {
-                var proP = payYearly ? '79' : '99';
-                var unP = payYearly ? '239' : '299';
+                var prices = window.currentPrices || { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239 };
+                var proP = payYearly ? String(prices.proYearly) : String(prices.proMonthly);
+                var unP = payYearly ? String(prices.unYearly) : String(prices.unMonthly);
                 var suffix = payYearly ? '/شهر (سنوي)' : '/شهر';
                 const planLabels = { free: 'مجاني', pro: 'Pro ' + proP + ' ج.م' + suffix, unlimited: 'Unlimited ' + unP + ' ج.م' + suffix };
                 document.getElementById('planField').value = planLabels[selectedPlan] || '';
@@ -1855,8 +1867,9 @@
             btn.disabled = true;
             btn.classList.add('loading');
 
-            var proP = payYearly ? '79' : '99';
-            var unP = payYearly ? '239' : '299';
+            var prices = window.currentPrices || { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239 };
+            var proP = payYearly ? String(prices.proYearly) : String(prices.proMonthly);
+            var unP = payYearly ? String(prices.unYearly) : String(prices.unMonthly);
             var billType = payYearly ? 'سنوي' : 'شهري';
             const planLabels = { free: 'Free', pro: 'Pro (' + proP + ' ج.م/' + billType + ')', unlimited: 'Unlimited (' + unP + ' ج.م/' + billType + ')', quick48: 'Quick 48h (30ج.م)' };
 
@@ -1887,8 +1900,9 @@
                 });
                 document.querySelectorAll('.step-connector').forEach(c => { c.classList.add('done'); c.classList.remove('active'); });
 
-                var proP = payYearly ? '79' : '99';
-                var unP = payYearly ? '239' : '299';
+                var prices2 = window.currentPrices || { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239 };
+                var proP = payYearly ? String(prices2.proYearly) : String(prices2.proMonthly);
+                var unP = payYearly ? String(prices2.unYearly) : String(prices2.unMonthly);
                 var billType = payYearly ? 'سنوي' : 'شهري';
                 const planLabels = { free: 'Free (مجاني)', pro: 'Pro (' + proP + ' ج.م/' + billType + ')', unlimited: 'Unlimited (' + unP + ' ج.م/' + billType + ')', quick48: 'Quick 48h (30 ج.م)' };
                 const planPrices = { free: 'مجاني', pro: proP + ' ج.م', unlimited: unP + ' ج.م', quick48: '30 ج.م' };
