@@ -1320,7 +1320,7 @@ if('serviceWorker' in navigator) {
 <style>@keyframes chatPulse{0%{box-shadow:0 0 0 0 rgba(0,3,201,0.4)}70%{box-shadow:0 0 0 15px rgba(0,3,201,0)}100%{box-shadow:0 0 0 0 rgba(0,3,201,0)}}@keyframes chatDot{0%,80%,100%{transform:scale(0.6);opacity:0.4}40%{transform:scale(1);opacity:1}}</style>
 <script>
 var chatOpen = false;
-var chatHistory = [{role:'system',content:'You are QCV Support AI. QCV is an AI-powered CV builder from Egypt. You help users in Arabic (or their language). Be friendly, concise (2-3 sentences max). You help with: creating CVs, choosing templates, understanding plans (Free/Pro 99EGP/Unlimited 299EGP), ATS optimization, and any CV-related questions. If asked about pricing, mention pay.html. Always encourage trying the free plan at editor.html.'}];
+var chatHistory = [{role:'system',content:'You are QCV Support AI from Egypt. Reply in Arabic. Be friendly, concise (2-3 sentences max). Help with: CVs, templates, plans (Free/Pro 99EGP/Unlimited 299EGP), ATS. Mention pay.html for pricing, editor.html to start free.'}];
 function toggleChat() {
     chatOpen = !chatOpen;
     document.getElementById('chatPanel').style.display = chatOpen ? 'block' : 'none';
@@ -1336,21 +1336,34 @@ function sendChat() {
     messages.innerHTML += '<div id="chatTyping" style="display:flex;gap:8px;margin-bottom:12px"><div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div><div style="background:var(--bg2,#f3f4f6);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6"><div style="display:flex;gap:4px"><span style="width:6px;height:6px;background:var(--accent);border-radius:50%;animation:chatDot 1.2s infinite"></span><span style="width:6px;height:6px;background:var(--accent);border-radius:50%;animation:chatDot 1.2s 0.2s infinite"></span><span style="width:6px;height:6px;background:var(--accent);border-radius:50%;animation:chatDot 1.2s 0.4s infinite"></span></div></div></div>';
     messages.scrollTop = messages.scrollHeight;
     chatHistory.push({role:'user',content:msg});
-    fetch('https://router.bynara.id/v1/chat/completions',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA'},
-        body:JSON.stringify({model:'mimo-v2.5-free',messages:chatHistory.slice(-10),max_tokens:200,temperature:0.7})
-    }).then(function(r){return r.json()}).then(function(d){
-        var reply = (d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||'عذراً، حصلت مشكلة. جرّب تاني.';
+    var prompt = 'System: ' + chatHistory[0].content + '\n\nUser: ' + msg;
+    fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {method:'GET'})
+    .then(function(r){return r.text()}).then(function(reply){
+        if(!reply || reply.length < 3) { reply = localChatReply(msg); }
         chatHistory.push({role:'assistant',content:reply});
         var typing = document.getElementById('chatTyping');
         if(typing) typing.outerHTML = '<div style="display:flex;gap:8px;margin-bottom:12px"><div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div><div style="background:var(--bg2,#f3f4f6);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6;max-width:220px;word-wrap:break-word">' + reply.replace(/</g,'&lt;') + '</div></div>';
         messages.scrollTop = messages.scrollHeight;
     }).catch(function(){
+        var reply = localChatReply(msg);
         var typing = document.getElementById('chatTyping');
-        if(typing) typing.outerHTML = '<div style="display:flex;gap:8px;margin-bottom:12px"><div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div><div style="background:var(--bg2,#f3f4f6);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6">عذراً، حصلت مشكلة في الاتصال. جرّب تاني!</div></div>';
+        if(typing) typing.outerHTML = '<div style="display:flex;gap:8px;margin-bottom:12px"><div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div><div style="background:var(--bg2,#f3f4f6);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6;max-width:220px;word-wrap:break-word">' + reply + '</div></div>';
         messages.scrollTop = messages.scrollHeight;
     });
+}
+function localChatReply(msg) {
+    var m = msg.toLowerCase();
+    if(m.match(/سعر|السعر|باق|التسعير|كم|price|cost|egp|جنيه/)) return 'الباقة المجانية: مجاناً ✅ | الاحترافية: 99 ج.م/شهر | غير محدودة: 299 ج.م/شهر. تفاصيل أكتر على pay.html 🎯';
+    if(m.match(/template|قالب|تصميم|شكل/)) return 'عندنا أكثر من 15 قالب احترافي متوافق مع ATS! جرّبهم على templates.html واختار اللي يناسبك 🎨';
+    if(m.match(/ats|توافق|نظام تتبع|resume score/)) return 'ATS هو نظام تتبع المتقدمين اللي الشركات بتستخدمه. قوالبنا مصممة عشان تجتازه. جرّب فحص ATS المجاني على ats-checker.html 🔍';
+    if(m.match(/editor|محرر|ابدأ|start|begin/)) return 'ابدأ دلوقتي مجاناً على editor.html!只需 تسجل حساب وتبدأ تبني سيرتك الذاتية في دقائق ⚡';
+    if(m.match(/pdf|تصدير|download|تحميل/)) return 'التصدير متاح لجميع الباقات. المجاني: جودة عادية + watermark | الاحترافية: جودة عالية | غير محدودة: جودة عالية + بدون حدود 📄';
+    if(m.match(/عمل من|remote|بُعد|work from/)) return 'وظائف عن بُعد بتزيد في مصر! راجع مقالتنا على blog/remote-jobs.html لقائمة بأفضل المنصات والنصائح 💼';
+    if(m.match(/خطاب|cover letter|تغطية/)) return 'خطاب التغطية بيزيد فرص قبولك 40%. راجع مقالتنا blog/cover-letter.html فيه 5 قوالب جاهزة ✉️';
+    if(m.match(/لينكد|linkedin|ملف شخصي/)) return 'ملفك على لينكدإن بوابتك الأولى للوظائف. راجع blog/linkedin-profile.html لـ 10 نصائح ذهبية 🌐';
+    if(m.match(/مرحبا|هلا|اهلا|hi|hello|hey/)) return 'أهلاً وسهلاً! 👋 أنا مساعد QCV الذكي. أقدر أساعدك في كتابة سيرة ذاتية، اختيار قالب، أو أي سؤال عن التوظيف!';
+    if(m.match(/شكر|ممتاز|حلو|thanks|thank/)) return 'العفو! 😊 لو محتاج أي حاجة تانية أنا هنا!';
+    return 'شكراً لسؤالك! أنا مساعد QCV الذكي. أقدر أساعدك في: ✍️ كتابة CV | 🎨 اختيار قالب | 💰 الأسعار | 🔍 فحص ATS | 💼 نصائح التوظيف. اسأل عن أي حاجة!';
 }
 </script>
 

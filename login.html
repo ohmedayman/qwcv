@@ -7,7 +7,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qcv.vexonet.online/login.html">
     <meta property="og:title" content="تسجيل الدخول - QCV">
-    <meta property="og:description" content="أنشئ حسابك مجاناً وابدأ في بناء سيرتك الذاتية الاحترافية بالذكاء الاصطناعي.">
+    <meta property="og:description"
+        content="أنشئ حسابك مجاناً وابدأ في بناء سيرتك الذاتية الاحترافية بالذكاء الاصطناعي.">
     <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <meta property="og:site_name" content="QCV">
     <meta property="og:locale" content="ar_AR">
@@ -22,7 +23,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        media="print" onload="this.media='all'">
     <link rel="stylesheet" href="components.css">
     <style>
         :root {
@@ -936,10 +938,29 @@
             .nav-links {
                 display: none;
             }
-            .theme-toggle{width:44px!important;height:44px!important}
-            .lang-switch button{padding:8px 12px!important}
-            .pw-toggle{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
-            .nav-cta{padding:12px 24px!important;min-height:44px}
+
+            .theme-toggle {
+                width: 44px !important;
+                height: 44px !important
+            }
+
+            .lang-switch button {
+                padding: 8px 12px !important
+            }
+
+            .pw-toggle {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+
+            .nav-cta {
+                padding: 12px 24px !important;
+                min-height: 44px
+            }
+
             .nav-links.show {
                 display: flex !important;
                 flex-direction: column;
@@ -952,47 +973,135 @@
                 padding: 16px 20px;
                 gap: 12px;
                 z-index: 999;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             }
-            .nav-links.show a, .nav-links.show button {
+
+            .nav-links.show a,
+            .nav-links.show button {
                 width: 100%;
                 text-align: center;
                 padding: 12px !important;
             }
+
             .nav-mobile-toggle {
                 display: flex !important;
             }
+
             .auth-card {
                 padding: 30px 24px;
                 border-radius: 16px;
             }
         }
-        .nav-mobile-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;font-size:1.3rem;color:var(--text);cursor:pointer;border-radius:10px;flex-shrink:0}
+
+        .nav-mobile-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: none;
+            font-size: 1.3rem;
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 10px;
+            flex-shrink: 0
+        }
 
         /* ===== DARK MODE ===== */
-        body.dark-mode .ig input { background: var(--input-bg); border-color: #2d3748; color: var(--text); }
-        body.dark-mode .ig input:focus { background: var(--input-bg); }
-        body.dark-mode .ig input::placeholder { color: #475569; }
-        body.dark-mode .ig label { color: var(--muted); }
-        body.dark-mode .pw-toggle { color: var(--muted); }
-        body.dark-mode .pw-reqs { background: var(--input-bg); border-color: #1e293b; }
-        body.dark-mode .pw-req { color: var(--muted); }
-        body.dark-mode .pw-req.on { color: #34d399; }
-        body.dark-mode .forgot { color: var(--cyan, #27ffed); }
-        body.dark-mode .auth-toggle { color: var(--muted); border-color: #1e293b; }
-        body.dark-mode .auth-toggle a { color: #27ffed; }
-        body.dark-mode .card-title { color: var(--text); }
-        body.dark-mode .card-subtitle { color: var(--muted); }
-        body.dark-mode .success-overlay { background: rgba(10,14,26,0.96); }
-        body.dark-mode .success-t, body.dark-mode .success-s { color: var(--text); }
-        body.dark-mode .social-label { color: var(--muted); }
-        body.dark-mode .btn-google { background: #1e293b; border-color: #2d3748; }
-        body.dark-mode .btn-google span { color: var(--text); }
-        body.dark-mode .grid-bg { background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); }
-        body.dark-mode .auth-card { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
-        body.dark-mode a { color: #27ffed; }
-        body.dark-mode .footer { border-color: #1e293b; }
+        body.dark-mode .ig input {
+            background: var(--input-bg);
+            border-color: #2d3748;
+            color: var(--text);
+        }
 
+        body.dark-mode .ig input:focus {
+            background: var(--input-bg);
+        }
+
+        body.dark-mode .ig input::placeholder {
+            color: #475569;
+        }
+
+        body.dark-mode .ig label {
+            color: var(--muted);
+        }
+
+        body.dark-mode .pw-toggle {
+            color: var(--muted);
+        }
+
+        body.dark-mode .pw-reqs {
+            background: var(--input-bg);
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .pw-req {
+            color: var(--muted);
+        }
+
+        body.dark-mode .pw-req.on {
+            color: #34d399;
+        }
+
+        body.dark-mode .forgot {
+            color: var(--cyan, #27ffed);
+        }
+
+        body.dark-mode .auth-toggle {
+            color: var(--muted);
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .auth-toggle a {
+            color: #27ffed;
+        }
+
+        body.dark-mode .card-title {
+            color: var(--text);
+        }
+
+        body.dark-mode .card-subtitle {
+            color: var(--muted);
+        }
+
+        body.dark-mode .success-overlay {
+            background: rgba(10, 14, 26, 0.96);
+        }
+
+        body.dark-mode .success-t,
+        body.dark-mode .success-s {
+            color: var(--text);
+        }
+
+        body.dark-mode .social-label {
+            color: var(--muted);
+        }
+
+        body.dark-mode .btn-google {
+            background: #1e293b;
+            border-color: #2d3748;
+        }
+
+        body.dark-mode .btn-google span {
+            color: var(--text);
+        }
+
+        body.dark-mode .grid-bg {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        body.dark-mode .auth-card {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode a {
+            color: #27ffed;
+        }
+
+        body.dark-mode .footer {
+            border-color: #1e293b;
+        }
     </style>
     <script defer src="js/maintenance.js"></script>
     <script src="js/theme.js"></script>
@@ -1002,19 +1111,32 @@
 
 <body>
     <nav class="navbar">
-    <a href="index.html" class="nav-logo"><div class="logo-box">Q</div>CV</a>
-    <div class="nav-links">
-        <a href="index.html" data-i18n="home">الرئيسية</a>
-        <a href="pay.html" data-i18n="pricing">التسعير</a>
-        <a href="careers.html" data-i18n="careers">الوظائف</a>
-        <a href="help.html" data-i18n="help">المساعدة</a>
-        <a href="blog.html" data-i18n="blog">المدونة</a>
-        <a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a>
-        <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button>
-        <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div>
-    </div>
-    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
-</nav>
+        <a href="index.html" class="nav-logo">
+            <div class="logo-box">Q</div>CV
+        </a>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="home">الرئيسية</a>
+            <a href="pay.html" data-i18n="pricing">التسعير</a>
+            <a href="careers.html" data-i18n="careers">الوظائف</a>
+            <a href="help.html" data-i18n="help">المساعدة</a>
+            <a href="blog.html" data-i18n="blog">المدونة</a>
+            <a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي"
+                style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0"
+                onmouseover="this.style.borderColor='var(--accent)'"
+                onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span
+                    class="icon-moon" style="display:none">🌒</span></button>
+            <div class="lang-switch"
+                style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px">
+                <button class="lang-ar" onclick="QCVLang.set('ar')"
+                    style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button
+                    class="lang-en" onclick="QCVLang.set('en')"
+                    style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button>
+            </div>
+        </div>
+        <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')"
+            aria-label="القائمة">&#9776;</button>
+    </nav>
 
     <div class="grid-bg"></div>
     <div class="particles" id="particles"></div>
@@ -1039,7 +1161,8 @@
         <div class="auth-card">
             <div class="card-header">
                 <h1 class="card-title" id="cardTitle" data-i18n="login_title">مرحباً بك مجدداً</h1>
-                <p class="card-subtitle" id="cardSubtitle" data-i18n="login_subtitle">قم بتسجيل الدخول للوصول إلى مركز البيانات المشفر</p>
+                <p class="card-subtitle" id="cardSubtitle" data-i18n="login_subtitle">قم بتسجيل الدخول للوصول إلى مركز
+                    البيانات المشفر</p>
             </div>
 
             <form class="form" id="loginForm">
@@ -1201,14 +1324,23 @@
                         <div class="spinner"></div>
                     </button>
                 </form>
-                <div class="auth-toggle" style="margin-top:18px"><span data-i18n="back_to_login" onclick="showLoginBox()">&#8594; العودة لتسجيل
+                <div class="auth-toggle" style="margin-top:18px"><span data-i18n="back_to_login"
+                        onclick="showLoginBox()">&#8594; العودة لتسجيل
                         الدخول</span></div>
             </div>
 
             <div id="toggleText" style="margin-top:20px">
-                <div style="text-align:center;font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px">ليس لديك حساب؟</div>
-                <button type="button" onclick="toggleMode()" style="width:100%;padding:14px 24px;background:linear-gradient(135deg,#0003c9 0%,#0005e0 50%,#0003c9 100%);color:#fff;border:none;border-radius:12px;font-size:0.95rem;font-weight:800;font-family:inherit;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(0,3,201,0.3);display:flex;align-items:center;justify-content:center;gap:10px">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                <div style="text-align:center;font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px">ليس لديك
+                    حساب؟</div>
+                <button type="button" onclick="toggleMode()"
+                    style="width:100%;padding:14px 24px;background:linear-gradient(135deg,#0003c9 0%,#0005e0 50%,#0003c9 100%);color:#fff;border:none;border-radius:12px;font-size:0.95rem;font-weight:800;font-family:inherit;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(0,3,201,0.3);display:flex;align-items:center;justify-content:center;gap:10px">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <line x1="19" x2="19" y1="8" y2="14" />
+                        <line x1="22" x2="16" y1="11" y2="11" />
+                    </svg>
                     إنشاء حساب جديد مجاناً
                 </button>
             </div>
@@ -1264,14 +1396,14 @@
         let isSignUpMode = false, isResetting = false;
 
         // Track affiliate link visits
-        (function(){
+        (function () {
             var params = new URLSearchParams(window.location.search);
             var refUid = params.get('ref');
-            if(refUid){
+            if (refUid) {
                 var visitsRef = ref(db, 'users/' + refUid + '/affiliateVisits');
-                get(visitsRef).then(function(snap){ set(visitsRef, (snap.val()||0) + 1); }).catch(function(){});
+                get(visitsRef).then(function (snap) { set(visitsRef, (snap.val() || 0) + 1); }).catch(function () { });
                 // Store ref in sessionStorage for registration tracking
-                try { sessionStorage.setItem('affiliate_ref', refUid); } catch(e){}
+                try { sessionStorage.setItem('affiliate_ref', refUid); } catch (e) { }
             }
         })();
 
@@ -1343,6 +1475,14 @@
             overlay.classList.remove('show');
             void overlay.offsetWidth;
             overlay.classList.add('show');
+        }
+
+        function getPasswordResetRedirectUrl() {
+            const origin = window.location.origin;
+            if (!origin || origin === 'null' || origin.startsWith('file://') || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+                return 'https://qcv.vexonet.online/login.html';
+            }
+            return origin + '/login.html';
         }
 
         function checkPwStrength(pw) {
@@ -1421,9 +1561,9 @@
             setLoading(btn, true);
             try {
                 // 1. Check admin credentials first (no network needed)
-                if(email === 'admin' && pass === 'Qcv@admin1') {
+                if (email === 'admin' && pass === 'Qcv@admin1') {
                     sessionStorage.setItem('qcv_admin', '1');
-                    if(window.QCVNotify) QCVNotify.success();
+                    if (window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('مرحباً بك يا أدمن!', 'جاري التحويل...');
                     setTimeout(() => location.replace("admin.html"), 400);
                     return;
@@ -1437,15 +1577,15 @@
                     const staffSnap = await Promise.race([staffPromise, timeoutPromise]);
                     const staffData = staffSnap.val() || {};
                     Object.entries(staffData).forEach(([id, s]) => {
-                        if(s.email === email && s.password === pass && s.active !== false) {
+                        if (s.email === email && s.password === pass && s.active !== false) {
                             matchedStaff = { id, ...s };
                         }
                     });
-                } catch(e) { /* staff check failed, continue to Firebase Auth */ }
+                } catch (e) { /* staff check failed, continue to Firebase Auth */ }
 
-                if(matchedStaff) {
+                if (matchedStaff) {
                     sessionStorage.setItem('qcv_staff', JSON.stringify(matchedStaff));
-                    if(window.QCVNotify) QCVNotify.success();
+                    if (window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('مرحباً ' + (matchedStaff.name || 'موظف') + '!', 'جاري التحويل...');
                     setTimeout(() => location.replace("admin.html"), 400);
                     return;
@@ -1454,25 +1594,25 @@
                 // 3. Normal user login via Firebase Auth
                 if (isSignUpMode) {
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    updateProfile(res.user, { displayName: name }).catch(()=>{});
+                    updateProfile(res.user, { displayName: name }).catch(() => { });
                     saveUserData(res.user, { name });
                     // Track referral
                     const urlParams = new URLSearchParams(window.location.search);
-                    const referrerUid = urlParams.get('ref') || (function(){ try { return sessionStorage.getItem('affiliate_ref'); } catch(e){ return null; } })();
+                    const referrerUid = urlParams.get('ref') || (function () { try { return sessionStorage.getItem('affiliate_ref'); } catch (e) { return null; } })();
                     if (referrerUid && referrerUid !== res.user.uid) {
-                        set(ref(db, 'users/' + res.user.uid + '/referredBy'), referrerUid).catch(()=>{});
+                        set(ref(db, 'users/' + res.user.uid + '/referredBy'), referrerUid).catch(() => { });
                         const ptsRef = ref(db, 'users/' + referrerUid + '/affiliatePoints');
-                        get(ptsRef).then(snap => { set(ptsRef, (snap.val() || 0) + 5); }).catch(()=>{});
+                        get(ptsRef).then(snap => { set(ptsRef, (snap.val() || 0) + 5); }).catch(() => { });
                         const regRef = ref(db, 'users/' + referrerUid + '/affiliateRegistrations');
-                        get(regRef).then(snap => { set(regRef, (snap.val() || 0) + 1); }).catch(()=>{});
-                        push(ref(db, 'users/' + referrerUid + '/affiliateReferrals'), { referred: res.user.uid, name: name, timestamp: Date.now() }).catch(()=>{});
-                        try { sessionStorage.removeItem('affiliate_ref'); } catch(e){}
+                        get(regRef).then(snap => { set(regRef, (snap.val() || 0) + 1); }).catch(() => { });
+                        push(ref(db, 'users/' + referrerUid + '/affiliateReferrals'), { referred: res.user.uid, name: name, timestamp: Date.now() }).catch(() => { });
+                        try { sessionStorage.removeItem('affiliate_ref'); } catch (e) { }
                     }
                     if (window.QCVNotify) QCVNotify.success();
                     location.replace("editor.html");
                 } else {
                     const res = await signInWithEmailAndPassword(auth, email, pass);
-                    setPersistence(auth, browserLocalPersistence).catch(()=>{});
+                    setPersistence(auth, browserLocalPersistence).catch(() => { });
                     set(ref(db, 'users/' + auth.currentUser.uid + '/lastLogin'), Date.now()).catch(() => { });
                     if (window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('مرحباً بك!', 'جاري التحويل...');
@@ -1501,14 +1641,17 @@
 
         document.getElementById('resetForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('resetEmail').value.trim();
+            const email = document.getElementById('resetEmail').value.trim().toLowerCase();
             if (!email) return;
             const btn = document.getElementById('resetSubmitBtn');
             setLoading(btn, true);
             try {
-                const actionCodeSettings = { url: window.location.origin + '/login.html', handleCodeInApp: true };
+                const actionCodeSettings = {
+                    url: getPasswordResetRedirectUrl(),
+                    handleCodeInApp: true
+                };
                 await sendPasswordResetEmail(auth, email, actionCodeSettings);
-                document.getElementById('resetForm').innerHTML = '<div style="text-align:center;padding:20px 0"><div style="width:60px;height:60px;border-radius:50%;background:#10b98120;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="fas fa-check" style="color:#10b981;font-size:1.5rem"></i></div><h4 style="font-weight:800;margin-bottom:8px">تم الإرسال!</h4><p style="font-size:0.85rem;color:var(--muted,#6b7280)">تم إرسال رابط إعادة تعيين كلمة المرور على بريدك<br><strong>' + email + '</strong><br><br>ابحث في صندوق الوارد أو Spam</p></div>';
+                document.getElementById('resetForm').innerHTML = '<div style="text-align:center;padding:20px 0"><div style="width:60px;height:60px;border-radius:50%;background:#10b98120;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="fas fa-check" style="color:#10b981;font-size:1.5rem"></i></div><h4 style="font-weight:800;margin-bottom:8px">تم الإرسال!</h4><p style="font-size:0.85rem;color:var(--muted,#6b7280)">تم إرسال رابط إعادة تعيين كلمة المرور على بريدك<br><strong>' + email + '</strong><br><br>ابحث في صندوق الوارد أو Spam. إذا كنت تفتح الصفحة من ملف محلي، استخدم النسخة المباشرة على <strong>https://qcv.vexonet.online</strong></p></div>';
                 setTimeout(showLoginBox, 4000);
             } catch (err) {
                 const m = { 'auth/user-not-found': 'البريد الإلكتروني غير مسجل عندنا', 'auth/invalid-email': 'البريد الإلكتروني غير صالح', 'auth/too-many-requests': 'طلبات كثيرة، حاول بعد 5 دقائق' };
@@ -1605,20 +1748,27 @@
     <script defer src="js/site-settings.js"></script>
     <script defer src="js/auto-reload.js"></script>
     <script src="js/animations.js"></script>
-<script src="js/analytics.js"></script>
-<script src="js/notify-sounds.js"></script>
-<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
-</a>
-<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
-    <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
-    <div style="flex:1;text-align:right">
-        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
-        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+    <script src="js/analytics.js"></script>
+    <script src="js/notify-sounds.js"></script>
+    <a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"
+        aria-label="واتساب"
+        style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s"
+        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+    </a>
+    <div id="installBanner"
+        style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
+        <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV"
+            style="width:36px;height:36px;border-radius:8px">
+        <div style="flex:1;text-align:right">
+            <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
+            <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+        </div>
+        <button id="installBtn"
+            style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
+        <button id="installClose"
+            style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
     </div>
-    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
-    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
-</div>
 </body>
 
 </html>

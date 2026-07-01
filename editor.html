@@ -4372,7 +4372,8 @@
                     <div class="dd-affiliate" id="ddAffiliateSection">
                         <div id="affApplyView">
                             <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i>
-                                <span>Affiliate Account</span></div>
+                                <span>Affiliate Account</span>
+                            </div>
                             <div class="dd-aff-apply-desc">Submit your request, get your unique link and earn <strong>5
                                     points</strong> for each new member who signs up through you</div>
                             <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i
@@ -4418,7 +4419,8 @@
                                 <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i>
                                     Redeem Points</div>
                                 <div class="dd-aff-exchange-desc">Redeem <strong>100 points</strong> for a
-                                    <strong>Pro</strong> plan for 30 days</div>
+                                    <strong>Pro</strong> plan for 30 days
+                                </div>
                                 <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i
                                         class="fas fa-sync-alt"></i> Redeem 100 Points</button>
                                 <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i
@@ -7454,37 +7456,17 @@
         };
 
         function callAI(prompt, onSuccess, onError) {
-            // Start with NaraRouter (free, works without user key)
-            callNaraRouter(prompt, onSuccess, onError);
-        }
-
-        function callNaraRouter(prompt, onSuccess, onError) {
-            var naraKey = (window.QCVSettings && window.QCVSettings.get && window.QCVSettings.get().naraKey) || localStorage.getItem('qcv_nara_key') || 'sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA';
-            fetch('https://router.bynara.id/v1/chat/completions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + naraKey },
-                body: JSON.stringify({ model: 'mimo-v2.5-free', messages: [{ role: 'user', content: prompt }], max_tokens: 1500, temperature: 0.7 })
-            })
-                .then(function (r) { return r.json(); })
-                .then(function (data) {
-                    if (data.choices && data.choices[0] && data.choices[0].message) {
-                        onSuccess(data.choices[0].message.content.trim());
-                    } else {
-                        callPollinations(prompt, onSuccess, onError);
-                    }
-                })
-                .catch(function () { callPollinations(prompt, onSuccess, onError); });
+            // Start with Pollinations (free, no key needed)
+            callPollinations(prompt, onSuccess, onError);
         }
 
         function callPollinations(prompt, onSuccess, onError) {
-            fetch('https://text.pollinations.ai/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: [{ role: 'user', content: prompt }], model: 'openai', max_tokens: 1500 })
+            fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {
+                method: 'GET'
             })
                 .then(function (r) { return r.text(); })
                 .then(function (text) {
-                    if (text && text.length > 20 && !text.trimStart().startsWith('<')) {
+                    if (text && text.length > 10 && !text.trimStart().startsWith('<')) {
                         onSuccess(text.trim());
                     } else {
                         callUserProviders(prompt, onSuccess, onError);
