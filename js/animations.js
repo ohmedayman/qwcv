@@ -491,24 +491,7 @@
 
     // ===== LOADING SCREEN =====
     function initLoadingScreen() {
-        var loader = document.getElementById('qcvLoader');
-        if (!loader) return;
-
-        function hideLoader() {
-            loader.style.opacity = '0';
-            setTimeout(function() { loader.remove(); }, 300);
-        }
-
-        // Hide as soon as DOM is ready (max 1.5s)
-        if (document.readyState === 'complete') {
-            hideLoader();
-        } else {
-            var maxTimer = setTimeout(hideLoader, 1500);
-            window.addEventListener('load', function() {
-                clearTimeout(maxTimer);
-                setTimeout(hideLoader, 100);
-            });
-        }
+        // Loading screen removed for faster page loads
     }
 
     // ===== CSS ANIMATIONS (injected) =====
@@ -528,7 +511,6 @@
     // ===== INIT ALL =====
     function init() {
         injectAnimationCSS();
-        initLoadingScreen();
         initScrollReveal();
         initTypingEffect();
         initCounters();
