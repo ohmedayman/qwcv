@@ -1,0 +1,409 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/templates.html">
+    <meta property="og:title" content="قوالب السير الذاتية الاحترافية - QCV">
+    <meta property="og:description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS. جميع القوالب مجانية للمعاينة.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <title>قوالب سيرة ذاتية - QCV | 15+ قالب احترافي ATS مجاني</title>
+    <meta name="description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/templates.html">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly site description">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="templates/templates.css">
+    <style>
+        :root{--bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--green:#059669;--purple:#8b5cf6;--sky:#2563eb}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg2);color:var(--text);font-family:'Inter','Cairo',sans-serif;min-height:100vh}
+
+        .page-header{background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+        .logo{font-size:1.5rem;font-weight:900}.logo span{color:var(--accent)}
+        .header-nav{display:flex;gap:8px;align-items:center}
+        .header-nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.82rem;padding:8px 14px;border-radius:8px;transition:all 0.2s}
+        .header-nav a:hover{color:var(--text);background:var(--bg2)}
+        .header-nav a.active{color:var(--accent);background:rgba(0,3,201,0.06)}
+        .btn-primary{background:var(--accent);color:#fff;padding:9px 22px;border-radius:8px;font-weight:700;font-size:0.85rem;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:all 0.2s}
+        .btn-primary:hover{background:#0002a3;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,3,201,0.25)}
+
+        .hero{text-align:center;padding:60px 32px 30px}
+        .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:12px;color:var(--text);letter-spacing:-0.5px}
+        .hero p{font-size:1.05rem;color:var(--muted);max-width:550px;margin:0 auto;line-height:1.7}
+        .hero-stats{display:flex;justify-content:center;gap:40px;margin-top:24px}
+        .hero-stat{text-align:center}
+        .hero-stat .num{font-size:1.6rem;font-weight:900;color:var(--accent)}
+        .hero-stat .lbl{font-size:0.78rem;color:var(--muted);margin-top:2px}
+
+        .filters{display:flex;justify-content:center;gap:8px;padding:16px 32px;flex-wrap:wrap}
+        .filter-btn{padding:8px 20px;border-radius:24px;border:1px solid var(--border);background:#fff;color:var(--muted);font-weight:600;font-size:0.82rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+        .filter-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.03)}
+        .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 8px rgba(0,3,201,0.2)}
+        .filter-btn .count{background:rgba(255,255,255,0.2);padding:1px 7px;border-radius:10px;font-size:0.7rem}
+        .filter-btn.active .count{background:rgba(255,255,255,0.25)}
+
+        .templates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;padding:20px 40px 60px;max-width:1400px;margin:0 auto}
+
+        .tpl-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);box-shadow:0 1px 3px rgba(0,0,0,0.04);position:relative}
+        .tpl-card:hover{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,0.1)}
+        .tpl-card:hover .tpl-preview{transform:scale(1.02)}
+        .tpl-card:hover .tpl-overlay{opacity:1}
+        .tpl-card:hover .tpl-use-btn{opacity:1;transform:translateY(0)}
+
+        .tpl-preview-wrap{position:relative;height:420px;background:#f0f0f0;overflow:hidden;border-bottom:1px solid var(--border)}
+        .tpl-preview{width:100%;height:100%;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+        .tpl-preview-inner{transform:scale(0.34);transform-origin:top center;width:294%;position:absolute;top:0;left:50%;transform:translateX(-50%) scale(0.34)}
+
+        .tpl-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 40%,rgba(0,3,201,0.85) 100%);opacity:0;transition:opacity 0.35s;display:flex;align-items:flex-end;justify-content:center;padding:20px;gap:10px}
+        .tpl-overlay .tpl-btn{background:#fff;color:var(--accent);border:none;padding:10px 20px;border-radius:10px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:inherit;opacity:0;transform:translateY(10px);transition:all 0.35s 0.05s;display:flex;align-items:center;gap:6px}
+        .tpl-overlay .tpl-btn.preview-btn{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4)}
+        .tpl-overlay .tpl-btn.preview-btn:hover{background:rgba(255,255,255,0.3);color:#fff}
+        .tpl-overlay .tpl-btn:hover{background:var(--accent);color:#fff}
+        .tpl-card:hover .tpl-overlay .tpl-btn{opacity:1;transform:translateY(0)}
+        .tpl-card:hover .tpl-overlay .tpl-btn:nth-child(2){transition-delay:0.08s}
+
+        .preview-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+        .preview-modal.show{display:flex}
+        .preview-modal-inner{background:var(--card);border-radius:20px;width:90%;max-width:800px;max-height:90vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalIn 0.3s ease}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+        .preview-modal-header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--border)}
+        .preview-modal-header h3{font-size:1.1rem;font-weight:800}
+        .preview-modal-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s}
+        .preview-modal-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+        .preview-modal-body{padding:24px;overflow-y:auto;max-height:70vh;display:flex;justify-content:center;background:#f0f0f0}
+        .preview-modal-body .tpl-preview-full{width:594px;min-height:840px;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,0.1);border-radius:4px;overflow:hidden;transform-origin:top center}
+        .preview-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+        .preview-modal-footer .btn{padding:10px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;border:none;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+        .preview-modal-footer .btn-use{background:var(--accent);color:#fff}
+        .preview-modal-footer .btn-use:hover{background:#0002a3}
+        .preview-modal-footer .btn-close{background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+        .preview-modal-footer .btn-close:hover{background:var(--border)}
+
+        .tpl-badge-locked{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:#f59e0b;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px;backdrop-filter:blur(8px)}
+        .tpl-badge-free{position:absolute;top:14px;right:14px;background:rgba(5,150,105,0.9);color:#fff;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px}
+
+        .tpl-info{padding:18px 22px}
+        .tpl-name{font-size:1.05rem;font-weight:800;margin-bottom:4px;color:var(--text)}
+        .tpl-desc{font-size:0.82rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
+        .tpl-meta{display:flex;align-items:center;justify-content:space-between}
+        .tpl-badge{padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700}
+        .tpl-features{display:flex;gap:6px;margin-top:10px}
+        .tpl-feat{font-size:0.68rem;color:var(--muted);background:var(--bg2);padding:3px 8px;border-radius:5px;display:flex;align-items:center;gap:4px}
+        .tpl-feat i{font-size:0.6rem;color:var(--green)}
+
+        .footer{text-align:center;padding:40px;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem}
+        .footer a{color:var(--accent);text-decoration:none}
+
+        @media(max-width:900px){
+            .page-header{padding:12px 20px}
+            .hero{padding:40px 20px 20px}
+            .hero h1{font-size:1.8rem}
+            .hero-stats{gap:20px}
+            .templates-grid{grid-template-columns:repeat(2,1fr);gap:16px;padding:16px 20px 40px}
+            .tpl-preview-wrap{height:320px}
+        }
+        @media(max-width:600px){
+            .hero h1{font-size:1.4rem}
+            .hero p{font-size:0.9rem}
+            .templates-grid{grid-template-columns:1fr;gap:14px;padding:12px 16px 40px}
+            .tpl-preview-wrap{height:360px}
+            .tpl-preview-inner{transform:translateX(-50%) scale(0.28)}
+            .header-nav a:not(.btn-primary){display:none}
+        }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode .navbar{background:rgba(10,14,26,0.95);border-bottom-color:#1e293b}
+        body.dark-mode .nav-links a{color:#94a3b8}
+        body.dark-mode .nav-links a:hover{color:#f1f5f9}
+        body.dark-mode .nav-links a.active{color:#27ffed}
+        body.dark-mode .nav-cta{background:#27ffed;color:#0a0e1a}
+        body.dark-mode .hero{background:linear-gradient(180deg,#0a0e1a 0%,#111827 100%)}
+        body.dark-mode .hero h1{color:#f1f5f9}
+        body.dark-mode .hero p{color:#94a3b8}
+        body.dark-mode .filter-bar{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .filter-btn{color:#64748b}
+        body.dark-mode .filter-btn:hover{color:#f1f5f9}
+        body.dark-mode .filter-btn.active{background:#0003c9;color:#fff}
+        body.dark-mode .search-input{background:#0f172a;border-color:#1e293b;color:#f1f5f9}
+        body.dark-mode .search-input::placeholder{color:#475569}
+        body.dark-mode .template-card{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .template-card:hover{border-color:#27ffed;box-shadow:0 4px 16px rgba(39,255,237,0.1)}
+        body.dark-mode .tpl-name{color:#f1f5f9}
+        body.dark-mode .tpl-desc{color:#94a3b8}
+        body.dark-mode .tpl-tag{background:rgba(39,255,237,0.08);color:#27ffed;border-color:rgba(39,255,237,0.15)}
+        body.dark-mode .tpl-use{color:#fff}
+        body.dark-mode .tpl-preview-overlay{background:rgba(10,14,26,0.95)}
+        body.dark-mode .tpl-preview-header{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .tpl-preview-header h3{color:#f1f5f9}
+        body.dark-mode .footer{background:#0a0e1a;border-color:#1e293b}
+        body.dark-mode .footer a{color:#27ffed}
+        body.dark-mode a{color:#27ffed}
+
+    </style>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/pwa.js" defer></script>
+</head>
+<body>
+    <div class="page-header">
+        <a href="index.html" class="logo" style="text-decoration:none;color:inherit;font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
+        <div class="header-nav">
+            <a href="index.html" data-i18n="home">الرئيسية</a>
+            <a href="pay.html" data-i18n="pricing">التسعير</a>
+            <a href="careers.html" data-i18n="careers">الوظائف</a>
+            <a href="help.html" data-i18n="help">المساعدة</a>
+            <a href="login.html" class="btn-primary" data-i18n="start_free">ابدأ مجاناً</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button>
+            <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1 data-i18n="templates_title">Professional CV Templates</h1>
+        <p data-i18n="templates_sub">Choose from 15+ ATS-optimized templates designed to get you hired. All templates are free to preview and export.</p>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="num">15+</div><div class="lbl">Templates</div></div>
+            <div class="hero-stat"><div class="num">100%</div><div class="lbl">ATS Compatible</div></div>
+            <div class="hero-stat"><div class="num">4.9</div><div class="lbl">User Rating</div></div>
+        </div>
+    </div>
+
+    <div class="filters" id="filtersBar"></div>
+    <div class="templates-grid" id="tplGrid"></div>
+
+    <footer class="footer" style="border-top:1px solid var(--border);padding:30px 60px 20px;background:var(--bg)">
+        <div class="footer-content" style="display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:30px">
+            <div class="footer-brand">
+                <div class="logo" style="font-size:1.5rem;font-weight:900;margin-bottom:8px;color:var(--text)">Q<span style="color:var(--accent)">CV</span></div>
+                <p style="color:var(--muted);font-size:0.82rem;max-width:280px;line-height:1.5">باني سير ذاتية احترافية بالذكاء الاصطناعي</p>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--text)">الشركة</h4>
+                <ul style="list-style:none;padding:0">
+                    <li style="margin-bottom:6px"><a href="about.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">من نحن</a></li>
+                    <li style="margin-bottom:6px"><a href="careers.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">الوظائف</a></li>
+                    <li style="margin-bottom:6px"><a href="terms.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">شروط الاستخدام</a></li>
+                    <li style="margin-bottom:6px"><a href="privacy.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--text)">الدعم</h4>
+                <ul style="list-style:none;padding:0">
+                    <li style="margin-bottom:6px"><a href="help.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">مركز المساعدة</a></li>
+                    <li style="margin-bottom:6px"><a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none;font-size:0.82rem">واتساب</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem">© 2026 QCV - جميع الحقوق محفوظة</div>
+    </footer>
+
+    <div class="preview-modal" id="previewModal" onclick="if(event.target===this)closePreview()">
+        <div class="preview-modal-inner">
+            <div class="preview-modal-header">
+                <h3 id="previewTitle">معاينة القالب</h3>
+                <button class="preview-modal-close" onclick="closePreview()" aria-label="إغلاق">&times;</button>
+            </div>
+            <div class="preview-modal-body">
+                <div class="tpl-preview-full" id="previewContent"></div>
+            </div>
+            <div class="preview-modal-footer">
+                <button class="btn btn-close" onclick="closePreview()">إغلاق</button>
+                <button class="btn btn-use" id="previewUseBtn" onclick="closePreview()"><i class="fas fa-arrow-left"></i> استخدام القالب</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/template-engine.js"></script>
+    <script>
+        const sampleData = {
+            name: 'Ahmad Mostafa',
+            title: 'Senior UI/UX Designer',
+            email: 'ahmad@example.com',
+            phone: '+20 123 456 789',
+            location: 'Cairo, Egypt',
+            linkedin: 'linkedin.com/in/ahmadmostafa',
+            summary: 'Product designer specializing in resume systems, portfolio storytelling, and candidate experiences. Experienced in ATS optimization and UX writing.',
+            skills: ['UI Design', 'Figma', 'Prototyping', 'User Research', 'Design Systems', 'CSS', 'Wireframing', 'Adobe XD'],
+            experience: [
+                { role: 'Senior Product Designer', company: 'TechCorp', duration: '2022 - Present', description: '- Redesigned application flows, lifting completion by 28%\n- Led design system overhaul for 5 products\n- Mentored junior designers' },
+                { role: 'UX Designer', company: 'StartupX', duration: '2019 - 2022', description: '- Built recruiter dashboards and scoring tools\n- Conducted 50+ user research sessions\n- Improved onboarding conversion by 35%' }
+            ],
+            education: [
+                { degree: 'B.Sc. Computer Science', school: 'Cairo University', duration: '2015 - 2019', description: '- GPA: 3.7/4.0\n- Dean\'s List' }
+            ],
+            languages: [
+                { name: 'Arabic', level: 'Native' },
+                { name: 'English', level: 'Fluent' }
+            ]
+        };
+
+        const categories = {all:'All',classic:'Classic',modern:'Modern',creative:'Creative',ats:'ATS',minimal:'Minimal',technical:'Technical'};
+        const catColors = {classic:'#38bdf8',modern:'#2563eb',creative:'#8b5cf6',ats:'#059669',minimal:'#6b7280',technical:'#0f172a'};
+        const catIcons = {classic:'fa-file-alt',modern:'fa-rocket',creative:'fa-palette',ats:'fa-shield-alt',minimal:'fa-minus',technical:'fa-code'};
+
+        const FREE_TEMPLATES = ['classic'];
+        let userPlan = 'free';
+        let currentFilter = 'all';
+
+        (async () => {
+            try {
+                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+                const { getAuth, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js");
+                const { getDatabase, ref, get } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js");
+                const app = initializeApp({apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"});
+                const auth = getAuth(app);
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        const snap = await get(ref(getDatabase(app), 'users/' + user.uid));
+                        const ud = snap.val() || {};
+                        userPlan = ud.plan || 'free';
+                        if ((userPlan === 'pro' || userPlan === 'unlimited') && ud.planExpiry && Date.now() > ud.planExpiry) userPlan = 'free';
+                    }
+                    renderGrid();
+                });
+            } catch(e) { renderGrid(); }
+        })();
+
+        function renderFilters() {
+            const templates = QCVTemplates.getAll();
+            const cats = ['all'];
+            templates.forEach(t => { if (!cats.includes(t.category)) cats.push(t.category); });
+            document.getElementById('filtersBar').innerHTML = cats.map(c => {
+                const count = c === 'all' ? templates.length : templates.filter(t => t.category === c).length;
+                return `<button class="filter-btn${c === currentFilter ? ' active' : ''}" onclick="filterTpl('${c}',this)">
+                    <i class="fas ${catIcons[c] || 'fa-th-large'}"></i>
+                    ${categories[c] || c} <span class="count">${count}</span>
+                </button>`;
+            }).join('');
+        }
+
+        function renderGrid() {
+            const templates = QCVTemplates.getAll();
+            const grid = document.getElementById('tplGrid');
+            const paid = userPlan === 'pro' || userPlan === 'unlimited';
+            grid.innerHTML = templates
+                .filter(t => currentFilter === 'all' || t.category === currentFilter)
+                .map((t, i) => {
+                    const locked = !paid && !FREE_TEMPLATES.includes(t.id);
+                    const catColor = catColors[t.category] || '#6b7280';
+                    return `
+                    <div class="tpl-card${locked ? ' locked' : ''}" data-cat="${t.category}" style="animation:fadeUp 0.4s ${i * 0.06}s both">
+                        <div class="tpl-preview-wrap">
+                            <div class="tpl-preview">
+                                <div class="tpl-preview-inner">${QCVTemplates.render(t.id, sampleData)}</div>
+                            </div>
+                            <div class="tpl-overlay">
+                                <button class="tpl-btn preview-btn" onclick="event.stopPropagation();previewTemplate('${t.id}','${t.nameAr} - ${t.name}')">
+                                    <i class="fas fa-eye"></i> معاينة
+                                </button>
+                                <button class="tpl-btn" onclick="${locked ? "window.location.href='pay.html'" : `useTemplate('${t.id}')`}">
+                                    <i class="fas ${locked ? 'fa-lock' : 'fa-arrow-left'}"></i>
+                                    ${locked ? 'فتح القالب' : 'استخدام'}
+                                </button>
+                            </div>
+                            ${locked
+                                ? '<div class="tpl-badge-locked"><i class="fas fa-lock"></i> Pro</div>'
+                                : '<div class="tpl-badge-free"><i class="fas fa-check"></i> Free</div>'
+                            }
+                        </div>
+                        <div class="tpl-info">
+                            <div class="tpl-name">${t.nameAr} &mdash; ${t.name}</div>
+                            <div class="tpl-desc">${t.description}</div>
+                            <div class="tpl-features">
+                                <span class="tpl-feat"><i class="fas fa-check"></i> ATS Safe</span>
+                                <span class="tpl-feat"><i class="fas fa-check"></i> PDF Export</span>
+                                ${t.category === 'creative' ? '<span class="tpl-feat"><i class="fas fa-check"></i> Colorful</span>' : ''}
+                                ${t.category === 'technical' ? '<span class="tpl-feat"><i class="fas fa-check"></i> Sidebar</span>' : ''}
+                            </div>
+                            <div class="tpl-meta" style="margin-top:12px">
+                                <span class="tpl-badge" style="background:${catColor}15;color:${catColor}"><i class="fas ${catIcons[t.category] || 'fa-file'}"></i> ${categories[t.category] || t.category}</span>
+                                <div style="display:flex;gap:6px">
+                                    <button onclick="event.stopPropagation();previewTemplate('${t.id}','${t.nameAr} - ${t.name}')" style="padding:7px 12px;background:var(--bg2);color:var(--muted);border:1px solid var(--border);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s">
+                                        <i class="fas fa-eye"></i> معاينة
+                                    </button>
+                                    <button class="tpl-use" onclick="${locked ? "window.location.href='pay.html'" : `useTemplate('${t.id}')`}" style="padding:7px 16px;background:${locked ? 'var(--border)' : 'var(--accent)'};color:${locked ? 'var(--muted)' : '#fff'};border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s">
+                                        ${locked ? '<i class="fas fa-lock"></i> Pro' : '<i class="fas fa-arrow-left"></i> استخدام'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+        }
+
+        function useTemplate(id) {
+            if(window.QCVNotify) QCVNotify.click();
+            localStorage.setItem('qcv_selected_template', id);
+            window.location.href = 'editor.html';
+        }
+
+        function filterTpl(cat, el) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            renderGrid();
+        }
+
+        let currentPreviewId = null;
+
+        function previewTemplate(id, name) {
+            currentPreviewId = id;
+            document.getElementById('previewTitle').textContent = name;
+            document.getElementById('previewContent').innerHTML = QCVTemplates.render(id, sampleData);
+            document.getElementById('previewContent').style.transform = 'scale(0.8)';
+            document.getElementById('previewContent').style.transformOrigin = 'top center';
+            const useBtn = document.getElementById('previewUseBtn');
+            const isPaid = userPlan === 'pro' || userPlan === 'unlimited';
+            const locked = !isPaid && !FREE_TEMPLATES.includes(id);
+            if (locked) {
+                useBtn.onclick = function() { window.location.href = 'pay.html'; };
+                useBtn.innerHTML = '<i class="fas fa-lock"></i> فتح القالب';
+            } else {
+                useBtn.onclick = function() { useTemplate(id); };
+                useBtn.innerHTML = '<i class="fas fa-arrow-left"></i> استخدام القالب';
+            }
+            document.getElementById('previewModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('show');
+            document.body.style.overflow = '';
+            currentPreviewId = null;
+        }
+
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePreview(); });
+
+        renderFilters();
+        renderGrid();
+    </script>
+    <style>@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}</style>
+<script src="js/maintenance.js"></script>
+<script src="js/site-settings.js"></script>
+<script src="js/auto-reload.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/notify-sounds.js"></script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
+    <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
+    <div style="flex:1;text-align:right">
+        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
+        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+    </div>
+    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
+    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+</body>
+</html>

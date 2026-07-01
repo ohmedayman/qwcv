@@ -1,0 +1,492 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوظائف الشاغرة - QCV | انضم لفريقنا</title>
+    <meta name="description" content="انضم لفريق QCV - وظائف شاغرة في الذكاء الاصطناعي، التصميم، والدعم الفني. ابحث عن فرصة عمل مناسبة لمهاراتك في منشئ السير الذاتية الذكي.">
+    <meta name="keywords" content="QCV وظائف, التوظيف QCV, وظائف شاغرة, فرصة عمل, وظائف ذكاء اصطناعي, وظائف تصميم">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/careers.html">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly site description">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/careers.html">
+    <meta property="og:title" content="الوظائف الشاغرة - QCV | انضم لفريقنا">
+    <meta property="og:description" content="انضم لفريق QCV - وظائف شاغرة في الذكاء الاصطناعي، التصميم، والدعم الفني. ابحث عن فرصة عمل مناسبة لمهاراتك.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="الوظائف الشاغرة - QCV | انضم لفريقنا">
+    <meta name="twitter:description" content="انضم لفريق QCV - وظائف شاغرة في الذكاء الاصطناعي، التصميم، والدعم الفني.">
+    <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--accent2:#27ffed;--green:#059669;--red:#ef4444;--yellow:#f59e0b;--purple:#8b5cf6;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af}
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;line-height:1.6}
+
+        /* ===== NAVBAR ===== */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center}
+        .nav-logo{font-size:1.8rem;font-weight:900;color:var(--text);text-decoration:none}
+        .nav-logo span{color:var(--accent)}
+        .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem;transition:color 0.2s}
+        .nav-links a:hover{color:var(--text)}
+        .nav-cta{background:var(--accent);color:#fff !important;padding:10px 22px;border-radius:50px;font-weight:700 !important;transition:all 0.2s !important}
+        .nav-cta:hover{background:#0005e6;transform:translateY(-2px)}
+
+        /* ===== HERO ===== */
+        .hero{padding:160px 20px 100px;text-align:center;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,3,201,0.04),transparent 70%);border-radius:50%;pointer-events:none}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,3,201,0.05);border:1px solid rgba(0,3,201,0.12);color:var(--accent);padding:7px 16px;border-radius:30px;font-size:0.82rem;font-weight:700;margin-bottom:28px;position:relative}
+        .hero h1{font-size:2.8rem;font-weight:900;margin-bottom:18px;position:relative;line-height:1.3}
+        .hero h1 .hl{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{color:var(--muted);font-size:1rem;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;position:relative;line-height:1.8}
+        .hero-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--accent);color:#fff;border-radius:50px;font-weight:700;font-size:0.95rem;text-decoration:none;transition:all 0.25s;position:relative;border:none;cursor:pointer;font-family:'Cairo',sans-serif}
+        .hero-btn:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,3,201,0.2)}
+
+        /* ===== SECTION COMMON ===== */
+        .section{padding:90px 60px}
+        .section-header{text-align:center;margin-bottom:50px}
+        .section-header h2{font-size:2rem;font-weight:900;margin-bottom:10px}
+        .section-header p{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto}
+
+        /* ===== WHAT WE OFFER ===== */
+        .offer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:1000px;margin:0 auto}
+        .offer-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;transition:all 0.3s}
+        .offer-card:hover{border-color:rgba(0,3,201,0.2);transform:translateY(-3px);box-shadow:0 12px 35px rgba(0,0,0,0.06)}
+        .offer-card .icon{font-size:1.5rem;margin-bottom:14px}
+        .offer-card h3{font-size:1.1rem;font-weight:800;margin-bottom:8px}
+        .offer-card p{color:var(--muted);font-size:0.85rem;line-height:1.7}
+
+        /* ===== BENEFITS ===== */
+        .benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1050px;margin:0 auto}
+        .benefit-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 24px;text-align:center;transition:all 0.3s}
+        .benefit-card:hover{border-color:rgba(0,3,201,0.2);transform:translateY(-3px);box-shadow:0 12px 35px rgba(0,0,0,0.06)}
+        .benefit-icon{width:55px;height:55px;background:rgba(0,3,201,0.06);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 16px}
+        .benefit-card h3{font-size:1rem;font-weight:800;margin-bottom:8px}
+        .benefit-card p{color:var(--muted);font-size:0.82rem;line-height:1.7}
+
+        /* ===== JOBS ===== */
+        .jobs-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+        .jobs-header{display:flex;justify-content:space-between;align-items:center;max-width:1050px;margin:0 auto 40px}
+        .jobs-header h2{font-size:2rem;font-weight:900}
+        .jobs-count{background:var(--accent);color:#fff;padding:6px 16px;border-radius:20px;font-size:0.82rem;font-weight:700}
+        .job-category{max-width:1050px;margin:0 auto 30px}
+        .cat-title{display:flex;align-items:center;gap:10px;font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--muted)}
+        .cat-title .emoji{font-size:1.2rem}
+        .job-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;transition:all 0.25s}
+        .job-card:hover{border-color:rgba(0,3,201,0.3);box-shadow:0 4px 15px rgba(0,0,0,0.05)}
+        .job-info h3{font-size:1rem;font-weight:800;margin-bottom:4px}
+        .job-info p{color:var(--muted);font-size:0.82rem}
+        .job-apply{padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;text-decoration:none}
+        .job-apply:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.03)}
+        .job-card .job-apply{padding:10px 24px;background:var(--accent);color:#fff;border-radius:10px;font-weight:800;font-size:0.85rem;border:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+        .job-card .job-apply:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,3,201,0.2)}
+        .job-apply i{font-size:0.8rem}
+
+        .job-featured{background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:2px solid var(--accent);border-radius:18px;padding:30px;margin-bottom:24px;position:relative;overflow:hidden;transition:all 0.35s}
+        .job-featured::before{content:'';position:absolute;top:0;right:0;width:100%;height:4px;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px}
+        .job-featured:hover{box-shadow:0 12px 40px rgba(0,3,201,0.12);transform:translateY(-3px)}
+        .featured-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:800;margin-bottom:14px}
+        .featured-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+        .featured-info{flex:1}
+        .featured-info h3{font-size:1.3rem;font-weight:900;margin-bottom:6px;color:var(--text)}
+        .featured-info p{color:var(--muted);font-size:0.88rem;margin-bottom:10px}
+        .featured-info .job-desc{color:var(--muted);font-size:0.82rem;line-height:1.7;margin-bottom:12px}
+        .featured-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+        .featured-tag{background:rgba(0,3,201,0.06);color:var(--accent);padding:4px 12px;border-radius:8px;font-size:0.72rem;font-weight:700}
+        .featured-apply{padding:12px 30px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+        .featured-apply:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,3,201,0.25)}
+
+        /* ===== CTA ===== */
+        .cta-section{text-align:center;padding:90px 20px}
+        .cta-box{max-width:700px;margin:0 auto;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid var(--border);border-radius:24px;padding:55px 40px}
+        .cta-box h2{font-size:2rem;font-weight:900;margin-bottom:14px}
+        .cta-box p{color:var(--muted);margin-bottom:30px;font-size:1rem}
+
+        /* ===== FOOTER ===== */
+        .footer{border-top:1px solid var(--border);padding:50px 60px 30px}
+        .footer-content{display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:40px}
+        .footer-brand .logo{font-size:1.6rem;font-weight:900;margin-bottom:12px}
+        .footer-brand .logo span{color:var(--accent)}
+        .footer-brand p{color:var(--muted);font-size:0.85rem;max-width:280px;line-height:1.6}
+        .footer-links h4{font-size:0.95rem;font-weight:700;margin-bottom:15px;color:var(--text)}
+        .footer-links ul{list-style:none}
+        .footer-links ul li{margin-bottom:10px}
+        .footer-links ul li a{color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+        .footer-links ul li a:hover{color:var(--accent)}
+        .footer-bottom{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:0.8rem}
+
+        /* ===== RESPONSIVE ===== */
+        .nav-mobile-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;font-size:1.3rem;color:var(--text);cursor:pointer;border-radius:10px;flex-shrink:0}
+        @media(max-width:900px){
+            .navbar{padding:0 20px}
+            .nav-links{display:none}
+            .nav-links.show{display:flex !important;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:16px 20px;gap:12px;z-index:999;box-shadow:0 8px 25px rgba(0,0,0,0.1)}
+            .nav-links.show li{width:100%}
+            .nav-links.show li a,.nav-links.show li button{width:100%;text-align:center;padding:12px !important}
+            .nav-mobile-toggle{display:flex !important}
+            .theme-toggle{width:44px!important;height:44px!important}
+            .lang-switch button{padding:8px 12px!important}
+            .hero h1{font-size:2rem}
+            .section{padding:50px 20px}
+            .jobs-grid{grid-template-columns:1fr}
+            .benefits-grid{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:600px){
+            .hero{padding:120px 20px 60px}
+            .hero h1{font-size:1.6rem}
+            .section-header h2{font-size:1.4rem}
+            .benefits-grid{grid-template-columns:1fr}
+            .footer{padding:30px 20px 15px}
+            .footer-content{flex-direction:column}
+        }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode .navbar{background:rgba(10,14,26,0.95);border-bottom-color:#1e293b}
+        body.dark-mode .nav-cta{color:#fff}
+        body.dark-mode .nav-cta:hover{background:#0005e6}
+        body.dark-mode .hero::before{background:radial-gradient(circle,rgba(39,255,237,0.06),transparent 70%)}
+        body.dark-mode .hero-badge{background:rgba(0,3,201,0.15);border-color:rgba(39,255,237,0.15)}
+        body.dark-mode .hero-btn{color:#fff}
+        body.dark-mode .hero-btn:hover{box-shadow:0 8px 25px rgba(0,3,201,0.4)}
+        body.dark-mode .section{background:#0a0e1a}
+        body.dark-mode .section-header h2{color:#f1f5f9}
+        body.dark-mode .section-header p{color:#94a3b8}
+        body.dark-mode .offer-card{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .offer-card:hover{border-color:#27ffed;box-shadow:0 12px 35px rgba(0,0,0,0.3)}
+        body.dark-mode .offer-card h3{color:#f1f5f9}
+        body.dark-mode .offer-card p{color:#94a3b8}
+        body.dark-mode .benefit-card{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .benefit-card:hover{border-color:#27ffed;box-shadow:0 12px 35px rgba(0,0,0,0.3)}
+        body.dark-mode .benefit-card h3{color:#f1f5f9}
+        body.dark-mode .benefit-card p{color:#94a3b8}
+        body.dark-mode .benefit-icon{background:rgba(39,255,237,0.08)}
+        body.dark-mode .jobs-section{background:#0a0e1a;border-top-color:#1e293b;border-bottom-color:#1e293b}
+        body.dark-mode .jobs-header h2{color:#f1f5f9}
+        body.dark-mode .jobs-count{color:#fff}
+        body.dark-mode .cat-title{color:#94a3b8}
+        body.dark-mode .job-card{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .job-card:hover{border-color:#27ffed;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        body.dark-mode .job-info h3{color:#f1f5f9}
+        body.dark-mode .job-info p{color:#94a3b8}
+        body.dark-mode .job-apply{border-color:#1e293b;color:#f1f5f9}
+        body.dark-mode .job-apply:hover{border-color:#27ffed;color:#27ffed;background:rgba(39,255,237,0.06)}
+        body.dark-mode .job-card .job-apply{color:#fff}
+        body.dark-mode .job-card .job-apply:hover{background:#0005e6;box-shadow:0 4px 15px rgba(0,3,201,0.4)}
+        body.dark-mode .job-featured{background:linear-gradient(135deg,rgba(0,3,201,0.12),rgba(139,92,246,0.08));border-color:#27ffed}
+        body.dark-mode .job-featured:hover{box-shadow:0 12px 40px rgba(39,255,237,0.1)}
+        body.dark-mode .featured-badge{color:#fff}
+        body.dark-mode .featured-info h3{color:#f1f5f9}
+        body.dark-mode .featured-info p{color:#94a3b8}
+        body.dark-mode .featured-info .job-desc{color:#94a3b8}
+        body.dark-mode .featured-tag{background:rgba(39,255,237,0.1);color:#27ffed}
+        body.dark-mode .featured-apply{color:#fff}
+        body.dark-mode .featured-apply:hover{background:#0005e6;box-shadow:0 6px 20px rgba(0,3,201,0.4)}
+        body.dark-mode .cta-box{background:linear-gradient(135deg,rgba(0,3,201,0.12),rgba(139,92,246,0.08));border-color:#1e293b}
+        body.dark-mode .cta-box h2{color:#f1f5f9}
+        body.dark-mode .cta-box p{color:#94a3b8}
+        body.dark-mode .cta-section a.hero-btn{color:#fff}
+        body.dark-mode .footer{border-top-color:#1e293b;background:#0a0e1a}
+        body.dark-mode .footer-brand .logo{color:#f1f5f9}
+        body.dark-mode .footer-brand p{color:#94a3b8}
+        body.dark-mode .footer-links h4{color:#f1f5f9}
+        body.dark-mode .footer-links ul li a{color:#94a3b8}
+        body.dark-mode .footer-links ul li a:hover{color:#27ffed}
+        body.dark-mode .footer-bottom{border-top-color:#1e293b;color:#64748b}
+        body.dark-mode a{color:#27ffed}
+        body.dark-mode a:hover{color:#3fffe5}
+
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": "QCV - وظائف شاغرة",
+        "description": "انضم لفريق QCV - وظائف شاغرة في الذكاء الاصطناعي، التصميم، والدعم الفني",
+        "datePosted": "2026-06-15",
+        "validThrough": "2026-12-31",
+        "employmentType": "FULL_TIME",
+        "hiringOrganization": {
+            "@type": "Organization",
+            "name": "QCV",
+            "sameAs": "https://qcv.vexonet.online",
+            "logo": "https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png"
+        },
+        "jobLocation": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "EG"
+            }
+        },
+        "baseSalary": {
+            "@type": "MonetaryAmount",
+            "currency": "EGP"
+        }
+    }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/pwa.js" defer></script>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <a href="index.html" class="logo" style="font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
+    <ul class="nav-links">
+        <li><a href="index.html" data-i18n="home">الرئيسية</a></li>
+        <li><a href="pay.html" data-i18n="pricing">التسعير</a></li>
+        <li><a href="careers.html" style="color:var(--accent)" data-i18n="careers">الوظائف</a></li>
+        <li><a href="help.html" data-i18n="help">المساعدة</a></li>
+        <li><a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a></li>
+        <li><button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button></li>
+        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div></li>
+    </ul>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="hero-badge" data-i18n="careers_badge"><i class="fas fa-hand-wave"></i> مرحباً بكم</div>
+    <h1 data-i18n-html="careers_title">انضم الى مستقبل التوظيف<br>القائم على <span class="hl">الذكاء الاصطناعي</span></h1>
+    <p data-i18n="careers_desc">نحن نبني الأدوات التي تغيّر طريقة توظيف الأشخاص. انضم إلينا وساهم في بناء مستقبل العمل</p>
+    <button class="hero-btn" data-i18n="careers_browse" onclick="document.getElementById('jobs').scrollIntoView({behavior:'smooth'})"><i class="fas fa-briefcase"></i> استعرض الوظائف</button>
+</section>
+
+<!-- ===== WHAT WE OFFER ===== -->
+<section class="section">
+    <div class="section-header">
+        <h2 data-i18n="careers_offer_title">ماذا نقدم</h2>
+        <p data-i18n="careers_offer_sub">فرص للنمو والتطور المهني في بيئة عمل مبتكرة</p>
+    </div>
+    <div class="offer-grid">
+        <div class="offer-card">
+            <div class="icon"><i class="fas fa-brain"></i></div>
+            <h3 data-i18n="careers_smart_hiring">التوظيف الذكي</h3>
+            <p data-i18n="careers_smart_hiring_desc">نستخدم أحدث تقنيات الذكاء الاصطناعي لتحسين عملية التوظيف وجعلها أكثر عدلاً وشفافية</p>
+        </div>
+        <div class="offer-card">
+            <div class="icon"><i class="fas fa-rocket"></i></div>
+            <h3 data-i18n="careers_comfortable_work">بيئة عمل مريحة</h3>
+            <p data-i18n="careers_comfortable_work_desc">نقدم بيئة عمل مرنة تدعم التوازن بين العمل والحياة الشخصية مع إمكانية العمل عن بُعد</p>
+        </div>
+        <div class="offer-card">
+            <div class="icon"><i class="fas fa-lightbulb"></i></div>
+            <h3 data-i18n="careers_innovation">ثقافة الابتكار</h3>
+            <p data-i18n="careers_innovation_desc">نشجع الأفكار الجديدة ونوفر الموارد اللازمة لتحويلها إلى منتجات حقيقية تفيد المجتمع</p>
+        </div>
+        <div class="offer-card">
+            <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3 data-i18n="careers_empowering">بيئة قادرة</h3>
+            <p data-i18n="careers_empowering_desc">نوفر برامج تدريب وتطوير مهني مستمرة لمساعدة فريقنا على النمو والتطور باستمرار</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== BENEFITS ===== -->
+<section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="section-header">
+        <h2 data-i18n="careers_benefits_title">المزايا والفوائد</h2>
+        <p data-i18n="careers_benefits_sub">نقدم مجموعة شاملة من المزايا لضمان راحة وسعادة فريقنا</p>
+    </div>
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <h3 data-i18n="careers_salary">رواتب تنافسية</h3>
+            <p data-i18n="careers_salary_desc">نقدم رواتب تنافسية تتجاوز متوسط السوق مع مكافآت أداء سنوية</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-calendar-alt"></i></div>
+            <h3 data-i18n="careers_vacation">إجازات ومرونة</h3>
+            <p data-i18n="careers_vacation_desc">إجازات سنوية مرنة وعمل عن بُعد (Remote) مع مرونة في أوقات العمل</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-heartbeat"></i></div>
+            <h3 data-i18n="careers_health">تأمين صحي</h3>
+            <p data-i18n="careers_health_desc">تغطية تأمينية شاملة لك ولعائلتك مع باقات صحية متكاملة</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== JOBS ===== -->
+<section class="section jobs-section" id="jobs">
+    <div class="jobs-header">
+        <h2 data-i18n="careers_open_positions">الوظائف الشاغرة</h2>
+        <div class="jobs-count" id="jobsCount">جاري التحميل...</div>
+    </div>
+    <div id="jobsContainer">
+        <div style="text-align:center;padding:40px;color:var(--muted)">جاري تحميل الوظائف...</div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+    <div class="cta-box">
+        <h2 data-i18n="careers_not_found_title">لم تجد الوظيفة المناسبة؟</h2>
+        <p data-i18n="careers_not_found_desc">أرسل لنا سيرتك الذاتية وسنتواصل معك في حال وجود فرصة مناسبة لمهاراتك وخبراتك</p>
+        <a href="mailto:support@qcv.com?subject=تقديم سيرة ذاتية" class="hero-btn" data-i18n="contact_us"><i class="fas fa-envelope"></i> تواصل معنا</a>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <div class="logo">Q<span>CV</span></div>
+            <p data-i18n="footer_brand">منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_product">المنتج</h4>
+            <ul>
+                <li><a href="index.html#features" data-i18n="features">المميزات</a></li>
+                <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+                <li><a href="index.html#how" data-i18n="how_works">كيف يعمل</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_company">الشركة</h4>
+            <ul>
+                <li><a href="about.html" data-i18n="about_us">من نحن</a></li>
+                <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+                <li><a href="terms.html">شروط الاستخدام</a></li>
+                <li><a href="privacy.html" data-i18n="privacy">سياسة الخصوصية</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_support">الدعم</h4>
+            <ul>
+                <li><a href="help.html" data-i18n="help_center">مركز المساعدة</a></li>
+                <li><a href="mailto:support@qcv.com" data-i18n="contact_us">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom" data-i18n="copyright">&copy; 2026 QCV - جميع الحقوق محفوظة</div>
+</footer>
+
+<!-- ===== Firebase ===== -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+    firebase.initializeApp({apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"});
+    var db = firebase.database();
+    var container = document.getElementById('jobsContainer');
+    var countEl = document.getElementById('jobsCount');
+
+    db.ref('jobs').on('value', function(snap) {
+        var jobs = snap.val();
+        if (!jobs) {
+            container.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--muted)"><div style="font-size:3rem;margin-bottom:16px"><i class="fas fa-briefcase"></i></div><p style="font-size:1.1rem">لا توجد وظائف شاغرة حالياً</p><p style="font-size:0.85rem;margin-top:8px">تابعنا للحصول على آخر الفرص الوظيفية</p></div>';
+            countEl.textContent = '0 وظائف';
+            return;
+        }
+
+        var entries = Object.values(jobs).filter(function(j) { return j.active !== false; });
+        countEl.textContent = entries.length + ' وظائف متاحة';
+
+        var cats = {};
+        entries.forEach(function(j) {
+            var cat = j.category || 'أخرى';
+            if (!cats[cat]) cats[cat] = [];
+            cats[cat].push(j);
+        });
+
+        var catEmojis = {
+            'تقنية و الذكاء الاصطناعي': '<i class="fas fa-robot"></i>',
+            'التصميم و المنتج': '<i class="fas fa-palette"></i>',
+            'الدعم و الخدمات': '<i class="fas fa-headset"></i>',
+            'التسويق': '<i class="fas fa-bullhorn"></i>',
+            'الإدارة': '<i class="fas fa-building"></i>'
+        };
+
+        var html = '';
+        var allJobs = [];
+        Object.keys(cats).forEach(function(cat) {
+            cats[cat].forEach(function(j) { allJobs.push(j); });
+        });
+
+        if (allJobs.length > 0) {
+            var fj = allJobs[0];
+            var fEmail = fj.email || 'support@qcv.com';
+            var fDesc = fj.description || '';
+            html += '<div class="job-featured">';
+            html += '<div class="featured-badge"><i class="fas fa-star"></i> وظيفة مميزة</div>';
+            html += '<div class="featured-header">';
+            html += '<div class="featured-info">';
+            html += '<h3>' + fj.title + '</h3>';
+            html += '<p>' + (fj.location || '') + (fj.category ? ' &bull; ' + fj.category : '') + '</p>';
+            if (fDesc) {
+                html += '<div class="job-desc">' + fDesc.replace(/\n/g, '<br>') + '</div>';
+            }
+            html += '<div class="featured-tags">';
+            html += '<span class="featured-tag"><i class="fas fa-briefcase"></i> ' + (fj.category || 'وظيفة') + '</span>';
+            if (fj.location) html += '<span class="featured-tag"><i class="fas fa-map-marker-alt"></i> ' + fj.location + '</span>';
+            html += '<span class="featured-tag"><i class="fas fa-clock"></i> متاح الآن</span>';
+            html += '</div>';
+            html += '</div>';
+            html += '<a href="mailto:' + fEmail + '?subject=التقديم على وظيفة ' + encodeURIComponent(fj.title) + '" class="featured-apply"><i class="fas fa-paper-plane"></i> تقدم الآن</a>';
+            html += '</div></div>';
+        }
+
+        var displayed = allJobs.slice(1);
+        var catsRemaining = {};
+        displayed.forEach(function(j) {
+            var cat = j.category || 'أخرى';
+            if (!catsRemaining[cat]) catsRemaining[cat] = [];
+            catsRemaining[cat].push(j);
+        });
+
+        Object.keys(catsRemaining).forEach(function(cat) {
+            var emoji = catEmojis[cat] || '<i class="fas fa-briefcase"></i>';
+            html += '<div class="job-category">';
+            html += '<div class="cat-title"><span class="emoji">' + emoji + '</span> ' + cat + '</div>';
+            catsRemaining[cat].forEach(function(j) {
+                var email = j.email || 'support@qcv.com';
+                var desc = j.description || '';
+                html += '<div class="job-card">';
+                html += '<div class="job-info"><h3>' + j.title + '</h3><p>' + (j.location || '') + '</p>';
+                if (desc) {
+                    html += '<p class="job-desc">' + desc.replace(/\n/g, '<br>') + '</p>';
+                }
+                html += '</div>';
+                html += '<a href="mailto:' + email + '?subject=التقديم على وظيفة ' + encodeURIComponent(j.title) + '" class="job-apply">تقديم</a>';
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+
+        container.innerHTML = html;
+    });
+</script>
+
+
+
+<script src="js/maintenance.js"></script>
+<script src="js/site-settings.js"></script>
+<script src="js/auto-reload.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/notify-sounds.js"></script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
+    <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
+    <div style="flex:1;text-align:right">
+        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
+        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+    </div>
+    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
+    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "resource": "https://qcv.vexonet.online",
+  "authorization_servers": [
+    {
+      "issuer": "https://qcv.vexonet.online",
+      "authorization_endpoint": "https://qcv.vexonet.online/login.html"
+    }
+  ],
+  "scopes_supported": ["openid", "profile", "email"],
+  "bearer_methods_supported": ["header", "query"],
+  "resource_documentation": "https://qcv.vexonet.online/help.html"
+}

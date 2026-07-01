@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز المساعدة - QCV | منشئ سير ذاتية ذكي</title>
+    <meta name="description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي.">
+    <meta name="keywords" content="QCV مساعدة, مركز المساعدة, دعم QCV, أسئلة شائعة">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/help.html">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly site description">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/help.html">
+    <meta property="og:title" content="مركز المساعدة - QCV | أسئلة شائعة ودعم فني">
+    <meta property="og:description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي. دعم فني وأسئلة شائعة.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="مركز المساعدة - QCV">
+    <meta name="twitter:description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي.">
+    <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "كيف أسجل حساب جديد في QCV؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ممكن تسجل حساب بالبريد الإلكتروني أو عن طريق حساب Google. اضغط على ابدأ مجاناً وأدخل بياناتك."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "هل QCV مجاني؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "نعم! عندنا باقة مجانية توفر بناء سيرة ذاتية واحدة مع قوالب ATS أساسية وتنزيل PDF."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "كيف أبني سيرة ذاتية احترافية؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "سجل دخولك وابدأ بإدخال معلوماتك الشخصية، الملخص الوظيفي، الخبرات، التعليم، والمهارات. كل التغييرات بتظهر مباشرة في المعاينة."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "إيه طرق الدفع المقبولة؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "بنقبل الدفع عن طريق فودافون كاش وفوري واستانبي. بعد الدفع طلبك هيتراجع من الإدارة."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "هل بياناتي آمنة في QCV؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "نعم! جميع بياناتك محفوظة بشكل آمن على سحابة Firebase مع تشفير متقدم."
+                }
+            }
+        ]
+    }
+    </script>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;
+            --accent:#0003c9;--accent2:#27ffed;
+            --green:#059669;--red:#ef4444;--yellow:#f59e0b;--purple:#8b5cf6;
+            --text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;line-height:1.6}
+
+        /* ===== NAVBAR ===== */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center}
+        .nav-logo{font-size:1.8rem;font-weight:900;color:var(--text);text-decoration:none}
+        .nav-logo span{color:var(--accent)}
+        .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem;transition:color 0.2s}
+        .nav-links a:hover{color:var(--text)}
+        .nav-links a.active{color:var(--accent)}
+        .nav-cta{background:var(--accent);color:#fff !important;padding:10px 22px;border-radius:50px;font-weight:700 !important;transition:all 0.2s !important}
+        .nav-cta:hover{background:#0005e6;transform:translateY(-2px)}
+
+        /* ===== HERO ===== */
+        .hero{padding:140px 20px 80px;text-align:center;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,3,201,0.05),transparent 70%);border-radius:50%;pointer-events:none}
+        .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:16px;position:relative}
+        .hero p{color:var(--muted);font-size:1.05rem;margin-bottom:35px;max-width:550px;margin-left:auto;margin-right:auto;position:relative}
+
+        /* ===== SEARCH ===== */
+        .search-box{max-width:550px;margin:0 auto;position:relative}
+        .search-box input{width:100%;padding:18px 55px 18px 24px;background:var(--bg2);border:2px solid var(--border);color:var(--text);border-radius:16px;font-family:'Cairo',sans-serif;font-size:1rem;outline:none;transition:all 0.3s}
+        .search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(0,3,201,0.08)}
+        .search-box input::placeholder{color:var(--muted)}
+        .search-icon{position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1.2rem;pointer-events:none}
+
+        /* ===== CATEGORIES ===== */
+        .section{padding:80px 60px}
+        .section-header{text-align:center;margin-bottom:50px}
+        .section-header h2{font-size:2rem;font-weight:900;margin-bottom:10px}
+        .section-header p{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto}
+
+        .categories-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;max-width:1100px;margin:0 auto}
+        .cat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 20px;text-align:center;cursor:pointer;transition:all 0.3s;text-decoration:none;color:var(--text)}
+        .cat-card:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,0.08)}
+        .cat-card.active{border-color:var(--accent);background:rgba(0,3,201,0.04);box-shadow:0 0 20px rgba(0,3,201,0.08)}
+        .cat-icon{width:60px;height:60px;background:rgba(0,3,201,0.06);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px}
+        .cat-card h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+        .cat-card p{color:var(--muted);font-size:0.8rem}
+        .cat-count{display:inline-block;background:rgba(0,3,201,0.06);color:var(--accent);font-size:0.7rem;padding:3px 10px;border-radius:20px;font-weight:700;margin-top:12px}
+
+        /* ===== FAQ ===== */
+        .faq-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+        .faq-list{max-width:800px;margin:0 auto}
+        .faq-item{border-bottom:1px solid var(--border);background:var(--card);padding:0 20px}
+        .faq-item:last-child{border-bottom:none}
+        .faq-q{padding:22px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:1rem;transition:color 0.2s}
+        .faq-q:hover{color:var(--accent)}
+        .faq-q .arrow{transition:transform 0.3s;font-size:0.8rem;color:var(--muted)}
+        .faq-item.active .faq-q .arrow{transform:rotate(180deg)}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease}
+        .faq-item.active .faq-a{max-height:300px}
+        .faq-a p{padding:0 0 20px;color:var(--muted);font-size:0.9rem;line-height:1.8}
+
+        /* ===== CONTACT ===== */
+        .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
+        .contact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;text-align:center;transition:all 0.3s;text-decoration:none;color:var(--text)}
+        .contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+        .contact-icon{width:55px;height:55px;background:rgba(0,3,201,0.06);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 16px}
+        .contact-card h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+        .contact-card p{color:var(--muted);font-size:0.82rem;margin-bottom:12px}
+        .contact-link{color:var(--accent);font-weight:700;font-size:0.88rem}
+
+        /* ===== QUICK LINKS ===== */
+        .quick-links{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:700px;margin:0 auto}
+        .quick-link{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 22px;text-decoration:none;color:var(--text);transition:all 0.25s}
+        .quick-link:hover{border-color:var(--accent);background:rgba(0,3,201,0.02)}
+        .quick-link .ql-icon{width:42px;height:42px;background:rgba(0,3,201,0.06);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+        .quick-link .ql-text h4{font-size:0.9rem;font-weight:700;margin-bottom:2px}
+        .quick-link .ql-text p{color:var(--muted);font-size:0.75rem}
+        .quick-link .ql-arrow{margin-right:auto;color:var(--muted);font-size:0.9rem}
+
+        /* ===== CTA ===== */
+        .cta-section{text-align:center;padding:80px 20px}
+        .cta-box{max-width:650px;margin:0 auto;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid var(--border);border-radius:24px;padding:50px 40px}
+        .cta-box h2{font-size:1.8rem;font-weight:900;margin-bottom:12px}
+        .cta-box p{color:var(--muted);margin-bottom:25px;font-size:0.95rem}
+        .btn{padding:14px 32px;border-radius:50px;font-weight:700;font-size:0.95rem;cursor:pointer;font-family:'Cairo',sans-serif;border:none;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+        .btn-primary{background:var(--accent);color:#fff}
+        .btn-primary:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,3,201,0.2)}
+        .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+
+        /* ===== FOOTER ===== */
+        .footer{border-top:1px solid var(--border);padding:50px 60px 30px}
+        .footer-content{display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:40px}
+        .footer-brand .logo{font-size:1.6rem;font-weight:900;margin-bottom:12px}
+        .footer-brand .logo span{color:var(--accent)}
+        .footer-brand p{color:var(--muted);font-size:0.85rem;max-width:280px;line-height:1.6}
+        .footer-links h4{font-size:0.95rem;font-weight:700;margin-bottom:15px;color:var(--text)}
+        .footer-links ul{list-style:none}
+        .footer-links ul li{margin-bottom:10px}
+        .footer-links ul li a{color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+        .footer-links ul li a:hover{color:var(--accent)}
+        .footer-bottom{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:0.8rem}
+
+        /* ===== RESPONSIVE ===== */
+        .nav-mobile-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;font-size:1.3rem;color:var(--text);cursor:pointer;border-radius:10px;flex-shrink:0}
+        @media(max-width:900px){
+            .navbar{padding:0 20px}
+            .nav-links{display:none}
+            .nav-links.show{display:flex !important;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:16px 20px;gap:12px;z-index:999;box-shadow:0 8px 25px rgba(0,0,0,0.1)}
+            .nav-links.show li{width:100%}
+            .nav-links.show li a,.nav-links.show li button{width:100%;text-align:center;padding:12px !important}
+            .nav-mobile-toggle{display:flex !important}
+            .theme-toggle{width:44px!important;height:44px!important}
+            .lang-switch button{padding:8px 12px!important}
+            .categories-grid{grid-template-columns:repeat(2,1fr)}
+            .contact-grid{grid-template-columns:1fr}
+            .section{padding:50px 20px}
+            .section-header h2{font-size:1.6rem}
+        }
+        @media(max-width:600px){
+            .hero h1{font-size:1.6rem}
+            .categories-grid{grid-template-columns:1fr 1fr}
+            .quick-links{grid-template-columns:1fr}
+            .footer{padding:30px 20px 15px}
+            .footer-content{flex-direction:column}
+            .cta-box{padding:30px 20px}
+            .cta-box h2{font-size:1.3rem}
+        }
+        @media(max-width:400px){
+            .categories-grid{grid-template-columns:1fr}
+        }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode .search-bar{background:var(--card);border-color:#1e293b;color:var(--text)}
+        body.dark-mode .search-bar input{background:var(--bg);border-color:#1e293b;color:var(--text)}
+        body.dark-mode .search-bar input::placeholder{color:#475569}
+        body.dark-mode .categories-grid .cat-card{background:var(--card);border-color:#1e293b}
+        body.dark-mode .categories-grid .cat-card:hover{border-color:#27ffed}
+        body.dark-mode .cat-icon{background:rgba(39,255,237,0.08);color:#27ffed}
+        body.dark-mode .cat-card h3{color:var(--text)}
+        body.dark-mode .cat-card p{color:var(--muted)}
+        body.dark-mode .faq-list .faq-item{background:var(--card);border-color:#1e293b}
+        body.dark-mode .faq-item:hover{border-color:rgba(39,255,237,0.2)}
+        body.dark-mode .faq-q{color:var(--text)}
+        body.dark-mode .faq-a{color:var(--muted)}
+        body.dark-mode .cta-box{background:linear-gradient(135deg,var(--accent),#0005a0)}
+        body.dark-mode .cta-box h2{color:#fff}
+        body.dark-mode .cta-box p{color:rgba(255,255,255,0.8)}
+        body.dark-mode .footer{background:var(--bg);border-color:#1e293b}
+        body.dark-mode .footer a{color:#27ffed}
+
+    </style>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/pwa.js" defer></script>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <a href="index.html" class="logo" style="font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
+    <ul class="nav-links">
+        <li><a href="index.html" data-i18n="home">الرئيسية</a></li>
+        <li><a href="pay.html" data-i18n="pricing">التسعير</a></li>
+        <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+        <li><a href="help.html" class="active" data-i18n="help">المساعدة</a></li>
+        <li><a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a></li>
+        <li><button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button></li>
+        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div></li>
+    </ul>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <h1 data-i18n="help_title">كيف نقدر نساعدك؟</h1>
+    <p data-i18n="help_sub">ابحث عن إجابة سؤالك أو تصفح الأقسام</p>
+    <div class="search-box">
+        <span class="search-icon"><i class="fas fa-search"></i></span>
+        <input type="text" id="searchInput" data-i18n-placeholder="help_search" placeholder="ابحث عن سؤالك..." aria-label="بحث" oninput="filterFAQ()">
+    </div>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="section">
+    <div class="section-header">
+        <h2 data-i18n="help_browse">تصفح حسب القسم</h2>
+        <p>اختر القسم اللي يهمك</p>
+    </div>
+    <div class="categories-grid">
+        <div class="cat-card active" data-filter="all" onclick="filterByCategory(this,'all')">
+            <div class="cat-icon"><i class="fas fa-globe"></i></div>
+            <h3 data-i18n="help_all">الكل</h3>
+            <p>كل الأسئلة والإجابات</p>
+            <div class="cat-count">16 سؤال</div>
+        </div>
+        <div class="cat-card" data-filter="getting-started" onclick="filterByCategory(this,'getting-started')">
+            <div class="cat-icon"><i class="fas fa-rocket"></i></div>
+            <h3 data-i18n="help_getting_started">البدء والإعداد</h3>
+            <p>كيف تبدأ وتسجل حسابك</p>
+            <div class="cat-count">5 أسئلة</div>
+        </div>
+        <div class="cat-card" data-filter="account" onclick="filterByCategory(this,'account')">
+            <div class="cat-icon"><i class="fas fa-user-circle"></i></div>
+            <h3 data-i18n="help_account">الحساب</h3>
+            <p>إدارة حسابك وبياناتك</p>
+            <div class="cat-count">4 أسئلة</div>
+        </div>
+        <div class="cat-card" data-filter="billing" onclick="filterByCategory(this,'billing')">
+            <div class="cat-icon"><i class="fas fa-credit-card"></i></div>
+            <h3 data-i18n="help_billing">الفواتير والاشتراكات</h3>
+            <p>الدفع والباقات</p>
+            <div class="cat-count">4 أسئلة</div>
+        </div>
+        <div class="cat-card" data-filter="technical" onclick="filterByCategory(this,'technical')">
+            <div class="cat-icon"><i class="fas fa-wrench"></i></div>
+            <h3 data-i18n="help_technical">مشاكل تقنية</h3>
+            <p>حل المشاكل والأخطاء</p>
+            <div class="cat-count">3 أسئلة</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section faq-section" id="faq">
+    <div class="section-header">
+        <h2 data-i18n="help_faq_title">الأسئلة الشائعة</h2>
+        <p data-i18n="help_faq_sub">أكثر الأسئلة اللي بيسألها المستخدمين</p>
+    </div>
+    <div class="faq-list" id="faqList">
+
+        <!-- Getting Started -->
+        <div class="faq-item" data-cat="getting-started">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                كيف أسجل حساب جديد في QCV؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>ممكن تسجل حساب بالبريد الإلكتروني أو عن طريق حساب Google. اضغط على "ابدأ مجاناً" في الصفحة الرئيسية، اختار الطريقة المناسبة، وأدخل بياناتك. العملية بتاخد أقل من دقيقة.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="getting-started">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                هل QCV مجاني؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>نعم! عندنا باقة مجانية توفر لك بناء سيرة ذاتية واحدة مع قوالب ATS أساسية وتنزيل PDF. ممكن ترقية للباقة الاحترافية للحصول على مزايا إضافية.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="getting-started">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                كيف أبدأ أبني سيرتي الذاتية؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>بعد تسجيل الدخول، هتوصل لصفحة المحرر. ابدأ بإدخال معلوماتك الشخصية (الاسم، المسمى الوظيفي، بيانات التواصل)، بعدها أضف الملخص الوظيفي، الخبرات، التعليم، والمهارات. كل التغييرات بتظهر مباشرة في المعاينة.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="getting-started">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                هل في تطبيق موبايل لـ QCV؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>حالياً QCV متاح كتطبيق ويب يشتغل على المتصفح. ممكن تستخدمه على الموبايل والتابلت والكمبيوتر. بناء تطبيق موبايل natives في الخطط المستقبلية.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="getting-started">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                هل بياناتي آمنة في QCV؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>نعم! جميع بياناتك محفوظة بشكل آمن على سحابة Firebase مع تشفير متقدم. لا نشارك بياناتك مع أي طرف ثالث. ممكن تحذف حسابك في أي وقت.</p>
+            </div>
+        </div>
+
+        <!-- Account -->
+        <div class="faq-item" data-cat="account">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                كيف أغير كلمة المرور؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>من صفحة تسجيل الدخول، اضغط على "نسيت كلمة المرور"، أدخل بريدك الإلكتروني وهتستقبل رسالة بإعادة تعيين كلمة المرور. لو عندك حساب Google، كلمة المرور بتتحكم فيها من Google.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="account">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                كيف أحذف حسابي؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>من القائمة المنسدلة للملف الشخصي، اختار "إعدادات الحساب"، بعدها اضغط "حذف الحساب". تنبيه: هذا الإجراء لا يمكن التراجع عنه وبياناتك ستُحذف نهائياً.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="account">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                كيف أغير لغة التطبيق؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>من القائمة المنسدلة للملف الشخصي، اختار "اللغة". عندنا دعم للإنجليزية والعربية والفرنسية والألمانية والتركية.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="account">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                هل أقدر أستخدم QCV من أكثر من جهاز؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>نعم! بياناتك محفوظة سحابياً فممكن تستخدم QCV من أي جهاز عن طريق تسجيل الدخول بحسابك. كل التغييرات بتتحفظ تلقائياً.</p>
+            </div>
+        </div>
+
+        <!-- Billing -->
+            <div class="faq-item" data-cat="billing">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                كيف أرقّي باقتي؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>من القائمة المنسدلة للملف الشخصي، اختار "الفواتير والاشتراكات"، بعدها اختار الباقة اللي عايزها واتبع خطوات الدفع.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="billing">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                إيه طرق الدفع المقبولة؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>بنقبل الدفع عن طريق فودافون كاش وفوري واستانبي. بعد الدفع، طلبك هيتراجع من الإدارة وتفعيل باقتك هيحصل فور الموافقة.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="billing">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                هل أقدر ألغي اشتراكي؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>نعم، يمكنك إلغاء اشتراكك في أي وقت من إعدادات الحساب. مش هتتحصلك أي رسوم إضافية. بياناتك ستبقى محفوظة وتقدر تستخدم الباقة المجانية.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="billing">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                في فرق بين الباقة الاحترافية وغير المحدودة؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>الباقة الاحترافية توفر 5 سير ذاتية وقوالب متقدمة. الباقة غير المحدودة توفر سير ذاتية غير محدودة + دعم فني 24/7 + تحليل ATS متقدم.</p>
+            </div>
+        </div>
+
+        <!-- Technical -->
+        <div class="faq-item" data-cat="technical">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                الصفحة مش بتشتغل معايا، أعمل إيه؟
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>جرّب الخطوات دي: 1) حدث المتصفح لآخر إصدار، 2) امسح cache المتصفح، 3) جرّب متصفح تاني (Chrome, Firefox, Edge)، 4) تأكد من اتصالك بالإنترنت. لو المشكلة مستمرة، تواصل معنا.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="technical">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                مش قادر أعمل export للـ PDF
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>تأكد إن السيرة الذاتية فيها محتوى كافي، جرّب تقلل حجم الخط أو الهوامش من أزرار التحكم في الأعلى. لو المشكلة مستمرة، جرّب تستخدم متصفح Chrome.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="technical">
+            <div class="faq-q" onclick="toggleFaq(this)">
+                التغييرات مش بتتحفظ
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="faq-a">
+                <p>تأكد من إنك مسجل دخول بحسابك. لو بتستخدم الوضع غير المتصل (offline)، التغييرات هتتحفظ محلياً وبتمتد لما تتصل بالإنترنت. كمان تأكد من إن متصفحك بيسمح بـ cookies.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== QUICK LINKS ===== -->
+<section class="section">
+    <div class="section-header">
+        <h2 data-i18n="help_quick_links">روابط سريعة</h2>
+        <p data-i18n="help_quick_links_sub">وصول سريع لأهم الصفحات</p>
+    </div>
+    <div class="quick-links">
+        <a href="index.html#pricing" class="quick-link">
+            <div class="ql-icon"><i class="fas fa-credit-card"></i></div>
+            <div class="ql-text">
+                <h4 data-i18n="help_pricing">الباقات والتسعير</h4>
+                <p data-i18n="help_pricing_desc">شوف الباقات المتاحة وأسعارها</p>
+            </div>
+            <span class="ql-arrow">&#8592;</span>
+        </a>
+        <a href="login.html" class="quick-link">
+            <div class="ql-icon"><i class="fas fa-user"></i></div>
+            <div class="ql-text">
+                <h4 data-i18n="help_login">تسجيل الدخول</h4>
+                <p data-i18n="help_login_desc">ادخل حسابك وابدأ</p>
+            </div>
+            <span class="ql-arrow">&#8592;</span>
+        </a>
+        <a href="index.html#features" class="quick-link">
+            <div class="ql-icon"><i class="fas fa-lightbulb"></i></div>
+            <div class="ql-text">
+                <h4 data-i18n="help_features">المميزات</h4>
+                <p data-i18n="help_features_desc">اكتشف كل مزايا QCV</p>
+            </div>
+            <span class="ql-arrow">&#8592;</span>
+        </a>
+        <a href="index.html#how" class="quick-link">
+            <div class="ql-icon"><i class="fas fa-rocket"></i></div>
+            <div class="ql-text">
+                <h4 data-i18n="help_how">كيف يعمل</h4>
+                <p data-i18n="help_how_desc">شرح خطوة بخطوة</p>
+            </div>
+            <span class="ql-arrow">&#8592;</span>
+        </a>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="section-header">
+        <h2 data-i18n="help_contact_title">تواصل معنا</h2>
+        <p data-i18n="help_contact_sub">لسه ملاقيتش الإجابة؟ تواصل مع فريق الدعم</p>
+    </div>
+    <div class="contact-grid">
+        <a href="mailto:support@qcv.com" class="contact-card">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <h3 data-i18n="help_email">البريد الإلكتروني</h3>
+            <p data-i18n="help_email_desc">أرسل لنا إيميل وهنرد عليك خلال 24 ساعة</p>
+            <div class="contact-link">support@qcv.com</div>
+        </a>
+        <a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <h3 data-i18n="help_whatsapp">الواتساب</h3>
+            <p data-i18n="help_whatsapp_desc">تواصل معنا مباشرة عبر الواتساب</p>
+            <div class="contact-link">01028707543</div>
+        </a>
+        <a href="https://www.facebook.com/qcv" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <div class="contact-icon"><i class="fab fa-facebook"></i></div>
+            <h3 data-i18n="help_facebook">فيسبوك</h3>
+            <p data-i18n="help_facebook_desc">تابعنا على فيسبوك للأخبار والتحديثات</p>
+            <div class="contact-link">@QCV</div>
+        </a>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+    <div class="cta-box">
+        <h2 data-i18n="cta_title">جاهز تبني سيرتك الذاتية؟</h2>
+        <p data-i18n="cta_sub">ابدأ الآن مجاناً واحصل على سيرة ذاتية احترافية في دقائق</p>
+        <a href="login.html" class="btn btn-primary" data-i18n="start_free">ابدأ مجاناً الآن &#10132;</a>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <div class="logo">Q<span>CV</span></div>
+            <p data-i18n="footer_brand">منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_product">المنتج</h4>
+            <ul>
+                <li><a href="index.html#features" data-i18n="features">المميزات</a></li>
+                <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+                <li><a href="index.html#how" data-i18n="how_works">كيف يعمل</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_company">الشركة</h4>
+            <ul>
+                <li><a href="about.html" data-i18n="about_us">من نحن</a></li>
+                <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+                <li><a href="terms.html">شروط الاستخدام</a></li>
+                <li><a href="privacy.html" data-i18n="privacy">سياسة الخصوصية</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_support">الدعم</h4>
+            <ul>
+                <li><a href="help.html" data-i18n="help_center">مركز المساعدة</a></li>
+                <li><a href="mailto:support@qcv.com" data-i18n="contact_us">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span data-i18n="copyright">&copy; 2026 QCV - جميع الحقوق محفوظة | آخر تحديث: 15 يونيو 2026</span>
+    </div>
+</footer>
+
+<script>
+function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+}
+
+function filterByCategory(el, cat) {
+    document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.faq-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+    document.getElementById('faq').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if(window.QCVNotify) QCVNotify.click();
+}
+
+function filterFAQ() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.faq-item').forEach(item => {
+        const question = item.querySelector('.faq-q').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-a p').textContent.toLowerCase();
+        if (question.includes(query) || answer.includes(query)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>
+
+<script src="js/maintenance.js"></script>
+<script src="js/site-settings.js"></script>
+<script src="js/auto-reload.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/notify-sounds.js"></script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
+    <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
+    <div style="flex:1;text-align:right">
+        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
+        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+    </div>
+    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
+    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+</body>
+</html>

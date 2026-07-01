@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "name": "QCV WebMCP",
+  "description": "WebMCP manifest for QCV - AI-Powered CV Builder",
+  "version": "1.0.0",
+  "url": "https://qcv.vexonet.online",
+  "endpoints": [
+    {
+      "path": "/editor.html",
+      "method": "GET",
+      "description": "CV Editor - Create and edit professional CVs",
+      "contentType": "text/html"
+    },
+    {
+      "path": "/templates.html",
+      "method": "GET",
+      "description": "Template Gallery - Browse CV templates",
+      "contentType": "text/html"
+    },
+    {
+      "path": "/pay.html",
+      "method": "GET",
+      "description": "Pricing - View subscription plans",
+      "contentType": "text/html"
+    },
+    {
+      "path": "/help.html",
+      "method": "GET",
+      "description": "Help Center - Get support and documentation",
+      "contentType": "text/html"
+    }
+  ],
+  "capabilities": {
+    "read": true,
+    "write": false,
+    "subscribe": false
+  }
+}

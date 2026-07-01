@@ -1,0 +1,13 @@
+{
+  "issuer": "https://qcv.vexonet.online",
+  "authorization_endpoint": "https://qcv.vexonet.online/login.html",
+  "token_endpoint": "https://securetoken.googleapis.com/v1/projects/qwcv-1cfad",
+  "response_types_supported": ["token"],
+  "grant_types_supported": ["implicit"],
+  "subject_types_supported": ["public"],
+  "id_token_signing_alg_values_supported": ["RS256"],
+  "scopes_supported": ["openid", "profile", "email"],
+  "claims_supported": ["sub", "email", "name", "picture"],
+  "service_documentation": "https://qcv.vexonet.online/help.html",
+  "ui_locales_supported": ["ar", "en"]
+}

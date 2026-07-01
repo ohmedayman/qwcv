@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "name": "QCV Agent Skills",
+  "description": "Skills for the QCV CV Builder agent",
+  "version": "1.0.0",
+  "url": "https://qcv.vexonet.online",
+  "skills": [
+    {
+      "id": "create-cv",
+      "name": "Create CV",
+      "description": "Create a new professional CV with user data and preferred template",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Full name" },
+          "title": { "type": "string", "description": "Job title" },
+          "email": { "type": "string", "description": "Email address" },
+          "phone": { "type": "string", "description": "Phone number" },
+          "template": { "type": "string", "enum": ["classic", "modern", "minimal", "creative", "professional", "executive", "technical", "academic", "elegant", "bold", "clean", "detailed", "two-column", "sidebar", "timeline"], "description": "Template to use" }
+        },
+        "required": ["name", "title"]
+      }
+    },
+    {
+      "id": "score-cv",
+      "name": "Score CV",
+      "description": "Analyze a CV and provide ATS compatibility score with improvement suggestions",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cvData": { "type": "object", "description": "CV data to analyze" }
+        },
+        "required": ["cvData"]
+      }
+    },
+    {
+      "id": "match-job",
+      "name": "Match Job",
+      "description": "Match CV content against a job description and provide compatibility analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cvData": { "type": "object", "description": "CV data" },
+          "jobDescription": { "type": "string", "description": "Job description text" }
+        },
+        "required": ["cvData", "jobDescription"]
+      }
+    },
+    {
+      "id": "export-pdf",
+      "name": "Export PDF",
+      "description": "Export CV as a professional PDF document",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cvData": { "type": "object", "description": "CV data to export" },
+          "template": { "type": "string", "description": "Template to use" }
+        },
+        "required": ["cvData"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "rules": {
+    "users": {
+      ".read": true,
+      ".write": true,
+      "$uid": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "staff": {
+      ".read": true,
+      ".write": true
+    },
+    "subscriptions": {
+      ".read": true,
+      ".write": true
+    },
+    "jobs": {
+      ".read": true,
+      ".write": true
+    },
+    "domains": {
+      ".read": true,
+      ".write": true
+    },
+    "settings": {
+      ".read": true,
+      ".write": true
+    },
+    "siteSettings": {
+      ".read": true,
+      ".write": true
+    },
+    "portfolioLinks": {
+      ".read": true,
+      ".write": true
+    },
+    "messages": {
+      ".read": true,
+      ".write": true
+    },
+    "referrals": {
+      ".read": true,
+      ".write": true
+    },
+    "affiliateCampaigns": {
+      ".read": true,
+      ".write": true
+    },
+    "affiliateCommissions": {
+      ".read": true,
+      ".write": true
+    },
+    "analytics": {
+      ".read": true,
+      ".write": true
+    },
+    "approvedDomains": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

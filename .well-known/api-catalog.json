@@ -1,0 +1,86 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "QCV API",
+    "description": "QCV - AI-Powered CV Builder API. Provides CV management, scoring, template rendering, and job matching capabilities.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "QCV Support",
+      "email": "support@qcv.vexonet.online",
+      "url": "https://qcv.vexonet.online/help.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://qcv.vexonet.online",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/editor.html": {
+      "get": {
+        "summary": "CV Editor",
+        "description": "Main CV editor interface for creating and editing CVs",
+        "operationId": "getEditor",
+        "tags": ["CV"]
+      }
+    },
+    "/templates.html": {
+      "get": {
+        "summary": "Template Gallery",
+        "description": "Browse and preview 15+ professional CV templates",
+        "operationId": "getTemplates",
+        "tags": ["Templates"]
+      }
+    },
+    "/pay.html": {
+      "get": {
+        "summary": "Pricing Plans",
+        "description": "View pricing plans and subscription options",
+        "operationId": "getPricing",
+        "tags": ["Plans"]
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "CVData": {
+        "type": "object",
+        "description": "Complete CV data structure",
+        "properties": {
+          "name": { "type": "string", "description": "Full name" },
+          "title": { "type": "string", "description": "Job title" },
+          "email": { "type": "string", "format": "email", "description": "Email address" },
+          "phone": { "type": "string", "description": "Phone number" },
+          "location": { "type": "string", "description": "Location" },
+          "linkedin": { "type": "string", "description": "LinkedIn profile URL" },
+          "summary": { "type": "string", "description": "Professional summary" },
+          "experience": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": { "type": "string" },
+                "company": { "type": "string" },
+                "duration": { "type": "string" },
+                "description": { "type": "string" }
+              }
+            }
+          },
+          "education": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "degree": { "type": "string" },
+                "school": { "type": "string" },
+                "duration": { "type": "string" }
+              }
+            }
+          },
+          "skills": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

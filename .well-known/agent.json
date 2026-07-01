@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0",
+  "name": "QCV CV Builder Agent",
+  "description": "An AI agent that helps users build professional CVs, score them for ATS compatibility, match them to job descriptions, and generate PDF exports.",
+  "url": "https://qcv.vexonet.online",
+  "version": "1.0.0",
+  "documentationUrl": "https://qcv.vexonet.online/help.html",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "authentication": {
+    "schemes": ["firebase-auth"],
+    "credentials": "firebase-id-token"
+  },
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["text"],
+  "skills": [
+    {
+      "id": "cv-builder",
+      "name": "CV Builder",
+      "description": "Build professional CVs from user data with 15+ ATS-friendly templates",
+      "tags": ["cv", "resume", "builder", "templates"]
+    },
+    {
+      "id": "cv-scorer",
+      "name": "CV Scorer",
+      "description": "Analyze and score CVs for ATS compatibility, completeness, and quality",
+      "tags": ["cv", "scoring", "ats", "analysis"]
+    },
+    {
+      "id": "job-matcher",
+      "name": "Job Matcher",
+      "description": "Match CV content against job descriptions and suggest improvements",
+      "tags": ["job", "matching", "analysis"]
+    }
+  ],
+  "provider": {
+    "organization": "QCV",
+    "url": "https://qcv.vexonet.online"
+  }
+}

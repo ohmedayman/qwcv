@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "name": "QCV - AI CV Builder",
+  "description": "AI-powered CV builder with 15+ professional templates, scoring, and job matching",
+  "version": "1.0.0",
+  "url": "https://qcv.vexonet.online",
+  "capabilities": [
+    {
+      "name": "cv-scoring",
+      "description": "Score and analyze CVs for ATS compatibility and quality",
+      "endpoint": "https://qcv.vexonet.online/editor.html"
+    },
+    {
+      "name": "cv-generation",
+      "description": "Generate professional CVs from user data",
+      "endpoint": "https://qcv.vexonet.online/editor.html"
+    },
+    {
+      "name": "job-matching",
+      "description": "Match CV content against job descriptions",
+      "endpoint": "https://qcv.vexonet.online/editor.html"
+    },
+    {
+      "name": "template-rendering",
+      "description": "Render CV data into 15+ professional templates",
+      "endpoint": "https://qcv.vexonet.online/editor.html"
+    }
+  ],
+  "contact": {
+    "name": "QCV Support",
+    "url": "https://qcv.vexonet.online/help.html",
+    "email": "support@qcv.vexonet.online"
+  }
+}
