@@ -37,33 +37,64 @@
     }
     </script>
     <style>
-        .blog-hero {
-            background: linear-gradient(135deg, #0003c9 0%, #0005a0 50%, #000280 100%);
-            color: #fff;
-            padding: 80px 24px 60px;
+        :root { --blue: #0003c9; --blue-light: #0005e0; --green: #059669; --orange: #ea580c; --purple: #7c3aed; --red: #dc2626; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg, #f8fafc); color: var(--text, #1a1a2e); }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0003c9 0%, #0005a0 40%, #000280 100%);
+            padding: 60px 20px 50px;
             text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
         }
-        .blog-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; }
-        .blog-hero p { font-size: 1rem; opacity: 0.85; max-width: 600px; margin: 0 auto; }
-        .blog-search {
-            max-width: 500px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            backdrop-filter: blur(4px);
+        }
+        .hero h1 { font-size: 2.4rem; font-weight: 900; margin-bottom: 10px; position: relative; }
+        .hero p { font-size: 1rem; opacity: 0.8; max-width: 500px; margin: 0 auto; position: relative; }
+
+        /* Search */
+        .search-box {
+            max-width: 480px;
             margin: 24px auto 0;
             position: relative;
         }
-        .blog-search input {
+        .search-box input {
             width: 100%;
-            padding: 14px 50px 14px 16px;
+            padding: 14px 50px 14px 20px;
             border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
+            border-radius: 14px;
             background: rgba(255,255,255,0.1);
             color: #fff;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-family: 'Cairo', sans-serif;
             outline: none;
             backdrop-filter: blur(4px);
+            transition: border-color 0.2s;
         }
-        .blog-search input::placeholder { color: rgba(255,255,255,0.5); }
-        .blog-search button {
+        .search-box input::placeholder { color: rgba(255,255,255,0.5); }
+        .search-box input:focus { border-color: rgba(255,255,255,0.5); }
+        .search-box button {
             position: absolute;
             left: 8px;
             top: 50%;
@@ -75,111 +106,113 @@
             border: none;
             color: #fff;
             cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s;
         }
-        .blog-categories {
+        .search-box button:hover { background: rgba(255,255,255,0.25); }
+
+        /* Categories */
+        .cats {
             display: flex;
             gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 20px;
+            position: relative;
         }
-        .blog-categories button {
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.25);
+        .cats button {
+            padding: 7px 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
             background: transparent;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.75);
             font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             transition: all 0.2s;
         }
-        .blog-categories button:hover, .blog-categories button.active {
+        .cats button:hover, .cats button.active {
             background: #fff;
-            color: #0003c9;
+            color: var(--blue);
             border-color: #fff;
         }
-        .blog-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        .blog-grid {
+
+        /* ===== CONTAINER ===== */
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* ===== FEATURED ===== */
+        .featured {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-        .blog-card {
+            grid-template-columns: 1fr 1fr;
             background: var(--card, #fff);
-            border: 1px solid var(--border, #e5e7eb);
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
             text-decoration: none;
             color: inherit;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid var(--border, #e5e7eb);
+            transition: all 0.3s;
         }
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-        }
-        .blog-card-img {
-            height: 180px;
-            background: linear-gradient(135deg, #0003c9 0%, #0005a0 100%);
+        .featured:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .featured-img {
+            background: linear-gradient(135deg, var(--blue) 0%, #0005a0 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(255,255,255,0.15);
-            font-size: 3rem;
+            color: rgba(255,255,255,0.12);
+            font-size: 4rem;
+            min-height: 280px;
             position: relative;
         }
-        .blog-card-tag {
+        .featured-badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 16px;
+            right: 16px;
             background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(4px);
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 0.7rem;
-            color: #fff;
-            font-weight: 600;
-        }
-        .blog-card-body {
-            padding: 18px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .blog-card-title {
-            font-size: 1rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            line-height: 1.5;
-            color: var(--text, #1a1a2e);
-        }
-        .blog-card-excerpt {
-            font-size: 0.82rem;
-            color: var(--muted, #6b7280);
-            line-height: 1.7;
-            flex: 1;
-            margin-bottom: 12px;
-        }
-        .blog-card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            backdrop-filter: blur(8px);
+            padding: 5px 14px;
+            border-radius: 8px;
             font-size: 0.72rem;
-            color: var(--muted, #6b7280);
-            padding-top: 12px;
-            border-top: 1px solid var(--border, #e5e7eb);
+            color: #fff;
+            font-weight: 700;
         }
-        .blog-card-meta i { margin-left: 4px; }
-        .blog-featured {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .featured-body { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
+        .featured-cat {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #0003c910;
+            color: var(--blue);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+        .featured-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 12px; line-height: 1.5; }
+        .featured-desc { font-size: 0.9rem; color: var(--muted, #6b7280); line-height: 1.8; margin-bottom: 16px; }
+        .featured-meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--muted, #6b7280); }
+        .featured-meta i { margin-left: 4px; color: var(--blue); }
+        .featured-read {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 16px;
+            text-decoration: none;
+        }
+        .featured-read i { transition: transform 0.2s; }
+        .featured:hover .featured-read i { transform: translateX(-4px); }
+
+        /* ===== GRID ===== */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+        .card {
             background: var(--card, #fff);
             border: 1px solid var(--border, #e5e7eb);
             border-radius: 16px;
@@ -187,23 +220,80 @@
             text-decoration: none;
             color: inherit;
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
         }
-        .blog-featured:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+
+        .card-icon {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            position: relative;
         }
-        .blog-featured .blog-card-img { height: 100%; min-height: 260px; }
-        .blog-featured .blog-card-body { padding: 28px; }
-        .blog-featured .blog-card-title { font-size: 1.4rem; }
-        .blog-featured .blog-card-excerpt { font-size: 0.9rem; }
-        .blog-load-more {
+        .card-icon.cv { background: linear-gradient(135deg, #0003c9 0%, #0005a0 100%); color: rgba(255,255,255,0.12); }
+        .card-icon.job { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: rgba(255,255,255,0.12); }
+        .card-icon.interview { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); color: rgba(255,255,255,0.12); }
+        .card-icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #005e93 100%); color: rgba(255,255,255,0.12); }
+        .card-icon.career { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); color: rgba(255,255,255,0.12); }
+
+        .card-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .card-tag.cv { background: rgba(0,3,201,0.8); }
+        .card-tag.job { background: rgba(5,150,105,0.8); }
+        .card-tag.interview { background: rgba(124,58,237,0.8); }
+        .card-tag.linkedin { background: rgba(0,119,181,0.8); }
+        .card-tag.career { background: rgba(234,88,12,0.8); }
+
+        .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 8px; line-height: 1.5; }
+        .card-excerpt { font-size: 0.8rem; color: var(--muted, #6b7280); line-height: 1.7; flex: 1; margin-bottom: 12px; }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border, #e5e7eb);
+            font-size: 0.72rem;
+            color: var(--muted, #6b7280);
+        }
+        .card-footer i { margin-left: 3px; }
+        .card-read {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .blog-cta {
+            background: var(--card, #fff);
+            border: 1px solid var(--border, #e5e7eb);
+            border-radius: 20px;
+            padding: 40px;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 48px;
         }
-        .blog-load-more a {
-            display: inline-block;
-            padding: 12px 32px;
-            background: var(--accent, #0003c9);
+        .blog-cta h3 { font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; }
+        .blog-cta p { font-size: 0.88rem; color: var(--muted, #6b7280); margin-bottom: 20px; }
+        .blog-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: var(--blue);
             color: #fff;
             border-radius: 10px;
             font-weight: 700;
@@ -211,205 +301,238 @@
             text-decoration: none;
             transition: all 0.2s;
         }
-        .blog-load-more a:hover { opacity: 0.9; transform: translateY(-2px); }
+        .blog-cta a:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,3,201,0.3); }
+
+        /* ===== FOOTER ===== */
+        .site-footer { background: var(--card, #fff); border-top: 1px solid var(--border, #e5e7eb); padding: 40px 20px; margin-top: 0; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .footer-logo { font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; }
+        .footer-logo span { color: var(--blue); }
+        .footer-desc { font-size: 0.82rem; color: var(--muted, #6b7280); margin-bottom: 16px; }
+        .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+        .footer-links a { color: var(--muted, #6b7280); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--blue); }
+        .footer-copy { font-size: 0.72rem; color: var(--muted, #9ca3af); }
+
         @media (max-width: 768px) {
-            .blog-grid { grid-template-columns: 1fr; }
-            .blog-featured { grid-template-columns: 1fr; }
-            .blog-featured .blog-card-img { min-height: 180px; }
-            .blog-hero h1 { font-size: 1.6rem; }
+            .hero h1 { font-size: 1.6rem; }
+            .featured { grid-template-columns: 1fr; }
+            .featured-img { min-height: 180px; }
+            .featured-body { padding: 24px; }
+            .featured-title { font-size: 1.2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .blog-cta { padding: 28px 20px; }
         }
         @media (max-width: 480px) {
-            .blog-hero { padding: 60px 16px 40px; }
+            .hero { padding: 50px 16px 40px; }
+            .hero h1 { font-size: 1.4rem; }
+            .cats { gap: 6px; }
+            .cats button { padding: 5px 12px; font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav style="background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:14px 20px;position:sticky;top:0;z-index:999">
     <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between">
         <a href="index.html" style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);text-decoration:none">Q<span style="color:var(--accent,#0003c9)">CV</span></a>
-        <div class="nav-links" style="display:flex;gap:20px;align-items:center">
+        <div style="display:flex;gap:20px;align-items:center">
             <a href="index.html" style="color:var(--text,#1a1a2e);text-decoration:none;font-size:0.85rem;font-weight:600">الرئيسية</a>
             <a href="templates.html" style="color:var(--text,#1a1a2e);text-decoration:none;font-size:0.85rem;font-weight:600">القوالب</a>
-            <a href="blog.html" style="color:var(--accent,#0003c9);text-decoration:none;font-size:0.85rem;font-weight:600">المدونة</a>
-            <a href="editor.html" style="background:var(--accent,#0003c9);color:#fff;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:700">ابدأ مجاناً</a>
+            <a href="blog.html" style="color:var(--blue);text-decoration:none;font-size:0.85rem;font-weight:700">المدونة</a>
+            <a href="editor.html" style="background:var(--blue);color:#fff;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:700">ابدأ مجاناً</a>
         </div>
     </div>
 </nav>
 
-<header class="blog-hero">
-    <h1>مدونة QCV</h1>
-    <p>نصائح عملية لكتابة سيرة ذاتية احترافية والتوظيف بنجاح</p>
-    <div class="blog-search">
-        <input type="text" placeholder="ابحث عن مقال..." id="blogSearchInput" onkeypress="if(event.key==='Enter')searchBlog()">
-        <button onclick="searchBlog()"><i class="fas fa-search"></i></button>
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-badge"><i class="fas fa-pen-nib" style="margin-left:6px"></i> مدونة QCV</div>
+    <h1>نصائح عملية للتوظيف الناجح</h1>
+    <p>مقالات محدثة عن كتابة السيرة الذاتية، البحث عن وظيفة، وتطوير مهاراتك المهنية</p>
+    <div class="search-box">
+        <input type="text" placeholder="ابحث عن مقال..." id="searchInput" onkeypress="if(event.key==='Enter')doSearch()">
+        <button onclick="doSearch()"><i class="fas fa-search"></i></button>
     </div>
-    <div class="blog-categories">
-        <button class="active" onclick="filterBlog('all',this)">الكل</button>
-        <button onclick="filterBlog('cv',this)">كتابة CV</button>
-        <button onclick="filterBlog('job',this)">البحث عن وظيفة</button>
-        <button onclick="filterBlog('interview',this)">مقابلات العمل</button>
-        <button onclick="filterBlog('linkedin',this)">لينكدإن</button>
-        <button onclick="filterBlog('career',this)">تطوير مهني</button>
+    <div class="cats" id="catsBar">
+        <button class="active" onclick="filterCat('all',this)"><i class="fas fa-border-all" style="margin-left:4px"></i>الكل</button>
+        <button onclick="filterCat('cv',this)"><i class="fas fa-file-alt" style="margin-left:4px"></i>كتابة CV</button>
+        <button onclick="filterCat('job',this)"><i class="fas fa-briefcase" style="margin-left:4px"></i>البحث عن وظيفة</button>
+        <button onclick="filterCat('interview',this)"><i class="fas fa-comments" style="margin-left:4px"></i>مقابلات العمل</button>
+        <button onclick="filterCat('linkedin',this)"><i class="fab fa-linkedin" style="margin-left:4px"></i>لينكدإن</button>
+        <button onclick="filterCat('career',this)"><i class="fas fa-chart-line" style="margin-left:4px"></i>تطوير مهني</button>
     </div>
 </header>
 
-<main class="blog-container">
-    <div class="blog-grid" id="blogGrid">
+<!-- MAIN -->
+<main class="container">
 
-        <a href="blog/ats-cv-2025.html" class="blog-featured" data-cat="cv">
-            <div class="blog-card-img">
-                <i class="fas fa-robot"></i>
-                <span class="blog-card-tag">الأكثر قراءة</span>
+    <!-- Featured -->
+    <a href="blog/ats-cv-2025.html" class="featured" data-cat="cv">
+        <div class="featured-img">
+            <i class="fas fa-robot"></i>
+            <div class="featured-badge"><i class="fas fa-fire" style="margin-left:4px"></i> الأكثر قراءة</div>
+        </div>
+        <div class="featured-body">
+            <div class="featured-cat"><i class="fas fa-file-alt"></i> كتابة CV</div>
+            <div class="featured-title">كيف تكتب سيرة ذاتية متوافقة مع ATS في 2025 — الدليل الشامل</div>
+            <div class="featured-desc">تعلم كيف تجتاز أنظمة ATS (Applicant Tracking Systems) وتصل سيرتك الذاتية للمسئول المباشر. نصائح عملية مع أمثلة حقيقية وقالب مجاني.</div>
+            <div class="featured-meta">
+                <span><i class="far fa-clock"></i> 8 دقائق قراءة</span>
+                <span><i class="far fa-calendar"></i> 1 يوليو 2025</span>
             </div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">كيف تكتب سيرة ذاتية متوافقة مع ATS في 2025 — الدليل الشامل</div>
-                <div class="blog-card-excerpt">تعلم كيف تجتاز أنظمة ATS (Applicant Tracking Systems) وتصل سيرتك الذاتية للمسئول المباشر. نصائح عملية مع أمثلة حقيقية وقالب مجاني.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 8 دقائق قراءة</span><span><i class="far fa-calendar"></i> 2025-07-01</span></div>
-            </div>
-        </a>
+            <div class="featured-read">اقرأ المقال <i class="fas fa-arrow-left"></i></div>
+        </div>
+    </a>
 
-        <a href="blog/kataba-sira-dhatia.html" class="blog-card" data-cat="cv">
-            <div class="blog-card-img"><i class="fas fa-pen-fancy"></i><span class="blog-card-tag">أساسيات</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">كيف تكتب سيرة ذاتية من الصفر — خطوة بخطوة</div>
-                <div class="blog-card-excerpt">دليل مبسط لكتابة سيرة ذاتية احترافية حتى لو ما عندك خبرة. القالب الجاهز وأمثلة لكل قسم.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 6 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-28</span></div>
-            </div>
-        </a>
+    <!-- Grid -->
+    <div class="grid" id="blogGrid">
 
-        <a href="blog/cover-letter.html" class="blog-card" data-cat="job">
-            <div class="blog-card-img"><i class="fas fa-envelope-open-text"></i><span class="blog-card-tag">وظائف</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">خطاب التغطية — كيف تكتب خطاب تعريف يلفت الانتباه</div>
-                <div class="blog-card-excerpt">خطاب التغطية الجيد بيزيد فرص قبولك 40%. اتعلم تكتبه صح مع 5 قوالب جاهزة تقدر تستخدمها.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 5 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-25</span></div>
-            </div>
-        </a>
-
-        <a href="blog/linkedin-profile.html" class="blog-card" data-cat="linkedin">
-            <div class="blog-card-img"><i class="fab fa-linkedin"></i><span class="blog-card-tag">لينكدإن</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">تحسين ملفك الشخصي على لينكدإن — 10 نصائح ذهبية</div>
-                <div class="blog-card-excerpt">ملفك الشخصي على لينكدإن هو بوابتك الأولى للوظائف. اlearn تحسينه عشان المدراء يلاقوك أولاً.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 7 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-22</span></div>
+        <a href="blog/kataba-sira-dhatia.html" class="card" data-cat="cv">
+            <div class="card-icon cv"><i class="fas fa-pen-fancy"></i><div class="card-tag cv">أساسيات</div></div>
+            <div class="card-body">
+                <div class="card-title">كيف تكتب سيرة ذاتية من الصفر — خطوة بخطوة</div>
+                <div class="card-excerpt">دليل مبسط لكتابة سيرة ذاتية احترافية حتى لو ما عندك خبرة. القالب الجاهز وأمثلة لكل قسم.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 6 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/interview-tips.html" class="blog-card" data-cat="interview">
-            <div class="blog-card-img"><i class="fas fa-user-tie"></i><span class="blog-card-tag">مقابلات</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">أسئلة المقابلة الشائعة وإجاباتها — كيف تتميّز</div>
-                <div class="blog-card-excerpt">أهم 15 سؤال بيتبعت في مقابلات العمل في مصر والعالم العربي، مع الإجابة المثالية لكل سؤال.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 9 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-20</span></div>
+        <a href="blog/cover-letter.html" class="card" data-cat="job">
+            <div class="card-icon job"><i class="fas fa-envelope-open-text"></i><div class="card-tag job">وظائف</div></div>
+            <div class="card-body">
+                <div class="card-title">خطاب التغطية — كيف تكتب خطاب تعريف يلفت الانتباه</div>
+                <div class="card-excerpt">خطاب التغطية الجيد بيزيد فرص قبولك 40%. اتعلم تكتبه صح مع 5 قوالب جاهزة.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 5 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/cv-mistakes.html" class="blog-card" data-cat="cv">
-            <div class="blog-card-img"><i class="fas fa-exclamation-triangle"></i><span class="blog-card-tag">أخطاء شائعة</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">7 أخطاء قاتلة في السيرة الذاتية بتضيع فرصة وظيفتك</div>
-                <div class="blog-card-excerpt">الأخطاء اللي بيرتكبها 90% من المتقدمين على الوظائف. اعرفهم وتجنبهم قبل ما تبعت سيرتك.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 5 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-18</span></div>
+        <a href="blog/linkedin-profile.html" class="card" data-cat="linkedin">
+            <div class="card-icon linkedin"><i class="fab fa-linkedin"></i><div class="card-tag linkedin">لينكدإن</div></div>
+            <div class="card-body">
+                <div class="card-title">تحسين ملفك الشخصي على لينكدإن — 10 نصائح ذهبية</div>
+                <div class="card-excerpt">ملفك الشخصي على لينكدإن هو بوابتك الأولى للوظائف. اتعلم تحسينه عشان المدراء يلاقوك أولاً.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 7 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/salary-negotiation.html" class="blog-card" data-cat="career">
-            <div class="blog-card-img"><i class="fas fa-hand-holding-dollar"></i><span class="blog-card-tag">تطوير مهني</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">كيف تتفاوض على راتبك — دليل المبتدئين</div>
-                <div class="blog-card-excerpt">التفاوض على الراتب فن. اتعلم الطريقة الصحيحة تفاوض على راتبك من غير ما تخسر الفرصة.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 6 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-15</span></div>
+        <a href="blog/interview-tips.html" class="card" data-cat="interview">
+            <div class="card-icon interview"><i class="fas fa-user-tie"></i><div class="card-tag interview">مقابلات</div></div>
+            <div class="card-body">
+                <div class="card-title">أسئلة المقابلة الشائعة وإجاباتها — كيف تتميّز</div>
+                <div class="card-excerpt">أهم 15 سؤال بيتبعت في مقابلات العمل في مصر، مع الإجابة المثالية لكل سؤال.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 9 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/cv-fresh-graduates.html" class="blog-card" data-cat="cv">
-            <div class="blog-card-img"><i class="fas fa-graduation-cap"></i><span class="blog-card-tag">خريجين</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">سيرة ذاتية لخريج جديد — كيف تكتب CV من غير خبرة</div>
-                <div class="blog-card-excerpt">متخرج جديد وبتدور على أول وظيفة؟ اlearn تكتب سيرة ذاتية تعرض مهاراتك ومشاريعك حتى لو ما عندك خبرة عمل.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 6 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-12</span></div>
+        <a href="blog/cv-mistakes.html" class="card" data-cat="cv">
+            <div class="card-icon cv"><i class="fas fa-exclamation-triangle"></i><div class="card-tag cv">أخطاء شائعة</div></div>
+            <div class="card-body">
+                <div class="card-title">7 أخطاء قاتلة في السيرة الذاتية بتضيع فرصة وظيفتك</div>
+                <div class="card-excerpt">الأخطاء اللي بيرتكبها 90% من المتقدمين على الوظائف. اعرفهم وتجنبهم.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 5 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/remote-jobs.html" class="blog-card" data-cat="job">
-            <div class="blog-card-img"><i class="fas fa-laptop-house"></i><span class="blog-card-tag">وظائف عن بُعد</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">وظائف عن بُعد 2025 — أين تجد Opportunities وكيف تتقدم</div>
-                <div class="blog-card-excerpt">دليل شامل للوظائف عن بُعد: أفضل المواقع، المهارات المطلوبة، ونصائح للتميّز في العمل من البيت.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 8 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-10</span></div>
+        <a href="blog/salary-negotiation.html" class="card" data-cat="career">
+            <div class="card-icon career"><i class="fas fa-hand-holding-dollar"></i><div class="card-tag career">تطوير مهني</div></div>
+            <div class="card-body">
+                <div class="card-title">كيف تتفاوض على راتبك — دليل المبتدئين</div>
+                <div class="card-excerpt">التفاوض على الراتب فن. اتعلم الطريقة الصحيحة من غير ما تخسر الفرصة.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 6 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/cv-design-trends.html" class="blog-card" data-cat="cv">
-            <div class="blog-card-img"><i class="fas fa-palette"></i><span class="blog-card-tag">تصميم</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">트렌دات تصميم السيرة الذاتية 2025 — الصيغة والأسلوب</div>
-                <div class="blog-card-excerpt">إيه اللي جديد في تصميم الـ CV في 2025؟ تصفح أحدث التصميمات والصيغ اللي بتلفت انتباه المدراء.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 5 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-08</span></div>
+        <a href="blog/cv-fresh-graduates.html" class="card" data-cat="cv">
+            <div class="card-icon cv"><i class="fas fa-graduation-cap"></i><div class="card-tag cv">خريجين</div></div>
+            <div class="card-body">
+                <div class="card-title">سيرة ذاتية لخريج جديد — كيف تكتب CV من غير خبرة</div>
+                <div class="card-excerpt">متخرج جديد وبتدور على أول وظيفة؟ اتعلم تكتب سيرة ذاتية تعرض مهاراتك ومشاريعك.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 6 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/job-search-egypt.html" class="blog-card" data-cat="job">
-            <div class="blog-card-img"><i class="fas fa-magnifying-glass"></i><span class="blog-card-tag">البحث عن وظيفة</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">كيف تدور على وظيفة في مصر 2025 — أفضل المواقع والاستراتيجيات</div>
-                <div class="blog-card-excerpt">دليل كامل للبحث عن وظيفة في مصر: أفضل 20 موقع توظيف، نصائح للتقديم، واستراتيجيات للنجاح.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 10 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-05</span></div>
+        <a href="blog/remote-jobs.html" class="card" data-cat="job">
+            <div class="card-icon job"><i class="fas fa-laptop-house"></i><div class="card-tag job">وظائف عن بُعد</div></div>
+            <div class="card-body">
+                <div class="card-title">وظائف عن بُعد 2025 — أين تجد Opportunities وكيف تتقدم</div>
+                <div class="card-excerpt">دليل شامل للوظائف عن بُعد: أفضل المواقع، المهارات المطلوبة، ونصائح للنجاح.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 8 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
-        <a href="blog/skills-cv.html" class="blog-card" data-cat="cv">
-            <div class="blog-card-img"><i class="fas fa-lightbulb"></i><span class="blog-card-tag">مهارات</span></div>
-            <div class="blog-card-body">
-                <div class="blog-card-title">المهارات اللي المدراء بيدوروا عليها في السيرة الذاتية</div>
-                <div class="blog-card-excerpt">إيه المهارات التقنية والليونة اللي بتلفت انتباه المدراء؟ قائمة شاملة بأكثر من 50 مهارة مطلوبة.</div>
-                <div class="blog-card-meta"><span><i class="far fa-clock"></i> 7 دقائق</span><span><i class="far fa-calendar"></i> 2025-06-02</span></div>
+        <a href="blog/cv-design-trends.html" class="card" data-cat="cv">
+            <div class="card-icon cv"><i class="fas fa-palette"></i><div class="card-tag cv">تصميم</div></div>
+            <div class="card-body">
+                <div class="card-title">اتجاهات تصميم السيرة الذاتية 2025 — الصيغة والأسلوب</div>
+                <div class="card-excerpt">إيه اللي جديد في تصميم الـ CV في 2025؟ أحدث التصميمات اللي بتلفت انتباه المدراء.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 5 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
+            </div>
+        </a>
+
+        <a href="blog/job-search-egypt.html" class="card" data-cat="job">
+            <div class="card-icon job"><i class="fas fa-magnifying-glass"></i><div class="card-tag job">بحث وظائف</div></div>
+            <div class="card-body">
+                <div class="card-title">كيف تدور على وظيفة في مصر 2025 — أفضل المواقع والاستراتيجيات</div>
+                <div class="card-excerpt">دليل كامل: أفضل 20 موقع توظيف في مصر، نصائح للتقديم، واستراتيجيات للنجاح.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 10 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
+            </div>
+        </a>
+
+        <a href="blog/skills-cv.html" class="card" data-cat="cv">
+            <div class="card-icon cv"><i class="fas fa-lightbulb"></i><div class="card-tag cv">مهارات</div></div>
+            <div class="card-body">
+                <div class="card-title">المهارات اللي المدراء بيدوروا عليها في السيرة الذاتية</div>
+                <div class="card-excerpt">قائمة شاملة بأكثر من 50 مهارة تقنية وليونة مطلوبة في سوق العمل المصري.</div>
+                <div class="card-footer"><span><i class="far fa-clock"></i> 7 دقائق</span><span class="card-read">اقرأ <i class="fas fa-arrow-left"></i></span></div>
             </div>
         </a>
 
     </div>
 
-    <div class="blog-load-more" id="loadMoreSection" style="display:none">
-        <a href="#">حمّل المزيد من المقالات</a>
+    <!-- CTA -->
+    <div class="blog-cta">
+        <h3>جاهز تبني سيرتك الذاتية الاحترافية؟</h3>
+        <p>استخدم محرر QCV المجاني لكتابة سيرة ذاتية متوافقة مع ATS في دقائق</p>
+        <a href="editor.html"><i class="fas fa-pen-fancy"></i> ابدأ مجاناً الآن</a>
     </div>
+
 </main>
 
-<footer class="footer" style="background:var(--card,#fff);border-top:1px solid var(--border,#e5e7eb);padding:40px 20px;margin-top:40px">
-    <div style="max-width:1100px;margin:0 auto;text-align:center">
-        <div style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);margin-bottom:12px">Q<span style="color:var(--accent,#0003c9)">CV</span></div>
-        <div style="font-size:0.82rem;color:var(--muted,#6b7280);margin-bottom:16px">منشئ سير ذاتية بالذكاء الاصطناعي — ابدأ مجاناً</div>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
-            <a href="index.html" style="color:var(--muted,#6b7280);text-decoration:none;font-size:0.82rem">الرئيسية</a>
-            <a href="templates.html" style="color:var(--muted,#6b7280);text-decoration:none;font-size:0.82rem">القوالب</a>
-            <a href="blog.html" style="color:var(--accent,#0003c9);text-decoration:none;font-size:0.82rem;font-weight:700">المدونة</a>
-            <a href="editor.html" style="color:var(--muted,#6b7280);text-decoration:none;font-size:0.82rem">المحرر</a>
-            <a href="privacy.html" style="color:var(--muted,#6b7280);text-decoration:none;font-size:0.82rem">الخصوصية</a>
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-logo">Q<span>CV</span></div>
+        <div class="footer-desc">منشئ سير ذاتية بالذكاء الاصطناعي — ابدأ مجاناً</div>
+        <div class="footer-links">
+            <a href="index.html">الرئيسية</a>
+            <a href="templates.html">القوالب</a>
+            <a href="blog.html" style="color:var(--blue);font-weight:700">المدونة</a>
+            <a href="editor.html">المحرر</a>
+            <a href="ats-checker.html">فحص ATS</a>
+            <a href="privacy.html">الخصوصية</a>
         </div>
-        <div class="footer-bottom" style="font-size:0.75rem;color:var(--muted,#9ca3af)">&copy; 2025 QCV. جميع الحقوق محفوظة.</div>
+        <div class="footer-copy">&copy; 2025 QCV. جميع الحقوق محفوظة.</div>
     </div>
 </footer>
 
 <script>
-function filterBlog(cat, btn) {
-    document.querySelectorAll('.blog-categories button').forEach(function(b){ b.classList.remove('active'); });
+function filterCat(cat, btn) {
+    document.querySelectorAll('.cats button').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    var cards = document.querySelectorAll('.blog-card, .blog-featured');
-    cards.forEach(function(c) {
-        if (cat === 'all' || c.getAttribute('data-cat') === cat) {
-            c.style.display = '';
-        } else {
-            c.style.display = 'none';
-        }
+    var items = document.querySelectorAll('.card, .featured');
+    items.forEach(function(c) {
+        c.style.display = (cat === 'all' || c.getAttribute('data-cat') === cat) ? '' : 'none';
     });
 }
-function searchBlog() {
-    var q = document.getElementById('blogSearchInput').value.trim().toLowerCase();
-    var cards = document.querySelectorAll('.blog-card, .blog-featured');
-    cards.forEach(function(c) {
-        var text = c.textContent.toLowerCase();
-        c.style.display = (!q || text.indexOf(q) !== -1) ? '' : 'none';
+function doSearch() {
+    var q = document.getElementById('searchInput').value.trim().toLowerCase();
+    var items = document.querySelectorAll('.card, .featured');
+    items.forEach(function(c) {
+        c.style.display = (!q || c.textContent.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
     });
+    document.querySelectorAll('.cats button').forEach(function(b){ b.classList.remove('active'); });
+    if (!q) document.querySelector('.cats button').classList.add('active');
 }
 </script>
 <script defer src="js/animations.js"></script>
