@@ -4,7 +4,7 @@
  */
 (function(){
     var DB = 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
-    var CHECK_INTERVAL = 30000;
+    var CHECK_INTERVAL = 120000;
     var currentVersion = localStorage.getItem('qcv_site_version') || '0';
 
     function checkVersion(){

@@ -23,7 +23,7 @@
                 }
             })
             .catch(function(){});
-    }, 8000);
+    }, 120000);
 
     fetch(DB + '/siteSettings/maintenance.json')
         .then(function(r){ return r.json(); })
