@@ -409,7 +409,7 @@
 
     // ===== CURSOR FOLLOWER =====
     function initCursorFollower() {
-        if (window.innerWidth < 768) return;
+        if (window.innerWidth < 768 || window.matchMedia('(hover: none)').matches) return;
         var dot = document.createElement('div');
         dot.style.cssText = 'position:fixed;width:8px;height:8px;background:var(--accent,#0003c9);border-radius:50%;pointer-events:none;z-index:99999;transition:transform 0.15s ease;mix-blend-mode:difference;opacity:0.7';
         document.body.appendChild(dot);
@@ -491,23 +491,24 @@
 
     // ===== LOADING SCREEN =====
     function initLoadingScreen() {
-        var loader = document.createElement('div');
-        loader.id = 'qcvLoader';
-        loader.style.cssText = 'position:fixed;inset:0;background:var(--bg,#fff);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.4s ease';
-        loader.innerHTML = '<div style="font-size:2.5rem;font-weight:900;color:var(--text,#1a1a2e);margin-bottom:20px">Q<span style="color:var(--accent,#0003c9)">CV</span></div>' +
-            '<div style="width:40px;height:40px;border:3px solid var(--border,#e5e7eb);border-top-color:var(--accent,#0003c9);border-radius:50%;animation:qcvSpin 0.8s linear infinite"></div>';
-        document.body.prepend(loader);
+        var loader = document.getElementById('qcvLoader');
+        if (!loader) return;
 
-        var style = document.createElement('style');
-        style.textContent = '@keyframes qcvSpin{to{transform:rotate(360deg)}}';
-        document.head.appendChild(style);
+        function hideLoader() {
+            loader.style.opacity = '0';
+            setTimeout(function() { loader.remove(); }, 300);
+        }
 
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                loader.style.opacity = '0';
-                setTimeout(function() { loader.remove(); }, 400);
-            }, 300);
-        });
+        // Hide as soon as DOM is ready (max 1.5s)
+        if (document.readyState === 'complete') {
+            hideLoader();
+        } else {
+            var maxTimer = setTimeout(hideLoader, 1500);
+            window.addEventListener('load', function() {
+                clearTimeout(maxTimer);
+                setTimeout(hideLoader, 100);
+            });
+        }
     }
 
     // ===== CSS ANIMATIONS (injected) =====
