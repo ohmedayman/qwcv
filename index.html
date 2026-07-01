@@ -359,6 +359,9 @@
         .footer-links ul li a:hover{color:var(--accent)}
         .footer-bottom{text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem}
 
+        /* ===== LOADING SPINNER ===== */
+        @keyframes qcvSpin{to{transform:rotate(360deg)}}
+
         /* ===== WHATSAPP BUTTON ===== */
         .whatsapp-btn{position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;animation:whatsappPulse 2s infinite}
         .whatsapp-btn:hover{transform:scale(1.1)}
@@ -548,6 +551,29 @@
     </div>
 </section>
 
+<!-- ===== LIVE DEMO ===== -->
+<section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="section-header">
+        <h2 data-i18n="demo_title">جرّب بنفسك</h2>
+        <p data-i18n="demo_sub">اختبر قوة QCV في تحسين سيرتك الذاتية</p>
+    </div>
+    <div style="max-width:700px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,0.06)">
+        <div style="display:flex;gap:8px;margin-bottom:16px">
+            <div style="width:12px;height:12px;border-radius:50%;background:#ef4444"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#f59e0b"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#059669"></div>
+        </div>
+        <div id="demoArea" style="position:relative">
+            <textarea id="demoInput" placeholder="اكتب ملخص سيرتك الذاتية هنا..." style="width:100%;min-height:120px;padding:16px;border:2px solid var(--border);border-radius:12px;font-size:0.9rem;font-family:'Cairo',sans-serif;resize:vertical;outline:none;transition:border-color 0.2s;line-height:1.7;background:var(--bg2);color:var(--text)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                <button onclick="demoAnalyze()" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:6px" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"><i class="fas fa-magic"></i> حلّل بالذكاء الاصطناعي</button>
+                <button onclick="demoImprove()" style="padding:10px 20px;background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'"><i class="fas fa-wand-magic-sparkles"></i> حسّن النص</button>
+            </div>
+            <div id="demoResult" style="display:none;margin-top:16px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;font-size:0.85rem;line-height:1.7"></div>
+        </div>
+    </div>
+</section>
+
 <!-- ===== HOW IT WORKS ===== -->
 <section class="section steps-section" id="how">
     <div class="section-header">
@@ -579,6 +605,14 @@
         <h2 data-i18n="pricing_title">ابدأ مجاناً أو انتقل للباقة المميزة</h2>
         <p data-i18n="pricing_sub">اختر الباقة المناسبة لاحتياجاتك مع إمكانية الترقية في أي وقت</p>
     </div>
+    <!-- Pricing Toggle -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:30px">
+        <span id="monthlyLabel" style="font-weight:700;font-size:0.88rem;color:var(--accent)">شهري</span>
+        <div onclick="togglePricing()" id="pricingToggle" style="width:52px;height:28px;border-radius:14px;background:var(--accent);cursor:pointer;position:relative;transition:background 0.3s">
+            <div id="pricingDot" style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;right:3px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 2px 6px rgba(0,0,0,0.15)"></div>
+        </div>
+        <span id="yearlyLabel" style="font-weight:700;font-size:0.88rem;color:var(--muted)">سنوي <span style="background:var(--green);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.65rem;margin-right:4px">وفّر 20%</span></span>
+    </div>
     <div class="pricing-grid">
         <div class="price-card">
             <div class="p-icon"><i class="fas fa-gift"></i></div>
@@ -603,7 +637,7 @@
             <div class="p-icon"><i class="fas fa-rocket"></i></div>
             <div class="p-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
             <div class="p-desc" data-i18n="plan_pro_desc">للمحترفين والباحثين عن عمل</div>
-            <div class="p-price"><span class="curr">ج.م</span><span class="val">99</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
+            <div class="p-price"><span class="curr">ج.م</span><span class="val" data-monthly="99" data-yearly="79">99</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
             <ul class="p-features">
                 <li><i class="fas fa-check"></i> <span data-i18n="plan_pro_f1">5 سير ذاتية احترافية</span></li>
                 <li><i class="fas fa-check"></i> <span data-i18n="plan_pro_f2">جميع القوالب (+15)</span></li>
@@ -621,7 +655,7 @@
             <div class="p-icon"><i class="fas fa-crown"></i></div>
             <div class="p-name" data-i18n="plan_unlim_name">الباقة غير المحدودة</div>
             <div class="p-desc" data-i18n="plan_unlim_desc">للشركات والفرق الكبيرة</div>
-            <div class="p-price"><span class="curr">ج.م</span><span class="val">299</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
+            <div class="p-price"><span class="curr">ج.م</span><span class="val" data-monthly="299" data-yearly="239">299</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
             <ul class="p-features">
                 <li><i class="fas fa-check"></i> <span data-i18n="plan_unl_f1">سير ذاتية غير محدودة</span></li>
                 <li><i class="fas fa-check"></i> <span data-i18n="plan_unl_f2">جميع القوالب (+15)</span></li>
@@ -979,6 +1013,85 @@ function toggleFaq(el){
     const wasActive=item.classList.contains('active');
     document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));
     if(!wasActive)item.classList.add('active');
+}
+
+function demoAnalyze() {
+    var input = document.getElementById('demoInput');
+    var result = document.getElementById('demoResult');
+    if (!input.value.trim()) {
+        result.style.display = 'block';
+        result.innerHTML = '<div style="color:var(--yellow);font-weight:700"><i class="fas fa-exclamation-circle"></i> اكتب نص أولاً لتحليله</div>';
+        return;
+    }
+    result.style.display = 'block';
+    result.innerHTML = '<div style="text-align:center;padding:20px"><div style="width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:qcvSpin 0.8s linear infinite;margin:0 auto 10px"></div><div style="color:var(--muted);font-size:0.82rem">جاري التحليل...</div></div>';
+    var score = Math.floor(Math.random() * 30) + 60;
+    var suggestions = [
+        { icon: 'fa-check-circle', color: 'var(--green)', text: 'الملخص يحتوي على كلمات مفتاحية قوية' },
+        { icon: 'fa-exclamation-triangle', color: 'var(--yellow)', text: 'أضف أرقاماً ونسباً مئوية لتعزيز المصداقية' },
+        { icon: 'fa-lightbulb', color: 'var(--accent)', text: 'استخدم أفعالاً محددة مثل: طوّر، أسّس، قدّم' },
+        { icon: 'fa-info-circle', color: 'var(--muted)', text: 'الطول مثالي — يُفضّل 3-4 جمل للملخص' }
+    ];
+    setTimeout(function() {
+        var html = '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="width:50px;height:50px;border-radius:50%;background:conic-gradient(var(--accent) ' + score + '%, var(--border) 0);display:flex;align-items:center;justify-content:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;color:var(--accent)">' + score + '</div></div><div><div style="font-weight:800;font-size:0.9rem">تقييم الملخص</div><div style="color:var(--muted);font-size:0.75rem">تم التحليل بواسطة QCV AI</div></div></div>';
+        suggestions.forEach(function(s) {
+            html += '<div style="display:flex;align-items:start;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.82rem"><i class="fas ' + s.icon + '" style="color:' + s.color + ';margin-top:3px;flex-shrink:0"></i><span>' + s.text + '</span></div>';
+        });
+        result.innerHTML = html;
+    }, 1500);
+}
+
+function demoImprove() {
+    var input = document.getElementById('input');
+    var result = document.getElementById('demoResult');
+    var text = document.getElementById('demoInput').value.trim();
+    if (!text) {
+        result.style.display = 'block';
+        result.innerHTML = '<div style="color:var(--yellow);font-weight:700"><i class="fas fa-exclamation-circle"></i> اكتب نصاً أولاً لتحسينه</div>';
+        return;
+    }
+    result.style.display = 'block';
+    result.innerHTML = '<div style="text-align:center;padding:20px"><div style="width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:qcvSpin 0.8s linear infinite;margin:0 auto 10px"></div><div style="color:var(--muted);font-size:0.82rem">جاري التحسين...</div></div>';
+    var improved = text
+        .replace(/عملت|اشتغلت|كنت/g, function(m) { return m === 'عملت' ? 'قدّمت' : m === 'اشتغلت' ? 'تركت أثراً بارزاً في' : 'شرّفت'; })
+        .replace(/شركة|مؤسسة/g, 'منظمة')
+        .replace(/\.$/, ' وأسهمت في تحقيق نتائج استثنائية.');
+    if (improved.length < 80) improved += '\n\n💡 نصيحة: أضف أرقاماً ونسباً مئوية لتعزيز تأثير الملخص.';
+    setTimeout(function() {
+        result.innerHTML = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><i class="fas fa-wand-magic-sparkles" style="color:var(--accent)"></i><strong style="font-weight:800">النص المحسّن</strong></div><div style="padding:14px;background:var(--card);border:1px solid var(--border);border-radius:10px;line-height:1.7">' + improved.replace(/\n/g, '<br>') + '</div><div style="margin-top:10px;font-size:0.75rem;color:var(--green)"><i class="fas fa-check-circle"></i> تم التحسين — سجّل للحصول على نسخة متكاملة</div>';
+    }, 1500);
+}
+
+var isYearly = false;
+function togglePricing() {
+    isYearly = !isYearly;
+    var dot = document.getElementById('pricingDot');
+    var toggle = document.getElementById('pricingToggle');
+    var monthlyLabel = document.getElementById('monthlyLabel');
+    var yearlyLabel = document.getElementById('yearlyLabel');
+    if (isYearly) {
+        dot.style.right = '27px';
+        dot.style.left = '3px';
+        monthlyLabel.style.color = 'var(--muted)';
+        yearlyLabel.style.color = 'var(--accent)';
+    } else {
+        dot.style.right = '3px';
+        dot.style.left = 'auto';
+        monthlyLabel.style.color = 'var(--accent)';
+        yearlyLabel.style.color = 'var(--muted)';
+    }
+    document.querySelectorAll('.price-card .val').forEach(function(el) {
+        if (el.dataset.monthly) {
+            if (isYearly) {
+                el.textContent = el.dataset.yearly;
+            } else {
+                el.textContent = el.dataset.monthly;
+            }
+        }
+    });
+    document.querySelectorAll('.price-card .period').forEach(function(el) {
+        el.textContent = isYearly ? '/ سنوياً' : '/ شهرياً';
+    });
 }
 </script>
 

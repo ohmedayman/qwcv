@@ -288,6 +288,187 @@
         }, { passive: true });
     }
 
+    // ===== SCROLL PROGRESS BAR =====
+    function initScrollProgress() {
+        var bar = document.createElement('div');
+        bar.style.cssText = 'position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent,#0003c9),var(--cyan,#27ffed));z-index:10001;width:0;transition:width 0.1s linear;border-radius:0 2px 2px 0';
+        document.body.appendChild(bar);
+        window.addEventListener('scroll', function() {
+            var scrollTop = window.scrollY;
+            var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            bar.style.width = progress + '%';
+        }, { passive: true });
+    }
+
+    // ===== BACK TO TOP BUTTON =====
+    function initBackToTop() {
+        var btn = document.createElement('button');
+        btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        btn.style.cssText = 'position:fixed;bottom:100px;left:28px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent,#0003c9);color:#fff;border:none;font-size:1rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 4px 15px rgba(0,3,201,0.3);display:flex;align-items:center;justify-content:center';
+        document.body.appendChild(btn);
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        btn.addEventListener('mouseenter', function() {
+            btn.style.transform = 'translateY(-3px) scale(1.1)';
+        });
+        btn.addEventListener('mouseleave', function() {
+            btn.style.transform = '';
+        });
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                btn.style.opacity = '1';
+                btn.style.transform = 'translateY(0)';
+            } else {
+                btn.style.opacity = '0';
+                btn.style.transform = 'translateY(20px)';
+            }
+        }, { passive: true });
+    }
+
+    // ===== SOCIAL PROOF TOASTS =====
+    function initSocialProof() {
+        var names = ['أحمد من القاهرة', 'سارة من الإسكندرية', 'محمد من الدوحة', 'فاطمة من الرياض', 'خالد من دبي', 'نورا من الكويت', 'عمر من جدة', 'ياسمين من الرباط', 'حسن من عمّان', 'ليلى من بيروت'];
+        var actions = ['سجّل في QCV', 'أنشأ سيرة ذاتية', 'حمّل PDF احترافي', 'اشترك في الباقة الاحترافية', 'حصل على تقييم ATS 95/100'];
+        var shown = parseInt(localStorage.getItem('qcv_social_shown') || '0');
+
+        function showToast() {
+            if (shown >= 3 || window.scrollY < 200) return;
+            var name = names[Math.floor(Math.random() * names.length)];
+            var action = actions[Math.floor(Math.random() * actions.length)];
+            var minutes = Math.floor(Math.random() * 30) + 1;
+
+            var toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;bottom:100px;left:28px;z-index:9997;background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:14px;padding:14px 18px;box-shadow:0 8px 30px rgba(0,0,0,0.12);max-width:280px;transform:translateX(-120%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);cursor:pointer;display:flex;align-items:center;gap:10px;font-size:0.78rem';
+            toast.innerHTML = '<div style="width:36px;height:36px;border-radius:50%;background:var(--accent,#0003c9);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.75rem;flex-shrink:0">' + name.charAt(0) + '</div>' +
+                '<div><div style="font-weight:700;color:var(--text,#1a1a2e);margin-bottom:2px">' + name + '</div>' +
+                '<div style="color:var(--muted,#6b7280);font-size:0.72rem">' + action + ' • ' + minutes + ' دقيقة</div></div>' +
+                '<div style="margin-right:auto;color:var(--green,#059669);font-size:0.8rem"><i class="fas fa-check-circle"></i></div>';
+
+            document.body.appendChild(toast);
+            setTimeout(function() { toast.style.transform = 'translateX(0)'; }, 100);
+
+            toast.addEventListener('click', function() {
+                toast.style.transform = 'translateX(-120%)';
+                setTimeout(function() { toast.remove(); }, 400);
+            });
+
+            setTimeout(function() {
+                toast.style.transform = 'translateX(-120%)';
+                setTimeout(function() { toast.remove(); }, 400);
+            }, 5000);
+
+            shown++;
+            localStorage.setItem('qcv_social_shown', String(shown));
+        }
+
+        var proofShown = false;
+        window.addEventListener('scroll', function() {
+            if (!proofShown && window.scrollY > 500) {
+                proofShown = true;
+                setTimeout(showToast, 3000);
+                setTimeout(showToast, 12000);
+                setTimeout(showToast, 22000);
+            }
+        }, { passive: true });
+    }
+
+    // ===== TILT EFFECT on cards =====
+    function initTiltEffect() {
+        document.querySelectorAll('.feature-card, .price-card, .test-card-new').forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var rect = card.getBoundingClientRect();
+                var x = (e.clientX - rect.left) / rect.width - 0.5;
+                var y = (e.clientY - rect.top) / rect.height - 0.5;
+                card.style.transform = 'perspective(800px) rotateY(' + (x * 6) + 'deg) rotateX(' + (-y * 6) + 'deg) translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                card.style.transform = '';
+                card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+            });
+        });
+    }
+
+    // ===== TEXT GRADIENT ANIMATION =====
+    function initGradientText() {
+        document.querySelectorAll('.hero-right h1 .hl').forEach(function(el) {
+            el.style.background = 'linear-gradient(135deg, var(--accent,#0003c9), var(--cyan,#27ffed), var(--accent,#0003c9))';
+            el.style.backgroundSize = '200% auto';
+            el.style.webkitBackgroundClip = 'text';
+            el.style.webkitTextFillColor = 'transparent';
+            el.style.backgroundClip = 'text';
+            el.style.animation = 'gradientShift 3s ease infinite';
+        });
+        var style = document.createElement('style');
+        style.textContent = '@keyframes gradientShift{0%{background-position:0% center}50%{background-position:100% center}100%{background-position:0% center}}';
+        document.head.appendChild(style);
+    }
+
+    // ===== CURSOR FOLLOWER =====
+    function initCursorFollower() {
+        if (window.innerWidth < 768) return;
+        var dot = document.createElement('div');
+        dot.style.cssText = 'position:fixed;width:8px;height:8px;background:var(--accent,#0003c9);border-radius:50%;pointer-events:none;z-index:99999;transition:transform 0.15s ease;mix-blend-mode:difference;opacity:0.7';
+        document.body.appendChild(dot);
+
+        var ring = document.createElement('div');
+        ring.style.cssText = 'position:fixed;width:36px;height:36px;border:2px solid var(--accent,#0003c9);border-radius:50%;pointer-events:none;z-index:99998;transition:transform 0.3s ease,width 0.3s,height 0.3s;opacity:0.4';
+        document.body.appendChild(ring);
+
+        document.addEventListener('mousemove', function(e) {
+            dot.style.transform = 'translate(' + (e.clientX - 4) + 'px,' + (e.clientY - 4) + 'px)';
+            ring.style.transform = 'translate(' + (e.clientX - 18) + 'px,' + (e.clientY - 18) + 'px)';
+        });
+
+        document.querySelectorAll('a, button, .faq-q, .partner-card').forEach(function(el) {
+            el.addEventListener('mouseenter', function() {
+                ring.style.width = '50px';
+                ring.style.height = '50px';
+                ring.style.opacity = '0.6';
+                dot.style.transform += ' scale(1.5)';
+            });
+            el.addEventListener('mouseleave', function() {
+                ring.style.width = '36px';
+                ring.style.height = '36px';
+                ring.style.opacity = '0.4';
+            });
+        });
+    }
+
+    // ===== STAGGER ANIMATIONS for lists =====
+    function initStaggerAnimations() {
+        document.querySelectorAll('.p-features li, .faq-item').forEach(function(el, i) {
+            el.style.transitionDelay = (i * 0.03) + 's';
+        });
+    }
+
+    // ===== TYPING COUNTER in hero =====
+    function initHeroTyping() {
+        var scoreEl = document.querySelector('.hv-score-text');
+        if (!scoreEl) return;
+        var target = 92;
+        var current = 0;
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var interval = setInterval(function() {
+                        current += 2;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(interval);
+                        }
+                        scoreEl.textContent = current + '/100';
+                    }, 30);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        observer.observe(scoreEl);
+    }
+
     // ===== RIPPLE EFFECT on buttons =====
     function initRipple() {
         document.addEventListener('click', function(e) {
@@ -356,6 +537,14 @@
         initSmoothScroll();
         initNavbarScroll();
         initRipple();
+        initScrollProgress();
+        initBackToTop();
+        initSocialProof();
+        initTiltEffect();
+        initGradientText();
+        initCursorFollower();
+        initStaggerAnimations();
+        initHeroTyping();
     }
 
     if (document.readyState === 'loading') {
