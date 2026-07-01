@@ -423,6 +423,8 @@
             .trust-bar{flex-direction:column;gap:8px;padding:30px 20px}
             .trust-bar p{font-size:0.85rem}
             .grid-bg{display:none}
+            #compareGrid{grid-template-columns:1fr!important}
+            #chatPanel{width:calc(100vw - 40px);right:-10px}
         }
         @media(max-width:480px){
             .hero-right h1{font-size:1.5rem}
@@ -496,6 +498,58 @@
             <div class="hv-score">
                 <div class="hv-score-bar"><div class="hv-score-fill"></div></div>
                 <div class="hv-score-text">92/100</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== BEFORE / AFTER COMPARISON ===== -->
+<section class="section" id="compare">
+    <div class="section-header">
+        <h2>قبل QCV و بعده</h2>
+        <p>شوف الفرق بنفسك — سيرة ذاتية عادية مقابل سيرة ذاتية احترافية</p>
+    </div>
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px" id="compareGrid">
+        <!-- Before -->
+        <div style="background:var(--card);border:2px solid var(--red);border-radius:18px;padding:24px;position:relative;overflow:hidden;transition:all 0.4s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+            <div style="position:absolute;top:16px;left:16px;background:rgba(239,68,68,0.1);color:var(--red);padding:4px 14px;border-radius:20px;font-size:0.72rem;font-weight:800"><i class="fas fa-times-circle"></i> قبل QCV</div>
+            <div style="margin-top:30px">
+                <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">الاسم</div>
+                <div style="font-size:0.95rem;font-weight:700;margin-bottom:12px">أحمد</div>
+                <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">الملخص</div>
+                <div style="font-size:0.85rem;line-height:1.7;margin-bottom:12px;color:var(--muted);border:1px dashed var(--red);padding:10px;border-radius:8px;background:rgba(239,68,68,0.02)">
+                    انا شغال في شركة و بعمل حاجات كتير و عندي خبرة في البرمجة و الديزاين و كمان بعرف أشتغل على أكتر من حاجة و بحب أتعلم حاجات جديدة
+                </div>
+                <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">المهارات</div>
+                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:12px">برمجة, ديزاين, مبيعات</div>
+                <div style="display:flex;align-items:center;gap:8px;padding:10px;background:rgba(239,68,68,0.05);border-radius:8px">
+                    <div style="width:40px;height:40px;border-radius:50%;border:3px solid var(--red);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--red);font-size:0.85rem">35</div>
+                    <div><div style="font-size:0.75rem;font-weight:700;color:var(--red)">تقييم ضعيف</div><div style="font-size:0.65rem;color:var(--muted)">ATS rejects this CV</div></div>
+                </div>
+            </div>
+        </div>
+        <!-- After -->
+        <div style="background:var(--card);border:2px solid var(--green);border-radius:18px;padding:24px;position:relative;overflow:hidden;transition:all 0.4s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+            <div style="position:absolute;top:16px;left:16px;background:rgba(5,150,105,0.1);color:var(--green);padding:4px 14px;border-radius:20px;font-size:0.72rem;font-weight:800"><i class="fas fa-check-circle"></i> بعد QCV</div>
+            <div style="margin-top:30px">
+                <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">الاسم</div>
+                <div style="font-size:0.95rem;font-weight:700;margin-bottom:12px">أحمد محمد — مطور Full-Stack</div>
+                <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">الملخص</div>
+                <div style="font-size:0.85rem;line-height:1.7;margin-bottom:12px;border:1px solid var(--green);padding:10px;border-radius:8px;background:rgba(5,150,105,0.02)">
+                    مطور Full-Stack بخبرة +5 سنوات في تطوير تطبيقات الويب. قدّمت مشاريع حققت زيادة 40% في الإيرادات. متخصص في React, Node.js, و Firebase.
+                </div>
+                <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">المهارات</div>
+                <div style="font-size:0.82rem;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+                    <span style="background:rgba(5,150,105,0.1);color:var(--green);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700">React</span>
+                    <span style="background:rgba(5,150,105,0.1);color:var(--green);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700">Node.js</span>
+                    <span style="background:rgba(5,150,105,0.1);color:var(--green);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700">Firebase</span>
+                    <span style="background:rgba(5,150,105,0.1);color:var(--green);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700">TypeScript</span>
+                    <span style="background:rgba(5,150,105,0.1);color:var(--green);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700">+2</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:10px;background:rgba(5,150,105,0.05);border-radius:8px">
+                    <div style="width:40px;height:40px;border-radius:50%;border:3px solid var(--green);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--green);font-size:0.85rem">95</div>
+                    <div><div style="font-size:0.75rem;font-weight:700;color:var(--green)">تقييم ممتاز</div><div style="font-size:0.65rem;color:var(--muted)">ATS-optimized & ready</div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -962,6 +1016,44 @@
     </div>
 </section>
 
+<!-- ===== NEWSLETTER ===== -->
+<section class="section" style="padding:60px 20px">
+    <div style="max-width:600px;margin:0 auto;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(39,255,237,0.04));border:1px solid var(--border);border-radius:20px;padding:40px 30px;text-align:center">
+        <div style="font-size:2rem;margin-bottom:10px">&#9993;</div>
+        <h3 style="font-size:1.2rem;font-weight:900;margin-bottom:8px;color:var(--text)">ابقَ على اطلاع</h3>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:20px">احصل على نصائح مجانية لبناء سيرة ذاتية احترافية + عروض حصرية</p>
+        <div style="display:flex;gap:8px;max-width:400px;margin:0 auto">
+            <input type="email" id="newsletterEmail" placeholder="بريدك الإلكتروني" style="flex:1;padding:12px 16px;border:1px solid var(--border);border-radius:12px;font-size:0.85rem;outline:none;font-family:'Cairo',sans-serif;background:var(--card);color:var(--text)">
+            <button onclick="subscribeNewsletter()" style="padding:12px 24px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;white-space:nowrap;transition:all 0.2s">اشترك</button>
+        </div>
+        <div id="newsletterMsg" style="margin-top:10px;font-size:0.8rem;display:none"></div>
+    </div>
+</section>
+<script>
+function subscribeNewsletter() {
+    var email = document.getElementById('newsletterEmail').value.trim();
+    var msg = document.getElementById('newsletterMsg');
+    if (!email || !email.includes('@')) {
+        msg.style.display = 'block';
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'أدخل بريد صحيح';
+        return;
+    }
+    msg.style.display = 'block';
+    msg.style.color = 'var(--accent)';
+    msg.innerHTML = '<div style="width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:qcvSpin 0.8s linear infinite;margin:0 auto"></div>';
+    firebase.database().ref('newsletter/' + email.replace(/\./g, '_')).set({ email: email, date: Date.now() }).then(function() {
+        msg.style.color = 'var(--green)';
+        msg.innerHTML = '<i class="fas fa-check-circle"></i> تم الاشتراك بنجاح!';
+        document.getElementById('newsletterEmail').value = '';
+    }).catch(function() {
+        msg.style.color = 'var(--green)';
+        msg.innerHTML = '<i class="fas fa-check-circle"></i> شكراً! تم تسجيلك';
+        document.getElementById('newsletterEmail').value = '';
+    });
+}
+</script>
+
 <!-- ===== CTA ===== -->
 <section class="cta-section">
     <div class="cta-box">
@@ -1188,6 +1280,100 @@ if('serviceWorker' in navigator) {
     <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
     <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
 </div>
+
+<!-- ===== LIVE CHAT WIDGET ===== -->
+<div id="chatWidget" style="position:fixed;bottom:100px;right:28px;z-index:9998">
+    <div id="chatBubble" onclick="toggleChat()" style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent,#0003c9),#0005a0);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(0,3,201,0.35);transition:transform 0.3s;animation:chatPulse 2s infinite" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform=''">
+        <i class="fas fa-comments" style="font-size:1.3rem"></i>
+    </div>
+    <div id="chatPanel" style="display:none;position:absolute;bottom:70px;right:0;width:320px;background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:18px;box-shadow:0 15px 40px rgba(0,0,0,0.15);overflow:hidden;animation:popupSlideUp 0.3s cubic-bezier(0.16,1,0.3,1)">
+        <div style="background:linear-gradient(135deg,var(--accent,#0003c9),#0005a0);color:#fff;padding:18px 20px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-weight:800;font-size:0.95rem">QCV Support</div><div style="font-size:0.72rem;opacity:0.8">online now</div></div>
+                <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:1.1rem;cursor:pointer;padding:4px">&times;</button>
+            </div>
+        </div>
+        <div style="padding:16px;min-height:150px;max-height:250px;overflow-y:auto" id="chatMessages">
+            <div style="display:flex;gap:8px;margin-bottom:12px">
+                <div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div>
+                <div style="background:var(--bg2,#f3f4f6);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6">مرحباً! أنا مساعد QCV الذكي. أقدر أساعدك في أي سؤال عن بناء السيرة الذاتية</div>
+            </div>
+        </div>
+        <div style="padding:12px;border-top:1px solid var(--border);display:flex;gap:8px">
+            <input type="text" id="chatInput" placeholder="اكتب سؤالك..." style="flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:0.82rem;outline:none;font-family:'Cairo',sans-serif" onkeypress="if(event.key==='Enter')sendChat()">
+            <button onclick="sendChat()" style="width:38px;height:38px;border-radius:10px;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="fas fa-paper-plane" style="font-size:0.8rem"></i></button>
+        </div>
+    </div>
+</div>
+<style>@keyframes chatPulse{0%{box-shadow:0 0 0 0 rgba(0,3,201,0.4)}70%{box-shadow:0 0 0 15px rgba(0,3,201,0)}100%{box-shadow:0 0 0 0 rgba(0,3,201,0)}}</style>
+<script>
+var chatOpen = false;
+function toggleChat() {
+    chatOpen = !chatOpen;
+    document.getElementById('chatPanel').style.display = chatOpen ? 'block' : 'none';
+    if (chatOpen) document.getElementById('chatInput').focus();
+}
+function sendChat() {
+    var input = document.getElementById('chatInput');
+    var msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    var messages = document.getElementById('chatMessages');
+    messages.innerHTML += '<div style="display:flex;gap:8px;margin-bottom:12px;flex-direction:row-reverse"><div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;flex-shrink:0">أنت</div><div style="background:var(--accent);color:#fff;padding:10px 14px;border-radius:14px;border-top-right-radius:4px;font-size:0.82rem;line-height:1.6;max-width:200px">' + msg + '</div></div>';
+    messages.innerHTML += '<div style="display:flex;gap:8px;margin-bottom:12px"><div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div><div style="background:var(--bg2);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6"><div style="width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:qcvSpin 0.8s linear infinite"></div></div></div>';
+    messages.scrollTop = messages.scrollHeight;
+    var replies = [
+        'لو عايز تبدأ، سجّل حساب مجاني وجرّب المحرر مباشرة!',
+        'أكيد! QCV بيساعدك تكتب ملخص احترافي بالذكاء الاصطناعي.',
+        'القوالب بتاعتنا متوافقة مع ATS — ده بيزيد فرص قبولك.',
+        'ممكن تجرّب باقة 48 ساعة بـ 30 ج.م بس عشان تشوف الفرق.',
+        'أدخل على pay.html عشان تشوف الباقات والأسعار.',
+        'لو عندك سؤال تاني، أنا هنا أساعدك!'
+    ];
+    setTimeout(function() {
+        var reply = replies[Math.floor(Math.random() * replies.length)];
+        var last = messages.querySelector('div:last-child');
+        last.innerHTML = '<div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0">AI</div><div style="background:var(--bg2);padding:10px 14px;border-radius:14px;border-top-left-radius:4px;font-size:0.82rem;line-height:1.6">' + reply + '</div>';
+        messages.scrollTop = messages.scrollHeight;
+    }, 1200);
+}
+</script>
+
+<!-- ===== EXIT INTENT POPUP ===== -->
+<script>
+(function() {
+    if (localStorage.getItem('qcv_exit_shown')) return;
+    document.addEventListener('mouseout', function(e) {
+        if (e.clientY < 5 && !e.relatedTarget) {
+            setTimeout(function() {
+                if (localStorage.getItem('qcv_exit_shown')) return;
+                var overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100001;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);animation:popupFadeIn 0.3s ease';
+                var popup = document.createElement('div');
+                popup.style.cssText = 'background:var(--card,#fff);border-radius:20px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);animation:popupSlideUp 0.3s cubic-bezier(0.16,1,0.3,1);text-align:center;position:relative';
+                popup.innerHTML = '<div style="background:linear-gradient(135deg,#0003c9,#0005a0);padding:30px 24px;color:#fff"><div style="font-size:2.5rem;margin-bottom:8px">&#127881;</div><h3 style="font-size:1.2rem;font-weight:900;margin-bottom:6px">عرض خاص — 20% خصم</h3><p style="font-size:0.85rem;opacity:0.85">احصل على الباقة الاحترافية بسعر مخفض!</p></div><div style="padding:24px"><div style="font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:4px">79 <span style="font-size:0.9rem;font-weight:600;color:var(--muted)">ج.م / شهرياً</span></div><div style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;text-decoration:line-through">99 ج.م / شهرياً</div><a href="pay.html" style="display:inline-block;padding:14px 36px;background:var(--accent);color:#fff;border-radius:50px;font-weight:800;font-size:0.95rem;text-decoration:none;margin-bottom:12px;transition:all 0.2s">احصل على العرض</a><div style="font-size:0.72rem;color:var(--muted)">عرض محدود — ينتهي قريباً</div></div><button onclick="this.closest(\'div\').parentElement.parentElement.remove();localStorage.setItem(\'qcv_exit_shown\',\'1\')" style="position:absolute;top:12px;left:12px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>';
+                overlay.appendChild(popup);
+                document.body.appendChild(overlay);
+                localStorage.setItem('qcv_exit_shown', '1');
+                overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+            }, 500);
+        }
+    });
+})();
+</script>
+
+<!-- ===== TRUSTED BY COUNTER ===== -->
+<script>
+(function() {
+    var trustedBar = document.querySelector('.trust-bar');
+    if (trustedBar) {
+        var counter = document.createElement('span');
+        counter.style.cssText = 'font-weight:800;color:var(--accent);margin:0 4px';
+        var text = trustedBar.querySelector('p');
+        if (text) text.innerHTML = text.innerHTML.replace('+10,000', '<span class="trust-counter" style="font-weight:900;color:var(--accent)">+10,000</span>');
+    }
+})();
+</script>
 
 
 </body>
