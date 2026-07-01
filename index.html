@@ -3199,6 +3199,72 @@
     </script>
 
 
+    <!-- ===== WHATS NEW POPUP ===== -->
+    <script>
+        (function () {
+            var today = new Date().toISOString().slice(0, 10);
+            if (localStorage.getItem('qcv_whatsnew_date') === today) return;
+
+            var updates = [
+                { icon: '💰', title: 'أسعار سنوية', desc: 'وفّر 20% مع الاشتراك السنوي — Pro 79 ج.م/شهر، Unlimited 239 ج.م/شهر' },
+                { icon: '📝', title: '12 مقال جديد', desc: 'دليل شامل للكتابة والتوظيف والمقابلات على blog.html' },
+                { icon: '🔍', title: 'فحص ATS مجاني', desc: 'حلل سيرتك الذاتية وشوف قد ايه متوافقة مع أنظمة التوظيف على ats-checker.html' },
+                { icon: '🎨', title: '15+ قالب احترافي', desc: 'قوالب مصممة خصيصاً لاجتياز فلتر ATS مع إخراج PDF احترافي' },
+                { icon: '🤖', title: 'مساعد ذكاء اصطناعي', desc: 'اكتب سيرتك بمساعدة AI — ملخص، تدقيق، تحسين، ترجمة' },
+                { icon: '📄', title: 'بورتفوليو شخصي', desc: 'انشر سيرتك كصفحة عامة مع رابط شير وتحميل PDF' }
+            ];
+
+            var overlay = document.createElement('div');
+            overlay.id = 'whatsNewOverlay';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100002;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);animation:popupFadeIn 0.3s ease';
+
+            var card = document.createElement('div');
+            card.style.cssText = 'background:var(--card,#fff);border-radius:20px;max-width:460px;width:100%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);animation:popupSlideUp 0.35s cubic-bezier(0.16,1,0.3,1);max-height:80vh;display:flex;flex-direction:column';
+
+            var header = document.createElement('div');
+            header.style.cssText = 'background:linear-gradient(135deg,#0003c9,#0005a0);padding:24px 24px 18px;color:#fff;text-align:center;flex-shrink:0;position:relative';
+            header.innerHTML = '<div style="font-size:2rem;margin-bottom:4px">🚀</div><h3 style="font-size:1.15rem;font-weight:900;margin:0 0 4px">ما الجديد في QCV؟</h3><p style="font-size:0.78rem;opacity:0.8;margin:0">آخر التحديثات وال features الجديدة</p><button id="whatsNewClose" style="position:absolute;top:12px;left:12px;width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s" onmouseover="this.style.background=\'rgba(255,255,255,0.35)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.2)\'">&times;</button>';
+
+            var body = document.createElement('div');
+            body.style.cssText = 'padding:16px 20px;overflow-y:auto;flex:1';
+
+            updates.forEach(function (u, i) {
+                var item = document.createElement('div');
+                item.style.cssText = 'display:flex;gap:12px;align-items:flex-start;padding:12px 0;' + (i < updates.length - 1 ? 'border-bottom:1px solid var(--border,#e5e7eb)' : '');
+                item.innerHTML = '<div style="font-size:1.4rem;flex-shrink:0;width:36px;height:36px;background:var(--bg,#f8fafc);border-radius:10px;display:flex;align-items:center;justify-content:center">' + u.icon + '</div><div><div style="font-weight:700;font-size:0.88rem;color:var(--text,#1e293b);margin-bottom:2px">' + u.title + '</div><div style="font-size:0.78rem;color:var(--muted,#64748b);line-height:1.5">' + u.desc + '</div></div>';
+                body.appendChild(item);
+            });
+
+            var footer = document.createElement('div');
+            footer.style.cssText = 'padding:12px 20px 16px;text-align:center;flex-shrink:0';
+            footer.innerHTML = '<button id="whatsNewAction" style="width:100%;padding:12px;background:var(--accent,#0003c9);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;transition:opacity 0.2s" onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'">ابدأ الآن مجاناً</button><div style="font-size:0.68rem;color:var(--muted,#94a3b8);margin-top:8px">لا تظهر هذا العرض مرة أخرى اليوم</div>';
+
+            card.appendChild(header);
+            card.appendChild(body);
+            card.appendChild(footer);
+            overlay.appendChild(card);
+            document.body.appendChild(overlay);
+
+            function closeWhatsNew() {
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.25s ease';
+                setTimeout(function () { overlay.remove(); }, 250);
+                localStorage.setItem('qcv_whatsnew_date', today);
+            }
+
+            document.getElementById('whatsNewClose').addEventListener('click', closeWhatsNew);
+            overlay.addEventListener('click', function (e) { if (e.target === overlay) closeWhatsNew(); });
+            document.getElementById('whatsNewAction').addEventListener('click', function () {
+                closeWhatsNew();
+                window.location.href = 'editor.html';
+            });
+
+            setTimeout(function () {
+                overlay.style.opacity = '1';
+            }, 1500);
+        })();
+    </script>
+
 </body>
 
 </html>
