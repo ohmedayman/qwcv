@@ -22,9 +22,10 @@ QCV provides a complete CV/resume building platform with:
 - Login: https://qcv.vexonet.online/login.html
 
 ## Pricing
-- Free Plan: 1 CV, 1 template (Classic), 2 PDF downloads, watermark
-- Pro Plan: 99 EGP/month - Unlimited templates, AI features, no watermark
-- Unlimited Plan: 299 EGP/month - Everything in Pro plus priority support
+- Free Plan: 1 CV, 1 template (Classic), 1 PDF download, watermark
+- Pro Plan: 99 EGP/month (79 EGP/yearly) - 5 CVs, all templates, AI, portfolio
+- Unlimited Plan: 299 EGP/month (239 EGP/yearly) - Everything unlimited
+- 48h Pass: 30 EGP - Full access for 48 hours
 
 ## API Endpoints
 QCV uses Firebase for backend services. Authentication is required for most features.

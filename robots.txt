@@ -1,34 +1,11 @@
 User-agent: *
 Allow: /
-Disallow: /admin.html
-Disallow: /admin-setup.html
-Disallow: /editor.html
-Disallow: /pay.html
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: CCBot
-Allow: /
+Disallow: /admin*
+Disallow: /admin-setup*
+Disallow: /login*
+Disallow: /my-account*
+Disallow: /my-page*
+Disallow: /pay*
+Disallow: /trash*
 
 Sitemap: https://qcv.vexonet.online/sitemap.xml
-
-Crawl-delay: 1

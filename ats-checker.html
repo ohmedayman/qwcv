@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فحص ATS مجاني — اختبر سيرتك الذاتية مع نظام التوظيف</title>
-    <meta name="description" content="أداة فحص ATS مجانية من QCV — اختبر توافق سيرتك الذاتية مع أنظمة التوظيف الحديثة واحصل على تقييم فوري مع نصائح لتحسين فرص قبولك.">
-    <meta name="keywords" content="فحص ATS, اختبار سيرة ذاتية, ATS check, resume checker, توافق ATS, نظام تتبع المتقدمين, تحليل CV مجاني, فحص CV, resume score">
+    <meta name="description"
+        content="أداة فحص ATS مجانية من QCV — اختبر توافق سيرتك الذاتية مع أنظمة التوظيف الحديثة واحصل على تقييم فوري مع نصائح لتحسين فرص قبولك.">
+    <meta name="keywords"
+        content="فحص ATS, اختبار سيرة ذاتية, ATS check, resume checker, توافق ATS, نظام تتبع المتقدمين, تحليل CV مجاني, فحص CV, resume score">
     <link rel="canonical" href="https://qcv.vexonet.online/ats-checker.html">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <meta name="robots" content="index, follow">
@@ -15,8 +18,11 @@
     <meta property="og:url" content="https://qcv.vexonet.online/ats-checker.html">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </noscript>
     <script defer src="js/theme.js"></script>
     <script defer src="js/lang.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,9 +46,26 @@
             padding: 70px 24px 50px;
             text-align: center;
         }
-        .ats-hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
-        .ats-hero p { font-size: 0.95rem; opacity: 0.85; max-width: 550px; margin: 0 auto; }
-        .ats-container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+
+        .ats-hero h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .ats-hero p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .ats-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
         .ats-input-section {
             background: var(--card, #fff);
             border: 2px solid var(--border, #e5e7eb);
@@ -50,7 +73,14 @@
             padding: 28px;
             margin-bottom: 24px;
         }
-        .ats-input-section h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; color: var(--text, #1a1a2e); }
+
+        .ats-input-section h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--text, #1a1a2e);
+        }
+
         .ats-textarea {
             width: 100%;
             min-height: 300px;
@@ -67,8 +97,15 @@
             background: var(--bg, #fff);
             direction: auto;
         }
-        .ats-textarea:focus { border-color: var(--accent, #0003c9); }
-        .ats-textarea::placeholder { color: var(--muted, #9ca3af); }
+
+        .ats-textarea:focus {
+            border-color: var(--accent, #0003c9);
+        }
+
+        .ats-textarea::placeholder {
+            color: var(--muted, #9ca3af);
+        }
+
         .ats-btn {
             display: flex;
             align-items: center;
@@ -85,15 +122,48 @@
             font-family: 'Cairo', sans-serif;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0,3,201,0.3);
+            box-shadow: 0 4px 20px rgba(0, 3, 201, 0.3);
         }
-        .ats-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0,3,201,0.4); }
-        .ats-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .ats-btn .spinner { display: none; width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
-        .ats-btn.loading .spinner { display: block; }
-        .ats-btn.loading .btn-label { display: none; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .ats-result { display: none; }
+
+        .ats-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 3, 201, 0.4);
+        }
+
+        .ats-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ats-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .ats-btn.loading .spinner {
+            display: block;
+        }
+
+        .ats-btn.loading .btn-label {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .ats-result {
+            display: none;
+        }
+
         .ats-score-card {
             background: var(--card, #fff);
             border: 1px solid var(--border, #e5e7eb);
@@ -102,6 +172,7 @@
             text-align: center;
             margin-bottom: 24px;
         }
+
         .ats-score-circle {
             width: 140px;
             height: 140px;
@@ -113,10 +184,35 @@
             justify-content: center;
             position: relative;
         }
-        .ats-score-circle svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
-        .ats-score-number { font-size: 2.5rem; font-weight: 900; color: var(--text, #1a1a2e); position: relative; z-index: 1; }
-        .ats-score-label { font-size: 0.8rem; color: var(--muted, #6b7280); position: relative; z-index: 1; }
-        .ats-score-verdict { font-size: 1.1rem; font-weight: 800; margin-top: 8px; }
+
+        .ats-score-circle svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+
+        .ats-score-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text, #1a1a2e);
+            position: relative;
+            z-index: 1;
+        }
+
+        .ats-score-label {
+            font-size: 0.8rem;
+            color: var(--muted, #6b7280);
+            position: relative;
+            z-index: 1;
+        }
+
+        .ats-score-verdict {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
         .ats-issues {
             background: var(--card, #fff);
             border: 1px solid var(--border, #e5e7eb);
@@ -124,7 +220,13 @@
             padding: 24px;
             margin-bottom: 24px;
         }
-        .ats-issues h3 { font-size: 1rem; font-weight: 800; margin-bottom: 16px; }
+
+        .ats-issues h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
         .ats-issue {
             display: flex;
             gap: 12px;
@@ -135,7 +237,11 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        .ats-issue:hover { background: var(--bg, #f9fafb); }
+
+        .ats-issue:hover {
+            background: var(--bg, #f9fafb);
+        }
+
         .ats-issue-icon {
             width: 32px;
             height: 32px;
@@ -147,18 +253,48 @@
             flex-shrink: 0;
             margin-top: 2px;
         }
-        .ats-issue-icon.critical { background: #fef2f2; color: #dc2626; }
-        .ats-issue-icon.warning { background: #fffbeb; color: #d97706; }
-        .ats-issue-icon.info { background: #eff6ff; color: #2563eb; }
-        .ats-issue-icon.pass { background: #f0fdf4; color: #16a34a; }
-        .ats-issue-text { font-size: 0.85rem; line-height: 1.6; color: var(--text, #1a1a2e); flex: 1; }
-        .ats-issue-fix { font-size: 0.75rem; color: #16a34a; font-weight: 700; margin-top: 4px; }
+
+        .ats-issue-icon.critical {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .ats-issue-icon.warning {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .ats-issue-icon.info {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .ats-issue-icon.pass {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .ats-issue-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text, #1a1a2e);
+            flex: 1;
+        }
+
+        .ats-issue-fix {
+            font-size: 0.75rem;
+            color: #16a34a;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
         .ats-categories {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-bottom: 24px;
         }
+
         .ats-cat-card {
             background: var(--card, #fff);
             border: 1px solid var(--border, #e5e7eb);
@@ -166,10 +302,33 @@
             padding: 16px;
             text-align: center;
         }
-        .ats-cat-score { font-size: 1.8rem; font-weight: 900; }
-        .ats-cat-name { font-size: 0.78rem; color: var(--muted, #6b7280); margin-top: 4px; }
-        .ats-cat-bar { width: 100%; height: 4px; background: var(--border, #e5e7eb); border-radius: 2px; margin-top: 8px; overflow: hidden; }
-        .ats-cat-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s cubic-bezier(0.16,1,0.3,1); }
+
+        .ats-cat-score {
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+
+        .ats-cat-name {
+            font-size: 0.78rem;
+            color: var(--muted, #6b7280);
+            margin-top: 4px;
+        }
+
+        .ats-cat-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border, #e5e7eb);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .ats-cat-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .ats-cta {
             background: linear-gradient(135deg, #0003c9, #0005a0);
             color: #fff;
@@ -177,8 +336,19 @@
             padding: 32px;
             text-align: center;
         }
-        .ats-cta h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
-        .ats-cta p { font-size: 0.88rem; opacity: 0.85; margin-bottom: 20px; }
+
+        .ats-cta h3 {
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .ats-cta p {
+            font-size: 0.88rem;
+            opacity: 0.85;
+            margin-bottom: 20px;
+        }
+
         .ats-cta a {
             display: inline-block;
             padding: 12px 32px;
@@ -190,102 +360,141 @@
             text-decoration: none;
             transition: all 0.2s;
         }
-        .ats-cta a:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+
+        .ats-cta a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
         .ats-sample-btn {
             display: inline-block;
             margin-top: 12px;
             padding: 8px 16px;
             background: transparent;
-            border: 1px dashed rgba(255,255,255,0.4);
-            color: rgba(255,255,255,0.8);
+            border: 1px dashed rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             font-size: 0.8rem;
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             transition: all 0.2s;
         }
-        .ats-sample-btn:hover { border-color: #fff; color: #fff; }
+
+        .ats-sample-btn:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
         @media (max-width: 600px) {
-            .ats-hero h1 { font-size: 1.5rem; }
-            .ats-categories { grid-template-columns: 1fr; }
-            .ats-textarea { min-height: 200px; }
+            .ats-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .ats-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .ats-textarea {
+                min-height: 200px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<nav style="background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:14px 20px;position:sticky;top:0;z-index:999">
-    <div style="max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between">
-        <a href="index.html" style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);text-decoration:none">Q<span style="color:var(--accent,#0003c9)">CV</span></a>
-        <a href="editor.html" style="background:var(--accent,#0003c9);color:#fff;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:700">ابدأ مجاناً</a>
-    </div>
-</nav>
-
-<header class="ats-hero">
-    <h1>اختبر سيرتك الذاتية مع ATS</h1>
-    <p>استخدم أداة فحص ATS المجانية من QCV وتعرف على مدى توافق سيرتك الذاتية مع أنظمة التوظيف الحديثة</p>
-</header>
-
-<main class="ats-container">
-
-    <div class="ats-input-section" id="inputSection">
-        <h2><i class="fas fa-file-alt" style="color:var(--accent,#0003c9);margin-left:8px"></i> الصق نص سيرتك الذاتية هنا</h2>
-        <textarea class="ats-textarea" id="cvInput" placeholder="الصق محتوى سيرتك الذاتية هنا...&#10;&#10;يتضمن: الاسم، البريد الإلكتروني، الملخص المهني، الخبرات العملية، التعليم، المهارات...&#10;&#10;أو اضغط على 'تجربة بعينة' أدناه لرؤية مثال"></textarea>
-        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-            <button class="ats-sample-btn" style="border-color:var(--border,#e5e7eb);color:var(--muted,#6b7280)" onclick="loadSample()"><i class="fas fa-magic" style="margin-left:4px"></i> تجربة بعينة</button>
-            <button class="ats-sample-btn" style="border-color:var(--border,#e5e7eb);color:var(--muted,#6b7280)" onclick="document.getElementById('cvInput').value=''"><i class="fas fa-trash" style="margin-left:4px"></i> مسح</button>
+    <nav
+        style="background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:14px 20px;position:sticky;top:0;z-index:999">
+        <div style="max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between">
+            <a href="index.html"
+                style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);text-decoration:none">Q<span
+                    style="color:var(--accent,#0003c9)">CV</span></a>
+            <a href="editor.html"
+                style="background:var(--accent,#0003c9);color:#fff;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:700">ابدأ
+                مجاناً</a>
         </div>
-        <div style="margin-top:16px">
-            <button class="ats-btn" id="analyzeBtn" onclick="analyzeCV()">
-                <span class="btn-label"><i class="fas fa-search"></i> فحص السيرة الذاتية الآن</span>
-                <div class="spinner"></div>
-            </button>
-        </div>
-    </div>
+    </nav>
 
-    <div class="ats-result" id="atsResult">
+    <header class="ats-hero">
+        <h1>اختبر سيرتك الذاتية مع ATS</h1>
+        <p>استخدم أداة فحص ATS المجانية من QCV وتعرف على مدى توافق سيرتك الذاتية مع أنظمة التوظيف الحديثة</p>
+    </header>
 
-        <div class="ats-score-card">
-            <div class="ats-score-circle" id="scoreCircle">
-                <svg width="140" height="140">
-                    <circle cx="70" cy="70" r="60" fill="none" stroke="#e5e7eb" stroke-width="10"/>
-                    <circle cx="70" cy="70" r="60" fill="none" stroke="var(--accent,#0003c9)" stroke-width="10" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" id="scoreArc"/>
-                </svg>
-                <div class="ats-score-number" id="scoreNumber">0</div>
-                <div class="ats-score-label">من 100</div>
+    <main class="ats-container">
+
+        <div class="ats-input-section" id="inputSection">
+            <h2><i class="fas fa-file-alt" style="color:var(--accent,#0003c9);margin-left:8px"></i> الصق نص سيرتك
+                الذاتية هنا</h2>
+            <textarea class="ats-textarea" id="cvInput"
+                placeholder="الصق محتوى سيرتك الذاتية هنا...&#10;&#10;يتضمن: الاسم، البريد الإلكتروني، الملخص المهني، الخبرات العملية، التعليم، المهارات...&#10;&#10;أو اضغط على 'تجربة بعينة' أدناه لرؤية مثال"></textarea>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                <button class="ats-sample-btn" style="border-color:var(--border,#e5e7eb);color:var(--muted,#6b7280)"
+                    onclick="loadSample()"><i class="fas fa-magic" style="margin-left:4px"></i> تجربة بعينة</button>
+                <button class="ats-sample-btn" style="border-color:var(--border,#e5e7eb);color:var(--muted,#6b7280)"
+                    onclick="document.getElementById('cvInput').value=''"><i class="fas fa-trash"
+                        style="margin-left:4px"></i> مسح</button>
             </div>
-            <div class="ats-score-verdict" id="scoreVerdict"></div>
+            <div style="margin-top:16px">
+                <button class="ats-btn" id="analyzeBtn" onclick="analyzeCV()">
+                    <span class="btn-label"><i class="fas fa-search"></i> فحص السيرة الذاتية الآن</span>
+                    <div class="spinner"></div>
+                </button>
+            </div>
         </div>
 
-        <div class="ats-categories" id="catsGrid"></div>
+        <div class="ats-result" id="atsResult">
 
-        <div class="ats-issues" id="issuesSection">
-            <h3><i class="fas fa-list-check" style="color:var(--accent,#0003c9);margin-left:8px"></i> التفاصيل والتوصيات</h3>
-            <div id="issuesList"></div>
+            <div class="ats-score-card">
+                <div class="ats-score-circle" id="scoreCircle">
+                    <svg width="140" height="140">
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#e5e7eb" stroke-width="10" />
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="var(--accent,#0003c9)" stroke-width="10"
+                            stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" id="scoreArc" />
+                    </svg>
+                    <div class="ats-score-number" id="scoreNumber">0</div>
+                    <div class="ats-score-label">من 100</div>
+                </div>
+                <div class="ats-score-verdict" id="scoreVerdict"></div>
+            </div>
+
+            <div class="ats-categories" id="catsGrid"></div>
+
+            <div class="ats-issues" id="issuesSection">
+                <h3><i class="fas fa-list-check" style="color:var(--accent,#0003c9);margin-left:8px"></i> التفاصيل
+                    والتوصيات</h3>
+                <div id="issuesList"></div>
+            </div>
+
+            <div class="ats-cta">
+                <h3>ابنِ سيرة ذاتية متوافقة مع ATS</h3>
+                <p>استخدم محرر QCV المجاني لبناء سيرة ذاتية احترافية متوافقة مع أنظمة التوظيف</p>
+                <a href="editor.html">ابدأ الآن مجاناً</a>
+            </div>
+
+            <div style="text-align:center;margin-top:24px">
+                <button onclick="resetChecker()"
+                    style="background:none;border:2px solid var(--border,#e5e7eb);color:var(--text,#1a1a2e);padding:10px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer"><i
+                        class="fas fa-redo" style="margin-left:6px"></i> فحص سيرة ذاتية أخرى</button>
+            </div>
         </div>
 
-        <div class="ats-cta">
-            <h3>ابنِ سيرة ذاتية متوافقة مع ATS</h3>
-            <p>استخدم محرر QCV المجاني لبناء سيرة ذاتية احترافية متوافقة مع أنظمة التوظيف</p>
-            <a href="editor.html">ابدأ الآن مجاناً</a>
+    </main>
+
+    <footer
+        style="background:var(--card,#fff);border-top:1px solid var(--border,#e5e7eb);padding:40px 20px;text-align:center">
+        <div style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);margin-bottom:8px">Q<span
+                style="color:var(--accent,#0003c9)">CV</span></div>
+        <p style="font-size:0.82rem;color:var(--muted,#6b7280);margin-bottom:16px">ابدأ في كتابة سيرتك الذاتية
+            الاحترافية الآن</p>
+        <a href="editor.html"
+            style="display:inline-block;padding:12px 32px;background:var(--accent,#0003c9);color:#fff;border-radius:10px;font-weight:700;font-size:0.9rem;text-decoration:none">ابدأ
+            مجاناً</a>
+        <div style="margin-top:16px;font-size:0.72rem;color:var(--muted,#9ca3af)">&copy; 2025 QCV. جميع الحقوق محفوظة.
         </div>
+    </footer>
 
-        <div style="text-align:center;margin-top:24px">
-            <button onclick="resetChecker()" style="background:none;border:2px solid var(--border,#e5e7eb);color:var(--text,#1a1a2e);padding:10px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer"><i class="fas fa-redo" style="margin-left:6px"></i> فحص سيرة ذاتية أخرى</button>
-        </div>
-    </div>
-
-</main>
-
-<footer style="background:var(--card,#fff);border-top:1px solid var(--border,#e5e7eb);padding:40px 20px;text-align:center">
-    <div style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);margin-bottom:8px">Q<span style="color:var(--accent,#0003c9)">CV</span></div>
-    <p style="font-size:0.82rem;color:var(--muted,#6b7280);margin-bottom:16px">ابدأ في كتابة سيرتك الذاتية الاحترافية الآن</p>
-    <a href="editor.html" style="display:inline-block;padding:12px 32px;background:var(--accent,#0003c9);color:#fff;border-radius:10px;font-weight:700;font-size:0.9rem;text-decoration:none">ابدأ مجاناً</a>
-    <div style="margin-top:16px;font-size:0.72rem;color:var(--muted,#9ca3af)">&copy; 2025 QCV. جميع الحقوق محفوظة.</div>
-</footer>
-
-<script>
-const SAMPLE_CV = `محمد أحمد علي
+    <script>
+        const SAMPLE_CV = `محمد أحمد علي
 مطور ويب — القاهرة، مصر
 Email: mohamed@email.com | Phone: 01012345678
 LinkedIn: linkedin.com/in/mohamed-ali
@@ -311,187 +520,189 @@ LinkedIn: linkedin.com/in/mohamed-ali
 المهارات:
 JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
 
-function loadSample() {
-    document.getElementById('cvInput').value = SAMPLE_CV;
-    document.getElementById('cvInput').focus();
-}
+        function loadSample() {
+            document.getElementById('cvInput').value = SAMPLE_CV;
+            document.getElementById('cvInput').focus();
+        }
 
-function resetChecker() {
-    document.getElementById('atsResult').style.display = 'none';
-    document.getElementById('inputSection').style.display = '';
-    document.getElementById('cvInput').value = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+        function resetChecker() {
+            document.getElementById('atsResult').style.display = 'none';
+            document.getElementById('inputSection').style.display = '';
+            document.getElementById('cvInput').value = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-async function analyzeCV() {
-    const text = document.getElementById('cvInput').value.trim();
-    if (!text || text.length < 50) {
-        alert('الرجاء إدخال نص سيرتك الذاتية (50 حرف على الأقل)');
-        return;
-    }
+        async function analyzeCV() {
+            const text = document.getElementById('cvInput').value.trim();
+            if (!text || text.length < 50) {
+                alert('الرجاء إدخال نص سيرتك الذاتية (50 حرف على الأقل)');
+                return;
+            }
 
-    const btn = document.getElementById('analyzeBtn');
-    btn.classList.add('loading');
-    btn.disabled = true;
+            const btn = document.getElementById('analyzeBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
 
-    try {
-        var prompt = 'You are an expert ATS analyzer. Analyze this CV and return ONLY a JSON object (no markdown, no code blocks) with: {"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","fix":"Arabic fix suggestion"}],"verdict":"Arabic verdict"}. Score: contact(email,phone,linkedin), content(summary,experience,achievements), ATS(keywords,formatting), skills(relevance,count), impact(action verbs,numbers). 8-12 issues. All text in Arabic. CV:\n\n' + text;
-        var response = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {method:'GET'});
-        var content = await response.text();
-        content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-        var result = JSON.parse(content);
-        displayResults(result);
+            try {
+                var prompt = 'You are an expert ATS analyzer. Analyze this CV and return ONLY a JSON object (no markdown, no code blocks) with: {"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","fix":"Arabic fix suggestion"}],"verdict":"Arabic verdict"}. Score: contact(email,phone,linkedin), content(summary,experience,achievements), ATS(keywords,formatting), skills(relevance,count), impact(action verbs,numbers). 8-12 issues. All text in Arabic. CV:\n\n' + text;
+                var response = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' });
+                if (!response.ok) throw new Error('AI service failure ' + response.status);
+                var content = await response.text();
+                content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+                var result = JSON.parse(content);
+                displayResults(result);
 
-    } catch (err) {
-        console.error('ATS analysis error:', err);
-        // Fallback: do local analysis
-        const result = localAnalyze(text);
-        displayResults(result);
-    }
+            } catch (err) {
+                console.error('ATS analysis error:', err);
+                // Fallback: do local analysis
+                const result = localAnalyze(text);
+                displayResults(result);
+            }
 
-    btn.classList.remove('loading');
-    btn.disabled = false;
-}
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
 
-function localAnalyze(text) {
-    const issues = [];
-    let contactScore = 0, contentScore = 0, atsScore = 0, skillsScore = 0, impactScore = 0;
+        function localAnalyze(text) {
+            const issues = [];
+            let contactScore = 0, contentScore = 0, atsScore = 0, skillsScore = 0, impactScore = 0;
 
-    // Contact checks
-    if (/@/.test(text)) { contactScore += 25; issues.push({ type: 'pass', text: 'تم العثور على بريد إلكتروني', fix: '' }); }
-    else issues.push({ type: 'critical', text: 'لم يتم العثور على بريد إلكتروني', fix: 'أضف بريدك الإلكتروني في معلومات الاتصال' });
+            // Contact checks
+            if (/@/.test(text)) { contactScore += 25; issues.push({ type: 'pass', text: 'تم العثور على بريد إلكتروني', fix: '' }); }
+            else issues.push({ type: 'critical', text: 'لم يتم العثور على بريد إلكتروني', fix: 'أضف بريدك الإلكتروني في معلومات الاتصال' });
 
-    if (/0[0-9]{10}/.test(text.replace(/\s/g,''))) { contactScore += 25; issues.push({ type: 'pass', text: 'تم العثور على رقم هاتف', fix: '' }); }
-    else issues.push({ type: 'critical', text: 'لم يتم العثور على رقم هاتف', fix: 'أضف رقم هاتفك في معلومات الاتصال' });
+            if (/0[0-9]{10}/.test(text.replace(/\s/g, ''))) { contactScore += 25; issues.push({ type: 'pass', text: 'تم العثور على رقم هاتف', fix: '' }); }
+            else issues.push({ type: 'critical', text: 'لم يتم العثور على رقم هاتف', fix: 'أضف رقم هاتفك في معلومات الاتصال' });
 
-    if (/linkedin/i.test(text)) { contactScore += 25; issues.push({ type: 'pass', text: 'تم العثور على رابط LinkedIn', fix: '' }); }
-    else issues.push({ type: 'warning', text: 'لم يتم العثور على رابط LinkedIn', fix: 'أضف رابط ملفك الشخصي على LinkedIn' });
+            if (/linkedin/i.test(text)) { contactScore += 25; issues.push({ type: 'pass', text: 'تم العثور على رابط LinkedIn', fix: '' }); }
+            else issues.push({ type: 'warning', text: 'لم يتم العثور على رابط LinkedIn', fix: 'أضف رابط ملفك الشخصي على LinkedIn' });
 
-    if (text.split('\n').filter(l => l.trim()).length > 5) { contactScore += 25; }
+            if (text.split('\n').filter(l => l.trim()).length > 5) { contactScore += 25; }
 
-    // Content checks
-    const lines = text.split('\n').filter(l => l.trim());
-    if (lines.length > 20) { contentScore += 20; issues.push({ type: 'pass', text: 'السيرة الذاتية تحتوي على محتوى كافٍ', fix: '' }); }
-    else issues.push({ type: 'warning', text: 'السيرة الذاتية قصيرة جداً — أضف المزيد من التفاصيل', fix: 'أضف المزيد من الأقسام والتفاصيل' });
+            // Content checks
+            const lines = text.split('\n').filter(l => l.trim());
+            if (lines.length > 20) { contentScore += 20; issues.push({ type: 'pass', text: 'السيرة الذاتية تحتوي على محتوى كافٍ', fix: '' }); }
+            else issues.push({ type: 'warning', text: 'السيرة الذاتية قصيرة جداً — أضف المزيد من التفاصيل', fix: 'أضف المزيد من الأقسام والتفاصيل' });
 
-    if (/\d+/.test(text)) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد أرقام في المحتوى (نتائج محددة)', fix: '' }); }
-    else issues.push({ type: 'warning', text: 'لا توجد أرقام أو نتائج محددة', fix: 'أضف أرقاماً مثل "حسّنت الأداء بنسبة 30%"' });
+            if (/\d+/.test(text)) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد أرقام في المحتوى (نتائج محددة)', fix: '' }); }
+            else issues.push({ type: 'warning', text: 'لا توجد أرقام أو نتائج محددة', fix: 'أضف أرقاماً مثل "حسّنت الأداء بنسبة 30%"' });
 
-    const keywords = ['خبرة', 'Result', 'Achievement', 'Led', 'Managed', 'Developed', 'Created', 'Built', 'Improved', 'Increased', 'Reduced', 'Delivered'];
-    const found = keywords.filter(k => text.toLowerCase().includes(k.toLowerCase()));
-    if (found.length > 0) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد ' + found.length + ' فعل إجراء محترف', fix: '' }); }
-    else issues.push({ type: 'warning', text: 'لم يتم العثور على أفعال إجراء (action verbs)', fix: 'استخدم أفعالاً مثل: طوّر، أنشأ، حسّن، زاد، قاد' });
+            const keywords = ['خبرة', 'Result', 'Achievement', 'Led', 'Managed', 'Developed', 'Created', 'Built', 'Improved', 'Increased', 'Reduced', 'Delivered'];
+            const found = keywords.filter(k => text.toLowerCase().includes(k.toLowerCase()));
+            if (found.length > 0) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد ' + found.length + ' فعل إجراء محترف', fix: '' }); }
+            else issues.push({ type: 'warning', text: 'لم يتم العثور على أفعال إجراء (action verbs)', fix: 'استخدم أفعالاً مثل: طوّر، أنشأ، حسّن، زاد، قاد' });
 
-    if (/(summary|ملخص|profile|الملخص)/i.test(text)) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد قسم الملخص المهني', fix: '' }); }
-    else issues.push({ type: 'critical', text: 'لا يوجد قسم الملخص المهني', fix: 'أضف ملخصاً مهنياً في أعلى السيرة الذاتية' });
+            if (/(summary|ملخص|profile|الملخص)/i.test(text)) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد قسم الملخص المهني', fix: '' }); }
+            else issues.push({ type: 'critical', text: 'لا يوجد قسم الملخص المهني', fix: 'أضف ملخصاً مهنياً في أعلى السيرة الذاتية' });
 
-    if (/(experience|خبرة|work|العمل)/i.test(text)) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد قسم الخبرة العملية', fix: '' }); }
-    else issues.push({ type: 'critical', text: 'لا يوجد قسم خبرة عملية', fix: 'أضف قسم الخبرة العملية مع التفاصيل' });
+            if (/(experience|خبرة|work|العمل)/i.test(text)) { contentScore += 20; issues.push({ type: 'pass', text: 'يوجد قسم الخبرة العملية', fix: '' }); }
+            else issues.push({ type: 'critical', text: 'لا يوجد قسم خبرة عملية', fix: 'أضف قسم الخبرة العملية مع التفاصيل' });
 
-    // ATS checks
-    if (!/[^\u0000-\u007F]{3,}/.test(text.split('\n')[0])) { atsScore += 25; issues.push({ type: 'pass', text: 'الاسم خالٍ من الرموز الخاصة', fix: '' }); }
-    else issues.push({ type: 'warning', text: 'الاسم يحتوي على رموز خاصة', fix: 'تجنب الرموز في اسم السيرة الذاتية' });
+            // ATS checks
+            if (!/[^\u0000-\u007F]{3,}/.test(text.split('\n')[0])) { atsScore += 25; issues.push({ type: 'pass', text: 'الاسم خالٍ من الرموز الخاصة', fix: '' }); }
+            else issues.push({ type: 'warning', text: 'الاسم يحتوي على رموز خاصة', fix: 'تجنب الرموز في اسم السيرة الذاتية' });
 
-    const techSkills = ['JavaScript','Python','React','Node','SQL','HTML','CSS','Java','C++','PHP','TypeScript','Angular','Vue','Docker','AWS','Git'];
-    const foundSkills = techSkills.filter(s => text.toLowerCase().includes(s.toLowerCase()));
-    if (foundSkills.length >= 3) { atsScore += 25; skillsScore += 40; issues.push({ type: 'pass', text: 'يوجد ' + foundSkills.length + ' مهارة تقنية محددة', fix: '' }); }
-    else { issues.push({ type: 'warning', text: 'عدد المهارات التقنية المحددة قليل (' + foundSkills.length + ')', fix: 'أضف مهارات تقنية محددة مثل: JavaScript, React, SQL' }); skillsScore += 15; }
+            const techSkills = ['JavaScript', 'Python', 'React', 'Node', 'SQL', 'HTML', 'CSS', 'Java', 'C++', 'PHP', 'TypeScript', 'Angular', 'Vue', 'Docker', 'AWS', 'Git'];
+            const foundSkills = techSkills.filter(s => text.toLowerCase().includes(s.toLowerCase()));
+            if (foundSkills.length >= 3) { atsScore += 25; skillsScore += 40; issues.push({ type: 'pass', text: 'يوجد ' + foundSkills.length + ' مهارة تقنية محددة', fix: '' }); }
+            else { issues.push({ type: 'warning', text: 'عدد المهارات التقنية المحددة قليل (' + foundSkills.length + ')', fix: 'أضف مهارات تقنية محددة مثل: JavaScript, React, SQL' }); skillsScore += 15; }
 
-    atsScore += 25; // Formatting assumed OK for plain text
-    atsScore += 25; // Keywords assumed present
+            atsScore += 25; // Formatting assumed OK for plain text
+            atsScore += 25; // Keywords assumed present
 
-    // Skills
-    if (foundSkills.length < 3) skillsScore += 15;
-    else if (foundSkills.length < 6) skillsScore += 30;
-    else skillsScore += 50;
+            // Skills
+            if (foundSkills.length < 3) skillsScore += 15;
+            else if (foundSkills.length < 6) skillsScore += 30;
+            else skillsScore += 50;
 
-    // Impact
-    if (/\d+%|\d+\+|\d+x/i.test(text)) { impactScore += 30; issues.push({ type: 'pass', text: 'يوجد نتائج محددة بأرقام', fix: '' }); }
-    else { impactScore += 10; issues.push({ type: 'warning', text: 'أضف نتائج محددة بأرقام (نسبة %، عدد مستخدمين)', fix: 'مثال: "حسّنت أداء النظام بنسبة 40%"' }); }
+            // Impact
+            if (/\d+%|\d+\+|\d+x/i.test(text)) { impactScore += 30; issues.push({ type: 'pass', text: 'يوجد نتائج محددة بأرقام', fix: '' }); }
+            else { impactScore += 10; issues.push({ type: 'warning', text: 'أضف نتائج محددة بأرقام (نسبة %، عدد مستخدمين)', fix: 'مثال: "حسّنت أداء النظام بنسبة 40%"' }); }
 
-    if (/(Led|Managed|Directed|Supervised|قاد|أدار|شرّف)/i.test(text)) { impactScore += 25; issues.push({ type: 'pass', text: 'يوجد أفعال قيادية', fix: '' }); }
-    else impactScore += 5;
+            if (/(Led|Managed|Directed|Supervised|قاد|أدار|شرّف)/i.test(text)) { impactScore += 25; issues.push({ type: 'pass', text: 'يوجد أفعال قيادية', fix: '' }); }
+            else impactScore += 5;
 
-    if (/(Bachelor|Degree|University|بكالوريوس|جامعة)/i.test(text)) { impactScore += 20; }
-    impactScore += 25;
+            if (/(Bachelor|Degree|University|بكالوريوس|جامعة)/i.test(text)) { impactScore += 20; }
+            impactScore += 25;
 
-    const overall = Math.round(contactScore * 0.15 + contentScore * 0.25 + atsScore * 0.25 + skillsScore * 0.2 + impactScore * 0.15);
+            const overall = Math.round(contactScore * 0.15 + contentScore * 0.25 + atsScore * 0.25 + skillsScore * 0.2 + impactScore * 0.15);
 
-    return {
-        overall,
-        categories: {
-            contact: { score: Math.min(100, contactScore), name: 'معلومات الاتصال' },
-            content: { score: Math.min(100, contentScore), name: 'محتوى السيرة الذاتية' },
-            ats: { score: Math.min(100, atsScore), name: 'التوافق مع ATS' },
-            skills: { score: Math.min(100, skillsScore), name: 'المهارات' },
-            impact: { score: Math.min(100, impactScore), name: 'التأثير المهني' }
-        },
-        issues: issues.slice(0, 12),
-        verdict: overall >= 80 ? 'ممتاز! سيرتك الذاتية متوافقة مع ATS' : overall >= 60 ? 'جيد — تحتاج بعض التحسينات البسيطة' : overall >= 40 ? 'مقبول — يحتاج تحسينات جوهرية' : 'يحتاج عمل كثير — ركّز على التحسينات المطلوبة'
-    };
-}
+            return {
+                overall,
+                categories: {
+                    contact: { score: Math.min(100, contactScore), name: 'معلومات الاتصال' },
+                    content: { score: Math.min(100, contentScore), name: 'محتوى السيرة الذاتية' },
+                    ats: { score: Math.min(100, atsScore), name: 'التوافق مع ATS' },
+                    skills: { score: Math.min(100, skillsScore), name: 'المهارات' },
+                    impact: { score: Math.min(100, impactScore), name: 'التأثير المهني' }
+                },
+                issues: issues.slice(0, 12),
+                verdict: overall >= 80 ? 'ممتاز! سيرتك الذاتية متوافقة مع ATS' : overall >= 60 ? 'جيد — تحتاج بعض التحسينات البسيطة' : overall >= 40 ? 'مقبول — يحتاج تحسينات جوهرية' : 'يحتاج عمل كثير — ركّز على التحسينات المطلوبة'
+            };
+        }
 
-function displayResults(result) {
-    document.getElementById('inputSection').style.display = 'none';
-    document.getElementById('atsResult').style.display = 'block';
+        function displayResults(result) {
+            document.getElementById('inputSection').style.display = 'none';
+            document.getElementById('atsResult').style.display = 'block';
 
-    // Animate score
-    const arc = document.getElementById('scoreArc');
-    const num = document.getElementById('scoreNumber');
-    const verdict = document.getElementById('scoreVerdict');
-    const score = result.overall;
+            // Animate score
+            const arc = document.getElementById('scoreArc');
+            const num = document.getElementById('scoreNumber');
+            const verdict = document.getElementById('scoreVerdict');
+            const score = result.overall;
 
-    // Determine color
-    let color = '#dc2626';
-    if (score >= 80) color = '#16a34a';
-    else if (score >= 60) color = '#d97706';
-    else if (score >= 40) color = '#ea580c';
+            // Determine color
+            let color = '#dc2626';
+            if (score >= 80) color = '#16a34a';
+            else if (score >= 60) color = '#d97706';
+            else if (score >= 40) color = '#ea580c';
 
-    arc.style.stroke = color;
-    verdict.style.color = color;
+            arc.style.stroke = color;
+            verdict.style.color = color;
 
-    // Animate circle
-    setTimeout(() => {
-        const offset = 377 - (377 * score / 100);
-        arc.style.strokeDashoffset = offset;
-    }, 100);
+            // Animate circle
+            setTimeout(() => {
+                const offset = 377 - (377 * score / 100);
+                arc.style.strokeDashoffset = offset;
+            }, 100);
 
-    // Animate number
-    let current = 0;
-    const interval = setInterval(() => {
-        current += Math.ceil((score - current) / 10);
-        if (current >= score) { current = score; clearInterval(interval); }
-        num.textContent = current;
-    }, 30);
+            // Animate number
+            let current = 0;
+            const interval = setInterval(() => {
+                current += Math.ceil((score - current) / 10);
+                if (current >= score) { current = score; clearInterval(interval); }
+                num.textContent = current;
+            }, 30);
 
-    verdict.textContent = result.verdict;
+            verdict.textContent = result.verdict;
 
-    // Categories
-    const catsGrid = document.getElementById('catsGrid');
-    catsGrid.innerHTML = '';
-    const cats = result.categories;
-    Object.keys(cats).forEach(key => {
-        const cat = cats[key];
-        let catColor = '#dc2626';
-        if (cat.score >= 80) catColor = '#16a34a';
-        else if (cat.score >= 60) catColor = '#d97706';
-        else if (cat.score >= 40) catColor = '#ea580c';
+            // Categories
+            const catsGrid = document.getElementById('catsGrid');
+            catsGrid.innerHTML = '';
+            const cats = result.categories;
+            Object.keys(cats).forEach(key => {
+                const cat = cats[key];
+                let catColor = '#dc2626';
+                if (cat.score >= 80) catColor = '#16a34a';
+                else if (cat.score >= 60) catColor = '#d97706';
+                else if (cat.score >= 40) catColor = '#ea580c';
 
-        catsGrid.innerHTML += '<div class="ats-cat-card"><div class="ats-cat-score" style="color:' + catColor + '">' + cat.score + '</div><div class="ats-cat-name">' + cat.name + '</div><div class="ats-cat-bar"><div class="ats-cat-bar-fill" style="width:' + cat.score + '%;background:' + catColor + '"></div></div></div>';
-    });
+                catsGrid.innerHTML += '<div class="ats-cat-card"><div class="ats-cat-score" style="color:' + catColor + '">' + cat.score + '</div><div class="ats-cat-name">' + cat.name + '</div><div class="ats-cat-bar"><div class="ats-cat-bar-fill" style="width:' + cat.score + '%;background:' + catColor + '"></div></div></div>';
+            });
 
-    // Issues
-    const issuesList = document.getElementById('issuesList');
-    issuesList.innerHTML = '';
-    const icons = { critical: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info', pass: 'fa-circle-check' };
-    result.issues.forEach(issue => {
-        issuesList.innerHTML += '<div class="ats-issue"><div class="ats-issue-icon ' + issue.type + '"><i class="fas ' + icons[issue.type] + '"></i></div><div><div class="ats-issue-text">' + issue.text + '</div>' + (issue.fix ? '<div class="ats-issue-fix"><i class="fas fa-wrench" style="margin-left:4px"></i>' + issue.fix + '</div>' : '') + '</div></div>';
-    });
+            // Issues
+            const issuesList = document.getElementById('issuesList');
+            issuesList.innerHTML = '';
+            const icons = { critical: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info', pass: 'fa-circle-check' };
+            result.issues.forEach(issue => {
+                issuesList.innerHTML += '<div class="ats-issue"><div class="ats-issue-icon ' + issue.type + '"><i class="fas ' + icons[issue.type] + '"></i></div><div><div class="ats-issue-text">' + issue.text + '</div>' + (issue.fix ? '<div class="ats-issue-fix"><i class="fas fa-wrench" style="margin-left:4px"></i>' + issue.fix + '</div>' : '') + '</div></div>';
+            });
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
-<script defer src="js/animations.js"></script>
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+    <script defer src="js/animations.js"></script>
 
 </body>
+
 </html>

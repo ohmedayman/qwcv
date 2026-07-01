@@ -2888,7 +2888,7 @@
                 </div>
             </div>
             <div id="chatMessages"
-                style="padding:16px;min-height:170px;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:var(--bg,#f8fafc)">
+                style="padding:16px;min-height:140px;max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:var(--bg,#f8fafc)">
                 <div style="display:flex;gap:8px;align-items:flex-start">
                     <div
                         style="width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0">
@@ -2897,6 +2897,9 @@
                         style="background:var(--bg2,#f3f4f6);padding:12px 14px;border-radius:16px;border-top-left-radius:6px;font-size:0.84rem;line-height:1.65;max-width:100%;box-shadow:0 0 0 1px rgba(0,0,0,0.04)">
                         مرحبا! أنا مساعد QCV الذكي. أقدر أساعدك في أي سؤال عن بناء السيرة الذاتية.</div>
                 </div>
+            </div>
+            <div id="chatSuggestions"
+                style="padding:10px 16px 4px;display:flex;flex-wrap:wrap;gap:8px;background:var(--bg,#f8fafc);border-top:1px solid rgba(0,0,0,0.04)">
             </div>
             <div
                 style="padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--card,#fff)">
@@ -2974,6 +2977,7 @@
             panel.style.display = chatOpen ? 'block' : 'none';
             panel.setAttribute('aria-hidden', chatOpen ? 'false' : 'true');
             if (chatOpen) {
+                renderChatSuggestions();
                 setTimeout(function () { document.getElementById('chatInput').focus(); }, 50);
             }
         }
@@ -3001,6 +3005,33 @@
             if (typing) typing.removeAttribute('id');
         }
 
+        function renderChatSuggestions() {
+            var suggestions = [
+                { label: 'أريد قالب ATS', value: 'ما هو أفضل قالب ATS المناسب لي؟' },
+                { label: 'كيف أكتب ملخص', value: 'كيف أكتب ملخص مهني جذاب للسيرة الذاتية؟' },
+                { label: 'سعر الباقات', value: 'ما هو سعر الباقات وما الفرق بينها؟' },
+                { label: 'نصائح الخبرة', value: 'كيف أكتب خبرات مهنية بشكل احترافي؟' }
+            ];
+            var container = document.getElementById('chatSuggestions');
+            if (!container) return;
+            container.innerHTML = '';
+            suggestions.forEach(function (item) {
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = item.label;
+                button.style.cssText = 'padding:8px 12px;border:1px solid rgba(0,0,0,0.08);border-radius:999px;background:var(--card,#fff);color:var(--text,#111827);font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.18s;';
+                button.onmouseover = function () { button.style.background = 'rgba(0,3,201,0.08)'; };
+                button.onmouseout = function () { button.style.background = 'var(--card,#fff)'; };
+                button.onclick = function () {
+                    var input = document.getElementById('chatInput');
+                    if (!input) return;
+                    input.value = item.value;
+                    sendChat();
+                };
+                container.appendChild(button);
+            });
+        }
+
         function sendChat() {
             var input = document.getElementById('chatInput');
             if (!input) return;
@@ -3014,7 +3045,10 @@
             var prompt = 'System: ' + chatHistory[0].content + '\n\nUser: ' + msg;
 
             fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' })
-                .then(function (r) { return r.text(); })
+                .then(function (r) {
+                    if (!r.ok) throw new Error('AI service failure ' + r.status);
+                    return r.text();
+                })
                 .then(function (reply) {
                     removeTypingIndicator();
                     if (!reply || reply.length < 10) { reply = localChatReply(msg); }
@@ -3029,7 +3063,7 @@
 
         function localChatReply(msg) {
             var m = msg.toLowerCase();
-            if (m.match(/سعر|السعر|باق|التسعير|كم|price|cost|egp|جنيه/)) return 'الباقة المجانية: مجاناً ✅ | الاحترافية: 99 ج.م/شهر | غير محدودة: 299 ج.م/شهر. تفاصيل أكتر على pay.html 🎯';
+            if (m.match(/سعر|السعر|باق|التسعير|كم|price|cost|egp|جنيه/)) return 'الباقة المجانية: مجاناً ✅ | الاحترافية: 99 ج.م/شهر (79 سنوي) | غير محدودة: 299 ج.م/شهر (239 سنوي). وفّر 20% بالاشتراك السنوي! تفاصيل على pay.html 🎯';
             if (m.match(/template|قالب|تصميم|شكل/)) return 'عندنا أكثر من 15 قالب احترافي متوافق مع ATS! جرّبهم على templates.html واختار اللي يناسبك 🎨';
             if (m.match(/ats|توافق|نظام تتبع|resume score/)) return 'ATS هو نظام تتبع المتقدمين اللي الشركات بتستخدمه. قوالبنا مصممة عشان تجتازه. جرّب فحص ATS المجاني على ats-checker.html 🔍';
             if (m.match(/editor|محرر|ابدأ|start|begin/)) return 'ابدأ دلوقتي مجاناً على editor.html!只需 تسجل حساب وتبدأ تبني سيرتك الذاتية في دقائق ⚡';
