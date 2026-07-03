@@ -3069,11 +3069,10 @@
         }
 
         function buildChatPrompt() {
-            var prompt = 'System: ' + chatHistory[0].content + '\n\n';
+            var prompt = 'You are QCV Support AI. Reply in Arabic. Be friendly, concise (2-3 sentences max). Help with: CVs, templates, plans (Free/Pro 99EGP/Unlimited 299EGP), ATS.';
             for (var i = 1; i < chatHistory.length; i++) {
-                prompt += (chatHistory[i].role === 'user' ? 'User: ' : 'Assistant: ') + chatHistory[i].content + '\n\n';
+                prompt += (chatHistory[i].role === 'user' ? '\nUser: ' : '\nAssistant: ') + chatHistory[i].content;
             }
-            prompt += 'User: ' + chatHistory[chatHistory.length - 1].content;
             return prompt;
         }
 
@@ -3091,15 +3090,8 @@
 
             var controller = new AbortController();
             var timeoutId = setTimeout(function () { controller.abort(); }, 15000);
-            fetch('https://text.pollinations.ai/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: chatHistory,
-                    model: 'openai',
-                    seed: Date.now(),
-                    jsonMode: false
-                }),
+            fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {
+                method: 'GET',
                 signal: controller.signal
             })
                 .then(function (r) {

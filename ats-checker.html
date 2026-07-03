@@ -545,18 +545,7 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
 
             try {
                 var prompt = 'You are an expert ATS analyzer. Analyze this CV and return ONLY a JSON object (no markdown, no code blocks) with: {"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","fix":"Arabic fix suggestion"}],"verdict":"Arabic verdict"}. Score: contact(email,phone,linkedin), content(summary,experience,achievements), ATS(keywords,formatting), skills(relevance,count), impact(action verbs,numbers). 8-12 issues. All text in Arabic. CV:\n\n' + text;
-                var response = await fetch('https://text.pollinations.ai/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        messages: [
-                            { role: 'system', content: 'You are an expert ATS analyzer. Reply in Arabic. Return ONLY valid JSON, no markdown.' },
-                            { role: 'user', content: prompt }
-                        ],
-                        model: 'openai',
-                        seed: Date.now()
-                    })
-                });
+                var response = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' });
                 if (!response.ok) throw new Error('AI service failure ' + response.status);
                 var content = await response.text();
                 content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
