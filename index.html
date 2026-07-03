@@ -3089,8 +3089,21 @@
             chatHistory.push({ role: 'user', content: msg });
             var prompt = buildChatPrompt();
 
-            fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' })
+            var controller = new AbortController();
+            var timeoutId = setTimeout(function () { controller.abort(); }, 15000);
+            fetch('https://text.pollinations.ai/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    messages: chatHistory,
+                    model: 'openai',
+                    seed: Date.now(),
+                    jsonMode: false
+                }),
+                signal: controller.signal
+            })
                 .then(function (r) {
+                    clearTimeout(timeoutId);
                     if (!r.ok) throw new Error('AI service failure ' + r.status);
                     return r.text();
                 })
@@ -3100,6 +3113,7 @@
                     chatHistory.push({ role: 'assistant', content: reply });
                     appendMessage('assistant', reply);
                 }).catch(function () {
+                    clearTimeout(timeoutId);
                     removeTypingIndicator();
                     var reply = localChatReply(msg);
                     chatHistory.push({ role: 'assistant', content: reply });
@@ -3139,7 +3153,7 @@
             }
             if (m.match(/template|قالب|تصميم|شكل/)) return 'عندنا أكثر من 15 قالب احترافي متوافق مع ATS! جرّبهم على templates.html واختار اللي يناسبك 🎨';
             if (m.match(/ats|توافق|نظام تتبع|resume score/)) return 'ATS هو نظام تتبع المتقدمين اللي الشركات بتستخدمه. قوالبنا مصممة عشان تجتازه. جرّب فحص ATS المجاني على ats-checker.html 🔍';
-            if (m.match(/editor|محرر|ابدأ|start|begin/)) return 'ابدأ دلوقتي مجاناً على editor.html!只需 تسجل حساب وتبدأ تبني سيرتك الذاتية في دقائق ⚡';
+            if (m.match(/editor|محرر|ابدأ|start|begin/)) return 'ابدأ دلوقتي مجاناً على editor.html! سجّل حسابك وتبدأ تبني سيرتك الذاتية في دقائق ⚡';
             if (m.match(/pdf|تصدير|download|تحميل/)) return 'التصدير متاح لجميع الباقات. المجاني: جودة عادية + watermark | الاحترافية: جودة عالية | غير محدودة: جودة عالية + بدون حدود 📄';
             if (m.match(/عمل من|remote|بُعد|work from/)) return 'وظائف عن بُعد بتزيد في مصر! راجع مقالتنا على blog/remote-jobs.html لقائمة بأفضل المنصات والنصائح 💼';
             if (m.match(/خطاب|cover letter|تغطية/)) return 'خطاب التغطية بيزيد فرص قبولك 40%. راجع مقالتنا blog/cover-letter.html فيه 5 قوالب جاهزة ✉️';
