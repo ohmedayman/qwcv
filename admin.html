@@ -816,7 +816,7 @@ function initAdmin() {
         document.getElementById('adminAvatar').textContent = 'A';
         document.getElementById('adminRoleDisplay').textContent = 'مدير عام';
     }
-    checkAndLoad();
+    checkAndLoad().catch(function(e) { console.error('[QCV Admin] Load failed:', e); document.getElementById('blockScreen').classList.add('hidden'); });
     setInterval(function() { checkAndLoad(); }, 30000);
 }
 
@@ -842,15 +842,20 @@ function restPost(path, data) {
 }
 
 // ===== MAIN DATA LOADER =====
+function restGetTimeout(path, timeout) {
+    var controller = new AbortController();
+    var tid = setTimeout(function() { controller.abort(); }, timeout || 10000);
+    return fetch(DB + path, { signal: controller.signal }).then(function(r) { clearTimeout(tid); return r.json(); }).catch(function(e) { clearTimeout(tid); console.error('[QCV Admin] GET failed:', path, e.message); return null; });
+}
 function checkAndLoad() {
     console.log('[QCV Admin] Loading data...');
     return Promise.all([
-        restGet('/users.json'), restGet('/subscriptions.json'), restGet('/jobs.json'),
-        restGet('/domains.json'), restGet('/staff.json'), restGet('/settings.json'),
-        restGet('/affiliateLinks.json'), restGet('/affiliateCampaigns.json'),
-        restGet('/affiliateReferrals.json'), restGet('/affiliateCommissions.json'),
-        restGet('/messages.json'), restGet('/siteSettings/maintenance.json'),
-        restGet('/affiliateRequests.json'), restGet('/pointsExchange.json'),
+        restGetTimeout('/users.json', 15000), restGetTimeout('/subscriptions.json'), restGetTimeout('/jobs.json'),
+        restGetTimeout('/domains.json'), restGetTimeout('/staff.json'), restGetTimeout('/settings.json'),
+        restGetTimeout('/affiliateLinks.json'), restGetTimeout('/affiliateCampaigns.json'),
+        restGetTimeout('/affiliateReferrals.json'), restGetTimeout('/affiliateCommissions.json'),
+        restGetTimeout('/messages.json'), restGetTimeout('/siteSettings/maintenance.json'),
+        restGetTimeout('/affiliateRequests.json'), restGetTimeout('/pointsExchange.json'),
         fetch('https://identitytoolkit.googleapis.com/v1/accounts:batchGet?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I').then(function(r){return r.json()}).catch(function(){return {users:[]}})
     ]).then(function(r) {
         window.allUsers = r[0] || {};
