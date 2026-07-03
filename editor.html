@@ -41,31 +41,40 @@
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', 'Cairo', sans-serif;
-            height: 100vh;
-            overflow: hidden
-        }
+            try {
+                const pathBase='users/'+window.currentUid+'/reports';
+                const atsSnap=await window._get(window._ref(window._db, pathBase + '/ats'));
+                const matcherSnap=await window._get(window._ref(window._db, pathBase + '/matcher'));
 
-        /* ===== TOP BAR ===== */
-        .topbar {
-            height: 56px;
-            background: var(--sidebar);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 6px;
-            z-index: 100;
-            position: relative;
-            direction: ltr;
-            overflow: visible
+                const ats=atsSnap.val() || {}
+
+                ;
+
+                const matcher=matcherSnap.val() || {}
+
+                ;
+                let rows=[];
+
+                Object.entries(ats).forEach(([k, v])=> {
+                        if (v) rows.push({
+                            id:k, type:'ats', payload:v
+                        });
+                });
+
+            Object.entries(matcher).forEach(([k, v])=> {
+                    if (v) rows.push({
+                        id:k, type:'matcher', payload:v
+                    });
+            });
+        // sort by createdAt desc
+        rows.sort((a, b)=> (b.payload.createdAt||0)-(a.payload.createdAt||0));
+        if (type==='ats') rows=rows.filter(r=>r.type==='ats');
+        if (type==='matcher') rows=rows.filter(r=>r.type==='matcher');
+
+        if ( !rows.length) {
+            container.innerHTML='<div style="padding:12px;color:var(--muted)">No reports yet.</div>';
+            return;
         }
 
         .topbar-logo {
@@ -4322,6 +4331,12 @@
                     class="fas fa-cloud-upload-alt"></i> <span class="btn-label">Upload CV</span></button>
             <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> <span
                     class="btn-label">Save</span></button>
+            <button class="btn-outline" id="runAtsBtn" title="Run ATS analysis" style="margin-left:8px"><i
+                    class="fas fa-search"></i> ATS</button>
+            <button class="btn-outline" id="runMatchBtn" title="Match to Job" style="margin-left:8px"><i
+                    class="fas fa-handshake"></i> Match</button>
+            <button class="btn-outline" id="openReportsBtn" title="Open Reports" style="margin-left:8px"><i
+                    class="fas fa-archive"></i> Reports</button>
             <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i
                     class="fas fa-robot"></i> <span class="btn-label">AI</span></button>
             <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i
@@ -5416,6 +5431,189 @@
             } catch (e) { console.error('saveToFirebase exception:', e); }
         };
     </script>
+    <!-- Reports Panel -->
+    <div id="reportsPanel"
+        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10010;align-items:center;justify-content:center">
+        <div
+            style="width:900px;max-width:96%;background:var(--bg2);border-radius:12px;padding:12px;box-shadow:0 12px 40px rgba(0,0,0,0.35);max-height:80vh;overflow:auto">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <h3 style="margin:0">Saved Reports</h3>
+                <div><button class="btn btn-outline" onclick="closeReportsPanel()">Close</button></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-bottom:8px">
+                <button class="btn" onclick="loadReportsList('ats')">ATS Reports</button>
+                <button class="btn" onclick="loadReportsList('matcher')">Matcher Reports</button>
+                <button class="btn btn-outline" onclick="loadReportsList('all')">All</button>
+            </div>
+            <div id="reportsList" style="max-height:64vh;overflow:auto"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('runAtsBtn').addEventListener('click', async function () {
+            try {
+                const res = await window.runAtsFromEditor();
+                if (!res) return alert('ATS analysis failed or returned no result.');
+                // show quick panel
+                alert('ATS analysis saved. Open Reports to view.');
+            } catch (e) { console.error(e); alert('Error running ATS'); }
+        });
+
+        document.getElementById('runMatchBtn').addEventListener('click', async function () {
+            try {
+                const jd = prompt('Paste the Job Description or short JD text to match against:');
+                if (!jd) return;
+                const res = await window.runMatcherFromEditor(jd);
+                if (!res) return alert('Matcher failed or returned no result.');
+                alert('Matcher saved. Open Reports to view.');
+            } catch (e) { console.error(e); alert('Error running matcher'); }
+        });
+
+        document.getElementById('openReportsBtn').addEventListener('click', function () { openReportsPanel(); });
+
+        function openReportsPanel() { document.getElementById('reportsPanel').style.display = 'flex'; loadReportsList('all'); }
+        function closeReportsPanel() { document.getElementById('reportsPanel').style.display = 'none'; }
+
+        async function loadReportsList(type) {
+            const container = document.getElementById('reportsList'); container.innerHTML = '<div style="padding:12px;color:var(--muted)">Loading...</div>';
+            if (!window.currentUid || !window._get || !window._ref || !window._db) { container.innerHTML = '<div style="padding:12px;color:var(--red)">Login required to view reports.</div>'; return; }
+            try {
+                const pathBase = 'users/' + window.currentUid + '/reports';
+                const snap = await window._get(window._ref(window._db, pathBase));
+                const data = snap.val() || {};
+                const rows = [];
+                Object.entries(data).forEach(([k, v]) => {
+                    if (!v) return;
+                    // v expected to be { ats: {..} } or { matcher: {..} } depending on structure; handle both
+                    if (v.ats || v.matcher) {
+                        if (v.ats) rows.push({ id: k, type: 'ats', payload: v.ats });
+                        if (v.matcher) rows.push({ id: k, type: 'matcher', payload: v.matcher });
+                    } else if (v.result && v.cvId) {
+                        // older flat structure - try identify by keys
+                        const t = (v.result && v.result.matchScore) ? 'matcher' : 'ats';
+                        rows.push({ id: k, type: t, payload: v });
+                    } else {
+                        // generic
+                        if (v.result && v.jobDescription) rows.push({ id: k, type: 'matcher', payload: v });
+                        else rows.push({ id: k, type: 'ats', payload: v });
+                    }
+                });
+                // flatten and sort by createdAt
+                rows.sort((a, b) => (b.payload.createdAt || 0) - (a.payload.createdAt || 0));
+                if (type === 'ats') rows = rows.filter(r => r.type === 'ats');
+                if (type === 'matcher') rows = rows.filter(r => r.type === 'matcher');
+                if (!rows.length) { container.innerHTML = '<div style="padding:12px;color:var(--muted)">No reports yet.</div>'; return; }
+                container.innerHTML = rows.map(r => {
+                    const p = r.payload;
+                    const tlabel = r.type.toUpperCase();
+                    const date = p.createdAt ? new Date(p.createdAt).toLocaleString() : '-';
+                    const title = (p.jobDescription && p.jobDescription.slice) ? (p.jobDescription.slice(0, 80) + '...') : (p.cvData && p.cvData.name ? p.cvData.name : tlabel);
+                    return `<div style="padding:10px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;justify-content:space-between">
+                        <div style="flex:1">
+                            <div style="font-weight:800">${escHtml(title)}</div>
+                            <div style="color:var(--muted);font-size:0.86rem">Type: ${tlabel} · ${date}</div>
+                        </div>
+                        <div style="display:flex;gap:8px">
+                            <button class="btn btn-outline" onclick='(function(){ window.exportReportJSON(${JSON.stringify(p)}, "report-${r.type}-${r.id}.json") })()'>Download</button>
+                            <button class="btn" onclick='(function(){ navigator.clipboard && navigator.clipboard.writeText(JSON.stringify(${JSON.stringify(p)},null,2)); alert("Copied to clipboard"); })()'>Copy</button>
+                        </div>
+                    </div>`;
+                }).join('');
+            } catch (e) { console.error(e); container.innerHTML = '<div style="padding:12px;color:var(--red)">Failed to load reports.</div>'; }
+        }
+    </script>
+    <!-- In-Editor AI Assistant Modal -->
+    <div id="aiModal"
+        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:10000;align-items:center;justify-content:center">
+        <div
+            style="width:720px;max-width:94%;background:var(--bg2);border-radius:12px;padding:12px;box-shadow:0 8px 40px rgba(0,0,0,0.25);height:72vh;display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+                <div style="font-weight:800">AI Assistant</div>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <input id="editorAiApiKey" placeholder="API Key (optional)"
+                        style="padding:8px;border:1px solid var(--border);border-radius:8px;font-size:0.85rem">
+                    <button class="btn btn-outline" onclick="closeAiModal()">Close</button>
+                </div>
+            </div>
+            <div id="aiModalMessages"
+                style="flex:1;overflow:auto;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+                <input id="aiModalInput" placeholder="اطرح سؤالاً أو اطلب مساعدة..."
+                    style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px">
+                <button class="btn btn-primary" id="aiModalSend">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Editor AI modal helpers
+        function openAiModal() { document.getElementById('aiModal').style.display = 'flex'; try { loadEditorChatHistory(); } catch (e) { } }
+        function closeAiModal() { document.getElementById('aiModal').style.display = 'none'; }
+
+        function escHtml(s) { return (s || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        function appendEditorAiMessage(who, text) {
+            const c = document.getElementById('aiModalMessages');
+            const el = document.createElement('div'); el.style.padding = '8px'; el.style.marginTop = '6px'; el.style.borderRadius = '8px';
+            if (who === 'user') { el.style.background = 'var(--card)'; el.style.textAlign = 'right'; el.innerHTML = '<strong>أنت:</strong><div style="margin-top:6px">' + escHtml(text) + '</div>'; }
+            else { el.style.background = 'linear-gradient(90deg,#fff,#f3f4f6)'; el.innerHTML = '<strong>المساعد:</strong><div style="margin-top:6px">' + escHtml(text) + '</div>'; }
+            c.appendChild(el); c.scrollTop = c.scrollHeight;
+            try { saveEditorChatEntry({ role: who, text: text, createdAt: Date.now() }); } catch (e) { }
+        }
+
+        async function getEditorCvForAi() {
+            try { return collectData(); } catch (e) { return null; }
+        }
+
+        function saveEditorChatEntry(entry) {
+            try {
+                if (window.currentUid && window._push && window._ref && window._db) {
+                    const path = 'users/' + window.currentUid + '/aiChats';
+                    window._push(window._ref(window._db, path)).then(r => { try { window._set(window._ref(window._db, path + '/' + r.key), entry).catch(() => { }); } catch (e) { } }).catch(() => { });
+                }
+            } catch (e) { console.warn('firebase save chat failed', e); }
+            try {
+                const key = 'qcv_ai_chats'; const arr = JSON.parse(localStorage.getItem(key) || '[]'); arr.push(entry); localStorage.setItem(key, JSON.stringify(arr.slice(-200)));
+            } catch (e) { console.warn('local save chat failed', e); }
+        }
+
+        async function loadEditorChatHistory() {
+            const c = document.getElementById('aiModalMessages'); c.innerHTML = '';
+            try {
+                if (window.currentUid && window._get && window._ref && window._db) {
+                    const snap = await window._get(window._ref(window._db, 'users/' + window.currentUid + '/aiChats'));
+                    const data = snap.val();
+                    if (data) {
+                        const arr = Object.values(data).sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+                        arr.forEach(item => appendEditorAiMessage(item.role || 'assistant', item.text || ''));
+                        return;
+                    }
+                }
+            } catch (e) { console.warn('load chats firebase failed', e); }
+            try { const arr = JSON.parse(localStorage.getItem('qcv_ai_chats') || '[]'); arr.forEach(item => appendEditorAiMessage(item.role || 'assistant', item.text || '')); } catch (e) { }
+        }
+
+        document.getElementById('aiModalSend').addEventListener('click', async function () {
+            const txt = document.getElementById('aiModalInput').value.trim(); if (!txt) return; document.getElementById('aiModalInput').value = '';
+            appendEditorAiMessage('user', txt);
+            const cv = await getEditorCvForAi();
+            const cvText = cv ? (['Name: ' + (cv.name || ''), 'Title: ' + (cv.title || ''), 'Summary: ' + (cv.summary || ''), 'Skills: ' + (Array.isArray(cv.skills) ? cv.skills.join(', ') : cv.skills)].join('\n\n')) : '';
+            const prompt = txt + '\n\n' + cvText;
+            appendEditorAiMessage('assistant', 'Thinking...');
+            // Use existing callAI pipeline defined earlier
+            callAI(prompt, function (result) {
+                // remove last 'Thinking...' entry
+                try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('Thinking')) last.remove(); } catch (e) { }
+                appendEditorAiMessage('assistant', result);
+            }, function (err) { try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('Thinking')) last.remove(); } catch (e) { }; appendEditorAiMessage('assistant', 'AI Error: ' + (err || '')); });
+        });
+
+        // Add a floating AI button to open modal
+        (function () {
+            const btn = document.createElement('button'); btn.className = 'btn-ai-gen'; btn.style.position = 'fixed'; btn.style.bottom = '28px'; btn.style.right = '28px'; btn.style.zIndex = 9998; btn.innerHTML = '<i class="fas fa-robot"></i> AI'; btn.onclick = openAiModal; document.body.appendChild(btn);
+        })();
+    </script>
 
     <!-- ===== CV LOGIC ===== -->
     <script>
@@ -5619,6 +5817,55 @@
             applyDesignSettings();
             if (isPaidPlan()) updateAIScore(data);
             debouncedSave();
+        };
+
+        // --- Editor integration: run ATS & Matcher on the current CV and save reports ---
+        window.runAtsFromEditor = function (opts = {}) {
+            try {
+                const data = collectData();
+                const text = (opts.useRawText && typeof window.getCvPlainText === 'function') ? window.getCvPlainText() : [data.name, data.title, data.summary, (data.skills || []).join('\n'), (data.experience || []).map(e => e.role + ' ' + e.company + ' ' + e.description).join('\n')].join('\n\n');
+                const cvData = data;
+                if (typeof CVAnalyzer === 'undefined' || typeof CVAnalyzer.analyze !== 'function') {
+                    console.warn('CVAnalyzer not available');
+                    return null;
+                }
+                const res = CVAnalyzer.analyze(cvData);
+                // Optionally save to Firebase under /users/{uid}/reports/ats/{ts}
+                if (window.currentUid && window._ref && window._push && window._set) {
+                    const path = 'users/' + window.currentUid + '/reports/ats';
+                    const payload = { createdAt: Date.now(), cvId: window.currentCvId || 'default', cvData: cvData, result: res };
+                    try { window._push(window._ref(window._db, path)).then(r => window._set(window._ref(window._db, path + '/' + r.key), payload).catch(() => { })).catch(() => { }); } catch (e) { console.warn('Firebase save failed', e); }
+                }
+                return res;
+            } catch (e) { console.error('runAtsFromEditor error', e); return null; }
+        };
+
+        window.runMatcherFromEditor = function (jobDescriptionText, opts = {}) {
+            try {
+                const data = collectData();
+                const cvData = data;
+                const jd = (typeof jobDescriptionText === 'string') ? jobDescriptionText : (opts.sampleJob || '');
+                if (typeof JobMatcher === 'undefined' || typeof JobMatcher.match !== 'function') {
+                    console.warn('JobMatcher not available');
+                    return null;
+                }
+                const res = JobMatcher.match(cvData, jd);
+                if (window.currentUid && window._ref && window._push && window._set) {
+                    const path = 'users/' + window.currentUid + '/reports/matcher';
+                    const payload = { createdAt: Date.now(), cvId: window.currentCvId || 'default', jobDescription: jd, cvData: cvData, result: res };
+                    try { window._push(window._ref(window._db, path)).then(r => window._set(window._ref(window._db, path + '/' + r.key), payload).catch(() => { })).catch(() => { }); } catch (e) { console.warn('Firebase save failed', e); }
+                }
+                return res;
+            } catch (e) { console.error('runMatcherFromEditor error', e); return null; }
+        };
+
+        // Helper: quick export of last analysis as JSON download
+        window.exportReportJSON = function (payload, filename) {
+            try {
+                const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = filename || ('report-' + Date.now() + '.json'); document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+            } catch (e) { console.error('exportReportJSON failed', e); }
         };
 
         function applyDesignSettings() {

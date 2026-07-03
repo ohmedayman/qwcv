@@ -1343,6 +1343,23 @@
     <div class="confetti-box" id="confettiBox"></div>
 
     <div class="container">
+        <div style="max-width:900px;margin:0 auto 18px;text-align:center">
+            <button id="togglePayCfg" class="btn btn-secondary" style="padding:8px 14px;font-size:0.82rem">Configure
+                Payments</button>
+            <div id="payCfg"
+                style="display:none;margin-top:10px;max-width:720px;margin-left:auto;margin-right:auto;text-align:right;padding:12px;border:1px dashed var(--border);border-radius:8px">
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="cfgStripeEndpoint"
+                        placeholder="Stripe create-checkout endpoint (POST)"
+                        style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px"><input
+                        id="cfgPublishableKey" placeholder="Publishable Key (optional)"
+                        style="flex:0.6;padding:8px;border:1px solid var(--border);border-radius:6px"></div>
+                <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-primary"
+                        id="savePayCfg">Save</button><button class="btn btn-secondary" id="clearPayCfg">Clear</button>
+                </div>
+                <div style="font-size:0.82rem;color:var(--muted);margin-top:8px">Tip: your server endpoint should create
+                    a Stripe Checkout session and return JSON { checkoutUrl } or { sessionId, publishableKey }.</div>
+            </div>
+        </div>
         <a href="index.html" class="back-link" data-i18n="go_back"><i class="fas fa-arrow-right"></i> العودة
             للرئيسية</a>
 
@@ -1480,6 +1497,16 @@
                         <div class="method-info">
                             <div class="method-name" data-i18n="pay_vodafone">فودافون كاش</div>
                             <div class="method-desc" data-i18n="pay_vodafone_desc">تحويل فوري على المحفظة</div>
+                        </div>
+                        <div class="method-check">&#10003;</div>
+                    </div>
+
+                    <div class="method-card" onclick="selectMethod(this,'stripe')" id="stripeMethodCard">
+                        <div class="method-icon" style="background:linear-gradient(135deg,#6772e5,#5469d4)"><i
+                                class="fas fa-credit-card"></i></div>
+                        <div class="method-info">
+                            <div class="method-name">Card (Stripe)</div>
+                            <div class="method-desc">Pay securely with card via Stripe Checkout</div>
                         </div>
                         <div class="method-check">&#10003;</div>
                     </div>
@@ -1714,11 +1741,11 @@
 
             // compute yearly prices from monthly if yearly not explicitly provided
             try {
-                proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12 * 0.95);
-            } catch (e) { proY = Math.round(proM * 12 * 0.95); }
+                proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12);
+            } catch (e) { proY = Math.round(proM * 12); }
             try {
-                unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12 * 0.95);
-            } catch (e) { unY = Math.round(unM * 12 * 0.95); }
+                unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12);
+            } catch (e) { unY = Math.round(unM * 12); }
 
             // expose current prices globally for other functions
             window.currentPrices = { proMonthly: proM, proYearly: proY, unMonthly: unM, unYearly: unY, quick: quick };
@@ -1764,6 +1791,21 @@
             }, 700);
         })();
 
+        // Payment config UI
+        document.getElementById('togglePayCfg').addEventListener('click', function () {
+            const el = document.getElementById('payCfg'); el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            try {
+                document.getElementById('cfgStripeEndpoint').value = localStorage.getItem('qcv_stripe_endpoint') || '';
+                document.getElementById('cfgPublishableKey').value = localStorage.getItem('qcv_stripe_publishable') || '';
+            } catch (e) { }
+        });
+
+        document.getElementById('savePayCfg').addEventListener('click', function () {
+            try { localStorage.setItem('qcv_stripe_endpoint', document.getElementById('cfgStripeEndpoint').value.trim()); localStorage.setItem('qcv_stripe_publishable', document.getElementById('cfgPublishableKey').value.trim()); showToast('Saved', 'ok'); } catch (e) { showToast('Save failed', 'err'); }
+        });
+
+        document.getElementById('clearPayCfg').addEventListener('click', function () { try { localStorage.removeItem('qcv_stripe_endpoint'); localStorage.removeItem('qcv_stripe_publishable'); document.getElementById('cfgStripeEndpoint').value = ''; document.getElementById('cfgPublishableKey').value = ''; showToast('Cleared', 'ok'); } catch (e) { } });
+
         // ===== PLAN SELECTION =====
         let selectedPlan = null;
 
@@ -1790,6 +1832,8 @@
             document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
             selectedMethod = method;
+            // show/hide wallet box for non-card methods
+            const wb = document.getElementById('walletBox'); if (wb) wb.style.display = (method === 'stripe') ? 'none' : '';
         };
 
         // ===== STEP NAVIGATION =====
@@ -1889,6 +1933,39 @@
 
             try {
                 await push(ref(db, 'subscriptions'), subData);
+
+                // If Stripe selected, attempt to create checkout session via configured endpoint
+                if (selectedMethod === 'stripe') {
+                    try {
+                        // endpoint configurable via QCVSettings.stripeEndpoint or localStorage qcv_stripe_endpoint
+                        var endpoint = (window.QCVSettings && window.QCVSettings.stripeEndpoint) || localStorage.getItem('qcv_stripe_endpoint') || '';
+                        if (!endpoint) {
+                            showToast('لم يتم إعداد نقطة الدفع (endpoint). اتصل بالمسؤول لإعداد Stripe endpoint.', 'err');
+                        } else {
+                            // post subscription info to endpoint
+                            const resp = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subscription: subData }) });
+                            if (!resp.ok) throw new Error('Checkout creation failed ' + resp.status);
+                            const j = await resp.json();
+                            // expected { checkoutUrl } or { sessionId, publishableKey }
+                            if (j.checkoutUrl) {
+                                window.location.href = j.checkoutUrl; return;
+                            } else if (j.sessionId && j.publishableKey) {
+                                // load Stripe.js then redirect
+                                const s = document.createElement('script'); s.src = 'https://js.stripe.com/v3/'; document.head.appendChild(s);
+                                s.onload = function () {
+                                    const stripe = Stripe(j.publishableKey);
+                                    stripe.redirectToCheckout({ sessionId: j.sessionId }).then(function (res) { if (res.error) alert(res.error.message); });
+                                };
+                                return;
+                            } else {
+                                showToast('رد غير متوقع من endpoint', 'err');
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Stripe checkout failed', e);
+                        showToast('فشل إنشاء جلسة الدفع: ' + (e.message || ''), 'err');
+                    }
+                }
 
                 if (window.QCVNotify) QCVNotify.success();
                 document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
