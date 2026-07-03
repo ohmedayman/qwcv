@@ -1569,7 +1569,6 @@ var _firstLoadSupport = true;
 function playNotifSound() {
     try {
         var ctx = new (window.AudioContext || window.webkitAudioContext)();
-        // WhatsApp-like two-tone notification
         var osc1 = ctx.createOscillator();
         var gain1 = ctx.createGain();
         osc1.type = 'sine';
@@ -1596,33 +1595,36 @@ function playNotifSound() {
 function showNewTicketPopup(ticket) {
     var popup = document.createElement('div');
     popup.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:99999;background:var(--card,#fff);border:2px solid var(--green,#059669);border-radius:16px;padding:16px 20px;box-shadow:0 10px 40px rgba(0,0,0,0.2);max-width:380px;width:calc(100% - 40px);animation:popupSlideDown 0.3s cubic-bezier(0.16,1,0.3,1);cursor:pointer';
-    popup.innerHTML = '<div style="display:flex;align-items:center;gap:12px"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--green,#059669),#047857);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fas fa-envelope"></i></div><div style="flex:1"><div style="font-weight:800;font-size:.88rem;color:var(--text)">📬 رسالة دعم جديدة</div><div style="font-size:.78rem;color:var(--muted);margin-top:2px">' + escHtml(ticket.userName || 'مستخدم') + ' — ' + escHtml(ticket.subject || 'بدون موضوع') + '</div></div><div style="font-size:.7rem;color:var(--muted);flex-shrink:0">الآن</div></div>';
+    popup.innerHTML = '<div style="display:flex;align-items:center;gap:12px"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--green,#059669),#047857);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fas fa-envelope"></i></div><div style="flex:1"><div style="font-weight:800;font-size:.88rem;color:var(--text)">\uD83D\uDCAC رسالة دعم جديدة</div><div style="font-size:.78rem;color:var(--muted);margin-top:2px">' + escHtml(ticket.userName || 'مستخدم') + ' \u2014 ' + escHtml(ticket.subject || 'بدون موضوع') + '</div></div><div style="font-size:.7rem;color:var(--muted);flex-shrink:0">الآن</div></div>';
     popup.onclick = function() { popup.remove(); switchPanel('messages'); };
     document.body.appendChild(popup);
     setTimeout(function() { if (popup.parentNode) popup.remove(); }, 8000);
 }
-onValue(ref(db, 'support'), function(snap) {
-    allSupportTickets = snap.val() || {};
-    if (document.getElementById('supportList')) renderSupportTickets();
-    var currentCount = Object.keys(allSupportTickets).length;
-    if (!_firstLoadSupport && currentCount > _prevTicketCount) {
-        var latest = Object.entries(allSupportTickets).sort(function(a, b) { return (b[1].createdAt || 0) - (a[1].createdAt || 0); })[0];
-        if (latest && latest[1].status === 'open') {
-            playNotifSound();
-            showNewTicketPopup(latest[1]);
-            if (window.QCVNotify) QCVNotify.toast('رسالة دعم جديدة من ' + (latest[1].userName || 'مستخدم'), 'info');
-            // Update badge
-            var badge = document.getElementById('supportBadge');
-            if (badge) {
-                var openCount = Object.values(allSupportTickets).filter(function(t) { return t.status === 'open'; }).length;
-                badge.textContent = openCount;
-                badge.style.display = openCount > 0 ? 'inline-block' : 'none';
+function pollSupportTickets() {
+    restGet('/support.json').then(function(data) {
+        allSupportTickets = data || {};
+        if (document.getElementById('supportList')) renderSupportTickets();
+        var currentCount = Object.keys(allSupportTickets).length;
+        if (!_firstLoadSupport && currentCount > _prevTicketCount) {
+            var latest = Object.entries(allSupportTickets).sort(function(a, b) { return (b[1].createdAt || 0) - (a[1].createdAt || 0); })[0];
+            if (latest && latest[1].status === 'open') {
+                playNotifSound();
+                showNewTicketPopup(latest[1]);
+                if (window.QCVNotify) QCVNotify.toast('\u0631\u0633\u0627\u0644\u0629 \u062F\u0639\u0645 \u062C\u062F\u064A\u062F\u0629 \u0645\u0646 ' + (latest[1].userName || '\u0645\u0633\u062A\u062E\u062F\u0645'), 'info');
+                var badge = document.getElementById('supportBadge');
+                if (badge) {
+                    var openCount = Object.values(allSupportTickets).filter(function(t) { return t.status === 'open'; }).length;
+                    badge.textContent = openCount;
+                    badge.style.display = openCount > 0 ? 'inline-block' : 'none';
+                }
             }
         }
-    }
-    _prevTicketCount = currentCount;
-    _firstLoadSupport = false;
-});
+        _prevTicketCount = currentCount;
+        _firstLoadSupport = false;
+    });
+}
+setInterval(pollSupportTickets, 10000);
+pollSupportTickets();
 
 // ===== REPORTS =====
 function renderReports() {
