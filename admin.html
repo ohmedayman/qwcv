@@ -406,7 +406,8 @@ tr:hover td{background:rgba(0,3,201,.02)}
             <div class="nav-item" onclick="switchPanel('staff')"><span class="icon"><i class="fas fa-user-shield"></i></span>الموظفين</div>
             <div class="nav-item" onclick="switchPanel('affiliate')"><span class="icon"><i class="fas fa-handshake"></i></span>التسويق بالعمولة</div>
             <div class="nav-item" onclick="switchPanel('domains')"><span class="icon"><i class="fas fa-globe"></i></span>النطاقات</div>
-            <div class="nav-item" onclick="switchPanel('messages')"><span class="icon"><i class="fas fa-envelope"></i></span>الرسائل<span class="badge" id="supportBadge" style="display:none">0</span></div>
+            <div class="nav-item" onclick="switchPanel('messages')"><span class="icon"><i class="fas fa-envelope"></i></span>رسائل الدعم<span class="badge" id="supportBadge" style="display:none">0</span></div>
+            <div class="nav-item" onclick="switchPanel('sendmsg')"><span class="icon"><i class="fas fa-paper-plane"></i></span>إرسال رسائل</div>
             <div class="nav-item" onclick="switchPanel('reports')"><span class="icon"><i class="fas fa-chart-bar"></i></span>التقارير</div>
             <div class="nav-item" onclick="switchPanel('analytics')"><span class="icon"><i class="fas fa-chart-line"></i></span>الإحصائيات</div>
             <div class="nav-item" onclick="switchPanel('settings')"><span class="icon"><i class="fas fa-cog"></i></span>الإعدادات</div>
@@ -606,7 +607,6 @@ tr:hover td{background:rgba(0,3,201,.02)}
                                     <option value="replied">تم الرد</option>
                                     <option value="closed">مغلقة</option>
                                 </select>
-                                <button class="btn-add" onclick="showSendMessage()"><i class="fas fa-paper-plane"></i> رسالة للمستخدم</button>
                             </div>
                         </div>
                         <div class="table-scroll">
@@ -630,6 +630,23 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <textarea id="adminReply" placeholder="اكتب ردك..." style="flex:1;padding:12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;min-height:60px;resize:vertical"></textarea>
                         <button onclick="sendAdminReply()" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;font-family:inherit;font-weight:700;align-self:flex-end"><i class="fas fa-paper-plane"></i>إرسال</button>
                     </div>
+                </div>
+            </div>
+
+            <!-- SEND MESSAGE -->
+            <div class="panel" id="panel-sendmsg">
+                <div class="settings-card">
+                    <h4><i class="fas fa-paper-plane"></i> إرسال رسالة للمستخدمين</h4>
+                    <div class="settings-row" style="margin-bottom:16px">
+                        <div class="field" style="flex:1"><label>المستلم</label><select id="sendMsgTarget" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:inherit"><option value="all">جميع المستخدمين</option></select></div>
+                        <div class="field" style="flex:1"><label>نوع الرسالة</label><select id="sendMsgType" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:inherit"><option value="info">معلوماتية</option><option value="warning">تحذير</option><option value="success">تهنئة</option><option value="promo">عرض خاص</option></select></div>
+                    </div>
+                    <div class="field" style="margin-bottom:16px"><label>الرسالة</label><textarea id="sendMsgText" placeholder="اكتب رسالتك هنا..." style="width:100%;min-height:100px;padding:12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;resize:vertical"></textarea></div>
+                    <button onclick="sendUserMessage()" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit"><i class="fas fa-paper-plane"></i> إرسال</button>
+                </div>
+                <div class="settings-card" style="margin-top:16px">
+                    <h4><i class="fas fa-history"></i> آخر الرسائل المرسلة</h4>
+                    <div id="sentMessagesList" style="max-height:300px;overflow-y:auto"><p style="color:var(--muted);text-align:center;padding:20px">لا توجد رسائل مرسلة</p></div>
                 </div>
             </div>
 
@@ -740,7 +757,7 @@ function closeSidebar() { document.getElementById('sidebar').classList.remove('o
 function closeModal() { document.getElementById('modal').classList.remove('show'); }
 
 // ===== PANEL SWITCHING =====
-var panelTitles = { dashboard:'الرئيسية', users:'المستخدمين', subscriptions:'الاشتراكات', jobs:'الوظائف', staff:'الموظفين', affiliate:'التسويق بالعمولة', domains:'النطاقات', messages:'الرسائل', reports:'التقارير', analytics:'الإحصائيات', settings:'الإعدادات' };
+var panelTitles = { dashboard:'الرئيسية', users:'المستخدمين', subscriptions:'الاشتراكات', jobs:'الوظائف', staff:'الموظفين', affiliate:'التسويق بالعمولة', domains:'النطاقات', messages:'رسائل الدعم', sendmsg:'إرسال رسائل', reports:'التقارير', analytics:'الإحصائيات', settings:'الإعدادات' };
 function switchPanel(panel) {
     document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
     var el = document.getElementById('panel-' + panel);
@@ -751,6 +768,7 @@ function switchPanel(panel) {
     closeSidebar();
     if (panel === 'reports') renderReports();
     if (panel === 'analytics') loadAnalytics();
+    if (panel === 'sendmsg') { populateSendMsgUsers(); renderSentMessages(); }
 }
 
 // ===== LOGIN LOGIC =====
@@ -1633,38 +1651,53 @@ setInterval(pollSupportTickets, 10000);
 pollSupportTickets();
 
 // ===== SEND MESSAGE TO USER =====
-window.showSendMessage = function() {
-    var userOptions = Object.entries(window.allUsers).map(function(e) {
-        return '<option value="'+e[0]+'">'+escHtml(e[1].name||e[1].email||e[0])+'</option>';
+function populateSendMsgUsers() {
+    var sel = document.getElementById('sendMsgTarget');
+    if (!sel) return;
+    sel.innerHTML = '<option value="all">جميع المستخدمين (' + Object.keys(window.allUsers).length + ')</option>';
+    Object.entries(window.allUsers).forEach(function(e) {
+        sel.innerHTML += '<option value="' + e[0] + '">' + escHtml(e[1].name || e[1].email || e[0]) + '</option>';
+    });
+}
+function renderSentMessages() {
+    var el = document.getElementById('sentMessagesList');
+    if (!el) return;
+    var msgs = Object.entries(window.allMessages).sort(function(a, b) { return (b[1].sentAt || 0) - (a[1].sentAt || 0); }).slice(0, 20);
+    if (!msgs.length) { el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">لا توجد رسائل مرسلة</p>'; return; }
+    var tl = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
+    var tc = { info: 'var(--accent)', warning: 'var(--yellow)', success: 'var(--green)', promo: 'var(--purple)' };
+    el.innerHTML = msgs.map(function(e) {
+        var m = e[1];
+        var target = m.target === 'all' ? 'الكل' : escHtml((window.allUsers[m.target] || {}).name || m.target || '-');
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.82rem"><div style="flex:1"><strong>' + target + '</strong> <span style="color:var(--muted);margin:0 6px">—</span>' + escHtml((m.text || '').substring(0, 50)) + ((m.text || '').length > 50 ? '...' : '') + '</div><div style="display:flex;align-items:center;gap:8px;flex-shrink:0"><span class="badge" style="background:' + (tc[m.type] || 'var(--accent)') + '20;color:' + (tc[m.type] || 'var(--accent)') + ';font-size:.7rem">' + (tl[m.type] || m.type) + '</span><span style="color:var(--muted);font-size:.72rem">' + formatDateTime(m.sentAt) + '</span></div></div>';
     }).join('');
-    document.getElementById('modalTitle').textContent = 'إرسال رسالة للمستخدم';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>المستلم</label><select id="msgTarget"><option value="all">جميع المستخدمين</option>'+userOptions+'</select></div><div class="field" style="margin-bottom:12px"><label>نوع الرسالة</label><select id="msgType"><option value="info">معلوماتية</option><option value="warning">تحذير</option><option value="success">تهنئة</option><option value="promo">عرض خاص</option></select></div><div class="field"><label>الرسالة</label><textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:80px;width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif"></textarea></div>';
-    document.getElementById('modalConfirm').style.display = 'block';
-    document.getElementById('modalConfirm').textContent = 'إرسال';
-    document.getElementById('modalConfirm').onclick = async function() {
-        var target = document.getElementById('msgTarget').value;
-        var type = document.getElementById('msgType').value;
-        var text = document.getElementById('msgText').value.trim();
-        if (!text) { showToast('اكتب الرسالة', 'error'); return; }
-        var msgData = { type: type, text: text, sentAt: Date.now(), read: false, from: 'admin' };
-        try {
-            if (target === 'all') {
-                var updates = {};
-                Object.keys(window.allUsers).forEach(function(uid) { updates['users/' + uid + '/notifications/' + Date.now()] = msgData; });
-                updates['messages/' + Date.now()] = Object.assign({}, msgData, { target: 'all', userCount: Object.keys(window.allUsers).length });
-                await fetch(DB + '.json', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates) });
-                showToast('تم إرسال الرسالة لـ ' + Object.keys(window.allUsers).length + ' مستخدم', 'success');
-            } else {
-                await restPost('/users/' + target + '/notifications', msgData);
-                await restPost('/messages', Object.assign({}, msgData, { target: target }));
-                showToast('تم إرسال الرسالة', 'success');
-            }
-            closeModal();
-        } catch (e) {
-            showToast('خطأ في الإرسال', 'error');
+}
+window.sendUserMessage = async function() {
+    var target = document.getElementById('sendMsgTarget').value;
+    var type = document.getElementById('sendMsgType').value;
+    var text = document.getElementById('sendMsgText').value.trim();
+    if (!text) { showToast('اكتب الرسالة', 'error'); return; }
+    var msgData = { type: type, text: text, sentAt: Date.now(), read: false, from: 'admin' };
+    try {
+        if (target === 'all') {
+            var updates = {};
+            Object.keys(window.allUsers).forEach(function(uid) { updates['users/' + uid + '/notifications/' + Date.now()] = msgData; });
+            updates['messages/' + Date.now()] = Object.assign({}, msgData, { target: 'all', userCount: Object.keys(window.allUsers).length });
+            await fetch(DB + '.json', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates) });
+            window.allMessages[Date.now()] = Object.assign({}, msgData, { target: 'all' });
+            showToast('تم إرسال الرسالة لـ ' + Object.keys(window.allUsers).length + ' مستخدم', 'success');
+        } else {
+            await restPost('/users/' + target + '/notifications', msgData);
+            var newMsg = Object.assign({}, msgData, { target: target });
+            await restPost('/messages', newMsg);
+            window.allMessages[Date.now()] = newMsg;
+            showToast('تم إرسال الرسالة', 'success');
         }
-    };
-    document.getElementById('modal').classList.add('show');
+        document.getElementById('sendMsgText').value = '';
+        renderSentMessages();
+    } catch (e) {
+        showToast('خطأ في الإرسال', 'error');
+    }
 };
 
 // ===== REPORTS =====
