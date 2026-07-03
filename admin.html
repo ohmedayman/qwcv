@@ -592,12 +592,42 @@ tr:hover td{background:rgba(0,3,201,.02)}
                 </div>
             </div>
 
-            <!-- MESSAGES -->
+            <!-- MESSAGES / SUPPORT -->
             <div class="panel" id="panel-messages">
-                <div class="table-wrap">
-                    <div class="table-head"><h3>الرسائل</h3><div class="actions"><button class="btn-add" onclick="showSendMessage()"><i class="fas fa-plus"></i> رسالة جديدة</button></div></div>
-                    <div class="table-scroll"><table><thead><tr><th>المستلم</th><th>الرسالة</th><th>التاريخ</th><th>النوع</th></tr></thead><tbody id="messagesList"><tr><td colspan="4" class="empty-state"><p>لا توجد رسائل</p></td></tr></tbody></table></div>
-                    <div class="pagination" id="messages-pagination"></div>
+                <!-- Ticket List View -->
+                <div id="supportListView">
+                    <div class="table-wrap">
+                        <div class="table-head"><h3><i class="fas fa-headset"></i> رسائل الدعم</h3>
+                            <div class="actions">
+                                <select id="supportFilter" onchange="filterSupport()" style="padding:8px 12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.82rem">
+                                    <option value="all">الكل</option>
+                                    <option value="open">مفتوحة</option>
+                                    <option value="replied">تم الرد</option>
+                                    <option value="closed">مغلقة</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>المستخدم</th><th>الموضوع</th><th>الرسالة</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead>
+                                <tbody id="supportList"><tr><td colspan="6" class="empty-state"><p>لا توجد رسائل دعم</p></td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Conversation View -->
+                <div id="supportConversation" style="display:none">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+                        <button onclick="closeConversation()" style="background:none;border:1px solid var(--border);border-radius:10px;padding:8px 14px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.82rem">← الرجوع</button>
+                        <h3 id="convTitle" style="margin:0;font-size:1rem"></h3>
+                        <span id="convStatus" class="badge" style="margin-right:auto"></span>
+                        <button onclick="closeTicket()" id="closeTicketBtn" style="background:var(--green);color:#fff;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:700;display:none">غلق المحادثة</button>
+                    </div>
+                    <div id="convMessages" style="background:var(--bg,#f8fafc);border:1px solid var(--border);border-radius:14px;padding:16px;max-height:400px;overflow-y:auto;margin-bottom:16px"></div>
+                    <div style="display:flex;gap:8px">
+                        <textarea id="adminReply" placeholder="اكتب ردك..." style="flex:1;padding:12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;min-height:60px;resize:vertical"></textarea>
+                        <button onclick="sendAdminReply()" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;font-family:inherit;font-weight:700;align-self:flex-end"><i class="fas fa-paper-plane"></i>إرسال</button>
+                    </div>
                 </div>
             </div>
 
@@ -1001,18 +1031,8 @@ function checkAndLoad() {
             }).join('') : '<tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr>';
         }
 
-        // Messages
-        var mt = document.getElementById('messagesList');
-        if (mt) {
-            var msgs = Object.entries(window.allMessages).sort(function(a,b) { return (b[1].sentAt||0) - (a[1].sentAt||0); });
-            mt.innerHTML = msgs.length ? msgs.map(function(e) {
-                var m = e[1];
-                var target = m.target === 'all' ? 'الكل' : escHtml((window.allUsers[m.target]||{}).name || m.target || '-');
-                var tl = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
-                var tc = { info: 'var(--accent)', warning: 'var(--yellow)', success: 'var(--green)', promo: 'var(--purple)' };
-                return '<tr><td><strong>'+target+'</strong></td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escHtml(m.text||'')+'</td><td>'+formatDateTime(m.sentAt)+'</td><td><span class="badge" style="background:'+(tc[m.type]||'var(--accent)')+'20;color:'+(tc[m.type]||'var(--accent)')+'">'+(tl[m.type]||m.type)+'</span></td></tr>';
-            }).join('') : '<tr><td colspan="4" class="empty-state"><p>لا توجد رسائل</p></td></tr>';
-        }
+        // Support Tickets
+        renderSupportTickets();
 
         // Settings
         el = document.getElementById('settingsDefaultPlan'); if (el) el.value = window.allSettings.defaultPlan || 'free';
@@ -1455,36 +1475,98 @@ window.saveSettings = async function() {
     showToast('تم حفظ الإعدادات', 'success');
 };
 
-// ===== MESSAGES =====
-window.showSendMessage = function() {
-    var userOptions = Object.entries(window.allUsers).map(function(e) {
-        return '<option value="'+e[0]+'">'+escHtml(e[1].name||e[1].email||e[0])+'</option>';
-    }).join('');
-    document.getElementById('modalTitle').textContent = 'إرسال رسالة';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>المستلم</label><select id="msgTarget"><option value="all">جميع المستخدمين</option>'+userOptions+'</select></div><div class="field" style="margin-bottom:12px"><label>نوع الرسالة</label><select id="msgType"><option value="info">معلوماتية</option><option value="warning">تحذير</option><option value="success">تهنئة</option><option value="promo">عرض خاص</option></select></div><div class="field"><label>الرسالة</label><textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:80px;width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif"></textarea></div>';
-    document.getElementById('modalConfirm').style.display = 'block';
-    document.getElementById('modalConfirm').textContent = 'إرسال';
-    document.getElementById('modalConfirm').onclick = async function() {
-        var target = document.getElementById('msgTarget').value;
-        var type = document.getElementById('msgType').value;
-        var text = document.getElementById('msgText').value.trim();
-        if (!text) { showToast('اكتب الرسالة', 'error'); return; }
-        var msgData = { type: type, text: text, sentAt: Date.now(), read: false, from: 'admin' };
-        if (target === 'all') {
-            var updates = {};
-            Object.keys(window.allUsers).forEach(function(uid) { updates['users/' + uid + '/notifications/' + Date.now()] = msgData; });
-            updates['messages/' + Date.now()] = Object.assign({}, msgData, { target: 'all', userCount: Object.keys(window.allUsers).length });
-            await fetch(DB + '.json', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates) });
-            showToast('تم إرسال الرسالة لـ ' + Object.keys(window.allUsers).length + ' مستخدم', 'success');
-        } else {
-            await restPost('/users/' + target + '/notifications', msgData);
-            await restPost('/messages', Object.assign({}, msgData, { target: target }));
-            showToast('تم إرسال الرسالة', 'success');
-        }
-        closeModal();
-    };
-    document.getElementById('modal').classList.add('show');
+// ===== SUPPORT TICKETS =====
+var allSupportTickets = {};
+var currentTicketId = null;
+
+function renderSupportTickets() {
+    var tb = document.getElementById('supportList');
+    if (!tb) return;
+    var filter = document.getElementById('supportFilter') ? document.getElementById('supportFilter').value : 'all';
+    var tickets = Object.entries(allSupportTickets).sort(function(a, b) { return (b[1].createdAt || 0) - (a[1].createdAt || 0); });
+    if (filter !== 'all') tickets = tickets.filter(function(e) { return e[1].status === filter; });
+    tb.innerHTML = tickets.length ? tickets.map(function(e) {
+        var t = e[1];
+        var userName = escHtml(t.userName || t.userEmail || 'مستخدم');
+        var st = { open: 'مفتوحة', replied: 'تم الرد', closed: 'مغلقة' };
+        var sc = { open: 'var(--yellow)', replied: 'var(--accent)', closed: 'var(--green)' };
+        var preview = escHtml((t.message || '').substring(0, 60)) + ((t.message || '').length > 60 ? '...' : '');
+        return '<tr style="cursor:pointer" onclick="openConversation(\'' + e[0] + '\')"><td><strong>' + userName + '</strong></td><td>' + escHtml(t.subject || 'بدون موضوع') + '</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + preview + '</td><td>' + formatDateTime(t.createdAt) + '</td><td><span class="badge" style="background:' + (sc[t.status] || 'var(--yellow)') + '20;color:' + (sc[t.status] || 'var(--yellow)') + '">' + (st[t.status] || t.status) + '</span></td><td><button class="btn-action btn-view" onclick="event.stopPropagation();openConversation(\'' + e[0] + '\')"><i class="fas fa-eye"></i></button></td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا توجد رسائل دعم</p></td></tr>';
+}
+
+window.filterSupport = function() { renderSupportTickets(); };
+
+window.openConversation = function(ticketId) {
+    currentTicketId = ticketId;
+    var t = allSupportTickets[ticketId];
+    if (!t) return;
+    document.getElementById('supportListView').style.display = 'none';
+    document.getElementById('supportConversation').style.display = 'block';
+    document.getElementById('convTitle').textContent = (t.userName || t.userEmail || 'مستخدم') + ' — ' + (t.subject || 'بدون موضوع');
+    var st = { open: 'مفتوحة', replied: 'تم الرد', closed: 'مغلقة' };
+    var sc = { open: 'var(--yellow)', replied: 'var(--accent)', closed: 'var(--green)' };
+    document.getElementById('convStatus').textContent = st[t.status] || t.status;
+    document.getElementById('convStatus').style.cssText = 'background:' + (sc[t.status] || 'var(--yellow)') + '20;color:' + (sc[t.status] || 'var(--yellow)');
+    document.getElementById('closeTicketBtn').style.display = t.status === 'closed' ? 'none' : 'inline-block';
+    var convEl = document.getElementById('convMessages');
+    var html = '<div style="background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;border-left:3px solid var(--accent)"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><strong style="font-size:.82rem">' + escHtml(t.userName || 'مستخدم') + '</strong><span style="font-size:.72rem;color:var(--muted)">' + formatDateTime(t.createdAt) + '</span></div><div style="font-size:.82rem;color:var(--text);line-height:1.7;white-space:pre-wrap">' + escHtml(t.message || '') + '</div><div style="font-size:.7rem;color:var(--muted);margin-top:6px">' + escHtml(t.userEmail || '') + '</div></div>';
+    if (t.replies && t.replies.length) {
+        t.replies.forEach(function(r) {
+            var isAdmin = r.from === 'admin';
+            var bg = isAdmin ? 'var(--accent)' : '#fff';
+            var color = isAdmin ? '#fff' : 'var(--text)';
+            var border = isAdmin ? 'none' : '1px solid var(--border)';
+            var align = isAdmin ? 'margin-right:0;margin-left:auto' : '';
+            html += '<div style="max-width:80%;background:' + bg + ';color:' + color + ';border:' + border + ';border-radius:12px;padding:14px;margin-bottom:10px;border-left:' + (isAdmin ? '3px solid var(--green)' : '3px solid var(--accent)') + ';' + align + '"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><strong style="font-size:.82rem">' + (isAdmin ? 'الأدمن' : escHtml(t.userName || 'مستخدم')) + '</strong><span style="font-size:.72rem;opacity:.7">' + formatDateTime(r.createdAt) + '</span></div><div style="font-size:.82rem;line-height:1.7;white-space:pre-wrap">' + escHtml(r.text) + '</div></div>';
+        });
+    }
+    convEl.innerHTML = html;
+    convEl.scrollTop = convEl.scrollHeight;
 };
+
+window.closeConversation = function() {
+    currentTicketId = null;
+    document.getElementById('supportListView').style.display = 'block';
+    document.getElementById('supportConversation').style.display = 'none';
+};
+
+window.sendAdminReply = async function() {
+    var text = document.getElementById('adminReply').value.trim();
+    if (!text || !currentTicketId) return;
+    var reply = { from: 'admin', text: text, createdAt: Date.now() };
+    try {
+        var ticket = allSupportTickets[currentTicketId] || {};
+        var replies = ticket.replies || [];
+        replies.push(reply);
+        await restPatch('/support/' + currentTicketId, { replies: replies, status: 'replied', lastReplyAt: Date.now() });
+        if (ticket.userId) {
+            await restPost('/users/' + ticket.userId + '/notifications', { type: 'info', text: 'تم الرد على رسالتك: ' + (ticket.subject || ''), sentAt: Date.now(), read: false, from: 'admin' });
+        }
+        document.getElementById('adminReply').value = '';
+        showToast('تم إرسال الرد', 'success');
+        openConversation(currentTicketId);
+    } catch (e) {
+        showToast('خطأ في الإرسال', 'error');
+    }
+};
+
+window.closeTicket = async function() {
+    if (!currentTicketId) return;
+    try {
+        await restPatch('/support/' + currentTicketId, { status: 'closed', closedAt: Date.now() });
+        showToast('تم غلق المحادثة', 'success');
+        openConversation(currentTicketId);
+    } catch (e) {
+        showToast('خطأ', 'error');
+    }
+};
+
+// Load support tickets
+onValue(ref(db, 'support'), function(snap) {
+    allSupportTickets = snap.val() || {};
+    if (document.getElementById('supportList')) renderSupportTickets();
+});
 
 // ===== REPORTS =====
 function renderReports() {

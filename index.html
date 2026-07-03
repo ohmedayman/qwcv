@@ -2904,6 +2904,105 @@
             style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
     </div>
 
+    <!-- ===== SUPPORT WIDGET ===== -->
+    <div id="supportWidget" style="position:fixed;bottom:90px;right:28px;z-index:9998;display:none">
+        <button onclick="toggleSupportForm()" style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--green,#059669),#047857);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(5,150,105,0.35);transition:transform 0.3s;border:none;font-size:1.1rem" aria-label="تواصل معنا">
+            <i class="fas fa-headset"></i>
+        </button>
+    </div>
+    <!-- Support Form Modal -->
+    <div id="supportModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10001;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)">
+        <div style="background:var(--card,#fff);border-radius:20px;max-width:420px;width:100%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3)">
+            <div style="background:linear-gradient(135deg,var(--green,#059669),#047857);padding:24px;color:#fff;position:relative">
+                <button onclick="toggleSupportForm()" style="position:absolute;top:12px;left:12px;width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>
+                <div style="font-size:1.5rem;margin-bottom:6px">📬</div>
+                <h3 style="margin:0;font-size:1.05rem;font-weight:800">تواصل مع فريق الدعم</h3>
+                <p style="margin:4px 0 0;font-size:.78rem;opacity:.85">ابعتلنا رسالتك وهنرد عليك خلال 24 ساعة</p>
+            </div>
+            <div style="padding:20px">
+                <div style="margin-bottom:12px"><label style="display:block;font-size:.8rem;font-weight:700;margin-bottom:4px;color:var(--text)">الاسم</label><input id="supportName" type="text" placeholder="اسمك" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.85rem"></div>
+                <div style="margin-bottom:12px"><label style="display:block;font-size:.8rem;font-weight:700;margin-bottom:4px;color:var(--text)">البريد الإلكتروني</label><input id="supportEmail" type="email" placeholder="email@example.com" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.85rem"></div>
+                <div style="margin-bottom:12px"><label style="display:block;font-size:.8rem;font-weight:700;margin-bottom:4px;color:var(--text)">الموضوع</label><select id="supportSubject" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.85rem"><option value="سؤال عام">سؤال عام</option><option value="مشكلة تقنية">مشكلة تقنية</option><option value="طلب ميزة">طلب ميزة جديدة</option><option value="شكوى">شكوى</option><option value="اقتراح">اقتراح</option></select></div>
+                <div style="margin-bottom:16px"><label style="display:block;font-size:.8rem;font-weight:700;margin-bottom:4px;color:var(--text)">الرسالة</label><textarea id="supportMessage" placeholder="اكتب رسالتك هنا..." style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.85rem;min-height:80px;resize:vertical"></textarea></div>
+                <button onclick="submitSupportTicket()" id="supportSubmitBtn" style="width:100%;padding:12px;background:var(--green,#059669);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s">إرسال الرسالة</button>
+                <div id="supportSuccess" style="display:none;text-align:center;padding:20px"><div style="font-size:2rem;margin-bottom:8px">✅</div><div style="font-weight:700;font-size:.95rem;margin-bottom:4px">تم إرسال رسالتك!</div><div style="font-size:.82rem;color:var(--muted)">هنرد عليك خلال 24 ساعة</div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show support widget after 3 seconds
+        setTimeout(function() { var w = document.getElementById('supportWidget'); if (w) w.style.display = 'block'; }, 3000);
+
+        window.toggleSupportForm = function() {
+            var modal = document.getElementById('supportModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+                // Pre-fill if user is logged in
+                if (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) {
+                    var u = firebase.auth().currentUser;
+                    var nameEl = document.getElementById('supportName');
+                    var emailEl = document.getElementById('supportEmail');
+                    if (nameEl && !nameEl.value) nameEl.value = u.displayName || '';
+                    if (emailEl && !emailEl.value) emailEl.value = u.email || '';
+                }
+            }
+        };
+
+        window.submitSupportTicket = async function() {
+            var name = document.getElementById('supportName').value.trim();
+            var email = document.getElementById('supportEmail').value.trim();
+            var subject = document.getElementById('supportSubject').value;
+            var message = document.getElementById('supportMessage').value.trim();
+            if (!name || !email || !message) {
+                if (window.QCVNotify) QCVNotify.toast('املأ كل الحقول', 'error');
+                return;
+            }
+            var btn = document.getElementById('supportSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'جاري الإرسال...';
+            try {
+                var userId = '';
+                if (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) {
+                    userId = firebase.auth().currentUser.uid;
+                }
+                var ticketData = {
+                    userId: userId,
+                    userName: name,
+                    userEmail: email,
+                    subject: subject,
+                    message: message,
+                    status: 'open',
+                    createdAt: Date.now(),
+                    replies: []
+                };
+                await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/support.json', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(ticketData)
+                });
+                document.getElementById('supportSuccess').style.display = 'block';
+                btn.style.display = 'none';
+                document.getElementById('supportName').value = '';
+                document.getElementById('supportEmail').value = '';
+                document.getElementById('supportMessage').value = '';
+                setTimeout(function() {
+                    document.getElementById('supportModal').style.display = 'none';
+                    document.getElementById('supportSuccess').style.display = 'none';
+                    btn.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = 'إرسال الرسالة';
+                }, 3000);
+            } catch (e) {
+                btn.disabled = false;
+                btn.textContent = 'إرسال الرسالة';
+                if (window.QCVNotify) QCVNotify.toast('حدث خطأ، جرّب تاني', 'error');
+            }
+        };
+    </script>
+
     <!-- ===== LIVE CHAT WIDGET ===== -->
     <div id="chatWidget" style="position:fixed;bottom:24px;right:24px;z-index:9999">
         <button id="chatBubble" onclick="toggleChat()" aria-label="فتح الدردشة"
