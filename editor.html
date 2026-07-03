@@ -41,40 +41,31 @@
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
 
-            try {
-                const pathBase='users/'+window.currentUid+'/reports';
-                const atsSnap=await window._get(window._ref(window._db, pathBase + '/ats'));
-                const matcherSnap=await window._get(window._ref(window._db, pathBase + '/matcher'));
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Cairo', sans-serif;
+            height: 100vh;
+            overflow: hidden
+        }
 
-                const ats=atsSnap.val() || {}
-
-                ;
-
-                const matcher=matcherSnap.val() || {}
-
-                ;
-                let rows=[];
-
-                Object.entries(ats).forEach(([k, v])=> {
-                        if (v) rows.push({
-                            id:k, type:'ats', payload:v
-                        });
-                });
-
-            Object.entries(matcher).forEach(([k, v])=> {
-                    if (v) rows.push({
-                        id:k, type:'matcher', payload:v
-                    });
-            });
-        // sort by createdAt desc
-        rows.sort((a, b)=> (b.payload.createdAt||0)-(a.payload.createdAt||0));
-        if (type==='ats') rows=rows.filter(r=>r.type==='ats');
-        if (type==='matcher') rows=rows.filter(r=>r.type==='matcher');
-
-        if ( !rows.length) {
-            container.innerHTML='<div style="padding:12px;color:var(--muted)">No reports yet.</div>';
-            return;
+        /* ===== TOP BAR ===== */
+        .topbar {
+            height: 56px;
+            background: var(--sidebar);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+            z-index: 100;
+            position: relative;
+            direction: ltr;
+            overflow: visible
         }
 
         .topbar-logo {
