@@ -606,6 +606,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
                                     <option value="replied">تم الرد</option>
                                     <option value="closed">مغلقة</option>
                                 </select>
+                                <button class="btn-add" onclick="showSendMessage()"><i class="fas fa-paper-plane"></i> رسالة للمستخدم</button>
                             </div>
                         </div>
                         <div class="table-scroll">
@@ -1630,6 +1631,41 @@ function pollSupportTickets() {
 }
 setInterval(pollSupportTickets, 10000);
 pollSupportTickets();
+
+// ===== SEND MESSAGE TO USER =====
+window.showSendMessage = function() {
+    var userOptions = Object.entries(window.allUsers).map(function(e) {
+        return '<option value="'+e[0]+'">'+escHtml(e[1].name||e[1].email||e[0])+'</option>';
+    }).join('');
+    document.getElementById('modalTitle').textContent = 'إرسال رسالة للمستخدم';
+    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>المستلم</label><select id="msgTarget"><option value="all">جميع المستخدمين</option>'+userOptions+'</select></div><div class="field" style="margin-bottom:12px"><label>نوع الرسالة</label><select id="msgType"><option value="info">معلوماتية</option><option value="warning">تحذير</option><option value="success">تهنئة</option><option value="promo">عرض خاص</option></select></div><div class="field"><label>الرسالة</label><textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:80px;width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif"></textarea></div>';
+    document.getElementById('modalConfirm').style.display = 'block';
+    document.getElementById('modalConfirm').textContent = 'إرسال';
+    document.getElementById('modalConfirm').onclick = async function() {
+        var target = document.getElementById('msgTarget').value;
+        var type = document.getElementById('msgType').value;
+        var text = document.getElementById('msgText').value.trim();
+        if (!text) { showToast('اكتب الرسالة', 'error'); return; }
+        var msgData = { type: type, text: text, sentAt: Date.now(), read: false, from: 'admin' };
+        try {
+            if (target === 'all') {
+                var updates = {};
+                Object.keys(window.allUsers).forEach(function(uid) { updates['users/' + uid + '/notifications/' + Date.now()] = msgData; });
+                updates['messages/' + Date.now()] = Object.assign({}, msgData, { target: 'all', userCount: Object.keys(window.allUsers).length });
+                await fetch(DB + '.json', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates) });
+                showToast('تم إرسال الرسالة لـ ' + Object.keys(window.allUsers).length + ' مستخدم', 'success');
+            } else {
+                await restPost('/users/' + target + '/notifications', msgData);
+                await restPost('/messages', Object.assign({}, msgData, { target: target }));
+                showToast('تم إرسال الرسالة', 'success');
+            }
+            closeModal();
+        } catch (e) {
+            showToast('خطأ في الإرسال', 'error');
+        }
+    };
+    document.getElementById('modal').classList.add('show');
+};
 
 // ===== REPORTS =====
 function renderReports() {
