@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV - Verify CV</title>
+    <meta name="description" content="التحقق من صحة السيرة الذاتية - QCV CV Verification. تأكد من أن السيرة الذاتية تم إنشاؤها بواسطة QCV.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--text:#1a1a2e;--muted:#6b7280;--green:#10b981;--red:#ef4444}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+
+        .verify-header{width:100%;background:var(--card);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+        .logo{font-size:1.3rem;font-weight:900;color:var(--text);display:flex;align-items:center;gap:6px}
+        .logo span{color:var(--accent)}
+        .header-actions{display:flex;gap:10px;align-items:center}
+        .btn-outline{padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-weight:600;font-size:0.82rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+        .btn-accent{padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+        .btn-accent:hover{background:#0002a3}
+
+        .verify-container{width:100%;max-width:640px;padding:40px 20px;flex:1}
+
+        .verify-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px 32px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+        .verify-icon{width:72px;height:72px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:2rem}
+        .verify-icon.pending{background:rgba(245,158,11,0.1);color:#f59e0b}
+        .verify-icon.success{background:rgba(16,185,129,0.1);color:#10b981}
+        .verify-icon.error{background:rgba(239,68,68,0.1);color:#ef4444}
+        .verify-icon.loading{background:rgba(0,3,201,0.06);color:var(--accent)}
+
+        .verify-title{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+        .verify-subtitle{color:var(--muted);font-size:0.92rem;margin-bottom:24px}
+
+        .verify-input-group{display:flex;gap:8px;margin-bottom:20px}
+        .verify-input{flex:1;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:0.95rem;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.2s}
+        .verify-input:focus{border-color:var(--accent)}
+        .verify-btn{padding:12px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.92rem;cursor:pointer;font-family:inherit;transition:all 0.2s;white-space:nowrap}
+        .verify-btn:hover{background:#0002a3}
+        .verify-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+        .verify-result{margin-top:24px;text-align:left}
+        .result-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:0.9rem}
+        .result-row:last-child{border-bottom:none}
+        .result-label{color:var(--muted);font-weight:600}
+        .result-value{font-weight:700;text-align:right}
+
+        .badge-verified{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(16,185,129,0.1);color:#10b981;border-radius:50px;font-weight:700;font-size:0.88rem;margin-bottom:16px}
+        .badge-verified i{font-size:1rem}
+
+        .cv-preview-link{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.88rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s;margin-top:16px}
+        .cv-preview-link:hover{background:#0002a3}
+
+        .verify-footer{text-align:center;padding:30px;color:var(--muted);font-size:0.82rem;width:100%}
+        .verify-footer a{color:var(--accent);text-decoration:none}
+
+        .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        @media(max-width:600px){
+            .verify-header{padding:12px 16px;flex-direction:column;gap:8px}
+            .header-actions{justify-content:center}
+            .verify-card{padding:28px 20px}
+            .verify-input-group{flex-direction:column}
+        }
+        body.dark-mode{background:#0a0e1a;color:#f1f5f9}
+        body.dark-mode .verify-header{background:rgba(10,14,26,0.95);border-color:#1e293b}
+        body.dark-mode .verify-card{background:#141b2d;border-color:#1e293b}
+        body.dark-mode .verify-input{background:#0f172a;border-color:#2d3748;color:#f1f5f9}
+        body.dark-mode .result-row{border-color:#1e293b}
+        body.dark-mode a{color:#27ffed}
+    </style>
+    <script src="js/pwa.js" defer></script>
+</head>
+<body>
+    <div class="verify-header">
+        <div class="logo">Q<span>CV</span></div>
+        <div class="header-actions">
+            <a href="index.html" class="btn-outline">الرئيسية</a>
+            <a href="ats-checker.html" class="btn-outline">فحص ATS</a>
+        </div>
+    </div>
+
+    <div class="verify-container">
+        <div class="verify-card">
+            <div class="verify-icon pending" id="verifyIcon">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h1 class="verify-title" id="verifyTitle">التحقق من السيرة الذاتية</h1>
+            <p class="verify-subtitle" id="verifySubtitle">أدخل رمز التحقق للتأكد من أن هذه السيرة الذاتية تم إنشاؤها بواسطة QCV</p>
+
+            <div class="verify-input-group" id="verifyInputGroup">
+                <input type="text" class="verify-input" id="verifyInput" placeholder="أدخل رمز التحقق (مثال: ABC123)" autocomplete="off">
+                <button class="verify-btn" id="verifyBtn" onclick="doVerify()">
+                    <i class="fas fa-check-circle"></i> تحقق
+                </button>
+            </div>
+
+            <div id="verifyResult" style="display:none"></div>
+        </div>
+    </div>
+
+    <div class="verify-footer">
+        <p>خدمة التحقق من السيرة الذاتية بواسطة <a href="https://qcv.vexonet.online">QCV</a> — منشئ سير ذاتية ذكي</p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script>
+    (function() {
+        var firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.database();
+
+        var params = new URLSearchParams(window.location.search);
+        var code = params.get('code') || '';
+        if (code) {
+            document.getElementById('verifyInput').value = code;
+            doVerify();
+        }
+
+        document.getElementById('verifyInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') doVerify();
+        });
+
+        window.doVerify = function() {
+            var input = document.getElementById('verifyInput').value.trim();
+            if (!input) return;
+
+            var icon = document.getElementById('verifyIcon');
+            var title = document.getElementById('verifyTitle');
+            var subtitle = document.getElementById('verifySubtitle');
+            var result = document.getElementById('verifyResult');
+            var btn = document.getElementById('verifyBtn');
+
+            icon.className = 'verify-icon loading';
+            icon.innerHTML = '<div class="spinner"></div>';
+            title.textContent = 'جاري التحقق...';
+            subtitle.textContent = '';
+            result.style.display = 'none';
+            btn.disabled = true;
+
+            var code = input.replace(/^.*\/portfolio\//, '').replace(/[^a-zA-Z0-9]/g, '');
+
+            db.ref('portfolioLinks/' + code).once('value').then(function(snap) {
+                var uid = snap.val();
+                if (!uid) {
+                    icon.className = 'verify-icon error';
+                    icon.innerHTML = '<i class="fas fa-times"></i>';
+                    title.textContent = 'رمز غير صالح';
+                    subtitle.textContent = 'لم يتم العثور على سيرة ذاتية بهذا الرمز. تأكد من صحة الرمز.';
+                    btn.disabled = false;
+                    return;
+                }
+
+                return db.ref('users/' + uid).once('value').then(function(snap2) {
+                    var user = snap2.val();
+                    if (!user) {
+                        icon.className = 'verify-icon error';
+                        icon.innerHTML = '<i class="fas fa-times"></i>';
+                        title.textContent = 'البيانات غير موجودة';
+                        subtitle.textContent = 'تم العثور على الرمز لكن البيانات غير متوفرة.';
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    icon.className = 'verify-icon success';
+                    icon.innerHTML = '<i class="fas fa-check"></i>';
+                    title.textContent = 'سيرة ذاتية موثقة';
+                    subtitle.textContent = '';
+
+                    var created = user.registeredAt ? new Date(user.registeredAt).toLocaleDateString('ar-EG', {year:'numeric',month:'long',day:'numeric'}) : 'غير معروف';
+                    var lastLogin = user.lastLogin ? new Date(user.lastLogin).toLocaleDateString('ar-EG', {year:'numeric',month:'long',day:'numeric'}) : 'غير معروف';
+                    var plan = user.plan === 'unlimited' ? 'غير محدودة' : user.plan === 'pro' ? 'احترافية' : 'مجانية';
+                    var cvName = (user.cvData && user.cvData.name) ? user.cvData.name : 'غير محدد';
+
+                    var html = '<div class="badge-verified"><i class="fas fa-shield-halved"></i> تم التحقق — سيرة ذاتية أصلية من QCV</div>';
+                    html += '<div class="verify-result">';
+                    html += '<div class="result-row"><span class="result-label">الاسم</span><span class="result-value">' + escHtml(cvName) + '</span></div>';
+                    html += '<div class="result-row"><span class="result-label">تاريخ الإنشاء</span><span class="result-value">' + created + '</span></div>';
+                    html += '<div class="result-row"><span class="result-label">آخر نشاط</span><span class="result-value">' + lastLogin + '</span></div>';
+                    html += '<div class="result-row"><span class="result-label">الباقة</span><span class="result-value">' + plan + '</span></div>';
+                    html += '<div class="result-row"><span class="result-label">رمز التحقق</span><span class="result-value" style="font-family:monospace;letter-spacing:1px">' + escHtml(code) + '</span></div>';
+                    html += '</div>';
+                    html += '<a href="portfolio-view.html?code=' + encodeURIComponent(code) + '" class="cv-preview-link"><i class="fas fa-eye"></i> عرض السيرة الذاتية</a>';
+
+                    result.innerHTML = html;
+                    result.style.display = 'block';
+                    btn.disabled = false;
+                });
+            }).catch(function() {
+                icon.className = 'verify-icon error';
+                icon.innerHTML = '<i class="fas fa-times"></i>';
+                title.textContent = 'خطأ في الاتصال';
+                subtitle.textContent = 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.';
+                btn.disabled = false;
+            });
+        };
+
+        function escHtml(s) {
+            return (s || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    })();
+    </script>
+
+    <script defer src="js/maintenance.js"></script>
+    <script defer src="js/site-settings.js"></script>
+    <script defer src="js/auto-reload.js"></script>
+    <script defer src="js/analytics.js"></script>
+</body>
+</html>

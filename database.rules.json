@@ -1,11 +1,24 @@
 {
   "rules": {
     "users": {
-      ".read": true,
-      ".write": true,
       "$uid": {
         ".read": true,
-        ".write": true
+        ".write": true,
+        "cvs": {
+          "$cvId": {
+            ".validate": "newData.hasChildren(['name', 'data']) || newData.val() === null"
+          }
+        },
+        "trash": {
+          "$cvId": {
+            ".validate": "newData.hasChildren(['data']) || newData.val() === null"
+          }
+        },
+        "notifications": {
+          "$notifId": {
+            ".validate": "newData.hasChildren(['type', 'text', 'timestamp']) || newData.child('read').isBoolean()"
+          }
+        }
       }
     },
     "staff": {
@@ -14,11 +27,17 @@
     },
     "subscriptions": {
       ".read": true,
-      ".write": true
+      ".write": true,
+      "$subId": {
+        ".validate": "newData.hasChildren(['userId', 'plan', 'paymentMethod'])"
+      }
     },
     "jobs": {
       ".read": true,
-      ".write": true
+      ".write": true,
+      "$jobId": {
+        ".validate": "newData.hasChildren(['title', 'category'])"
+      }
     },
     "domains": {
       ".read": true,
@@ -34,7 +53,10 @@
     },
     "portfolioLinks": {
       ".read": true,
-      ".write": true
+      ".write": true,
+      "$code": {
+        ".validate": "newData.isString() && newData.val().length > 0"
+      }
     },
     "messages": {
       ".read": true,
@@ -57,6 +79,32 @@
       ".write": true
     },
     "approvedDomains": {
+      ".read": true,
+      ".write": true
+    },
+    "newsletter": {
+      ".read": true,
+      ".write": true,
+      "$email": {
+        ".validate": "newData.hasChildren(['email'])"
+      }
+    },
+    "support": {
+      ".read": true,
+      ".write": true,
+      "$ticketId": {
+        ".validate": "newData.hasChildren(['userName', 'userEmail', 'message']) || newData.child('status').val() === 'closed' || newData.child('replies').exists()"
+      }
+    },
+    "auditLog": {
+      ".read": true,
+      ".write": true
+    },
+    "affiliateRequests": {
+      ".read": true,
+      ".write": true
+    },
+    "pointsExchange": {
       ".read": true,
       ".write": true
     }

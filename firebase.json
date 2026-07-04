@@ -105,6 +105,14 @@
       {
         "source": "/ai",
         "destination": "/ai.html"
+      },
+      {
+        "source": "/verify",
+        "destination": "/verify.html"
+      },
+      {
+        "source": "/verify/:code",
+        "destination": "/verify.html"
       }
     ]
   },
