@@ -270,75 +270,61 @@
 
     <script defer src="js/maintenance.js"></script>
     <script>
-    try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM =
-    parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
-    try {
-    if (window.QCVSettings && window.QCVSettings.pricing) {
-    var p = window.QCVSettings.pricing;
-    if (p.plans && Array.isArray(p.plans)) {
-    if (p.plans[1] && p.plans[1].price) quick = parseInt(p.plans[1].price) || quick;
-    if (p.plans[2] && p.plans[2].price) proM = parseInt(p.plans[2].price) || proM;
-    if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
-    } else {
-    proM = parseInt(p.proMonthly) || proM;
-    proY = parseInt(p.proYearly) || proY;
-    unM = parseInt(p.unlimitedMonthly) || unM;
-    unY = parseInt(p.unlimitedYearly) || unY;
-    quick = parseInt(p.quick) || quick;
-    }
-    }
-    } catch (e) { }
+    (function () {
+        function buildAndRender() {
+            var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
+            try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
+            try {
+                if (window.QCVSettings && window.QCVSettings.pricing) {
+                    var p = window.QCVSettings.pricing;
+                    if (p.plans && Array.isArray(p.plans)) {
+                        if (p.plans[1] && p.plans[1].price) quick = parseInt(p.plans[1].price) || quick;
+                        if (p.plans[2] && p.plans[2].price) proM = parseInt(p.plans[2].price) || proM;
+                        if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
+                    } else {
+                        proM = parseInt(p.proMonthly) || proM;
+                        proY = parseInt(p.proYearly) || proY;
+                        unM = parseInt(p.unlimitedMonthly) || unM;
+                        unY = parseInt(p.unlimitedYearly) || unY;
+                        quick = parseInt(p.quick) || quick;
+                    }
+                }
+            } catch (e) { }
 
-    // compute yearly as monthly * 12 (no additional discount) if not explicitly provided
-    try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12); } catch (e) { proY = Math.round(proM
-    * 12); }
-    try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12); } catch (e) { unY = Math.round(unM * 12);
-    }
+            try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12); } catch (e) { proY = Math.round(proM * 12); }
+            try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12); } catch (e) { unY = Math.round(unM * 12); }
 
-    var obj = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "QCV - منشئ سير ذاتية ذكي",
-    "alternateName": ["QCV", "QCV CV Builder", "منشئ سيرة ذاتية", "QCV Resume Builder"],
-    "url": "https://qcv.vexonet.online",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web",
-    "description": "منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لبناء سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق",
-    "offers": [
-    { "@type": "Offer", "price": "0", "priceCurrency": "EGP", "name": "الباقة المجانية", "description": "سيرة ذاتية
-    واحدة مع قالب كلاسيك وتصدير PDF بعلامة مائية" },
-    { "@type": "Offer", "price": String(quick), "priceCurrency": "EGP", "name": "باقة 48 ساعة", "description": "وصول
-    كامل لمدة 48 ساعة فقط - مساعد كتابة + تقييم + تحليل + PDF" },
-    { "@type": "Offer", "price": String(proM), "priceCurrency": "EGP", "name": "الباقة الاحترافية", "description": "5
-    سير ذاتية احترافية مع جميع القوالب وذكاء اصطناعي ورفع وتحليل 3 مرات/شهر", "billingIncrement": "P1M" },
-    { "@type": "Offer", "price": String(unM), "priceCurrency": "EGP", "name": "الباقة غير المحدودة", "description": "سير
-    ذاتية غير محدودة مع جميع القوالب وذكاء اصطناعي وتحليل غير محدود ودعم 24/7", "billingIncrement": "P1M" }
-    ],
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "52", "bestRating": "5",
-    "worstRating": "1" },
-    "review": [
-    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": {
-    "@type": "Person", "name": "أحمد محمد" }, "reviewBody": "QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة." },
-    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": {
-    "@type": "Person", "name": "سارة خالد" }, "reviewBody": "القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي
-    الذاتية كانت بترفض." },
-    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": {
-    "@type": "Person", "name": "محمد عبدالله" }, "reviewBody": "أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج
-    مبهرة." }
-    ],
-    "inLanguage": ["ar", "en"],
-    "featureList": "مساعد ذكاء اصطناعي, تحليل ATS, قوالب احترافية, تصدير PDF, حفظ سحابي"
-    };
+            var obj = {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "QCV - منشئ سير ذاتية ذكي",
+                "alternateName": ["QCV", "QCV CV Builder", "منشئ سيرة ذاتية", "QCV Resume Builder"],
+                "url": "https://qcv.vexonet.online",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web",
+                "description": "منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لبناء سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق",
+                "offers": [
+                    { "@type": "Offer", "price": "0", "priceCurrency": "EGP", "name": "الباقة المجانية", "description": "سيرة ذاتية واحدة مع قالب كلاسيك وتصدير PDF بعلامة مائية" },
+                    { "@type": "Offer", "price": String(quick), "priceCurrency": "EGP", "name": "باقة 48 ساعة", "description": "وصول كامل لمدة 48 ساعة فقط - مساعد كتابة + تقييم + تحليل + PDF" },
+                    { "@type": "Offer", "price": String(proM), "priceCurrency": "EGP", "name": "الباقة الاحترافية", "description": "5 سير ذاتية احترافية مع جميع القوالب وذكاء اصطناعي ورفع وتحليل 3 مرات/شهر", "billingIncrement": "P1M" },
+                    { "@type": "Offer", "price": String(unM), "priceCurrency": "EGP", "name": "الباقة غير المحدودة", "description": "سير ذاتية غير محدودة مع جميع القوالب وذكاء اصطناعي وتحليل غير محدود ودعم 24/7", "billingIncrement": "P1M" }
+                ],
+                "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "52", "bestRating": "5", "worstRating": "1" },
+                "review": [
+                    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "أحمد محمد" }, "reviewBody": "QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة." },
+                    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "سارة خالد" }, "reviewBody": "القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض." },
+                    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "محمد عبدالله" }, "reviewBody": "أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة." }
+                ],
+                "inLanguage": ["ar", "en"],
+                "featureList": "مساعد ذكاء اصطناعي, تحليل ATS, قوالب احترافية, تصدير PDF, حفظ سحابي"
+            };
 
-    var el = document.getElementById('qcv-software-ld');
-    if (el) el.textContent = JSON.stringify(obj, null, 2);
-    }
+            var el = document.getElementById('qcv-software-ld');
+            if (el) el.textContent = JSON.stringify(obj, null, 2);
+        }
 
-    // run now and poll briefly for settings
-    buildAndRender();
-    var tries = 0, iv = setInterval(function () { tries++; buildAndRender(); if (((window.allSettings &&
-    (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings &&
-    window.QCVSettings.pricing)) || tries > 10) clearInterval(iv); }, 700);
+        buildAndRender();
+        var tries = 0, iv = setInterval(function () { tries++; buildAndRender(); if (((window.allSettings && (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings && window.QCVSettings.pricing)) || tries > 10) clearInterval(iv); }, 700);
     })();
     </script>
     <script type="application/ld+json">
