@@ -1,0 +1,44 @@
+@mixin button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+    background: $primary;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform $transition, box-shadow $transition, background $transition;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 3, 201, 0.25);
+        background: darken($primary, 8%);
+    }
+}
+
+.btn-primary {
+    @include button-primary;
+}
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid $border;
+    border-radius: 999px;
+    background: transparent;
+    color: $text;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover {
+        border-color: $primary;
+        color: $primary;
+    }
+}

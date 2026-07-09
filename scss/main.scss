@@ -1,0 +1,17 @@
+@import 'base/variables';
+@import 'base/reset';
+@import 'components/buttons';
+@import 'layout/home';
+
+// Global utility classes
+.container {
+    width: min(1200px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.card {
+    background: $card;
+    border: 1px solid $border;
+    border-radius: $radius;
+    box-shadow: $shadow;
+}

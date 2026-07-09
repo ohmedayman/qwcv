@@ -1,0 +1,67 @@
+// Main hero and landing styles
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 110px 60px 80px;
+    background: linear-gradient(135deg, rgba($primary, 0.04), rgba($secondary, 0.04));
+
+    &__content {
+        max-width: 580px;
+    }
+
+    &__title {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 16px;
+        color: $text;
+
+        span {
+            color: $primary;
+        }
+    }
+
+    &__subtitle {
+        font-size: 1.05rem;
+        color: $muted;
+        margin-bottom: 28px;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    &__card {
+        background: $card;
+        border: 1px solid $border;
+        border-radius: $radius;
+        padding: 24px;
+        box-shadow: $shadow;
+        min-width: 320px;
+    }
+}
+
+.section {
+    padding: 70px 60px;
+
+    &__header {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+
+    &__title {
+        font-size: 1.9rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    &__desc {
+        color: $muted;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+}

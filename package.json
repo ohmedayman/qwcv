@@ -1,0 +1,10 @@
+{
+    "name": "qcv-sass-project",
+    "private": true,
+    "scripts": {
+        "sass": "sass scss/main.scss styles.css --style=expanded"
+    },
+    "devDependencies": {
+        "sass": "^1.77.5"
+    }
+}

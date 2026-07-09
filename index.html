@@ -270,62 +270,62 @@
 
     <script defer src="js/maintenance.js"></script>
     <script>
-    (function () {
-        function buildAndRender() {
-            var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
-            try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
-            try {
-                if (window.QCVSettings && window.QCVSettings.pricing) {
-                    var p = window.QCVSettings.pricing;
-                    if (p.plans && Array.isArray(p.plans)) {
-                        if (p.plans[1] && p.plans[1].price) quick = parseInt(p.plans[1].price) || quick;
-                        if (p.plans[2] && p.plans[2].price) proM = parseInt(p.plans[2].price) || proM;
-                        if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
-                    } else {
-                        proM = parseInt(p.proMonthly) || proM;
-                        proY = parseInt(p.proYearly) || proY;
-                        unM = parseInt(p.unlimitedMonthly) || unM;
-                        unY = parseInt(p.unlimitedYearly) || unY;
-                        quick = parseInt(p.quick) || quick;
+        (function () {
+            function buildAndRender() {
+                var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
+                try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
+                try {
+                    if (window.QCVSettings && window.QCVSettings.pricing) {
+                        var p = window.QCVSettings.pricing;
+                        if (p.plans && Array.isArray(p.plans)) {
+                            if (p.plans[1] && p.plans[1].price) quick = parseInt(p.plans[1].price) || quick;
+                            if (p.plans[2] && p.plans[2].price) proM = parseInt(p.plans[2].price) || proM;
+                            if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
+                        } else {
+                            proM = parseInt(p.proMonthly) || proM;
+                            proY = parseInt(p.proYearly) || proY;
+                            unM = parseInt(p.unlimitedMonthly) || unM;
+                            unY = parseInt(p.unlimitedYearly) || unY;
+                            quick = parseInt(p.quick) || quick;
+                        }
                     }
-                }
-            } catch (e) { }
+                } catch (e) { }
 
-            try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12); } catch (e) { proY = Math.round(proM * 12); }
-            try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12); } catch (e) { unY = Math.round(unM * 12); }
+                try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12); } catch (e) { proY = Math.round(proM * 12); }
+                try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12); } catch (e) { unY = Math.round(unM * 12); }
 
-            var obj = {
-                "@context": "https://schema.org",
-                "@type": "SoftwareApplication",
-                "name": "QCV - منشئ سير ذاتية ذكي",
-                "alternateName": ["QCV", "QCV CV Builder", "منشئ سيرة ذاتية", "QCV Resume Builder"],
-                "url": "https://qcv.vexonet.online",
-                "applicationCategory": "BusinessApplication",
-                "operatingSystem": "Web",
-                "description": "منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لبناء سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق",
-                "offers": [
-                    { "@type": "Offer", "price": "0", "priceCurrency": "EGP", "name": "الباقة المجانية", "description": "سيرة ذاتية واحدة مع قالب كلاسيك وتصدير PDF بعلامة مائية" },
-                    { "@type": "Offer", "price": String(quick), "priceCurrency": "EGP", "name": "باقة 48 ساعة", "description": "وصول كامل لمدة 48 ساعة فقط - مساعد كتابة + تقييم + تحليل + PDF" },
-                    { "@type": "Offer", "price": String(proM), "priceCurrency": "EGP", "name": "الباقة الاحترافية", "description": "5 سير ذاتية احترافية مع جميع القوالب وذكاء اصطناعي ورفع وتحليل 3 مرات/شهر", "billingIncrement": "P1M" },
-                    { "@type": "Offer", "price": String(unM), "priceCurrency": "EGP", "name": "الباقة غير المحدودة", "description": "سير ذاتية غير محدودة مع جميع القوالب وذكاء اصطناعي وتحليل غير محدود ودعم 24/7", "billingIncrement": "P1M" }
-                ],
-                "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "52", "bestRating": "5", "worstRating": "1" },
-                "review": [
-                    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "أحمد محمد" }, "reviewBody": "QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة." },
-                    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "سارة خالد" }, "reviewBody": "القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض." },
-                    { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "محمد عبدالله" }, "reviewBody": "أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة." }
-                ],
-                "inLanguage": ["ar", "en"],
-                "featureList": "مساعد ذكاء اصطناعي, تحليل ATS, قوالب احترافية, تصدير PDF, حفظ سحابي"
-            };
+                var obj = {
+                    "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "QCV - منشئ سير ذاتية ذكي",
+                    "alternateName": ["QCV", "QCV CV Builder", "منشئ سيرة ذاتية", "QCV Resume Builder"],
+                    "url": "https://qcv.vexonet.online",
+                    "applicationCategory": "BusinessApplication",
+                    "operatingSystem": "Web",
+                    "description": "منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لبناء سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق",
+                    "offers": [
+                        { "@type": "Offer", "price": "0", "priceCurrency": "EGP", "name": "الباقة المجانية", "description": "سيرة ذاتية واحدة مع قالب كلاسيك وتصدير PDF بعلامة مائية" },
+                        { "@type": "Offer", "price": String(quick), "priceCurrency": "EGP", "name": "باقة 48 ساعة", "description": "وصول كامل لمدة 48 ساعة فقط - مساعد كتابة + تقييم + تحليل + PDF" },
+                        { "@type": "Offer", "price": String(proM), "priceCurrency": "EGP", "name": "الباقة الاحترافية", "description": "5 سير ذاتية احترافية مع جميع القوالب وذكاء اصطناعي ورفع وتحليل 3 مرات/شهر", "billingIncrement": "P1M" },
+                        { "@type": "Offer", "price": String(unM), "priceCurrency": "EGP", "name": "الباقة غير المحدودة", "description": "سير ذاتية غير محدودة مع جميع القوالب وذكاء اصطناعي وتحليل غير محدود ودعم 24/7", "billingIncrement": "P1M" }
+                    ],
+                    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "52", "bestRating": "5", "worstRating": "1" },
+                    "review": [
+                        { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "أحمد محمد" }, "reviewBody": "QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة." },
+                        { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "سارة خالد" }, "reviewBody": "القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض." },
+                        { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "author": { "@type": "Person", "name": "محمد عبدالله" }, "reviewBody": "أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة." }
+                    ],
+                    "inLanguage": ["ar", "en"],
+                    "featureList": "مساعد ذكاء اصطناعي, تحليل ATS, قوالب احترافية, تصدير PDF, حفظ سحابي"
+                };
 
-            var el = document.getElementById('qcv-software-ld');
-            if (el) el.textContent = JSON.stringify(obj, null, 2);
-        }
+                var el = document.getElementById('qcv-software-ld');
+                if (el) el.textContent = JSON.stringify(obj, null, 2);
+            }
 
-        buildAndRender();
-        var tries = 0, iv = setInterval(function () { tries++; buildAndRender(); if (((window.allSettings && (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings && window.QCVSettings.pricing)) || tries > 10) clearInterval(iv); }, 700);
-    })();
+            buildAndRender();
+            var tries = 0, iv = setInterval(function () { tries++; buildAndRender(); if (((window.allSettings && (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings && window.QCVSettings.pricing)) || tries > 10) clearInterval(iv); }, 700);
+        })();
     </script>
     <script type="application/ld+json">
     {
@@ -543,6 +543,81 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 8px
+        }
+
+        .hero-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            max-width: 560px;
+            margin-top: 24px
+        }
+
+        .hero-highlight {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04)
+        }
+
+        .hero-highlight strong {
+            display: block;
+            font-size: 1.02rem;
+            color: var(--accent);
+            margin-bottom: 4px
+        }
+
+        .hero-highlight span {
+            color: var(--muted);
+            font-size: 0.78rem
+        }
+
+        .hero-step-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(0, 3, 201, 0.07);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            border: 1px solid rgba(0, 3, 201, 0.12)
+        }
+
+        .hero-side-card {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 3, 201, 0.08), rgba(39, 255, 237, 0.08));
+            border: 1px solid rgba(0, 3, 201, 0.12)
+        }
+
+        .hero-side-card .mini-stats {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px
+        }
+
+        .hero-side-card .mini-stat {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.04)
+        }
+
+        .hero-side-card .mini-stat span {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-bottom: 4px
+        }
+
+        .hero-side-card .mini-stat strong {
+            font-size: 0.95rem;
+            color: var(--text)
         }
 
         /* ===== HERO ===== */
@@ -2001,25 +2076,44 @@
     </nav>
 
     <!-- ===== HERO ===== -->
-    <section class="hero">
+    <section class="hero" id="welcome">
         <div class="hero-right">
-            <div class="hero-badge"><i class="fas fa-robot"></i> <span data-i18n="hero_badge">مدعوم بالذكاء
-                    الاصطناعي</span></div>
-            <h1 data-i18n-html="hero_title">ابنِ سيرة ذاتية <span class="hl">ذكية ومتوافقة</span><br>مع أنظمة الـ ATS
+            <div class="hero-badge"><i class="fas fa-robot"></i> <span data-i18n="hero_badge">منصة احترافية
+                    للوظائف</span></div>
+            <h1 data-i18n-html="hero_title">ابنِ سيرة ذاتية <span class="hl">مُجهزة للوظائف</span><br>ومُهيأة للـ ATS
             </h1>
-            <p data-i18n="hero_sub">منشئ سير ذاتية احترافي يعتمد على الذكاء الاصطناعي لمساعدتك في بناء سيرة ذاتية تتجاوز
-                أنظمة الفرز الآلي وتلفت انتباه الموظفين</p>
+            <p data-i18n="hero_sub">QCV يزوّدك بأدوات جاهزة لإنشاء سيرة ذاتية احترافية، تحليل ATS، مطابقة الوظائف،
+                وتصدير ملفات PDF بصياغة قوية ومناسبة لطلب العمل.</p>
             <div class="hero-btns">
-                <a href="login.html" class="btn btn-primary" data-i18n="start_free">ابدأ مجاناً الآن <i
+                <a href="editor.html" class="btn btn-primary" data-i18n="start_free">ابدأ بناء سيرتك الآن <i
                         class="fas fa-arrow-left"></i></a>
-                <a href="#pricing" class="btn btn-ghost" data-i18n="view_plans">شاهد الباقات</a>
+                <a href="ats-checker.html" class="btn btn-ghost" data-i18n="view_plans">جرّب فحص ATS مجاناً</a>
+            </div>
+            <div class="hero-highlights">
+                <div class="hero-highlight">
+                    <strong>15+</strong>
+                    <span>قالب احترافي</span>
+                </div>
+                <div class="hero-highlight">
+                    <strong>92/100</strong>
+                    <span>متوسط جودة السيرة</span>
+                </div>
+                <div class="hero-highlight">
+                    <strong>24/7</strong>
+                    <span>دعم ومساعدة</span>
+                </div>
+            </div>
+            <div class="hero-steps" style="margin-top:16px">
+                <div class="hero-step-pill"><i class="fas fa-bolt"></i> إنشاء سريع</div>
+                <div class="hero-step-pill"><i class="fas fa-chart-line"></i> تحليل ذكي</div>
+                <div class="hero-step-pill"><i class="fas fa-download"></i> تصدير PDF</div>
             </div>
         </div>
         <div class="hero-left">
             <div class="hero-visual" role="img" aria-label="معاينة سيرة ذاتية بالذكاء الاصطناعي">
                 <div class="hv-header">
-                    <div class="hv-title">منشئ سير ذاتية احترافية</div>
-                    <div class="hv-badge">متوافقة مع أنظمة ATS</div>
+                    <div class="hv-title">منصة QCV جاهزة للمستخدمين</div>
+                    <div class="hv-badge">مشروع متكامل</div>
                 </div>
                 <div class="hv-lines">
                     <div class="hv-line" style="width:90%"></div>
@@ -2028,13 +2122,59 @@
                     <div class="hv-line" style="width:70%"></div>
                     <div class="hv-line medium"></div>
                 </div>
+                <div class="hero-side-card">
+                    <div class="mini-stats">
+                        <div class="mini-stat">
+                            <span>تقييم ATS</span>
+                            <strong>92/100</strong>
+                        </div>
+                        <div class="mini-stat">
+                            <span>أدوات جاهزة</span>
+                            <strong>3+</strong>
+                        </div>
+                    </div>
+                    <div class="hero-step-pill"><i class="fas fa-magic"></i> تحليل سريع + تحسين + تصدير</div>
+                </div>
                 <div class="hv-score">
                     <div class="hv-score-bar">
                         <div class="hv-score-fill"></div>
                     </div>
-                    <div class="hv-score-text">92/100</div>
+                    <div class="hv-score-text">جاهز للاستعمال</div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+        <div class="section-header">
+            <h2>ابدأ الآن مع أدوات المنصة</h2>
+            <p>كل ما تحتاجه لعرض سيرتك بشكل احترافي وتوسيع فرصك الوظيفية من مكان واحد.</p>
+        </div>
+        <div class="features-grid">
+            <article class="feature-card">
+                <div class="f-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
+                <h3>إنشاء CV احترافي</h3>
+                <p>ابدأ سيرة ذاتية جاهزة بصياغة واضحة، تواصل احترافي، وتنسيق مميز.</p>
+                <a href="editor.html" class="btn btn-ghost" style="margin-top:12px">ابدأ الآن</a>
+            </article>
+            <article class="feature-card">
+                <div class="f-icon" aria-hidden="true"><i class="fas fa-search"></i></div>
+                <h3>فحص ATS مجاناً</h3>
+                <p>تحقق من قوة سيرتك قبل الإرسال واطلع على أبرز نقاط التحسين.</p>
+                <a href="ats-checker.html" class="btn btn-ghost" style="margin-top:12px">افتح الأداة</a>
+            </article>
+            <article class="feature-card">
+                <div class="f-icon" aria-hidden="true"><i class="fas fa-bullseye"></i></div>
+                <h3>مطابقة الوظيفة</h3>
+                <p>قارن سيرتك مع وصف الوظيفة واشحنها بالكلمات المفتاحية المطلوبة.</p>
+                <a href="#jobMatcher" class="btn btn-ghost" style="margin-top:12px">جرّب المطابقة</a>
+            </article>
+            <article class="feature-card">
+                <div class="f-icon" aria-hidden="true"><i class="fas fa-globe"></i></div>
+                <h3>عرض بورتفوليو</h3>
+                <p>شارك ملفك الشخصي بصيغة احترافية مع أصحاب العمل أو العملاء بسهولة.</p>
+                <a href="portfolio.html" class="btn btn-ghost" style="margin-top:12px">اعرض البورتفوليو</a>
+            </article>
         </div>
     </section>
 
@@ -3016,7 +3156,6 @@
         }
 
         function demoImprove() {
-            var input = document.getElementById('input');
             var result = document.getElementById('demoResult');
             var text = document.getElementById('demoInput').value.trim();
             if (!text) {
