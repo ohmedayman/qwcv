@@ -3021,43 +3021,46 @@
     </script>
 
     <!-- ===== LIVE CHAT WIDGET ===== -->
-    <script src='https://cdn.jotfor.ms/agent/embedjs/019f5139d36070008fd6041516f7656402d7/embed.js'></script>
-    <style>
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 {
-            --jf-primary: #0003c9 !important;
-            --jf-accent: #27ffed !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-chatButton {
-            background: linear-gradient(135deg, #0003c9, #0005a0) !important;
-            border: none !important;
-            box-shadow: 0 4px 20px rgba(0,3,201,0.35) !important;
-            width: 56px !important;
-            height: 56px !important;
-            border-radius: 50% !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-chatButton svg {
-            fill: #fff !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-chatWindow {
-            border-radius: 16px !important;
-            border: 1px solid #e5e7eb !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15) !important;
-            overflow: hidden !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-header {
-            background: linear-gradient(135deg, #0003c9, #0005a0) !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-welcomeMessage {
-            font-family: 'Cairo', sans-serif !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-inputField {
-            font-family: 'Cairo', sans-serif !important;
-            border-radius: 12px !important;
-        }
-        #JotformAgent-019f5139d36070008fd6041516f7656402d7 .jfAgent-sendButton {
-            background: #0003c9 !important;
-        }
-    </style>
+    <script>
+        (function() {
+            var src = "https://www.jotform.com/s/umd/3a7e3cb05af/for-embedded-agent.js";
+            var script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = function() {
+                window.AgentInitializer.init({
+                    agentRenderURL: "https://www.jotform.com/agent/019f5139d36070008fd6041516f7656402d7",
+                    rootId: "JotformAgent-019f5139d36070008fd6041516f7656402d7",
+                    formID: "019f5139d36070008fd6041516f7656402d7",
+                    contextID: "019f514364987000928a0c45798b4a199257",
+                    initialContext: "",
+                    queryParams: ["skipWelcome=1","maximizable=1"],
+                    domain: "https://www.jotform.com",
+                    isDraggable: false,
+                    background: "linear-gradient(180deg, #0003C9 0%, #0005a0 100%)",
+                    chatBackgroundColor: "#FFFFFF",
+                    buttonBackgroundColor: "#0003C9",
+                    buttonIconColor: "#FFFFFF",
+                    inputTextColor: "#0003C9",
+                    variant: false,
+                    customizations: {
+                        "greeting": "Yes",
+                        "greetingMessage": "!مرحباً أنا مساعد QCV الذكي. أساعدك في بناء سيرة ذاتية احترافية",
+                        "openByDefault": "No",
+                        "pulse": "Yes",
+                        "position": "right",
+                        "autoOpenChatIn": "0",
+                        "layout": "minimal",
+                        "size": "md",
+                        "placeholder": "اسأل AI..."
+                    },
+                    isVoice: false,
+                    isVoiceWebCallEnabled: false
+                });
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
 
     <!-- ===== EXIT INTENT POPUP ===== -->
     <script>
