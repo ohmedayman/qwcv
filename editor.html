@@ -65,7 +65,7 @@
             z-index: 100;
             position: relative;
             direction: ltr;
-            overflow: visible
+            overflow: hidden
         }
 
         .topbar-logo {
@@ -414,7 +414,7 @@
             align-items: center;
             gap: 4px;
             flex-shrink: 0;
-            overflow: visible
+            overflow: hidden
         }
 
         .theme-toggle {
@@ -658,9 +658,9 @@
         }
 
         .profile-dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
+            position: fixed;
+            top: 52px;
+            right: 20px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -4681,6 +4681,23 @@
                 </div>
                 <button class="btn-match" onclick="runJobMatch()">Match Now</button>
                 <div class="match-results" id="matchResults"></div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+                    <button onclick="trackApplication()" style="width:100%;padding:8px;background:rgba(5,150,105,0.1);border:1px solid rgba(5,150,105,0.3);color:#059669;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">
+                        <i class="fas fa-calendar-check"></i>Track This Application
+                    </button>
+                </div>
+            </div>
+
+            <!-- Follow-up Reminders Panel -->
+            <div class="form-card" id="tab-followups" style="display:none">
+                <div class="form-card-header"><span class="icon" style="background:rgba(249,115,22,0.08);color:#f97316"><i class="fas fa-bell"></i></span>
+                    <h3>Follow-up Reminders</h3>
+                </div>
+                <div id="followupList" style="margin-bottom:12px"></div>
+                <div id="followupEmpty" style="text-align:center;padding:20px;color:var(--muted);font-size:0.78rem">
+                    <i class="fas fa-bell-slash" style="font-size:1.5rem;margin-bottom:8px;display:block;opacity:0.4"></i>
+                    No tracked applications yet.<br>Paste a job description and click "Track This Application" to start.
+                </div>
             </div>
         </div>
 
@@ -7231,6 +7248,13 @@
         <button class="ai-menu-item" onclick="aiAction('translate')"><i class="fas fa-language"
                 style="color:#ec4899"></i>Translate CV<span class="ai-shortcut">AI</span></button>
         <div class="ai-menu-divider"></div>
+        <button class="ai-menu-item" onclick="aiAction('tailor')"><i class="fas fa-crosshairs"
+                style="color:#f97316"></i>Tailor CV to Job<span class="ai-shortcut">PRO</span></button>
+        <button class="ai-menu-item" onclick="aiAction('skillgap')"><i class="fas fa-chart-bar"
+                style="color:#06b6d4"></i>Skill Gap Analysis<span class="ai-shortcut">PRO</span></button>
+        <button class="ai-menu-item" onclick="aiAction('interview')"><i class="fas fa-user-tie"
+                style="color:#8b5cf6"></i>Interview Prep<span class="ai-shortcut">PRO</span></button>
+        <div class="ai-menu-divider"></div>
         <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots"
                 style="color:var(--muted)"></i>Ask AI Anything<span class="ai-shortcut">AI</span></button>
     </div>
@@ -7472,6 +7496,18 @@
             aiMenuOpen = false;
             document.getElementById('aiResultPanel').classList.add('show');
 
+            // Plan check for Pro-only features
+            if (action === 'tailor' || action === 'skillgap' || action === 'interview') {
+                var ud = window._userData || userData;
+                var plan = ud ? (ud.plan || 'free') : 'free';
+                if (plan === 'free') {
+                    document.getElementById('aiResultTitle').textContent = 'Pro Feature';
+                    document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">This is a Pro Feature</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">Upgrade to Pro to unlock ' + (action === 'tailor' ? 'CV Tailoring' : action === 'skillgap' ? 'Skill Gap Analysis' : 'Interview Prep') + '</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">Upgrade to Pro</a></div>';
+                    setAiLoading(false);
+                    return;
+                }
+            }
+
             setAiLoading(true);
 
             aiResultAction = action;
@@ -7482,6 +7518,9 @@
                 skills: 'Suggest Skills',
                 ats: 'ATS Optimize',
                 translate: 'Translate CV',
+                tailor: 'Tailor CV to Job',
+                skillgap: 'Skill Gap Analysis',
+                interview: 'Interview Prep',
                 custom: 'AI Assistant'
             };
             document.getElementById('aiResultTitle').textContent = titles[action] || 'AI Assistant';
@@ -7505,6 +7544,26 @@
                     '<button onclick="sendCustomAi()" style="width:100%;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem">Send</button></div>';
                 setAiLoading(false);
                 setTimeout(function () { var inp = document.getElementById('aiCustomInput'); if (inp) inp.focus(); }, 100);
+                return;
+            }
+
+            // For tailor/skillgap/interview, show job description input first
+            if (action === 'tailor' || action === 'skillgap' || action === 'interview') {
+                var jobInput = document.getElementById('jobDescInput');
+                var existingJob = jobInput ? jobInput.value.trim() : '';
+                var body = document.getElementById('aiResultBody');
+                var actionLabels = { tailor: 'Tailor CV to Job', skillgap: 'Skill Gap Analysis', interview: 'Interview Prep' };
+                var placeholders = {
+                    tailor: 'Paste the job description here...\n\nThe AI will rewrite your summary and experience to match this job perfectly.',
+                    skillgap: 'Paste the job description here...\n\nThe AI will analyze what skills you\'re missing and create a learning roadmap.',
+                    interview: 'Paste the job description here...\n\nThe AI will simulate a hiring manager interview with tough questions based on this role.'
+                };
+                body.innerHTML = '<div style="padding:12px">' +
+                    '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">Job Description:</label>' +
+                    '<textarea id="aiJobInput" rows="5" placeholder="' + placeholders[action] + '" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;resize:vertical;font-family:inherit">' + existingJob + '</textarea></div>' +
+                    '<button onclick="runAiAction(\'' + action + '\')" style="width:100%;padding:10px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem"><i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i>' + actionLabels[action] + '</button></div>';
+                setAiLoading(false);
+                setTimeout(function () { var inp = document.getElementById('aiJobInput'); if (inp) inp.focus(); }, 100);
                 return;
             }
 
@@ -7617,6 +7676,126 @@
                 aiResultText = result;
                 setAiLoading(false);
                 document.getElementById('aiResultBody').innerHTML = '<div style="margin-bottom:12px;padding:10px;background:var(--bg-alt,#f5f5f5);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">Your question:</strong> ' + escHtml(question) + '</div>' + renderAiMarkdown(result);
+            }, function (err) {
+                setAiLoading(false);
+                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
+            });
+        };
+
+        // Run AI action with job description (for tailor/skillgap/interview)
+        window.runAiAction = function (action) {
+            var jobInput = document.getElementById('aiJobInput');
+            var jobDesc = jobInput ? jobInput.value.trim() : '';
+            if (!jobDesc) {
+                alert('Please paste a job description first.');
+                return;
+            }
+
+            var data = collectData();
+            var cvText = [
+                data.name ? 'Name: ' + data.name : '',
+                data.title ? 'Job Title: ' + data.title : '',
+                data.email ? 'Email: ' + data.email : '',
+                data.summary ? 'Summary: ' + data.summary : '',
+                (data.experience || []).map(function (e) { return 'Experience: ' + (e.role || '') + ' at ' + (e.company || '') + ' (' + (e.duration || '') + ')\n' + (e.description || ''); }).join('\n'),
+                (data.education || []).map(function (e) { return 'Education: ' + (e.degree || '') + ' from ' + (e.school || ''); }).join('\n'),
+                'Skills: ' + (data.skills || []).join(', ')
+            ].filter(Boolean).join('\n\n');
+
+            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Analyzing job description...</div>';
+            setAiLoading(true);
+
+            var prompts = {
+                tailor: 'You are a world-class CV writing expert and ATS optimization specialist.\n\n' +
+                    'The user wants to tailor their CV to match a specific job posting.\n\n' +
+                    '=== USER\'S CURRENT CV ===\n' + cvText + '\n\n' +
+                    '=== TARGET JOB DESCRIPTION ===\n' + jobDesc + '\n\n' +
+                    'TASK: Rewrite the Professional Summary AND each Experience bullet point to perfectly match this job.\n\n' +
+                    'REQUIREMENTS:\n' +
+                    '1. Extract the top 5-7 keywords from the job description\n' +
+                    '2. Rewrite the Professional Summary (3-4 sentences) incorporating those keywords naturally\n' +
+                    '3. Rewrite each Experience entry\'s description (2-3 bullet points each) to highlight relevant achievements\n' +
+                    '4. Use the EXACT same job titles and companies (don\'t change them)\n' +
+                    '5. Add metrics/numbers where possible (%, $, people managed, etc.)\n' +
+                    '6. Use strong action verbs that match the job posting language\n' +
+                    '7. Keep the tone professional and ATS-friendly\n\n' +
+                    'OUTPUT FORMAT:\n' +
+                    '## Optimized Professional Summary\n' +
+                    '[new summary]\n\n' +
+                    '## Optimized Experience\n' +
+                    '### [Role] at [Company]\n' +
+                    '- [bullet 1]\n' +
+                    '- [bullet 2]\n' +
+                    '### [Role 2] at [Company 2]\n' +
+                    '- [bullet 1]\n' +
+                    '- [bullet 2]\n\n' +
+                    '## Keywords Added\n' +
+                    '[list the keywords you incorporated]',
+
+                skillgap: 'You are a senior career consultant and skills assessment expert.\n\n' +
+                    'Analyze the gap between the user\'s current skills/experience and the target job requirements.\n\n' +
+                    '=== USER\'S CURRENT CV ===\n' + cvText + '\n\n' +
+                    '=== TARGET JOB DESCRIPTION ===\n' + jobDesc + '\n\n' +
+                    'TASK: Perform a comprehensive skill gap analysis.\n\n' +
+                    'OUTPUT FORMAT:\n' +
+                    '## Match Score\n' +
+                    '[X]% overall match between your profile and this job\n\n' +
+                    '## Skills You Have (Matching)\n' +
+                    '- [skill 1] ✓\n' +
+                    '- [skill 2] ✓\n\n' +
+                    '## Skills You\'re Missing (Critical)\n' +
+                    '- [missing skill 1] — Why it\'s needed\n' +
+                    '- [missing skill 2] — Why it\'s needed\n\n' +
+                    '## Skills You\'re Missing (Nice to Have)\n' +
+                    '- [skill] — Why it helps\n\n' +
+                    '## Learning Roadmap\n' +
+                    'For each missing critical skill, provide:\n' +
+                    '- Free resource to learn it (YouTube, free courses)\n' +
+                    '- Estimated time to learn\n' +
+                    '- Priority level (High/Medium/Low)\n\n' +
+                    '## Experience Gaps\n' +
+                    '- What experience is missing and how to gain it\n\n' +
+                    '## Quick Wins\n' +
+                    '- 3 things you can do TODAY to improve your match score',
+
+                interview: 'You are a tough but fair hiring manager at a top tech company.\n\n' +
+                    'The user is applying for a position based on this job description:\n\n' +
+                    '=== JOB DESCRIPTION ===\n' + jobDesc + '\n\n' +
+                    '=== USER\'S CV ===\n' + cvText + '\n\n' +
+                    'TASK: Simulate a realistic interview. Ask 8-10 tough questions that a real hiring manager would ask for this specific role.\n\n' +
+                    'QUESTION TYPES TO INCLUDE:\n' +
+                    '1. "Tell me about yourself" (open-ended)\n' +
+                    '2. Technical/skill-specific questions based on the job requirements\n' +
+                    '3. Behavioral questions (STAR method: Situation, Task, Action, Result)\n' +
+                    '4. Problem-solving scenario based on the role\n' +
+                    '5. Culture fit questions\n' +
+                    '6. "Why should we hire you?" / "Why this company?"\n' +
+                    '7. Salary expectations question\n' +
+                    '8. "Do you have any questions for us?"\n\n' +
+                    'OUTPUT FORMAT:\n' +
+                    '## Interview Simulation\n' +
+                    'Role: [Job title from description]\n\n' +
+                    '### Question 1\n' +
+                    '**Q:** [question]\n' +
+                    '**Expected strong answer:** [what a good answer looks like]\n' +
+                    '**Red flags:** [what NOT to say]\n\n' +
+                    '### Question 2\n' +
+                    '[repeat format]\n\n' +
+                    '## Interview Tips\n' +
+                    '- [tip 1]\n' +
+                    '- [tip 2]\n' +
+                    '- [tip 3]\n\n' +
+                    '## Company Research Suggestions\n' +
+                    '- What to research before the interview'
+            };
+
+            callAI(prompts[action] || prompts.custom, function (result) {
+                aiResultText = result;
+                setAiLoading(false);
+                document.getElementById('aiResultBody').innerHTML =
+                    '<div style="margin-bottom:12px;padding:10px;background:rgba(0,3,201,0.06);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">Job:</strong> ' + escHtml(jobDesc.substring(0, 150)) + (jobDesc.length > 150 ? '...' : '') + '</div>' +
+                    renderAiMarkdown(result) +
+                    (action === 'tailor' ? '<div style="margin-top:12px;padding:10px;background:rgba(5,150,105,0.08);border-radius:8px;font-size:0.72rem;color:#059669"><i class="fas fa-info-circle"></i> Copy the optimized content above and paste it into your CV fields manually.</div>' : '');
             }, function (err) {
                 setAiLoading(false);
                 document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
