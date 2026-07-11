@@ -1382,18 +1382,9 @@
 
         <!-- STEP 1: Plan Selection -->
         <div class="step-content active" id="step1">
-            <!-- Pricing Toggle -->
-            <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:28px">
-                <span id="payMonthlyLabel" style="font-weight:700;font-size:0.88rem;color:var(--accent)">شهري</span>
-                <div onclick="togglePayPricing()" id="payPricingToggle"
-                    style="width:52px;height:28px;border-radius:14px;background:var(--accent);cursor:pointer;position:relative;transition:background 0.3s">
-                    <div id="payPricingDot"
-                        style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;right:3px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 2px 6px rgba(0,0,0,0.15)">
-                    </div>
-                </div>
-                <span id="payYearlyLabel" style="font-weight:700;font-size:0.88rem;color:var(--muted)">سنوي <span
-                        style="background:var(--green);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.65rem;margin-right:4px">وفّر
-                        5%</span></span>
+            <!-- Pricing -->
+            <div style="text-align:center;margin-bottom:28px">
+                <span style="font-weight:700;font-size:0.88rem;color:var(--accent)">الأسعار الشهرية</span>
             </div>
             <div class="plans-grid">
                 <div class="plan-card" onclick="selectPlan(this,'free')">
@@ -1420,8 +1411,8 @@
                     <div class="plan-icon"><i class="fas fa-rocket"></i></div>
                     <div class="plan-subtitle">للمحترفين والباحثين عن عمل</div>
                     <div class="plan-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
-                    <div class="plan-price" data-monthly="99" data-yearly="79">99 <span class="curr">ج.م</span></div>
-                    <div class="plan-period" data-monthly="شهرياً" data-yearly="شهرياً (948 ج.م/سنة)">شهرياً</div>
+                    <div class="plan-price">99 <span class="curr">ج.م</span></div>
+                    <div class="plan-period">شهرياً</div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> 5 سير ذاتية احترافية</li>
                         <li><i class="fas fa-check"></i> جميع القوالب (+15)</li>
@@ -1439,8 +1430,8 @@
                     <div class="plan-icon"><i class="fas fa-crown"></i></div>
                     <div class="plan-subtitle">للشركات والفرق الكبيرة</div>
                     <div class="plan-name" data-i18n="plan_unlim_name">الباقة غير المحدودة</div>
-                    <div class="plan-price" data-monthly="299" data-yearly="239">299 <span class="curr">ج.م</span></div>
-                    <div class="plan-period" data-monthly="شهرياً" data-yearly="شهرياً (2,868 ج.م/سنة)">شهرياً</div>
+                    <div class="plan-price">299 <span class="curr">ج.م</span></div>
+                    <div class="plan-period">شهرياً</div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> سير ذاتية غير محدودة</li>
                         <li><i class="fas fa-check"></i> جميع القوالب (+15)</li>
@@ -1676,35 +1667,7 @@
             userData = snap.val() || {};
         }
 
-        // ===== PRICING TOGGLE =====
-        let payYearly = false;
-        window.togglePayPricing = function () {
-            payYearly = !payYearly;
-            var dot = document.getElementById('payPricingDot');
-            var toggle = document.getElementById('payPricingToggle');
-            var ml = document.getElementById('payMonthlyLabel');
-            var yl = document.getElementById('payYearlyLabel');
-            if (payYearly) {
-                dot.style.right = '27px';
-                toggle.style.background = 'var(--green)';
-                ml.style.color = 'var(--muted)';
-                yl.style.color = 'var(--accent)';
-            } else {
-                dot.style.right = '3px';
-                toggle.style.background = 'var(--accent)';
-                ml.style.color = 'var(--accent)';
-                yl.style.color = 'var(--muted)';
-            }
-            document.querySelectorAll('.plan-price[data-monthly]').forEach(function (el) {
-                var price = payYearly ? el.dataset.yearly : el.dataset.monthly;
-                var curr = el.querySelector('.curr');
-                el.innerHTML = price + (curr ? ' ' + curr.outerHTML : '');
-            });
-            document.querySelectorAll('.plan-period[data-monthly]').forEach(function (el) {
-                el.textContent = payYearly ? el.dataset.yearly : el.dataset.monthly;
-            });
-            updatePlanPrices();
-        };
+        // ===== PRICING (monthly only) =====
 
         // ===== UPDATE PLAN PRICES FROM CENTRAL SETTINGS =====
         function updatePlanPrices() {
