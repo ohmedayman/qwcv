@@ -7807,8 +7807,11 @@
         function callAI(prompt, onSuccess, onError) {
             if (window.QCVAI) {
                 QCVAI.call(prompt, null, { maxRetries: 1 }).then(function (res) {
-                    if (res.ok) onSuccess(res.text);
+                    if (res.ok && res.text) onSuccess(res.text);
                     else if (onError) onError(res.error || 'AI unavailable');
+                }).catch(function (e) {
+                    console.error('QCVAI error:', e);
+                    if (onError) onError('AI request failed');
                 });
             } else {
                 // Fallback: direct Pollinations GET if ai-service.js hasn't loaded yet
@@ -7816,7 +7819,7 @@
                 var timer = setTimeout(function () { ctrl.abort(); }, 25000);
                 fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET', signal: ctrl.signal })
                     .then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('fail'); return r.text(); })
-                    .then(function (t) { if (t && t.length > 10 && !t.trimStart().startsWith('<')) onSuccess(t.trim()); else if (onError) onError('AI unavailable'); })
+                    .then(function (t) { if (t && t.length > 5) onSuccess(t.trim()); else if (onError) onError('Empty response'); })
                     .catch(function () { clearTimeout(timer); if (onError) onError('AI unavailable'); });
             }
         }

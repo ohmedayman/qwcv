@@ -70,13 +70,17 @@ const QCVAI = {
         text = text.trim();
         // Strip markdown code blocks
         text = text.replace(/^```(?:json|javascript|text|html)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
-        // Strip leading "Here is" / "Here's" preamble
-        text = text.replace(/^(Here(?:'s| is| are)[^.]*:\s*\n?)/i, '');
         return text.trim();
     },
 
-    _isHTML(text) {
-        return text && text.trim().startsWith('<') && text.trim().length > 200;
+    _isUseful(text) {
+        if (!text || typeof text !== 'string') return false;
+        text = text.trim();
+        if (text.length < 3) return false;
+        // Reject HTML error pages
+        if (text.startsWith('<!DOCTYPE') || text.startsWith('<html')) return false;
+        if (text.startsWith('<') && text.length > 500) return false;
+        return true;
     },
 
     async _callPollinations(prompt, systemPrompt) {
@@ -91,7 +95,7 @@ const QCVAI = {
             clearTimeout(timer);
             if (!res.ok) throw new Error('Pollinations HTTP ' + res.status);
             const text = await res.text();
-            if (!text || text.length < 5 || this._isHTML(text)) throw new Error('Pollinations returned invalid content');
+            if (!this._isUseful(text)) throw new Error('Pollinations returned invalid content');
             return { ok: true, text: this._cleanResponse(text), provider: 'pollinations' };
         } catch (e) {
             clearTimeout(timer);
