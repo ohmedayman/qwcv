@@ -77,7 +77,7 @@
     <script>
         (function () {
             function buildAndRender() {
-                var proM = 99, unM = 299, quick = 30;
+                var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
                 try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
                 try {
                     if (window.QCVSettings && window.QCVSettings.pricing) {
@@ -88,11 +88,16 @@
                             if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
                         } else {
                             proM = parseInt(p.proMonthly) || proM;
+                            proY = parseInt(p.proYearly) || proY;
                             unM = parseInt(p.unlimitedMonthly) || unM;
+                            unY = parseInt(p.unlimitedYearly) || unY;
                             quick = parseInt(p.quick) || quick;
                         }
                     }
                 } catch (e) { }
+
+                try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12); } catch (e) { proY = Math.round(proM * 12); }
+                try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12); } catch (e) { unY = Math.round(unM * 12); }
 
                 var obj = {
                     "@context": "https://schema.org",
@@ -2232,7 +2237,8 @@
                 <div class="p-icon"><i class="fas fa-rocket"></i></div>
                 <div class="p-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
                 <div class="p-desc" data-i18n="plan_pro_desc">للمحترفين والباحثين عن عمل</div>
-                <div class="p-price"><span class="curr">ج.م</span><span class="val">99</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
+                <div class="p-price"><span class="curr">ج.م</span><span class="val" data-monthly="99"
+                        data-yearly="79">99</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
                 <ul class="p-features">
                     <li><i class="fas fa-check"></i> <span data-i18n="plan_pro_f1">5 سير ذاتية احترافية</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="plan_pro_f2">جميع القوالب (+15)</span></li>
@@ -2253,7 +2259,8 @@
                 <div class="p-icon"><i class="fas fa-crown"></i></div>
                 <div class="p-name" data-i18n="plan_unlim_name">الباقة غير المحدودة</div>
                 <div class="p-desc" data-i18n="plan_unlim_desc">للشركات والفرق الكبيرة</div>
-                <div class="p-price"><span class="curr">ج.م</span><span class="val">299</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span>
+                <div class="p-price"><span class="curr">ج.م</span><span class="val" data-monthly="299"
+                        data-yearly="239">299</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span>
                 </div>
                 <ul class="p-features">
                     <li><i class="fas fa-check"></i> <span data-i18n="plan_unl_f1">سير ذاتية غير محدودة</span></li>
@@ -3229,7 +3236,7 @@
         function localChatReply(msg) {
             var m = msg.toLowerCase();
             function getPrices() {
-                var proM = 99, unM = 299, quick = 30;
+                var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
                 try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
                 try {
                     if (window.QCVSettings && window.QCVSettings.pricing) {
@@ -3240,16 +3247,20 @@
                             if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
                         } else {
                             proM = parseInt(p.proMonthly) || proM;
+                            proY = parseInt(p.proYearly) || proY;
                             unM = parseInt(p.unlimitedMonthly) || unM;
+                            unY = parseInt(p.unlimitedYearly) || unY;
                             quick = parseInt(p.quick) || quick;
                         }
                     }
                 } catch (e) { }
-                return { proM, unM, quick };
+                return { proM, proY, unM, unY, quick };
             }
             if (m.match(/سعر|السعر|باق|التسعير|كم|price|cost|egp|جنيه/)) {
                 var pr = getPrices();
-                return 'الباقة المجانية: مجاناً ✅ | الاحترافية: ' + pr.proM + ' ج.م/شهر | غير محدودة: ' + pr.unM + ' ج.م/شهر. تفاصيل على pay.html 🎯';
+                try { pr.proY = (pr.proY && parseInt(pr.proY)) ? parseInt(pr.proY) : Math.round(pr.proM * 12 * 0.95); } catch (e) { pr.proY = Math.round(pr.proM * 12 * 0.95); }
+                try { pr.unY = (pr.unY && parseInt(pr.unY)) ? parseInt(pr.unY) : Math.round(pr.unM * 12 * 0.95); } catch (e) { pr.unY = Math.round(pr.unM * 12 * 0.95); }
+                return 'الباقة المجانية: مجاناً ✅ | الاحترافية: ' + pr.proM + ' ج.م/شهر (' + pr.proY + ' سنوي) | غير محدودة: ' + pr.unM + ' ج.م/شهر (' + pr.unY + ' سنوي). وفّر 5% بالاشتراك السنوي! تفاصيل على pay.html 🎯';
             }
             if (m.match(/template|قالب|تصميم|شكل/)) return 'عندنا أكثر من 15 قالب احترافي متوافق مع ATS! جرّبهم على templates.html واختار اللي يناسبك 🎨';
             if (m.match(/ats|توافق|نظام تتبع|resume score/)) return 'ATS هو نظام تتبع المتقدمين اللي الشركات بتستخدمه. قوالبنا مصممة عشان تجتازه. جرّب فحص ATS المجاني على ats-checker.html 🔍';
@@ -3286,7 +3297,9 @@
                         var proM = 99;
                         try { if (window.allSettings && window.allSettings.proPrice) proM = parseInt(window.allSettings.proPrice) || proM; } catch (e) { }
                         try { if (window.QCVSettings && window.QCVSettings.pricing && window.QCVSettings.pricing.proMonthly) proM = parseInt(window.QCVSettings.pricing.proMonthly) || proM; } catch (e) { }
-                        popup.innerHTML = '<div style="background:linear-gradient(135deg,#0003c9,#0005a0);padding:30px 24px;color:#fff"><div style="font-size:2.5rem;margin-bottom:8px">&#127881;</div><h3 style="font-size:1.2rem;font-weight:900;margin-bottom:6px">عرض خاص</h3><p style="font-size:0.85rem;opacity:0.85">احصل على الباقة الاحترافية وابدأ في بناء سيرتك الذاتية الاحترافية!</p></div><div style="padding:24px"><div style="font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:4px">' + proM + ' <span style="font-size:0.9rem;font-weight:600;color:var(--muted)">ج.م / شهرياً</span></div><a href="pay.html" style="display:inline-block;padding:14px 36px;background:var(--accent);color:#fff;border-radius:50px;font-weight:800;font-size:0.95rem;text-decoration:none;margin-bottom:12px;transition:all 0.2s">احصل على العرض</a><div style="font-size:0.72rem;color:var(--muted)">عرض محدود — ينتهي قريباً</div></div><button onclick="this.closest(\'div\').parentElement.parentElement.remove();localStorage.setItem(\'qcv_exit_shown\',\'1\')" style="position:absolute;top:12px;left:12px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>';
+                        var annual = Math.round(proM * 12 * 0.95);
+                        var monthlyEq = Math.round(annual / 12);
+                        popup.innerHTML = '<div style="background:linear-gradient(135deg,#0003c9,#0005a0);padding:30px 24px;color:#fff"><div style="font-size:2.5rem;margin-bottom:8px">&#127881;</div><h3 style="font-size:1.2rem;font-weight:900;margin-bottom:6px">عرض خاص — خصم 5% سنوياً</h3><p style="font-size:0.85rem;opacity:0.85">احصل على الباقة الاحترافية بسعر مخفض عند الاشتراك السنوي!</p></div><div style="padding:24px"><div style="font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:4px">' + monthlyEq + ' <span style="font-size:0.9rem;font-weight:600;color:var(--muted)">ج.م / شهرياً (مكافئ سنوي)</span></div><div style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;text-decoration:line-through">' + proM + ' ج.م / شهرياً</div><a href="pay.html" style="display:inline-block;padding:14px 36px;background:var(--accent);color:#fff;border-radius:50px;font-weight:800;font-size:0.95rem;text-decoration:none;margin-bottom:12px;transition:all 0.2s">احصل على العرض</a><div style="font-size:0.72rem;color:var(--muted)">عرض محدود — ينتهي قريباً</div></div><button onclick="this.closest(\'div\').parentElement.parentElement.remove();localStorage.setItem(\'qcv_exit_shown\',\'1\')" style="position:absolute;top:12px;left:12px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>';
                         overlay.appendChild(popup);
                         document.body.appendChild(overlay);
                         localStorage.setItem('qcv_exit_shown', '1');
