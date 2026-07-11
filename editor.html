@@ -5458,24 +5458,109 @@
     </div>
 
     <script>
+        function showToast(msg, type) {
+            var t = document.createElement('div');
+            t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:700;color:#fff;box-shadow:0 8px 25px rgba(0,0,0,0.2);animation:popupSlideUp 0.3s ease;max-width:320px;' + (type === 'err' ? 'background:#ef4444' : type === 'ok' ? 'background:#059669' : 'background:#0003c9');
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(function () { t.remove(); }, 3000);
+        }
+
         document.getElementById('runAtsBtn').addEventListener('click', async function () {
             try {
-                const res = await window.runAtsFromEditor();
-                if (!res) return alert('ATS analysis failed or returned no result.');
-                // show quick panel
-                alert('ATS analysis saved. Open Reports to view.');
-            } catch (e) { console.error(e); alert('Error running ATS'); }
+                const data = collectData();
+                const res = CVAnalyzer.analyze(data);
+                if (!res) return showToast('ATS analysis failed', 'err');
+                showAtsResultPanel(res);
+            } catch (e) { console.error(e); showToast('Error running ATS', 'err'); }
         });
 
         document.getElementById('runMatchBtn').addEventListener('click', async function () {
             try {
-                const jd = prompt('Paste the Job Description or short JD text to match against:');
-                if (!jd) return;
-                const res = await window.runMatcherFromEditor(jd);
-                if (!res) return alert('Matcher failed or returned no result.');
-                alert('Matcher saved. Open Reports to view.');
-            } catch (e) { console.error(e); alert('Error running matcher'); }
+                const jd = prompt('Paste the Job Description to match against your CV:');
+                if (!jd || jd.trim().length < 10) return;
+                const data = collectData();
+                const res = JobMatcher.match(data, jd);
+                if (!res) return showToast('Match failed', 'err');
+                showMatchResultPanel(res, jd);
+            } catch (e) { console.error(e); showToast('Error running matcher', 'err'); }
         });
+
+        function showAtsResultPanel(res) {
+            const existing = document.getElementById('atsResultPanel');
+            if (existing) existing.remove();
+            const grade = CVAnalyzer.getGrade(res.overall);
+            let categoriesHtml = '';
+            const cats = [
+                { key: 'contact', label: 'Contact Info', data: res.contact },
+                { key: 'content', label: 'Content Quality', data: res.content },
+                { key: 'ats', label: 'ATS Compatibility', data: res.ats },
+                { key: 'skills', label: 'Skills', data: res.skills },
+                { key: 'impact', label: 'Impact & Achievements', data: res.impact }
+            ];
+            cats.forEach(cat => {
+                const g = CVAnalyzer.getGrade(cat.data.total);
+                let issuesHtml = '';
+                if (cat.data.issues && cat.data.issues.length) {
+                    issuesHtml = cat.data.issues.map(iss => {
+                        const clr = iss.type === 'critical' ? '#ef4444' : iss.type === 'warning' ? '#f59e0b' : '#0ea5e9';
+                        const icon = iss.type === 'critical' ? 'fa-exclamation-circle' : iss.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+                        return '<div style="display:flex;align-items:flex-start;gap:6px;padding:4px 0;font-size:0.78rem"><i class="fas ' + icon + '" style="color:' + clr + ';margin-top:2px;flex-shrink:0"></i><span>' + iss.text + '</span></div>';
+                    }).join('');
+                }
+                categoriesHtml += '<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:0.8rem;font-weight:700">' + cat.label + '</span><span style="font-size:0.78rem;font-weight:700;color:' + g.color + '">' + cat.data.total + '/100</span></div><div style="height:6px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden;margin-bottom:4px"><div style="height:100%;width:' + cat.data.total + '%;background:' + g.color + ';border-radius:3px;transition:width 0.5s"></div></div>' + issuesHtml + '</div>';
+            });
+            let recsHtml = '';
+            if (res.recommendations && res.recommendations.length) {
+                recsHtml = res.recommendations.slice(0, 10).map(r => {
+                    const clr = r.type === 'critical' ? '#ef4444' : r.type === 'warning' ? '#f59e0b' : '#0ea5e9';
+                    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,0.02);margin-bottom:4px;font-size:0.78rem"><i class="fas ' + (r.type === 'critical' ? 'fa-exclamation-circle' : r.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle') + '" style="color:' + clr + '"></i><span style="flex:1">' + r.title + '</span><span style="font-weight:700;color:' + clr + '">' + r.fix + '</span></div>';
+                }).join('');
+            }
+            const panel = document.createElement('div');
+            panel.id = 'atsResultPanel';
+            panel.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10015;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)';
+            panel.innerHTML = '<div style="width:600px;max-width:96%;max-height:85vh;overflow-y:auto;background:var(--bg2,#fff);border-radius:16px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,0.3)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="margin:0;font-size:1.1rem;font-weight:900"><i class="fas fa-search" style="color:var(--accent);margin-right:6px"></i> ATS Analysis Result</h3><button onclick="this.closest(\'#atsResultPanel\').remove()" style="width:32px;height:32px;border:none;border-radius:50%;background:var(--border,#e5e7eb);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">&times;</button></div><div style="text-align:center;margin-bottom:16px"><div style="display:inline-flex;flex-direction:column;align-items:center;padding:16px 32px;border-radius:12px;background:rgba(0,3,201,0.04);border:2px solid ' + grade.color + '"><span style="font-size:2.5rem;font-weight:900;color:' + grade.color + '">' + res.overall + '</span><span style="font-size:0.85rem;font-weight:700;color:' + grade.color + '">' + grade.emoji + ' ' + grade.grade + '</span></div></div>' + categoriesHtml + '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border,#e5e7eb)"><div style="font-weight:800;font-size:0.85rem;margin-bottom:8px"><i class="fas fa-lightbulb" style="color:#f59e0b;margin-right:4px"></i> Recommendations</div>' + recsHtml + '</div><div style="text-align:center;margin-top:16px"><button onclick="window.runAtsFromEditor();this.closest(\'#atsResultPanel\').remove()" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.85rem">Save Report</button></div></div>';
+            document.body.appendChild(panel);
+            panel.addEventListener('click', function (e) { if (e.target === panel) panel.remove(); });
+        }
+
+        function showMatchResultPanel(res, jd) {
+            const existing = document.getElementById('matchResultPanel');
+            if (existing) existing.remove();
+            const matchColor = res.matchPercent >= 70 ? '#059669' : res.matchPercent >= 40 ? '#f59e0b' : '#ef4444';
+            let matchedHtml = '';
+            if (res.matched && res.matched.length) {
+                matchedHtml = '<div style="margin-bottom:8px"><span style="font-size:0.75rem;font-weight:700;color:#059669"><i class="fas fa-check-circle"></i> Matched Skills (' + res.matched.length + ')</span><div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">' + res.matched.map(s => '<span style="font-size:0.72rem;padding:2px 8px;border-radius:10px;background:rgba(5,150,105,0.1);color:#059669;font-weight:600">' + s + '</span>').join('') + '</div></div>';
+            }
+            let missingHtml = '';
+            if (res.missing && res.missing.length) {
+                missingHtml = '<div style="margin-bottom:8px"><span style="font-size:0.75rem;font-weight:700;color:#ef4444"><i class="fas fa-times-circle"></i> Missing Skills (' + res.missing.length + ')</span><div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">' + res.missing.map(s => '<span style="font-size:0.72rem;padding:2px 8px;border-radius:10px;background:rgba(239,68,68,0.1);color:#ef4444;font-weight:600">' + s + '</span>').join('') + '</div></div>';
+            }
+            let sectionsHtml = '';
+            if (res.sections) {
+                Object.entries(res.sections).forEach(([k, v]) => {
+                    const sLabel = v.score >= 70 ? '#059669' : v.score >= 40 ? '#f59e0b' : '#ef4444';
+                    sectionsHtml += '<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:0.78rem"><span style="font-weight:600">' + k.charAt(0).toUpperCase() + k.slice(1) + '</span><span style="font-weight:700;color:' + sLabel + '">' + v.score + '%</span></div><div style="height:4px;background:rgba(0,0,0,0.06);border-radius:2px;overflow:hidden;margin-top:2px"><div style="height:100%;width:' + v.score + '%;background:' + sLabel + ';border-radius:2px"></div></div></div>';
+                });
+            }
+            const panel = document.createElement('div');
+            panel.id = 'matchResultPanel';
+            panel.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10015;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)';
+            panel.innerHTML = '<div style="width:600px;max-width:96%;max-height:85vh;overflow-y:auto;background:var(--bg2,#fff);border-radius:16px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,0.3)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="margin:0;font-size:1.1rem;font-weight:900"><i class="fas fa-handshake" style="color:var(--accent);margin-right:6px"></i> Job Match Result</h3><button onclick="this.closest(\'#matchResultPanel\').remove()" style="width:32px;height:32px;border:none;border-radius:50%;background:var(--border,#e5e7eb);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">&times;</button></div><div style="text-align:center;margin-bottom:16px"><div style="display:inline-flex;flex-direction:column;align-items:center;padding:16px 32px;border-radius:12px;background:rgba(0,0,0,0.02);border:2px solid ' + matchColor + '"><span style="font-size:2.5rem;font-weight:900;color:' + matchColor + '">' + res.matchPercent + '%</span><span style="font-size:0.85rem;font-weight:700;color:' + matchColor + '">' + (res.matchPercent >= 70 ? 'Strong Match' : res.matchPercent >= 40 ? 'Moderate Match' : 'Low Match') + '</span></div></div>' + matchedHtml + missingHtml + sectionsHtml + '<div style="text-align:center;margin-top:16px"><button id="saveMatchReportBtn" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.85rem">Save Report</button></div></div>';
+            document.body.appendChild(panel);
+            panel.addEventListener('click', function (e) { if (e.target === panel) panel.remove(); });
+            document.getElementById('saveMatchReportBtn').addEventListener('click', function () {
+                try {
+                    var data = collectData();
+                    var path = 'users/' + window.currentUid + '/reports/matcher';
+                    var payload = { createdAt: Date.now(), cvId: window.currentCvId || 'default', jobDescription: jd, cvData: data, result: res };
+                    window._push(window._ref(window._db, path)).then(function (r) {
+                        return window._set(window._ref(window._db, path + '/' + r.key), payload);
+                    }).then(function () { showToast('Report saved!', 'ok'); panel.remove(); }).catch(function () { showToast('Save failed', 'err'); });
+                } catch (e) { showToast('Save failed', 'err'); }
+            });
+        }
 
         document.getElementById('openReportsBtn').addEventListener('click', function () { openReportsPanel(); });
 

@@ -538,14 +538,11 @@
     <script>
         (function () {
             function applyTermsPrices() {
-                var proM = 99, proY = 79, unM = 299, unY = 239;
+                var proM = 99, unM = 299;
                 try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
-                try { if (window.QCVSettings && window.QCVSettings.pricing) { var p = window.QCVSettings.pricing; if (p.proMonthly) proM = parseInt(p.proMonthly) || proM; if (p.proYearly) proY = parseInt(p.proYearly) || proY; if (p.unlimitedMonthly) unM = parseInt(p.unlimitedMonthly) || unM; if (p.unlimitedYearly) unY = parseInt(p.unlimitedYearly) || unY; } } catch (e) { }
-                // compute yearly with 5% discount if not explicitly provided
-                try { proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12 * 0.95); } catch (e) { proY = Math.round(proM * 12 * 0.95); }
-                try { unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12 * 0.95); } catch (e) { unY = Math.round(unM * 12 * 0.95); }
-                var proEl = document.getElementById('terms-pro-price'); if (proEl) proEl.textContent = proM + ' ج.م/شهر (' + proY + ' ج.م سنوياً)';
-                var unEl = document.getElementById('terms-unlim-price'); if (unEl) unEl.textContent = unM + ' ج.م/شهر (' + unY + ' ج.م سنوياً)';
+                try { if (window.QCVSettings && window.QCVSettings.pricing) { var p = window.QCVSettings.pricing; if (p.proMonthly) proM = parseInt(p.proMonthly) || proM; if (p.unlimitedMonthly) unM = parseInt(p.unlimitedMonthly) || unM; } } catch (e) { }
+                var proEl = document.getElementById('terms-pro-price'); if (proEl) proEl.textContent = proM + ' ج.م/شهر';
+                var unEl = document.getElementById('terms-unlim-price'); if (unEl) unEl.textContent = unM + ' ج.م/شهر';
             }
             applyTermsPrices();
             var tries = 0, iv = setInterval(function () { tries++; applyTermsPrices(); if (((window.allSettings && (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings && window.QCVSettings.pricing)) || tries > 10) clearInterval(iv); }, 700);
