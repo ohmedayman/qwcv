@@ -91,6 +91,10 @@
         "destination": "/compare.html"
       },
       {
+        "source": "/report",
+        "destination": "/report.html"
+      },
+      {
         "source": "/help",
         "destination": "/help.html"
       },
