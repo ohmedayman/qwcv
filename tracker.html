@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV — Job Application Tracker</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <style>
+        :root { --bg:#f9fafb; --card:#fff; --border:#e5e7eb; --primary:#0003c9; --green:#059669; --red:#ef4444; --yellow:#f59e0b; --blue:#0ea5e9; --purple:#8b5cf6; --text:#1a1a2e; --muted:#6b7280; --input:#f3f4f6 }
+        * { box-sizing:border-box; margin:0; padding:0 }
+        body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh }
+        .topbar { background:var(--card); border-bottom:1px solid var(--border); padding:12px 24px; display:flex; align-items:center; justify-content:space-between }
+        .logo { font-size:1.4rem; font-weight:800; letter-spacing:-0.5px }
+        .logo span { color:var(--primary) }
+        .container { max-width:900px; margin:0 auto; padding:24px 20px }
+        .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px }
+        .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center }
+        .stat-num { font-size:1.8rem; font-weight:800 }
+        .stat-label { font-size:0.75rem; color:var(--muted); margin-top:2px }
+        .add-form { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:24px }
+        .form-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:12px }
+        .form-row.full { grid-template-columns:1fr }
+        .form-group { display:flex; flex-direction:column; gap:4px }
+        .form-group label { font-size:0.75rem; font-weight:600; color:var(--muted) }
+        .form-group input, .form-group select, .form-group textarea { padding:10px; border:1px solid var(--border); border-radius:8px; font-size:0.85rem; font-family:inherit; background:var(--input) }
+        .btn { padding:10px 20px; border:none; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer; font-family:inherit; transition:all 0.2s }
+        .btn-primary { background:var(--primary); color:#fff }
+        .btn-primary:hover { opacity:0.9 }
+        .btn-danger { background:var(--red); color:#fff; font-size:0.75rem; padding:6px 12px }
+        .btn-sm { padding:6px 12px; font-size:0.75rem }
+        .apps-list { display:flex; flex-direction:column; gap:10px }
+        .app-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:center; gap:14px }
+        .app-status { width:10px; height:10px; border-radius:50%; flex-shrink:0 }
+        .app-status.applied { background:var(--blue) }
+        .app-status.interview { background:var(--yellow) }
+        .app-status.offer { background:var(--green) }
+        .app-status.rejected { background:var(--red) }
+        .app-info { flex:1 }
+        .app-company { font-weight:700; font-size:0.9rem }
+        .app-position { font-size:0.8rem; color:var(--muted) }
+        .app-date { font-size:0.72rem; color:var(--muted) }
+        .app-actions { display:flex; gap:6px; flex-shrink:0 }
+        .status-badge { padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600; border:1px solid }
+        .status-badge.applied { color:var(--blue); border-color:var(--blue); background:rgba(14,165,233,0.08) }
+        .status-badge.interview { color:#d97706; border-color:#d97706; background:rgba(245,158,11,0.08) }
+        .status-badge.offer { color:var(--green); border-color:var(--green); background:rgba(5,150,105,0.08) }
+        .status-badge.rejected { color:var(--red); border-color:var(--red); background:rgba(239,68,68,0.08) }
+        .empty { text-align:center; padding:40px; color:var(--muted) }
+        .empty i { font-size:2rem; margin-bottom:8px; display:block; color:var(--border) }
+        @media(max-width:768px) { .stats-row { grid-template-columns:repeat(2,1fr) } .form-row { grid-template-columns:1fr } .app-card { flex-wrap:wrap } }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="index.html" class="logo">Q<span>CV</span></a>
+        <div style="display:flex;gap:10px;align-items:center">
+            <a href="editor.html" class="btn" style="background:var(--input);color:var(--text);text-decoration:none;font-size:0.82rem"><i class="fas fa-edit"></i> Editor</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:4px"><i class="fas fa-briefcase" style="color:var(--primary);margin-right:8px"></i>Job Application Tracker</h1>
+        <p style="color:var(--muted);font-size:0.88rem;margin-bottom:24px">Track your job applications and their status</p>
+
+        <div class="stats-row" id="statsRow">
+            <div class="stat-card"><div class="stat-num" id="statTotal" style="color:var(--primary)">0</div><div class="stat-label">Total Applied</div></div>
+            <div class="stat-card"><div class="stat-num" id="statInterview" style="color:var(--yellow)">0</div><div class="stat-label">Interviews</div></div>
+            <div class="stat-card"><div class="stat-num" id="statOffer" style="color:var(--green)">0</div><div class="stat-label">Offers</div></div>
+            <div class="stat-card"><div class="stat-num" id="statRejected" style="color:var(--red)">0</div><div class="stat-label">Rejected</div></div>
+        </div>
+
+        <div class="add-form">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px"><i class="fas fa-plus-circle" style="color:var(--primary);margin-right:6px"></i>Add Application</h3>
+            <div class="form-row">
+                <div class="form-group"><label>Company *</label><input id="appCompany" placeholder="Google"></div>
+                <div class="form-group"><label>Position *</label><input id="appPosition" placeholder="Software Engineer"></div>
+                <div class="form-group"><label>Status</label>
+                    <select id="appStatus">
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="offer">Offer</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Date Applied</label><input id="appDate" type="date"></div>
+                <div class="form-group"><label>Salary Range</label><input id="appSalary" placeholder="e.g. $80k-$120k"></div>
+                <div class="form-group"><label>Link</label><input id="appLink" placeholder="https://..."></div>
+            </div>
+            <div class="form-row full">
+                <div class="form-group"><label>Notes</label><textarea id="appNotes" rows="2" placeholder="Interview scheduled for next week..."></textarea></div>
+            </div>
+            <button class="btn btn-primary" onclick="addApplication()"><i class="fas fa-plus"></i> Add Application</button>
+        </div>
+
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px"><i class="fas fa-list" style="color:var(--primary);margin-right:6px"></i>Applications</h3>
+        <div class="apps-list" id="appsList">
+            <div class="empty"><i class="fas fa-inbox"></i>No applications yet. Add your first one above!</div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = { apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I", authDomain: "qwcv-1cfad.firebaseapp.com", databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com", projectId: "qwcv-1cfad", storageBucket: "qwcv-1cfad.appspot.com", messagingSenderId: "1076872518490", appId: "1:1076872518490:web:b3a43fec10bb47e3990039" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        let currentUid = null;
+
+        firebase.auth().onAuthStateChanged(user => {
+            if (!user) { window.location.href = 'login.html'; return; }
+            currentUid = user.uid;
+            loadApplications();
+            document.getElementById('appDate').value = new Date().toISOString().split('T')[0];
+        });
+
+        function addApplication() {
+            const company = document.getElementById('appCompany').value.trim();
+            const position = document.getElementById('appPosition').value.trim();
+            if (!company || !position) { alert('Please fill in Company and Position'); return; }
+            const app = {
+                company, position,
+                status: document.getElementById('appStatus').value,
+                date: document.getElementById('appDate').value,
+                salary: document.getElementById('appSalary').value.trim(),
+                link: document.getElementById('appLink').value.trim(),
+                notes: document.getElementById('appNotes').value.trim(),
+                createdAt: Date.now()
+            };
+            const newRef = db.ref('users/' + currentUid + '/applications').push();
+            newRef.set(app).then(() => {
+                ['appCompany','appPosition','appSalary','appLink','appNotes'].forEach(id => document.getElementById(id).value = '');
+                document.getElementById('appStatus').value = 'applied';
+                document.getElementById('appDate').value = new Date().toISOString().split('T')[0];
+            });
+        }
+
+        function loadApplications() {
+            db.ref('users/' + currentUid + '/applications').orderByChild('createdAt').on('value', snap => {
+                const apps = [];
+                snap.forEach(child => apps.push({ id: child.key, ...child.val() }));
+                apps.reverse();
+                renderApplications(apps);
+            });
+        }
+
+        function renderApplications(apps) {
+            const list = document.getElementById('appsList');
+            if (!apps.length) { list.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i>No applications yet. Add your first one above!</div>'; updateStats(apps); return; }
+            list.innerHTML = apps.map(a =>
+                '<div class="app-card">' +
+                '<div class="app-status ' + (a.status || 'applied') + '"></div>' +
+                '<div class="app-info">' +
+                '<div class="app-company">' + esc(a.company) + '</div>' +
+                '<div class="app-position">' + esc(a.position) + (a.salary ? ' — ' + esc(a.salary) : '') + '</div>' +
+                '<div class="app-date">' + (a.date || 'No date') + (a.notes ? ' — ' + esc(a.notes.substring(0, 80)) : '') + '</div>' +
+                '</div>' +
+                '<span class="status-badge ' + (a.status || 'applied') + '">' + (a.status || 'applied') + '</span>' +
+                '<div class="app-actions">' +
+                '<button class="btn btn-sm" style="background:var(--input)" onclick="cycleStatus(\'' + a.id + '\',\'' + a.status + '\')"><i class="fas fa-sync-alt"></i></button>' +
+                (a.link ? '<a href="' + esc(a.link) + '" target="_blank" class="btn btn-sm" style="background:var(--input);text-decoration:none"><i class="fas fa-external-link-alt"></i></a>' : '') +
+                '<button class="btn btn-danger" onclick="deleteApplication(\'' + a.id + '\')"><i class="fas fa-trash"></i></button>' +
+                '</div></div>'
+            ).join('');
+            updateStats(apps);
+        }
+
+        function updateStats(apps) {
+            document.getElementById('statTotal').textContent = apps.length;
+            document.getElementById('statInterview').textContent = apps.filter(a => a.status === 'interview').length;
+            document.getElementById('statOffer').textContent = apps.filter(a => a.status === 'offer').length;
+            document.getElementById('statRejected').textContent = apps.filter(a => a.status === 'rejected').length;
+        }
+
+        function cycleStatus(id, current) {
+            const order = ['applied', 'interview', 'offer', 'rejected'];
+            const next = order[(order.indexOf(current) + 1) % order.length];
+            db.ref('users/' + currentUid + '/applications/' + id + '/status').set(next);
+        }
+
+        function deleteApplication(id) {
+            if (!confirm('Delete this application?')) return;
+            db.ref('users/' + currentUid + '/applications/' + id).remove();
+        }
+
+        function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    </script>
+</body>
+</html>

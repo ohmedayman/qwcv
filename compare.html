@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV — CV Comparison</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <style>
+        :root { --bg:#f9fafb; --card:#fff; --border:#e5e7eb; --primary:#0003c9; --green:#059669; --red:#ef4444; --yellow:#f59e0b; --blue:#0ea5e9; --text:#1a1a2e; --muted:#6b7280; --input:#f3f4f6 }
+        * { box-sizing:border-box; margin:0; padding:0 }
+        body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh }
+        .topbar { background:var(--card); border-bottom:1px solid var(--border); padding:12px 24px; display:flex; align-items:center; justify-content:space-between }
+        .logo { font-size:1.4rem; font-weight:800; letter-spacing:-0.5px }
+        .logo span { color:var(--primary) }
+        .container { max-width:1200px; margin:0 auto; padding:24px 20px }
+        .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px }
+        .compare-col { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px }
+        .compare-col h3 { font-size:1rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px }
+        .field-group { margin-bottom:12px }
+        .field-group label { display:block; font-size:0.75rem; font-weight:600; color:var(--muted); margin-bottom:4px }
+        .field-group input, .field-group textarea { width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-size:0.85rem; font-family:inherit; background:var(--input) }
+        .btn { padding:10px 20px; border:none; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer; font-family:inherit; transition:all 0.2s }
+        .btn-primary { background:var(--primary); color:#fff }
+        .btn-outline { background:transparent; border:1px solid var(--border); color:var(--text) }
+        .btn-ai { background:#8b5cf6; color:#fff }
+        .result-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-top:20px }
+        .score-bar { height:8px; border-radius:4px; background:var(--input); overflow:hidden; margin-top:6px }
+        .score-fill { height:100%; border-radius:4px; transition:width 0.5s }
+        .diff-item { padding:10px; border-radius:8px; margin-bottom:8px; font-size:0.82rem }
+        .diff-better { background:rgba(5,150,105,0.08); border-left:3px solid var(--green) }
+        .diff-worse { background:rgba(239,68,68,0.08); border-left:3px solid var(--red) }
+        .diff-same { background:rgba(107,114,128,0.06); border-left:3px solid var(--muted) }
+        .empty { text-align:center; padding:30px; color:var(--muted); font-size:0.85rem }
+        @media(max-width:768px) { .compare-grid { grid-template-columns:1fr } }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="index.html" class="logo">Q<span>CV</span></a>
+        <div style="display:flex;gap:10px;align-items:center">
+            <a href="editor.html" class="btn" style="background:var(--input);color:var(--text);text-decoration:none;font-size:0.82rem"><i class="fas fa-edit"></i> Editor</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:4px"><i class="fas fa-code-compare" style="color:var(--primary);margin-right:8px"></i>CV Comparison</h1>
+        <p style="color:var(--muted);font-size:0.88rem;margin-bottom:24px">Compare two CV versions side by side and see what improved</p>
+
+        <div class="compare-grid">
+            <div class="compare-col">
+                <h3><i class="fas fa-file-alt" style="color:var(--blue)"></i> CV Version A (Before)</h3>
+                <div class="field-group"><label>Job Title</label><input id="cvA_title" placeholder="Software Engineer"></div>
+                <div class="field-group"><label>Summary</label><textarea id="cvA_summary" rows="3" placeholder="Professional summary..."></textarea></div>
+                <div class="field-group"><label>Experience (one per line)</label><textarea id="cvA_exp" rows="4" placeholder="- Led team of 5&#10;- Improved performance by 40%"></textarea></div>
+                <div class="field-group"><label>Skills (comma separated)</label><input id="cvA_skills" placeholder="JavaScript, React, Python"></div>
+            </div>
+            <div class="compare-col">
+                <h3><i class="fas fa-file-alt" style="color:var(--green)"></i> CV Version B (After)</h3>
+                <div class="field-group"><label>Job Title</label><input id="cvB_title" placeholder="Senior Software Engineer"></div>
+                <div class="field-group"><label>Summary</label><textarea id="cvB_summary" rows="3" placeholder="Improved professional summary..."></textarea></div>
+                <div class="field-group"><label>Experience (one per line)</label><textarea id="cvB_exp" rows="4" placeholder="- Spearheaded team of 8&#10;- Boosted performance by 60%"></textarea></div>
+                <div class="field-group"><label>Skills (comma separated)</label><input id="cvB_skills" placeholder="JavaScript, React, Python, AWS, Docker"></div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:20px;display:flex;gap:12px;justify-content:center">
+            <button class="btn btn-primary" onclick="compareCVs()"><i class="fas fa-code-compare" style="margin-right:6px"></i> Compare Now</button>
+            <button class="btn btn-ai" onclick="aiCompare()"><i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> AI Deep Analysis</button>
+        </div>
+
+        <div class="result-card" id="resultCard" style="display:none">
+            <h3 style="margin-bottom:14px"><i class="fas fa-chart-bar" style="color:var(--primary);margin-right:6px"></i>Comparison Results</h3>
+            <div id="resultBody"></div>
+        </div>
+    </div>
+
+    <script src="js/ai-service.js"></script>
+    <script>
+        function getCvData(prefix) {
+            return {
+                title: document.getElementById(prefix + '_title').value.trim(),
+                summary: document.getElementById(prefix + '_summary').value.trim(),
+                exp: document.getElementById(prefix + '_exp').value.trim(),
+                skills: document.getElementById(prefix + '_skills').value.trim()
+            };
+        }
+
+        function compareCVs() {
+            const a = getCvData('cvA');
+            const b = getCvData('cvB');
+            if (!a.summary && !b.summary && !a.exp && !b.exp) { alert('Please fill in at least one CV'); return; }
+
+            const diffs = [];
+
+            // Title comparison
+            if (a.title && b.title) {
+                if (a.title !== b.title) diffs.push({ type: 'same', text: 'Title: "' + a.title + '" → "' + b.title + '"' });
+                else diffs.push({ type: 'same', text: 'Title: No change (' + a.title + ')' });
+            }
+
+            // Summary comparison
+            if (a.summary && b.summary) {
+                const aWords = a.summary.split(/\s+/).length;
+                const bWords = b.summary.split(/\s+/).length;
+                if (bWords > aWords) diffs.push({ type: 'better', text: 'Summary: Expanded from ' + aWords + ' to ' + bWords + ' words' });
+                else if (bWords < aWords) diffs.push({ type: 'worse', text: 'Summary: Shrank from ' + aWords + ' to ' + bWords + ' words' });
+                else diffs.push({ type: 'same', text: 'Summary: Same length (' + aWords + ' words)' });
+
+                // Check for power verbs
+                const powerVerbs = ['led', 'managed', 'achieved', 'delivered', 'optimized', 'spearheaded', 'drove', 'transformed', 'built', 'launched', 'increased', 'reduced'];
+                const aVerbs = powerVerbs.filter(v => a.summary.toLowerCase().includes(v));
+                const bVerbs = powerVerbs.filter(v => b.summary.toLowerCase().includes(v));
+                if (bVerbs.length > aVerbs.length) diffs.push({ type: 'better', text: 'Summary: More power verbs (' + bVerbs.length + ' vs ' + aVerbs.length + ')' });
+
+                // Check for numbers/metrics
+                const aNums = (a.summary.match(/\d+/g) || []).length;
+                const bNums = (b.summary.match(/\d+/g) || []).length;
+                if (bNums > aNums) diffs.push({ type: 'better', text: 'Summary: More metrics/numbers (' + bNums + ' vs ' + aNums + ')' });
+            }
+
+            // Skills comparison
+            const aSkills = a.skills.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+            const bSkills = b.skills.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+            const newSkills = bSkills.filter(s => !aSkills.includes(s));
+            const removedSkills = aSkills.filter(s => !bSkills.includes(s));
+            if (newSkills.length) diffs.push({ type: 'better', text: 'Skills added: ' + newSkills.join(', ') });
+            if (removedSkills.length) diffs.push({ type: 'worse', text: 'Skills removed: ' + removedSkills.join(', ') });
+            diffs.push({ type: 'same', text: 'Total skills: ' + aSkills.length + ' → ' + bSkills.length });
+
+            // Experience comparison
+            const aExpLines = a.exp.split('\n').filter(l => l.trim());
+            const bExpLines = b.exp.split('\n').filter(l => l.trim());
+            if (bExpLines.length > aExpLines.length) diffs.push({ type: 'better', text: 'Experience: More bullet points (' + bExpLines.length + ' vs ' + aExpLines.length + ')' });
+
+            const aExpNums = aExpLines.join(' ').match(/\d+/g) || [];
+            const bExpNums = bExpLines.join(' ').match(/\d+/g) || [];
+            if (bExpNums.length > aExpNums.length) diffs.push({ type: 'better', text: 'Experience: More quantified achievements (' + bExpNums.length + ' vs ' + aExpNums.length + ' numbers)' });
+
+            // Overall score
+            let score = 50;
+            diffs.forEach(d => { if (d.type === 'better') score += 10; if (d.type === 'worse') score -= 5; });
+            score = Math.max(0, Math.min(100, score));
+
+            const html = '<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600"><span>Improvement Score</span><span style="color:' + (score >= 70 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)') + '">' + score + '%</span></div><div class="score-bar"><div class="score-fill" style="width:' + score + '%;background:' + (score >= 70 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)') + '"></div></div></div>' +
+                diffs.map(d => '<div class="diff-item diff-' + d.type + '">' + d.text + '</div>').join('');
+
+            document.getElementById('resultBody').innerHTML = html;
+            document.getElementById('resultCard').style.display = '';
+        }
+
+        async function aiCompare() {
+            const a = getCvData('cvA');
+            const b = getCvData('cvB');
+            if (!a.summary && !b.summary && !a.exp && !b.exp) { alert('Please fill in at least one CV'); return; }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+
+            try {
+                const prompt = 'Compare these two CV versions and provide a detailed analysis.\n\n' +
+                    '=== VERSION A (Before) ===\nTitle: ' + a.title + '\nSummary: ' + a.summary + '\nExperience: ' + a.exp + '\nSkills: ' + a.skills + '\n\n' +
+                    '=== VERSION B (After) ===\nTitle: ' + b.title + '\nSummary: ' + b.summary + '\nExperience: ' + b.exp + '\nSkills: ' + b.skills + '\n\n' +
+                    'Provide:\n1. Overall improvement score (0-100)\n2. What improved (list specific improvements)\n3. What got worse (if anything)\n4. Suggestions for further improvement\n\nKeep response under 300 words.';
+
+                const res = await QCVAI.call(prompt, null, { maxRetries: 1, timeout: 15000 });
+                document.getElementById('resultBody').innerHTML = '<div style="font-size:0.85rem;line-height:1.7;white-space:pre-wrap">' + (res.ok ? res.text : 'AI unavailable. Use the basic comparison instead.') + '</div>';
+                document.getElementById('resultCard').style.display = '';
+            } catch (e) {
+                document.getElementById('resultBody').innerHTML = '<div style="color:var(--red)">AI analysis failed. Try basic comparison.</div>';
+                document.getElementById('resultCard').style.display = '';
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> AI Deep Analysis';
+        }
+    </script>
+</body>
+</html>

@@ -83,6 +83,14 @@
         "destination": "/careers.html"
       },
       {
+        "source": "/tracker",
+        "destination": "/tracker.html"
+      },
+      {
+        "source": "/compare",
+        "destination": "/compare.html"
+      },
+      {
         "source": "/help",
         "destination": "/help.html"
       },

@@ -320,5 +320,44 @@ const CVAnalyzer = {
         if (score >= 60) return { grade: 'جيد', label: 'GOOD', color: '#f59e0b', emoji: '\uD83D\uDC4D' };
         if (score >= 40) return { grade: 'مقبول', label: 'FAIR', color: '#f97316', emoji: '\uD83D\uDCC8' };
         return { grade: 'يحتاج تحسين', label: 'NEEDS WORK', color: '#ef4444', emoji: '\uD83D\uDD27' };
+    },
+
+    /**
+     * Get AI-powered personalized improvement suggestions
+     * @param {object} data - CV data
+     * @param {object} scores - Analysis scores
+     * @returns {Promise<string|null>} AI suggestions or null if unavailable
+     */
+    async getAISuggestions(data, scores) {
+        if (!window.QCVAI) return null;
+
+        const cvText = [
+            data.name ? 'Name: ' + data.name : '',
+            data.title ? 'Title: ' + data.title : '',
+            data.summary ? 'Summary: ' + data.summary : '',
+            (data.skills || []).join(', '),
+            (data.experience || []).map(e => (e.role || '') + ' at ' + (e.company || '') + ': ' + (e.description || '')).join('\n')
+        ].filter(Boolean).join('\n');
+
+        const weakCategories = [];
+        if (scores.content.total < 70) weakCategories.push('Content (' + scores.content.total + '/100)');
+        if (scores.ats.total < 70) weakCategories.push('ATS (' + scores.ats.total + '/100)');
+        if (scores.skills.total < 70) weakCategories.push('Skills (' + scores.skills.total + '/100)');
+        if (scores.impact.total < 70) weakCategories.push('Impact (' + scores.impact.total + '/100)');
+        if (scores.contact.total < 70) weakCategories.push('Contact (' + scores.contact.total + '/100)');
+
+        if (weakCategories.length === 0) return null;
+
+        const prompt = 'You are an elite CV consultant. Analyze this CV with score ' + scores.overall + '/100.\n\n' +
+            'CV:\n' + cvText + '\n\n' +
+            'Weak areas: ' + weakCategories.join(', ') + '\n\n' +
+            'Provide exactly 5 specific, actionable improvements (not generic advice). Format:\n' +
+            '1. [Section] — Specific improvement with example\n' +
+            '2. [Section] — Specific improvement with example\n' +
+            '...\n\n' +
+            'Keep each point under 30 words. Be specific to THIS person\'s CV.';
+
+        const res = await QCVAI.call(prompt, null, { maxRetries: 1 });
+        return res.ok ? res.text : null;
     }
 };

@@ -4322,6 +4322,7 @@
                     class="fas fa-cloud-upload-alt"></i> <span class="btn-label">Upload CV</span></button>
             <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> <span
                     class="btn-label">Save</span></button>
+            <button class="btn-save" onclick="showVersionHistory()" title="Version History" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">History</span></button>
 
             <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i
                     class="fas fa-robot"></i> <span class="btn-label">AI</span></button>
@@ -4564,6 +4565,11 @@
                             <button class="btn-open" onclick="openPortfolioLink()"><i
                                     class="fas fa-external-link-alt"></i> Open</button>
                         </div>
+                    </div>
+                    <div style="text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+                        <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px">QR Code for your portfolio</div>
+                        <img id="portfolioQr" style="width:120px;height:120px;border-radius:8px;border:1px solid var(--border)" alt="QR Code">
+                        <div style="margin-top:8px"><a id="qrDownload" href="#" download="qcv-portfolio-qr.png" style="font-size:0.72rem;color:var(--accent);font-weight:600;text-decoration:none"><i class="fas fa-download"></i> Download QR</a></div>
                     </div>
                 </div>
             </div>
@@ -5040,6 +5046,16 @@
             document.getElementById('portfolioUrl').value = portfolioUrl;
             const myPageLink = document.getElementById('myPageLink');
             if (myPageLink) myPageLink.href = portfolioUrl;
+            // Generate QR Code
+            try {
+                const qrImg = document.getElementById('portfolioQr');
+                const qrDl = document.getElementById('qrDownload');
+                if (qrImg) {
+                    const qrApi = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(portfolioUrl) + '&format=png&margin=10';
+                    qrImg.src = qrApi;
+                    if (qrDl) qrDl.href = qrApi;
+                }
+            } catch (e) { console.warn('QR generation failed:', e); }
 
             await loadSavedData();
             togglePaidFeatures(userData.plan || 'free');
@@ -5430,9 +5446,85 @@
                 set(ref(db, path), data).then(() => {
                     if (window.QCVNotify) { QCVNotify.save(); QCVNotify.success() }
                     if (btn) { const o = btn.innerHTML; btn.innerHTML = '&#10003; Saved'; btn.style.color = '#38bdf8'; btn.style.borderColor = '#38bdf8'; setTimeout(() => { btn.innerHTML = o; btn.style.color = ''; btn.style.borderColor = '' }, 2000) }
+                    // Save version history (max 20 versions, skip if identical to last)
+                    saveCvVersion(cid, data);
                 }).catch(e => { console.error('Firebase save error:', e); if (btn) { btn.innerHTML = '&#10007; Save failed'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; Save'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
             } catch (e) { console.error('saveToFirebase exception:', e); }
         };
+
+        let _lastVersionHash = '';
+        function saveCvVersion(cvId, data) {
+            try {
+                const hash = JSON.stringify(data).substring(0, 200);
+                if (hash === _lastVersionHash) return;
+                _lastVersionHash = hash;
+                const vPath = 'users/' + window.currentUid + '/cvVersions/' + cvId;
+                const vRef = ref(db, vPath);
+                get(vRef).then(snap => {
+                    const versions = snap.val() || {};
+                    const keys = Object.keys(versions).sort();
+                    // Keep max 20 versions
+                    if (keys.length >= 20) {
+                        const toRemove = keys.slice(0, keys.length - 19);
+                        toRemove.forEach(k => remove(ref(db, vPath + '/' + k)));
+                    }
+                    const newRef = push(ref(db, vPath));
+                    set(newRef, { data: data, timestamp: Date.now(), label: new Date().toLocaleString() });
+                }).catch(() => {});
+            } catch (e) { console.warn('Version save failed:', e); }
+        }
+
+        window.showVersionHistory = async function () {
+            const cid = window.currentCvId || 'default';
+            const vPath = 'users/' + window.currentUid + '/cvVersions/' + cid;
+            try {
+                const snap = await get(ref(db, vPath));
+                const versions = snap.val() || {};
+                const list = Object.entries(versions).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+
+                const panel = document.getElementById('aiResultPanel');
+                const title = document.getElementById('aiResultTitle');
+                const body = document.getElementById('aiResultBody');
+                title.textContent = 'Version History';
+                panel.classList.add('show');
+
+                if (list.length === 0) {
+                    body.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-history" style="font-size:2rem;margin-bottom:8px;display:block;color:var(--border)"></i>No versions saved yet.<br><span style="font-size:0.72rem">Versions are saved automatically each time you save your CV.</span></div>';
+                    return;
+                }
+
+                body.innerHTML = '<div style="max-height:400px;overflow-y:auto">' + list.map(([key, v]) =>
+                    '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;background:var(--bg)">' +
+                    '<div><div style="font-weight:600;font-size:0.82rem">' + (v.label || 'Unknown') + '</div>' +
+                    '<div style="font-size:0.7rem;color:var(--muted)">' + timeAgo(v.timestamp) + '</div></div>' +
+                    '<button onclick="restoreVersion(\'' + cid + '\',\'' + key + '\')" style="padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer">Restore</button>' +
+                    '</div>'
+                ).join('') + '</div>';
+            } catch (e) {
+                console.error('Version history error:', e);
+            }
+        };
+
+        window.restoreVersion = async function (cvId, versionKey) {
+            try {
+                const snap = await get(ref(db, 'users/' + window.currentUid + '/cvVersions/' + cvId + '/' + versionKey));
+                const version = snap.val();
+                if (!version || !version.data) { alert('Version not found'); return; }
+                if (!confirm('Restore this version? Your current data will be replaced.')) return;
+                const path = cvId === 'default' ? 'users/' + window.currentUid + '/cvData' : 'users/' + window.currentUid + '/cvs/' + cvId + '/data';
+                await set(ref(db, path), version.data);
+                window.location.reload();
+            } catch (e) { alert('Restore failed: ' + e.message); }
+        };
+
+        function timeAgo(ts) {
+            if (!ts) return '';
+            const diff = Date.now() - ts;
+            if (diff < 60000) return 'Just now';
+            if (diff < 3600000) return Math.floor(diff / 60000) + ' min ago';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + ' hours ago';
+            return Math.floor(diff / 86400000) + ' days ago';
+        }
     </script>
     <!-- Reports Panel -->
 
@@ -7163,6 +7255,8 @@
             Optimize<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('translate')"><i class="fas fa-language"
                 style="color:#ec4899"></i>Translate CV<span class="ai-shortcut">AI</span></button>
+        <button class="ai-menu-item" onclick="aiAction('coverletter')"><i class="fas fa-envelope-open-text"
+                style="color:#0ea5e9"></i>Cover Letter<span class="ai-shortcut">AI</span></button>
         <div class="ai-menu-divider"></div>
         <button class="ai-menu-item" onclick="aiAction('tailor')"><i class="fas fa-crosshairs"
                 style="color:#f97316"></i>Tailor CV to Job<span class="ai-shortcut">PRO</span></button>
@@ -7435,6 +7529,7 @@
                 skills: 'Suggest Skills',
                 ats: 'ATS Optimize',
                 translate: 'Translate CV',
+                coverletter: 'Cover Letter',
                 tailor: 'Tailor CV to Job',
                 skillgap: 'Skill Gap Analysis',
                 interview: 'Interview Prep',
@@ -7464,16 +7559,17 @@
                 return;
             }
 
-            // For tailor/skillgap/interview, show job description input first
-            if (action === 'tailor' || action === 'skillgap' || action === 'interview') {
+            // For tailor/skillgap/interview/coverletter, show job description input first
+            if (action === 'tailor' || action === 'skillgap' || action === 'interview' || action === 'coverletter') {
                 var jobInput = document.getElementById('jobDescInput');
                 var existingJob = jobInput ? jobInput.value.trim() : '';
                 var body = document.getElementById('aiResultBody');
-                var actionLabels = { tailor: 'Tailor CV to Job', skillgap: 'Skill Gap Analysis', interview: 'Interview Prep' };
+                var actionLabels = { tailor: 'Tailor CV to Job', skillgap: 'Skill Gap Analysis', interview: 'Interview Prep', coverletter: 'Generate Cover Letter' };
                 var placeholders = {
                     tailor: 'Paste the job description here...\n\nThe AI will rewrite your summary and experience to match this job perfectly.',
                     skillgap: 'Paste the job description here...\n\nThe AI will analyze what skills you\'re missing and create a learning roadmap.',
-                    interview: 'Paste the job description here...\n\nThe AI will simulate a hiring manager interview with tough questions based on this role.'
+                    interview: 'Paste the job description here...\n\nThe AI will simulate a hiring manager interview with tough questions based on this role.',
+                    coverletter: 'Paste the job description here...\n\nThe AI will generate a tailored cover letter for this position.'
                 };
                 body.innerHTML = '<div style="padding:12px">' +
                     '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">Job Description:</label>' +
@@ -7488,85 +7584,21 @@
             setAiLoading(true);
 
             const prompts = {
-                summarize: 'You are a world-class career consultant who has helped 10,000+ professionals land jobs at top companies like Google, Amazon, and McKinsey.\n\n' +
-                    'Write a powerful, concise professional summary (3-4 sentences) for this person:\n\n' + cvText + '\n\n' +
-                    'Rules:\n' +
-                    '1. Open with a strong positioning statement: [Title] with [X] years of experience in [domain]\n' +
-                    '2. Highlight 1-2 quantifiable achievements (revenue, %, team size)\n' +
-                    '3. Use power verbs: spearheaded, optimized, delivered, transformed, drove\n' +
-                    '4. End with a value proposition statement\n' +
-                    '5. Must be ATS-friendly: no symbols, no first person, no pronouns\n' +
-                    '6. Output ONLY the summary text — no heading, no explanation, no quotes',
+                summarize: 'Write a 3-sentence professional summary for this CV. Include: title, years of experience, 2 quantifiable achievements, key skills. ATS-friendly, no pronouns, power verbs only. Output ONLY the summary.\n\nCV:\n' + cvText,
 
-                proofread: 'You are a senior English copywriter with 15 years of experience editing Fortune 500 executive resumes.\n\n' +
-                    'Proofread and enhance this CV text:\n\n' + (data.summary || 'No summary written yet') + '\n\n' +
-                    'Fix ALL of the following:\n' +
-                    '- Spelling and grammar errors\n' +
-                    '- Weak verbs → replace with power verbs (assisted→guided, helped→spearheaded, did→orchestrated)\n' +
-                    '- Passive voice → active voice\n' +
-                    '- Wordiness → concise impact statements\n' +
-                    '- Inconsistent tense\n' +
-                    '- Add quantifiable metrics where possible\n\n' +
-                    'Output ONLY the corrected text. No explanations.',
+                proofread: 'Proofread this text. Fix grammar, replace weak verbs with power verbs, make active voice, add metrics. Output ONLY corrected text.\n\n' + (data.summary || 'No summary'),
 
-                improve: 'You are an expert CV writer and career coach who has reviewed 50,000+ resumes.\n\n' +
-                    'Transform this summary into a top-tier, ATS-optimized professional summary:\n\n' +
-                    'Current summary: ' + (data.summary || 'No summary') + '\n\n' +
-                    'Relevant experience:\n' + (data.experience || []).map(function (e) { return '- ' + (e.role || '') + ' at ' + (e.company || '') + ': ' + (e.description || ''); }).join('\n') + '\n\n' +
-                    'Requirements:\n' +
-                    '- Start with: [Title] with [X] years of experience in [key domains]\n' +
-                    '- Include 2-3 quantified achievements (numbers, percentages, dollar amounts)\n' +
-                    '- Use industry-relevant keywords for ATS parsing\n' +
-                    '- Maximum 4 sentences — quality over quantity\n' +
-                    '- Must sound like a real person, not AI-generated\n' +
-                    '- Return ONLY the improved summary text',
+                improve: 'Rewrite this summary to be ATS-optimized and impactful. Start with [Title] + experience. Include 2 quantified achievements. Max 4 sentences. Return ONLY the improved summary.\n\nCurrent: ' + (data.summary || 'No summary') + '\nExperience: ' + (data.experience || []).map(function(e) { return e.role + ' at ' + e.company + ': ' + e.description; }).join('; '),
 
-                skills: 'You are a senior technical recruiter who has screened 100,000+ candidates for FAANG and Fortune 500 companies.\n\n' +
-                    'Based on this profile, suggest the most in-demand skills:\n\n' +
-                    'Job Title: ' + (data.title || 'Not specified') + '\n' +
-                    'Experience: ' + (data.experience || []).map(function (e) { return (e.role || '') + ' - ' + (e.description || ''); }).join('; ') + '\n\n' +
-                    'Requirements:\n' +
-                    '- 12-15 skills total\n' +
-                    '- 60% technical/hard skills relevant to the role\n' +
-                    '- 40% soft skills that recruiters look for\n' +
-                    '- Include trending 2025-2026 skills for this industry\n' +
-                    '- Use exact skill names recruiters search for on LinkedIn\n' +
-                    '- Output as comma-separated list ONLY: Skill1, Skill2, Skill3...',
+                skills: 'Suggest 12 skills for this role: ' + (data.title || 'Professional') + '. 60% technical, 40% soft. Comma-separated list only.\n\nExperience: ' + (data.experience || []).map(function(e) { return e.role + ': ' + e.description; }).join('; '),
 
-                ats: 'You are an ATS (Applicant Tracking System) optimization expert. You understand how algorithms like Greenhouse, Lever, Workday, and Taleo parse resumes.\n\n' +
-                    'Rewrite this summary to maximize ATS score:\n\n' +
-                    'Current summary: ' + (data.summary || 'No summary') + '\n' +
-                    'Target role: ' + (data.title || 'General') + '\n\n' +
-                    'ATS Optimization Rules:\n' +
-                    '- Include exact job title keywords (not paraphrased)\n' +
-                    '- Use standard section headers (no creative names)\n' +
-                    '- No abbreviations without full form (e.g., "Search Engine Optimization (SEO)")\n' +
-                    '- No special characters, tables, or columns\n' +
-                    '- Include industry buzzwords naturally\n' +
-                    '- 2-3 sentences, 80-120 words optimal\n' +
-                    '- Return ONLY the optimized summary',
+                ats: 'Rewrite this summary for ATS optimization. Include exact job title keywords, standard headers, no abbreviations. Max 100 words. Return ONLY the optimized text.\n\nSummary: ' + (data.summary || 'No summary') + '\nRole: ' + (data.title || 'General'),
 
-                translate: 'You are a professional bilingual translator specializing in business and career documents.\n\n' +
-                    'Translate this CV. Detect the language and translate to the OTHER:\n' +
-                    '- Arabic → English (professional business English)\n' +
-                    '- English → Arabic (فصحى مهنية سلسة)\n\n' +
-                    'CV Content:\n' + cvText + '\n\n' +
-                    'Translation Rules:\n' +
-                    '- Maintain professional tone throughout\n' +
-                    '- Preserve all numbers, dates, percentages exactly\n' +
-                    '- Localize job titles (e.g., "مهندس برمجيات" → "Software Engineer")\n' +
-                    '- Keep the same structure and section order\n' +
-                    '- Do NOT add translator notes or explanations\n' +
-                    '- Return the FULL translated CV in the same format',
+                translate: 'Translate this CV content. Arabic→English or English→Arabian professional business. Preserve numbers and dates. Return ONLY the translated text.\n\n' + cvText,
 
-                custom: 'You are an elite career consultant and CV writing expert with 20+ years of experience.\n\n' +
-                    'Context — the user\'s CV:\n' + cvText + '\n\n' +
-                    'Respond to their question with:\n' +
-                    '- Specific, actionable advice (not generic)\n' +
-                    '- Reference their actual CV data when relevant\n' +
-                    '- Keep response under 200 words\n' +
-                    '- Use bullet points for clarity when listing suggestions\n' +
-                    '- Professional but friendly tone'
+                coverletter: 'Write a professional cover letter (3-4 paragraphs) for this job application.\n\nMy CV:\n' + cvText + '\n\nJob Description:\n' + jobDesc + '\n\nFormat:\n- Paragraph 1: Opening - mention the specific role and why you\'re excited\n- Paragraph 2: Key qualifications - match your experience to their requirements\n- Paragraph 3: Value proposition - what unique contribution you bring\n- Paragraph 4: Closing - call to action\n\nRules:\n- Professional but personable tone\n- Reference specific details from both CV and job description\n- No generic phrases like "I am writing to express my interest"\n- Max 300 words\n- Return ONLY the cover letter text',
+
+                custom: 'You are a CV expert. Answer briefly (under 150 words) with specific actionable advice referencing this CV.\n\nCV:\n' + cvText
             };
 
             callAI(prompts[action] || prompts.custom, function (result) {
@@ -7717,7 +7749,22 @@
                     '- [tip 2]\n' +
                     '- [tip 3]\n\n' +
                     '## Company Research Suggestions\n' +
-                    '- What to research before the interview'
+                    '- What to research before the interview',
+
+                coverletter: 'Write a professional cover letter (3-4 paragraphs) for this job application.\n\n' +
+                    '=== MY CV ===\n' + cvText + '\n\n' +
+                    '=== JOB DESCRIPTION ===\n' + jobDesc + '\n\n' +
+                    'FORMAT:\n' +
+                    '- Paragraph 1: Opening — mention the specific role and why you\'re excited\n' +
+                    '- Paragraph 2: Key qualifications — match your experience to their requirements\n' +
+                    '- Paragraph 3: Value proposition — what unique contribution you bring\n' +
+                    '- Paragraph 4: Closing — call to action\n\n' +
+                    'RULES:\n' +
+                    '- Professional but personable tone\n' +
+                    '- Reference specific details from both CV and job description\n' +
+                    '- No generic phrases like "I am writing to express my interest"\n' +
+                    '- Max 300 words\n' +
+                    '- Return ONLY the cover letter text'
             };
 
             callAI(prompts[action] || prompts.custom, function (result) {
@@ -7806,7 +7853,7 @@
         // Unified AI service — uses QCVAI from js/ai-service.js
         function callAI(prompt, onSuccess, onError) {
             if (window.QCVAI) {
-                QCVAI.call(prompt, null, { maxRetries: 1 }).then(function (res) {
+                QCVAI.call(prompt, null, { maxRetries: 1, timeout: 12000 }).then(function (res) {
                     if (res.ok && res.text) onSuccess(res.text);
                     else if (onError) onError(res.error || 'AI unavailable');
                 }).catch(function (e) {
@@ -7814,9 +7861,8 @@
                     if (onError) onError('AI request failed');
                 });
             } else {
-                // Fallback: direct Pollinations GET if ai-service.js hasn't loaded yet
                 var ctrl = new AbortController();
-                var timer = setTimeout(function () { ctrl.abort(); }, 25000);
+                var timer = setTimeout(function () { ctrl.abort(); }, 12000);
                 fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET', signal: ctrl.signal })
                     .then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('fail'); return r.text(); })
                     .then(function (t) { if (t && t.length > 5) onSuccess(t.trim()); else if (onError) onError('Empty response'); })

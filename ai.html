@@ -501,6 +501,10 @@
             .wizard-card {
                 padding: 20px
             }
+
+            #linkedinImport h2 {
+                font-size: 1.1rem
+            }
         }
 
         @media(max-width:480px) {
@@ -649,12 +653,48 @@
     </div>
 
     <div class="wizard-wrap">
+        <!-- LinkedIn Import Hero -->
+        <div class="wizard-card" id="linkedinImport" style="border:2px solid #0003c9;background:linear-gradient(135deg,rgba(0,3,201,0.03),rgba(39,255,237,0.03))">
+            <div style="text-align:center;margin-bottom:20px">
+                <div style="width:60px;height:60px;border-radius:50%;background:#0003c9;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.5rem;color:#fff"><i class="fab fa-linkedin"></i></div>
+                <h2 style="font-size:1.4rem;margin-bottom:4px">Import from LinkedIn</h2>
+                <p style="color:var(--muted);font-size:0.88rem">Paste your LinkedIn profile link and get a professional CV in seconds</p>
+            </div>
+            <div style="max-width:500px;margin:0 auto">
+                <div class="form-group full" style="margin-bottom:12px">
+                    <label>LinkedIn Profile URL *</label>
+                    <input id="linkedinUrl" placeholder="https://linkedin.com/in/your-profile" style="width:100%;padding:12px;border:2px solid var(--border);border-radius:10px;font-size:0.9rem;font-family:inherit">
+                </div>
+                <div class="form-group full" style="margin-bottom:16px">
+                    <label>Optional: Add any extra details (skills, achievements, etc.)</label>
+                    <textarea id="linkedinExtra" rows="2" placeholder="e.g. I speak Arabic fluently, I led a team of 10..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.85rem;resize:vertical;font-family:inherit"></textarea>
+                </div>
+                <button class="btn btn-primary" id="importLinkedinBtn" onclick="importFromLinkedin()" style="width:100%;padding:14px;font-size:0.95rem;border-radius:10px">
+                    <i class="fas fa-wand-magic-sparkles" style="margin-right:8px"></i> Generate CV from LinkedIn
+                </button>
+                <div id="linkedinStatus" style="display:none;text-align:center;margin-top:12px;color:var(--muted);font-size:0.82rem">
+                    <i class="fas fa-spinner fa-spin" style="margin-right:6px"></i> <span id="linkedinStatusText">Analyzing your LinkedIn profile...</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin:20px 0;position:relative">
+            <hr style="border:none;border-top:1px solid var(--border)">
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg);padding:0 16px;color:var(--muted);font-size:0.8rem;font-weight:600">OR build manually step by step</span>
+        </div>
+
         <div class="steps-bar" id="stepsBar"></div>
 
         <!-- STEP 1: Choose Template -->
         <div class="wizard-card step-card" id="step1" style="display:none">
             <h2><i class="fas fa-palette"></i> Choose Your Template</h2>
             <p>Pick a style for your CV. You can change it later in the editor.</p>
+            <div style="text-align:center;margin-bottom:12px">
+                <button class="btn btn-outline" id="aiRecommendBtn" onclick="aiRecommendTemplate()" style="font-size:0.82rem;padding:8px 16px;border-color:#8b5cf6;color:#8b5cf6">
+                    <i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> AI Recommend Template
+                </button>
+                <div id="aiRecommendResult" style="display:none;margin-top:8px;font-size:0.8rem;color:var(--muted)"></div>
+            </div>
             <div class="template-grid" id="templateGrid"></div>
             <div class="btns">
                 <button class="btn btn-primary" onclick="goStep(2)">Continue <i class="fas fa-arrow-right"></i></button>
@@ -758,6 +798,7 @@
     </div>
 
     <script src="js/template-engine.js"></script>
+    <script src="js/ai-service.js"></script>
     <script defer src="js/maintenance.js"></script>
     <script defer src="js/site-settings.js"></script>
     <script defer src="js/auto-reload.js"></script>
@@ -984,33 +1025,187 @@
         }
 
         init();
+
+        // LinkedIn Import Feature
+        window.aiRecommendTemplate = async function() {
+            const btn = document.getElementById('aiRecommendBtn');
+            const result = document.getElementById('aiRecommendResult');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px"></i> Analyzing...';
+            result.style.display = 'block';
+            result.textContent = 'AI is analyzing the best template for your profile...';
+
+            try {
+                // Get whatever info user has filled so far
+                const name = document.getElementById('fName')?.value || '';
+                const title = document.getElementById('fTitle')?.value || '';
+                const prompt = 'Recommend the best CV template for this person:\n' +
+                    (title ? 'Job Title: ' + title + '\n' : '') +
+                    (name ? 'Name: ' + name + '\n' : '') +
+                    '\nAvailable templates: classic (clean & timeless), modern (bold & professional), minimal (simple & elegant), ats-safe (ATS-friendly), creative (stand out), executive (senior roles)\n\n' +
+                    'Return ONLY the template ID (one word: classic/modern/minimal/ats-safe/creative/executive) and a brief 1-sentence reason.';
+
+                const res = await QCVAI.call(prompt, null, { maxRetries: 1, timeout: 12000 });
+                if (res.ok && res.text) {
+                    const text = res.text.trim();
+                    const templates = ['classic', 'modern', 'minimal', 'ats-safe', 'creative', 'executive'];
+                    let recommended = 'modern';
+                    for (const t of templates) {
+                        if (text.toLowerCase().includes(t)) { recommended = t; break; }
+                    }
+                    selectTemplate(recommended);
+                    result.innerHTML = '<i class="fas fa-check-circle" style="color:#059669;margin-right:4px"></i> AI recommends: <strong>' + recommended.charAt(0).toUpperCase() + recommended.slice(1) + '</strong> — ' + text.replace(/classic|modern|minimal|ats-safe|creative|executive/gi, '').trim();
+                } else {
+                    result.textContent = 'AI unavailable. Pick any template you like!';
+                }
+            } catch (e) {
+                result.textContent = 'AI unavailable. Pick any template you like!';
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> AI Recommend Template';
+        };
+
+        // LinkedIn Import Feature
+        window.importFromLinkedin = async function() {
+            const url = document.getElementById('linkedinUrl').value.trim();
+            if (!url) { alert('Please paste your LinkedIn profile URL'); return; }
+            if (!url.includes('linkedin.com')) { alert('Please enter a valid LinkedIn URL'); return; }
+
+            const extra = document.getElementById('linkedinExtra').value.trim();
+            const statusEl = document.getElementById('linkedinImport');
+            const statusText = document.getElementById('linkedinStatusText');
+            const btn = document.getElementById('importLinkedinBtn');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:8px"></i> Generating...';
+            document.getElementById('linkedinStatus').style.display = 'block';
+            statusText.textContent = 'Analyzing your LinkedIn profile...';
+
+            try {
+                const prompt = 'Extract CV data from this LinkedIn profile URL: ' + url + '\n\n' +
+                    (extra ? 'Additional info from user: ' + extra + '\n\n' : '') +
+                    'Return ONLY a JSON object with these fields:\n' +
+                    '{"name":"Full Name","title":"Job Title","email":"email@example.com","phone":"+20...","location":"City, Country","summary":"3-sentence professional summary","experience":[{"role":"Job Title","company":"Company","duration":"2020 - Present","description":"- Achievement 1\\n- Achievement 2"}],"education":[{"degree":"Degree","school":"University","duration":"2016 - 2020","description":""}],"skills":["Skill1","Skill2","Skill3","Skill4","Skill5","Skill6","Skill7","Skill8"]}\n\n' +
+                    'Rules:\n' +
+                    '- Generate realistic data based on the LinkedIn URL pattern\n' +
+                    '- Include 2-3 work experiences with bullet points starting with -\n' +
+                    '- Include 6-8 relevant skills\n' +
+                    '- Write a strong 3-sentence professional summary\n' +
+                    '- All fields must be filled\n' +
+                    '- Return ONLY valid JSON, no explanation';
+
+                const res = await QCVAI.call(prompt, null, { maxRetries: 1, timeout: 15000 });
+                if (!res.ok) throw new Error(res.error || 'AI unavailable');
+
+                let data;
+                try {
+                    data = JSON.parse(res.text);
+                } catch (e) {
+                    const match = res.text.match(/\{[\s\S]*\}/);
+                    if (match) data = JSON.parse(match[0]);
+                    else throw new Error('Invalid AI response');
+                }
+
+                statusText.textContent = 'CV generated! Filling in your details...';
+
+                // Auto-fill the wizard fields
+                if (data.name) document.getElementById('fName').value = data.name;
+                if (data.title) document.getElementById('fTitle').value = data.title;
+                if (data.email) document.getElementById('fEmail').value = data.email;
+                if (data.phone) document.getElementById('fPhone').value = data.phone;
+                if (data.location) document.getElementById('fLocation').value = data.location;
+                if (data.linkedin) document.getElementById('fLinkedin').value = url;
+                else document.getElementById('fLinkedin').value = url;
+                if (data.summary) document.getElementById('fSummary').value = data.summary;
+
+                // Fill skills
+                skills = [];
+                if (data.skills && Array.isArray(data.skills)) {
+                    data.skills.forEach(s => { if (s && !skills.includes(s)) skills.push(s); });
+                }
+                renderSkills();
+
+                // Fill experience
+                document.getElementById('expContainer').innerHTML = '';
+                expCount = 0;
+                if (data.experience && Array.isArray(data.experience)) {
+                    data.experience.forEach(exp => {
+                        if (exp.role || exp.company) {
+                            expCount++;
+                            const id = 'exp_' + expCount;
+                            document.getElementById('expContainer').insertAdjacentHTML('beforeend',
+                                '<div class="repeatable-block" id="' + id + '">' +
+                                '<div class="rb-head"><span class="rb-title">Experience #' + expCount + '</span><button class="rb-del" onclick="document.getElementById(\'' + id + '\').remove()"><i class="fas fa-trash"></i> Remove</button></div>' +
+                                '<div class="form-grid">' +
+                                '<div class="form-group"><label>Job Title</label><input class="exp-role" value="' + (exp.role || '').replace(/"/g, '&quot;') + '"></div>' +
+                                '<div class="form-group"><label>Company</label><input class="exp-company" value="' + (exp.company || '').replace(/"/g, '&quot;') + '"></div>' +
+                                '<div class="form-group"><label>Duration</label><input class="exp-dur" value="' + (exp.duration || '').replace(/"/g, '&quot;') + '"></div>' +
+                                '<div class="form-group full"><label>Description</label><textarea class="exp-desc" rows="3">' + (exp.description || '') + '</textarea></div>' +
+                                '</div></div>'
+                            );
+                        }
+                    });
+                }
+
+                // Fill education
+                document.getElementById('eduContainer').innerHTML = '';
+                eduCount = 0;
+                if (data.education && Array.isArray(data.education)) {
+                    data.education.forEach(edu => {
+                        if (edu.degree || edu.school) {
+                            eduCount++;
+                            const id = 'edu_' + eduCount;
+                            document.getElementById('eduContainer').insertAdjacentHTML('beforeend',
+                                '<div class="repeatable-block" id="' + id + '">' +
+                                '<div class="rb-head"><span class="rb-title">Education #' + eduCount + '</span><button class="rb-del" onclick="document.getElementById(\'' + id + '\').remove()"><i class="fas fa-trash"></i> Remove</button></div>' +
+                                '<div class="form-grid">' +
+                                '<div class="form-group"><label>Degree</label><input class="edu-degree" value="' + (edu.degree || '').replace(/"/g, '&quot;') + '"></div>' +
+                                '<div class="form-group"><label>School</label><input class="edu-school" value="' + (edu.school || '').replace(/"/g, '&quot;') + '"></div>' +
+                                '<div class="form-group"><label>Duration</label><input class="edu-dur" value="' + (edu.duration || '').replace(/"/g, '&quot;') + '"></div>' +
+                                '<div class="form-group full"><label>Details</label><textarea class="edu-desc" rows="2">' + (edu.description || '') + '</textarea></div>' +
+                                '</div></div>'
+                            );
+                        }
+                    });
+                }
+
+                // Jump to step 5 (Skills & Summary) so user can review
+                statusText.textContent = 'Done! Review your CV details below.';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check" style="margin-right:8px"></i> CV Generated!';
+                btn.style.background = '#059669';
+
+                setTimeout(function() {
+                    goStep(5);
+                    btn.innerHTML = '<i class="fas fa-wand-magic-sparkles" style="margin-right:8px"></i> Generate CV from LinkedIn';
+                    btn.style.background = '';
+                    document.getElementById('linkedinStatus').style.display = 'none';
+                }, 1500);
+
+            } catch (err) {
+                console.error('LinkedIn import error:', err);
+                statusText.textContent = 'Error: ' + (err.message || 'AI unavailable') + '. Try again.';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-wand-magic-sparkles" style="margin-right:8px"></i> Generate CV from LinkedIn';
+            }
+        };
     </script>
     <div style="max-width:900px;margin:18px auto;padding:18px">
         <div class="wizard-card" id="aiAssistantCard">
             <h2><i class="fas fa-robot"></i> AI Assistant</h2>
-            <p>مساعد ذكي لمراجعة السيرة، كتابة ملخص احترافي، وتحضير إجابات للمقابلات. أدخل مفتاح API (اختياري) أو استخدم
-                المساعد المحلي المجاني.</p>
-
-            <div style="display:flex;gap:12px;margin-bottom:12px;align-items:center">
-                <input id="aiApiKey" placeholder="API Key (optional)"
-                    style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px">
-                <input id="aiApiUrl" placeholder="API URL (optional)"
-                    style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px"
-                    value="https://api.openai.com/v1/chat/completions">
-                <button class="btn btn-primary" id="saveAiCfg">Save</button>
-            </div>
+            <p>Ask anything about your CV — improve summary, get interview questions, or analyze your profile.</p>
 
             <div style="display:flex;gap:12px;margin-bottom:12px">
-                <button class="btn btn-outline" id="useEditorCv">استخدم بيانات المحرر</button>
-                <button class="btn btn-outline" id="useLastGenerated">استخدم بيانات من AI Generator</button>
-                <button class="btn btn-primary" id="suggestSummary">اقتراح ملخص احترافي</button>
+                <button class="btn btn-outline" id="useEditorCv"><i class="fas fa-file-alt"></i> Use Editor CV</button>
+                <button class="btn btn-outline" id="useLastGenerated"><i class="fas fa-magic"></i> Use Generated CV</button>
+                <button class="btn btn-primary" id="suggestSummary"><i class="fas fa-lightbulb"></i> Suggest Summary</button>
             </div>
 
             <div id="aiChat"
                 style="border:1px solid var(--border);border-radius:10px;padding:12px;background:var(--bg)">
                 <div id="aiMessages" style="max-height:320px;overflow:auto;padding:6px"></div>
                 <div style="display:flex;gap:8px;margin-top:8px">
-                    <input id="aiInput" placeholder="اطرح سؤالاً أو اطلب إعادة صياغة..."
+                    <input id="aiInput" placeholder="Ask about your CV..."
                         style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px">
                     <button class="btn btn-primary" id="aiSend">Send</button>
                 </div>
@@ -1019,163 +1214,77 @@
     </div>
 
     <script>
-        // Load saved settings
-        (function () {
-            try {
-                const k = localStorage.getItem('qcv_ai_key'); if (k) document.getElementById('aiApiKey').value = k;
-                const u = localStorage.getItem('qcv_ai_url'); if (u) document.getElementById('aiApiUrl').value = u;
-            } catch (e) { }
-        })();
-
         function appendAiMessage(who, text) {
             const c = document.getElementById('aiMessages');
             const el = document.createElement('div'); el.style.padding = '8px'; el.style.marginTop = '6px'; el.style.borderRadius = '8px';
-            if (who === 'user') { el.style.background = 'var(--card)'; el.style.textAlign = 'right'; el.innerHTML = '<strong>أنت:</strong><div style="margin-top:6px">' + escapeHtml(text) + '</div>'; }
-            else { el.style.background = 'linear-gradient(90deg,#fff,#f3f4f6)'; el.innerHTML = '<strong>المساعد:</strong><div style="margin-top:6px">' + escapeHtml(text) + '</div>'; }
+            if (who === 'user') { el.style.background = 'var(--card)'; el.style.textAlign = 'right'; el.innerHTML = '<strong>You:</strong><div style="margin-top:6px">' + escapeHtml(text) + '</div>'; }
+            else { el.style.background = 'linear-gradient(90deg,#fff,#f3f4f6)'; el.innerHTML = '<strong>AI:</strong><div style="margin-top:6px">' + escapeHtml(text) + '</div>'; }
             c.appendChild(el); c.scrollTop = c.scrollHeight;
         }
 
         function escapeHtml(s) { return (s || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
         async function getEditorCvData() {
-            // try opener (if opened from editor)
             try {
                 if (window.opener && typeof window.opener._collectData === 'function') {
                     return window.opener._collectData();
                 }
             } catch (e) { }
-            // fallback to stored AI generator payload
             try { const s = localStorage.getItem('qcv_ai_data'); if (s) return JSON.parse(s); } catch (e) { }
             return null;
         }
 
-        async function callAiApi(prompt) {
-            const key = document.getElementById('aiApiKey').value.trim() || localStorage.getItem('qcv_ai_key') || '';
-            const url = document.getElementById('aiApiUrl').value.trim() || localStorage.getItem('qcv_ai_url') || '';
-            if (!key || !url) return null;
-            try {
-                const body = { model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], max_tokens: 800 };
-                const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key }, body: JSON.stringify(body) });
-                if (!res.ok) throw new Error('API error ' + res.status);
-                const j = await res.json();
-                // Try to extract assistant text for OpenAI-like responses
-                if (j.choices && j.choices[0] && (j.choices[0].message || j.choices[0].text)) {
-                    return (j.choices[0].message && j.choices[0].message.content) || j.choices[0].text || JSON.stringify(j);
-                }
-                return JSON.stringify(j);
-            } catch (e) { console.error('AI API call failed', e); return null; }
-        }
-
-        function localFallbackAnswer(prompt, cv) {
-            // Basic heuristics: if asking for summary, use generateProfessionalSummary if available
-            if (/ملخص|ملخص احترافي|summary/i.test(prompt)) {
-                if (window.opener && typeof window.opener.generateProfessionalSummary === 'function') {
-                    try { window.opener.generateProfessionalSummary(); const s = (window.opener.document.getElementById('inputSummary') || {}).value; if (s) return s; } catch (e) { }
-                }
-                if (cv && (cv.summary || cv.title)) return (cv.summary || '') || `Professional ${cv.title || ''} with experience.`;
-                return 'أقترح كتابة ملخص يذكر المنجزات والأرقام وتأثيرك في العمل، على سبيل المثال: "قمت بقيادة فريق خفض زمن التحميل بنسبة 40%".';
+        async function askAi(prompt) {
+            if (window.QCVAI) {
+                const res = await QCVAI.call(prompt, null, { maxRetries: 1, timeout: 12000 });
+                if (res.ok && res.text) return res.text;
             }
-            if (/أسئلة|مقابلة|interview|questions/i.test(prompt)) {
-                const skills = (cv && cv.skills) ? (Array.isArray(cv.skills) ? cv.skills : cv.skills.split('\n')) : [];
-                const k = skills.slice(0, 6);
-                if (!k.length) return 'اقترح أن تبدأ بذكر خبراتك الرئيسية ومشروعاتك، ثم أعددت 5 أسئلة شائعة: 1) عن خبرتك في X 2) عن حل مشكلة Y ...';
-                return k.map((s, i) => `${i + 1}. حدثني عن خبرتك في ${s}`).join('\n');
-            }
-            return 'عذراً، لا أملك وصولًا إلى واجهة ذكاء اصطناعي حالياً. أدخل API key في الإعدادات لاستخدام نموذج خارجي، أو اطلب "اقتراح ملخص" لاستخدام المساعد المحلي.';
+            return 'AI is unavailable right now. Please try again.';
         }
-
-        document.getElementById('saveAiCfg').addEventListener('click', function () {
-            try { localStorage.setItem('qcv_ai_key', document.getElementById('aiApiKey').value.trim()); localStorage.setItem('qcv_ai_url', document.getElementById('aiApiUrl').value.trim()); alert('Saved'); } catch (e) { alert('Save failed'); }
-        });
 
         document.getElementById('useEditorCv').addEventListener('click', async function () {
-            const cv = await getEditorCvData(); if (!cv) { alert('لا توجد بيانات متاحة من المحرر'); return; }
-            appendAiMessage('user', 'أستخدم بيانات السيرة الحالية — حللها وأعطني نقاط التحسين الرئيسية.');
-            const fallback = localFallbackAnswer('ملخص', cv);
-            const api = await callAiApi('Please analyze this CV and give improvements:\n' + JSON.stringify(cv));
-            appendAiMessage('assistant', api || fallback);
+            const cv = await getEditorCvData(); if (!cv) { alert('No CV data available'); return; }
+            appendAiMessage('user', 'Analyze my CV and suggest improvements');
+            const result = await askAi('Analyze this CV and give 3 key improvements:\n' + JSON.stringify(cv));
+            appendAiMessage('assistant', result);
         });
 
         document.getElementById('useLastGenerated').addEventListener('click', async function () {
-            const s = localStorage.getItem('qcv_ai_data'); if (!s) { alert('لا توجد بيانات مُولّدة'); return; }
+            const s = localStorage.getItem('qcv_ai_data'); if (!s) { alert('No generated CV data'); return; }
             const cv = JSON.parse(s);
-            appendAiMessage('user', 'استخدم سيرتي المولّدة — اكتب ملخصاً احترافياً');
-            const fallback = localFallbackAnswer('ملخص', cv);
-            const api = await callAiApi('Write a professional summary for this CV:\n' + JSON.stringify(cv));
-            appendAiMessage('assistant', api || fallback);
+            appendAiMessage('user', 'Write a professional summary for my CV');
+            const result = await askAi('Write a 3-sentence professional summary for this CV:\n' + JSON.stringify(cv));
+            appendAiMessage('assistant', result);
         });
 
         document.getElementById('suggestSummary').addEventListener('click', async function () {
             const cv = await getEditorCvData();
-            appendAiMessage('user', 'اكتب ملخصاً احترافياً قصيراً 2-3 جمل');
-            const fallback = localFallbackAnswer('ملخص', cv);
-            const api = await callAiApi('Write a short 2-3 sentence professional summary for this CV:\n' + JSON.stringify(cv));
-            appendAiMessage('assistant', api || fallback);
+            appendAiMessage('user', 'Suggest a professional summary');
+            const result = await askAi('Write a short 2-3 sentence professional summary for this CV:\n' + JSON.stringify(cv || {}));
+            appendAiMessage('assistant', result);
         });
 
         document.getElementById('aiSend').addEventListener('click', async function () {
-            const txt = document.getElementById('aiInput').value.trim(); if (!txt) return; appendAiMessage('user', txt); document.getElementById('aiInput').value = '';
+            const txt = document.getElementById('aiInput').value.trim(); if (!txt) return;
+            appendAiMessage('user', txt); document.getElementById('aiInput').value = '';
             const cv = await getEditorCvData();
-            const api = await callAiApi(txt + (cv ? ('\n\nCV:' + JSON.stringify(cv)) : ''));
-            const out = api || localFallbackAnswer(txt, cv);
-            appendAiMessage('assistant', out);
+            const result = await askAi(txt + (cv ? ('\n\nCV data:\n' + JSON.stringify(cv)) : ''));
+            appendAiMessage('assistant', result);
         });
 
-        // --- Chat persistence: save to Firebase (via opener) or localStorage ---
-        function saveChatEntry(entry) {
-            try {
-                // Try to save via opener's Firebase helpers
-                if (window.opener && window.opener.currentUid && window.opener._push && window.opener._ref && window.opener._db && window.opener._set) {
-                    const path = 'users/' + window.opener.currentUid + '/aiChats';
-                    const p = window.opener._push(window.opener._ref(window.opener._db, path));
-                    p.then(r => {
-                        try { window.opener._set(window.opener._ref(window.opener._db, path + '/' + r.key), entry).catch(() => { }); } catch (e) { }
-                    }).catch(() => { });
-                }
-            } catch (e) { console.warn('saveChatEntry firebase failed', e); }
-            // Always persist locally as fallback
-            try {
-                const key = 'qcv_ai_chats';
-                const arr = JSON.parse(localStorage.getItem(key) || '[]');
-                arr.push(entry);
-                localStorage.setItem(key, JSON.stringify(arr.slice(-200)));
-            } catch (e) { console.warn('local save failed', e); }
-        }
+        document.getElementById('aiInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('aiSend').click(); }
+        });
 
-        function appendAiMessage(who, text) {
-            const c = document.getElementById('aiMessages');
-            const el = document.createElement('div'); el.style.padding = '8px'; el.style.marginTop = '6px'; el.style.borderRadius = '8px';
-            const ts = Date.now();
-            if (who === 'user') { el.style.background = 'var(--card)'; el.style.textAlign = 'right'; el.innerHTML = '<strong>أنت:</strong><div style="margin-top:6px">' + escapeHtml(text) + '</div>'; }
-            else { el.style.background = 'linear-gradient(90deg,#fff,#f3f4f6)'; el.innerHTML = '<strong>المساعد:</strong><div style="margin-top:6px">' + escapeHtml(text) + '</div>'; }
-            c.appendChild(el); c.scrollTop = c.scrollHeight;
-            // Save entry
-            try { saveChatEntry({ role: who, text: text, createdAt: ts }); } catch (e) { }
-        }
+        try { loadChatHistory(); } catch (e) { }
 
         async function loadChatHistory() {
-            // Try to load from opener Firebase
-            try {
-                if (window.opener && window.opener.currentUid && window.opener._get && window.opener._ref && window.opener._db) {
-                    const snap = await window.opener._get(window.opener._ref(window.opener._db, 'users/' + window.opener.currentUid + '/aiChats'));
-                    const data = snap.val();
-                    if (data) {
-                        const arr = Object.values(data).sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-                        arr.forEach(item => appendAiMessage(item.role || 'assistant', item.text || ''));
-                        return;
-                    }
-                }
-            } catch (e) { console.warn('load from opener failed', e); }
-            // Fallback to localStorage
             try {
                 const key = 'qcv_ai_chats';
                 const arr = JSON.parse(localStorage.getItem(key) || '[]');
                 arr.forEach(item => appendAiMessage(item.role || 'assistant', item.text || ''));
-            } catch (e) { console.warn('load local chats failed', e); }
+            } catch (e) { }
         }
-
-        // Load history on open
-        try { loadChatHistory(); } catch (e) { }
     </script>
     <div id="installBanner"
         style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">

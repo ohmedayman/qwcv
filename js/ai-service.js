@@ -1,164 +1,84 @@
 /**
- * QCV AI Service — Unified AI provider with retry, timeout, and fallback
- * Replaces duplicate AI call code across editor.html, index.html, ats-checker.html
+ * QCV AI Service — Fast unified AI with Pollinations
  */
-
 const QCVAI = {
-    providers: {
-        pollinations: {
-            name: 'Pollinations',
-            url: 'https://text.pollinations.ai/',
-            method: 'GET',
-            free: true,
-            timeout: 25000
-        },
-        groq: {
-            name: 'Groq',
-            url: 'https://api.groq.com/openai/v1/chat/completions',
-            method: 'POST',
-            model: 'llama-3.3-70b-versatile',
-            free: true,
-            timeout: 20000
-        },
-        deepseek: {
-            name: 'DeepSeek',
-            url: 'https://api.deepseek.com/chat/completions',
-            method: 'POST',
-            model: 'deepseek-chat',
-            free: false,
-            timeout: 20000
-        },
-        openrouter: {
-            name: 'OpenRouter',
-            url: 'https://openrouter.ai/api/v1/chat/completions',
-            method: 'POST',
-            model: 'meta-llama/llama-3.3-70b-instruct:free',
-            free: true,
-            timeout: 20000
-        },
-        openai: {
-            name: 'OpenAI',
-            url: 'https://api.openai.com/v1/chat/completions',
-            method: 'POST',
-            model: 'gpt-4o-mini',
-            free: false,
-            timeout: 20000
-        }
-    },
+    /** Pollinations API key (free, no key needed) */
+    _pollinationsKey: 'uKxg3L4c6fOoMfM8J0nJ',
 
-    _getKeys() {
-        const keys = {};
+    /**
+     * Try Pollinations GET (fastest, no key needed)
+     */
+    async _callPollinations(prompt, systemPrompt, timeout = 12000) {
         try {
-            if (window.QCVSettings) {
-                keys.groq = window.QCVSettings.groqKey || '';
-                keys.deepseek = window.QCVSettings.deepseekKey || '';
-                keys.openrouter = window.QCVSettings.openrouterKey || '';
-                keys.openai = window.QCVSettings.aiApiKey || '';
-            }
-        } catch (e) { }
-        try {
-            if (!keys.groq) keys.groq = localStorage.getItem('qcv_groq_key') || '';
-            if (!keys.deepseek) keys.deepseek = localStorage.getItem('qcv_deepseek_key') || '';
-            if (!keys.openrouter) keys.openrouter = localStorage.getItem('qcv_openrouter_key') || '';
-            if (!keys.openai) keys.openai = localStorage.getItem('qcv_ai_key') || '';
-        } catch (e) { }
-        return keys;
-    },
-
-    _cleanResponse(text) {
-        if (!text || typeof text !== 'string') return '';
-        text = text.trim();
-        // Strip markdown code blocks
-        text = text.replace(/^```(?:json|javascript|text|html)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
-        return text.trim();
-    },
-
-    _isUseful(text) {
-        if (!text || typeof text !== 'string') return false;
-        text = text.trim();
-        if (text.length < 3) return false;
-        // Reject HTML error pages
-        if (text.startsWith('<!DOCTYPE') || text.startsWith('<html')) return false;
-        if (text.startsWith('<') && text.length > 500) return false;
-        return true;
-    },
-
-    async _callPollinations(prompt, systemPrompt) {
-        const fullPrompt = systemPrompt ? systemPrompt + '\n\nUser request:\n' + prompt : prompt;
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), this.providers.pollinations.timeout);
-        try {
-            const res = await fetch(this.providers.pollinations.url + encodeURIComponent(fullPrompt) + '?model=openai&seed=' + Date.now(), {
-                method: 'GET',
-                signal: ctrl.signal
-            });
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), timeout);
+            const response = await fetch(
+                'https://text.pollinations.ai/' + encodeURIComponent((systemPrompt || '') + '\n\n' + prompt),
+                { signal: ctrl.signal }
+            );
             clearTimeout(timer);
-            if (!res.ok) throw new Error('Pollinations HTTP ' + res.status);
-            const text = await res.text();
-            if (!this._isUseful(text)) throw new Error('Pollinations returned invalid content');
-            return { ok: true, text: this._cleanResponse(text), provider: 'pollinations' };
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            let text = await response.text();
+            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
+            if (text.length > 3000) text = text.substring(0, 3000);
+            return { ok: true, text, provider: 'pollinations' };
         } catch (e) {
-            clearTimeout(timer);
-            return { ok: false, error: e.message || 'Pollinations failed', provider: 'pollinations' };
-        }
-    },
-
-    async _callOpenAICompatible(provider, prompt, systemPrompt, apiKey) {
-        if (!apiKey) return { ok: false, error: 'No API key for ' + provider, provider };
-        const cfg = this.providers[provider];
-        const messages = [];
-        if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
-        messages.push({ role: 'user', content: prompt });
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), cfg.timeout);
-        try {
-            const res = await fetch(cfg.url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-                body: JSON.stringify({ model: cfg.model, messages, max_tokens: 2000, temperature: 0.7 }),
-                signal: ctrl.signal
-            });
-            clearTimeout(timer);
-            if (!res.ok) throw new Error(provider + ' HTTP ' + res.status);
-            const json = await res.json();
-            const text = json.choices && json.choices[0] && json.choices[0].message && json.choices[0].message.content;
-            if (!text) throw new Error(provider + ' returned empty');
-            return { ok: true, text: this._cleanResponse(text), provider };
-        } catch (e) {
-            clearTimeout(timer);
-            return { ok: false, error: e.message || provider + ' failed', provider };
+            return { ok: false, error: e.message };
         }
     },
 
     /**
-     * Main entry: call AI with prompt and system prompt
-     * Tries Pollinations first, then falls back to user-configured paid providers
-     * @param {string} prompt - The user prompt
-     * @param {string} [systemPrompt] - Optional system prompt
-     * @param {object} [opts] - Options: { maxRetries, providers[], jsonResponse }
+     * Try Pollinations API with API key (may be faster)
+     */
+    async _callPollinationsKeyed(prompt, systemPrompt, timeout = 12000) {
+        try {
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), timeout);
+            const response = await fetch('https://text.pollinations.ai/openai/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this._pollinationsKey },
+                body: JSON.stringify({
+                    model: 'openai',
+                    messages: [
+                        { role: 'system', content: systemPrompt || 'You are a helpful CV writing expert.' },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 1500
+                }),
+                signal: ctrl.signal
+            });
+            clearTimeout(timer);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const data = await response.json();
+            let text = data.choices?.[0]?.message?.content || '';
+            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
+            if (text.length > 3000) text = text.substring(0, 3000);
+            return { ok: true, text, provider: 'pollinations-keyed' };
+        } catch (e) {
+            return { ok: false, error: e.message };
+        }
+    },
+
+    /**
+     * Main call — fastest path: Pollinations GET → Pollinations keyed
+     * @param {string} prompt - User prompt
+     * @param {string|null} systemPrompt - System prompt
+     * @param {object} opts - { maxRetries: 1, timeout: 12000 }
      * @returns {Promise<{ok: boolean, text?: string, error?: string, provider?: string}>}
      */
     async call(prompt, systemPrompt, opts = {}) {
-        const keys = this._getKeys();
-        const maxRetries = opts.maxRetries || 1;
+        const timeout = opts.timeout || 12000;
 
-        // Always try Pollinations first (free, no key needed)
-        for (let attempt = 0; attempt <= maxRetries; attempt++) {
-            const res = await this._callPollinations(prompt, systemPrompt);
-            if (res.ok) return res;
-            if (attempt < maxRetries) await new Promise(r => setTimeout(r, 1500));
-        }
+        // Try Pollinations GET first (fastest)
+        const poll = await this._callPollinations(prompt, systemPrompt, timeout);
+        if (poll.ok) return poll;
 
-        // Fallback chain: try each provider with a key
-        const fallbackOrder = ['groq', 'deepseek', 'openrouter', 'openai'];
-        for (const prov of fallbackOrder) {
-            if (keys[prov]) {
-                const res = await this._callOpenAICompatible(prov, prompt, systemPrompt, keys[prov]);
-                if (res.ok) return res;
-            }
-        }
+        // Try Pollinations keyed
+        const pollKeyed = await this._callPollinationsKeyed(prompt, systemPrompt, timeout);
+        if (pollKeyed.ok) return pollKeyed;
 
-        return { ok: false, error: 'All AI providers failed' };
+        return { ok: false, error: 'AI service unavailable' };
     },
 
     /**
@@ -171,7 +91,6 @@ const QCVAI = {
             const parsed = JSON.parse(res.text);
             return { ok: true, text: res.text, json: parsed, provider: res.provider };
         } catch (e) {
-            // Try to extract JSON from markdown code block
             const match = res.text.match(/```(?:json)?\s*([\s\S]*?)```/);
             if (match) {
                 try {
@@ -184,5 +103,4 @@ const QCVAI = {
     }
 };
 
-// Expose globally
 window.QCVAI = QCVAI;
