@@ -25,6 +25,7 @@
     </noscript>
     <script defer src="js/theme.js"></script>
     <script defer src="js/lang.js"></script>
+    <script defer src="js/ai-service.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -544,13 +545,40 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
             btn.disabled = true;
 
             try {
-                var prompt = 'You are an expert ATS analyzer. Analyze this CV and return ONLY a JSON object (no markdown, no code blocks) with: {"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","fix":"Arabic fix suggestion"}],"verdict":"Arabic verdict"}. Score: contact(email,phone,linkedin), content(summary,experience,achievements), ATS(keywords,formatting), skills(relevance,count), impact(action verbs,numbers). 8-12 issues. All text in Arabic. CV:\n\n' + text;
-                var response = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' });
-                if (!response.ok) throw new Error('AI service failure ' + response.status);
-                var content = await response.text();
-                content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-                var result = JSON.parse(content);
-                displayResults(result);
+                var prompt = 'You are a senior ATS (Applicant Tracking System) analyst with 15 years of experience at top recruitment firms.\n\n' +
+                    'Analyze this CV and return ONLY a JSON object (no markdown, no code blocks, no explanation) with this exact structure:\n' +
+                    '{"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","section":"summary|experience|skills|education|contact","fix":"Arabic fix suggestion with +points"}],"verdict":"Arabic verdict in 1-2 sentences"}\n\n' +
+                    'Scoring criteria:\n' +
+                    '- Contact: email, phone, LinkedIn, professional title presence\n' +
+                    '- Content: summary quality (80+ words), experience depth, bullet points, education\n' +
+                    '- ATS: keyword density, standard formatting, no special chars, proper sections\n' +
+                    '- Skills: relevance, count (8-12 optimal), mix of technical + soft\n' +
+                    '- Impact: action verbs, quantified achievements (numbers/%), power statements\n\n' +
+                    'Generate 8-12 issues with severity levels. Be specific and actionable.\n' +
+                    'All text MUST be in Arabic.\n\nCV:\n' + text;
+
+                var aiResult = null;
+                // Try QCVAI first
+                if (window.QCVAI) {
+                    try { aiResult = await QCVAI.callJSON(prompt, null, { maxRetries: 1 }); } catch (e) { }
+                }
+                // Fallback to direct Pollinations
+                if (!aiResult || !aiResult.ok) {
+                    try {
+                        var response = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' });
+                        if (!response.ok) throw new Error('fail');
+                        var content = await response.text();
+                        content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+                        aiResult = { ok: true, json: JSON.parse(content) };
+                    } catch (e) { }
+                }
+
+                if (aiResult && aiResult.ok && aiResult.json) {
+                    displayResults(aiResult.json);
+                } else {
+                    const result = localAnalyze(text);
+                    displayResults(result);
+                }
 
             } catch (err) {
                 console.error('ATS analysis error:', err);

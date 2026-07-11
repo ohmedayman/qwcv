@@ -7190,6 +7190,7 @@
 
     <script src="js/tutorial.js"></script>
     <script src="js/site-settings.js"></script>
+    <script src="js/ai-service.js"></script>
     <script src="js/auto-reload.js"></script>
     <script src="js/analytics.js"></script>
     <script src="js/notify-sounds.js"></script>
@@ -7487,71 +7488,85 @@
             setAiLoading(true);
 
             const prompts = {
-                summarize: 'You are a professional career consultant. Write a professional summary (3-4 sentences) for this person based on their data:\n\n' + cvText + '\n\n' +
-                    'Requirements:\n' +
-                    '- Start with a sentence defining their profession and total experience\n' +
-                    '- Mention their biggest achievement or strength\n' +
-                    '- Use strong action verbs: led, developed, achieved, drove\n' +
-                    '- Include numbers/percentages if available\n' +
-                    '- Make it suitable for both local and international job markets\n' +
-                    '- Return ONLY the summary, no headings or explanation',
+                summarize: 'You are a world-class career consultant who has helped 10,000+ professionals land jobs at top companies like Google, Amazon, and McKinsey.\n\n' +
+                    'Write a powerful, concise professional summary (3-4 sentences) for this person:\n\n' + cvText + '\n\n' +
+                    'Rules:\n' +
+                    '1. Open with a strong positioning statement: [Title] with [X] years of experience in [domain]\n' +
+                    '2. Highlight 1-2 quantifiable achievements (revenue, %, team size)\n' +
+                    '3. Use power verbs: spearheaded, optimized, delivered, transformed, drove\n' +
+                    '4. End with a value proposition statement\n' +
+                    '5. Must be ATS-friendly: no symbols, no first person, no pronouns\n' +
+                    '6. Output ONLY the summary text — no heading, no explanation, no quotes',
 
-                proofread: 'You are a professional English language editor.\n\n' +
-                    'Proofread and improve this text for:\n' +
+                proofread: 'You are a senior English copywriter with 15 years of experience editing Fortune 500 executive resumes.\n\n' +
+                    'Proofread and enhance this CV text:\n\n' + (data.summary || 'No summary written yet') + '\n\n' +
+                    'Fix ALL of the following:\n' +
                     '- Spelling and grammar errors\n' +
-                    '- Clarity and strong expression\n' +
-                    '- Consistent tense and verb agreement\n' +
-                    '- Remove unnecessary repetition\n\n' +
-                    'Current text:\n' + (data.summary || 'No summary written yet') + '\n\n' +
-                    'Return ONLY the corrected text without any explanation or comments.',
+                    '- Weak verbs → replace with power verbs (assisted→guided, helped→spearheaded, did→orchestrated)\n' +
+                    '- Passive voice → active voice\n' +
+                    '- Wordiness → concise impact statements\n' +
+                    '- Inconsistent tense\n' +
+                    '- Add quantifiable metrics where possible\n\n' +
+                    'Output ONLY the corrected text. No explanations.',
 
-                improve: 'You are a CV writing and content improvement expert. The user wants practical, realistic improvements.\n\n' +
-                    'Improve the following professional summary and make it stronger and more professional:\n\n' +
-                    'Current summary:\n' + (data.summary || 'No summary') + '\n\n' +
-                    'Experience:\n' + (data.experience || []).map(function (e) { return '- ' + (e.role || '') + ' at ' + (e.company || '') + ': ' + (e.description || ''); }).join('\n') + '\n\n' +
+                improve: 'You are an expert CV writer and career coach who has reviewed 50,000+ resumes.\n\n' +
+                    'Transform this summary into a top-tier, ATS-optimized professional summary:\n\n' +
+                    'Current summary: ' + (data.summary || 'No summary') + '\n\n' +
+                    'Relevant experience:\n' + (data.experience || []).map(function (e) { return '- ' + (e.role || '') + ' at ' + (e.company || '') + ': ' + (e.description || ''); }).join('\n') + '\n\n' +
                     'Requirements:\n' +
-                    '- Use strong action verbs (lead, optimize, deliver, implement)\n' +
-                    '- Add numbers/percentages if possible\n' +
-                    '- Make it ATS-friendly (job search context)\n' +
-                    '- Keep it concise and impactful (3-4 sentences max)\n' +
-                    '- Return ONLY the improved summary without explanation',
+                    '- Start with: [Title] with [X] years of experience in [key domains]\n' +
+                    '- Include 2-3 quantified achievements (numbers, percentages, dollar amounts)\n' +
+                    '- Use industry-relevant keywords for ATS parsing\n' +
+                    '- Maximum 4 sentences — quality over quantity\n' +
+                    '- Must sound like a real person, not AI-generated\n' +
+                    '- Return ONLY the improved summary text',
 
-                skills: 'You are a hiring and job market expert. The user wants skills matching their background.\n\n' +
+                skills: 'You are a senior technical recruiter who has screened 100,000+ candidates for FAANG and Fortune 500 companies.\n\n' +
+                    'Based on this profile, suggest the most in-demand skills:\n\n' +
                     'Job Title: ' + (data.title || 'Not specified') + '\n' +
                     'Experience: ' + (data.experience || []).map(function (e) { return (e.role || '') + ' - ' + (e.description || ''); }).join('; ') + '\n\n' +
-                    'Suggest 10-12 professional skills suitable for this person.\n\n' +
                     'Requirements:\n' +
-                    '- Mix of technical + soft skills\n' +
-                    '- Include the most in-demand skills in the current job market\n' +
-                    '- Return skills as a comma-separated list only, no numbering or explanation',
+                    '- 12-15 skills total\n' +
+                    '- 60% technical/hard skills relevant to the role\n' +
+                    '- 40% soft skills that recruiters look for\n' +
+                    '- Include trending 2025-2026 skills for this industry\n' +
+                    '- Use exact skill names recruiters search for on LinkedIn\n' +
+                    '- Output as comma-separated list ONLY: Skill1, Skill2, Skill3...',
 
-                ats: 'You are an Applicant Tracking System (ATS) expert. The user wants their summary to pass ATS filters.\n\n' +
-                    'Current summary:\n' + (data.summary || 'No summary') + '\n\n' +
-                    'Job Title: ' + (data.title || '') + '\n\n' +
-                    'Improve the summary to be ATS-compatible:\n' +
-                    '- Use industry-specific keywords\n' +
-                    '- Avoid symbols, images, and tables\n' +
-                    '- Use direct and simple sentences\n' +
-                    '- Clearly identify skills and experience\n' +
-                    '- Keep it 2-3 sentences only\n' +
-                    '- Return ONLY the improved summary without explanation',
+                ats: 'You are an ATS (Applicant Tracking System) optimization expert. You understand how algorithms like Greenhouse, Lever, Workday, and Taleo parse resumes.\n\n' +
+                    'Rewrite this summary to maximize ATS score:\n\n' +
+                    'Current summary: ' + (data.summary || 'No summary') + '\n' +
+                    'Target role: ' + (data.title || 'General') + '\n\n' +
+                    'ATS Optimization Rules:\n' +
+                    '- Include exact job title keywords (not paraphrased)\n' +
+                    '- Use standard section headers (no creative names)\n' +
+                    '- No abbreviations without full form (e.g., "Search Engine Optimization (SEO)")\n' +
+                    '- No special characters, tables, or columns\n' +
+                    '- Include industry buzzwords naturally\n' +
+                    '- 2-3 sentences, 80-120 words optimal\n' +
+                    '- Return ONLY the optimized summary',
 
-                translate: 'You are a professional translator specializing in CV/resume content.\n\n' +
-                    'Translate the following CV content. Detect the current language and translate to the OTHER language:\n' +
-                    '- If the content is in Arabic → translate to English\n' +
-                    '- If the content is in English → translate to Arabic\n\n' +
-                    'CV Data:\n' + cvText + '\n\n' +
-                    'Rules:\n' +
-                    '- Keep the professional tone\n' +
-                    '- Preserve all numbers, dates, and proper nouns\n' +
-                    '- Translate job titles to their equivalents in the target language\n' +
-                    '- Keep formatting consistent\n' +
-                    '- Return the FULL translated CV in the same format as input\n' +
-                    '- Do NOT add explanations or notes, just the translated content',
+                translate: 'You are a professional bilingual translator specializing in business and career documents.\n\n' +
+                    'Translate this CV. Detect the language and translate to the OTHER:\n' +
+                    '- Arabic → English (professional business English)\n' +
+                    '- English → Arabic (فصحى مهنية سلسة)\n\n' +
+                    'CV Content:\n' + cvText + '\n\n' +
+                    'Translation Rules:\n' +
+                    '- Maintain professional tone throughout\n' +
+                    '- Preserve all numbers, dates, percentages exactly\n' +
+                    '- Localize job titles (e.g., "مهندس برمجيات" → "Software Engineer")\n' +
+                    '- Keep the same structure and section order\n' +
+                    '- Do NOT add translator notes or explanations\n' +
+                    '- Return the FULL translated CV in the same format',
 
-                custom: 'You are a friendly and professional AI assistant specialized in writing and improving CVs. Talk to the user in a friendly, professional manner.\n\n' +
-                    'CV Data:\n' + cvText + '\n\n' +
-                    'Answer the user\'s question in a helpful and concise way. If the question is about improving the CV, suggest practical improvements. If it\'s a general CV question, answer helpfully and concisely.'
+                custom: 'You are an elite career consultant and CV writing expert with 20+ years of experience.\n\n' +
+                    'Context — the user\'s CV:\n' + cvText + '\n\n' +
+                    'Respond to their question with:\n' +
+                    '- Specific, actionable advice (not generic)\n' +
+                    '- Reference their actual CV data when relevant\n' +
+                    '- Keep response under 200 words\n' +
+                    '- Use bullet points for clarity when listing suggestions\n' +
+                    '- Professional but friendly tone'
             };
 
             callAI(prompts[action] || prompts.custom, function (result) {
@@ -7788,68 +7803,22 @@
             });
         };
 
+        // Unified AI service — uses QCVAI from js/ai-service.js
         function callAI(prompt, onSuccess, onError) {
-            // Start with Pollinations (free, no key needed)
-            callPollinations(prompt, onSuccess, onError);
-        }
-
-        function callPollinations(prompt, onSuccess, onError) {
-            var controller = new AbortController();
-            var timeoutId = setTimeout(function () { controller.abort(); }, 20000);
-            fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {
-                method: 'GET',
-                signal: controller.signal
-            })
-                .then(function (r) {
-                    clearTimeout(timeoutId);
-                    if (!r.ok) throw new Error('AI service failure ' + r.status);
-                    return r.text();
-                })
-                .then(function (text) {
-                    if (text && text.length > 10 && !text.trimStart().startsWith('<')) {
-                        onSuccess(text.trim());
-                    } else {
-                        callUserProviders(prompt, onSuccess, onError);
-                    }
-                })
-                .catch(function () { clearTimeout(timeoutId); callUserProviders(prompt, onSuccess, onError); });
-        }
-
-        function callUserProviders(prompt, onSuccess, onError) {
-            var settings = (window.QCVSettings && window.QCVSettings.get) ? window.QCVSettings.get() : {};
-            var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '';
-            var openrouterKey = settings.openrouterKey || localStorage.getItem('qcv_openrouter_key') || '';
-            var openaiKey = settings.aiApiKey || localStorage.getItem('qcv_ai_key') || '';
-            var deepseekKey = localStorage.getItem('qcv_deepseek_key') || '';
-
-            var providers = [];
-            if (groqKey) providers.push({ url: 'https://api.groq.com/openai/v1/chat/completions', key: groqKey, model: 'llama-3.3-70b-versatile' });
-            if (deepseekKey) providers.push({ url: 'https://api.deepseek.com/chat/completions', key: deepseekKey, model: 'deepseek-chat' });
-            if (openrouterKey) providers.push({ url: 'https://openrouter.ai/api/v1/chat/completions', key: openrouterKey, model: 'meta-llama/llama-3.3-70b-instruct:free' });
-            if (openaiKey) providers.push({ url: 'https://api.openai.com/v1/chat/completions', key: openaiKey, model: 'gpt-4o-mini' });
-
-            function tryNext(i) {
-                if (i >= providers.length) {
-                    if (onError) onError('AI is currently unavailable. Try again later.');
-                    return;
-                }
-                var p = providers[i];
-                fetch(p.url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + p.key },
-                    body: JSON.stringify({ model: p.model, messages: [{ role: 'user', content: prompt }], max_tokens: 1500, temperature: 0.7 })
-                })
-                    .then(function (r) { return r.json(); })
-                    .then(function (data) {
-                        if (data.choices && data.choices[0]) {
-                            onSuccess(data.choices[0].message.content.trim());
-                        } else {
-                            tryNext(i + 1);
-                        }
-                    })
-                    .catch(function () { tryNext(i + 1); });
+            if (window.QCVAI) {
+                QCVAI.call(prompt, null, { maxRetries: 1 }).then(function (res) {
+                    if (res.ok) onSuccess(res.text);
+                    else if (onError) onError(res.error || 'AI unavailable');
+                });
+            } else {
+                // Fallback: direct Pollinations GET if ai-service.js hasn't loaded yet
+                var ctrl = new AbortController();
+                var timer = setTimeout(function () { ctrl.abort(); }, 25000);
+                fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET', signal: ctrl.signal })
+                    .then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('fail'); return r.text(); })
+                    .then(function (t) { if (t && t.length > 10 && !t.trimStart().startsWith('<')) onSuccess(t.trim()); else if (onError) onError('AI unavailable'); })
+                    .catch(function () { clearTimeout(timer); if (onError) onError('AI unavailable'); });
             }
-            tryNext(0);
         }
 
     </script>

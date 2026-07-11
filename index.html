@@ -73,6 +73,7 @@
     </script>
     <script id="qcv-software-ld" type="application/ld+json">
     </script>
+    <script defer src="js/ai-service.js"></script>
     <script defer src="js/maintenance.js"></script>
     <script>
         (function () {
@@ -3115,7 +3116,7 @@
     </style>
     <script>
         var chatOpen = false;
-        var chatHistory = [{ role: 'system', content: 'You are QCV Support AI from Egypt. Reply in Arabic. Be friendly, concise (2-3 sentences max). Help with: CVs, templates, plans (Free/Pro 99EGP/Unlimited 299EGP), ATS. Mention pay.html for pricing, editor.html to start free.' }];
+        var chatHistory = [{ role: 'system', content: 'You are QCV, an expert AI CV writing assistant from Egypt. Reply in Arabic (Egyptian dialect). Be friendly, warm, and concise (2-3 sentences max). You specialize in: CV writing, resume optimization, ATS compliance, job matching, career advice, LinkedIn optimization, interview preparation, salary negotiation. Always mention relevant pages: editor.html to start building, pay.html for pricing, templates.html for templates, ats-checker.html for ATS scanning, blog/ for career articles. Be helpful and encouraging. If unsure, guide them to help.html.' }];
 
         function escapeHtml(text) {
             return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -3189,7 +3190,7 @@
         }
 
         function buildChatPrompt() {
-            var prompt = 'You are QCV Support AI. Reply in Arabic. Be friendly, concise (2-3 sentences max). Help with: CVs, templates, plans (Free/Pro 99EGP/Unlimited 299EGP), ATS.';
+            var prompt = 'You are QCV, an expert AI CV writing assistant from Egypt. Reply in Arabic (Egyptian dialect). Be friendly, warm, concise (2-3 sentences max). You help with: CVs, templates, plans (Free/Pro 99EGP/Unlimited 299EGP), ATS, career advice, LinkedIn, interviews. Mention pay.html for pricing, editor.html to start free, blog/ for articles.';
             for (var i = 1; i < chatHistory.length; i++) {
                 prompt += (chatHistory[i].role === 'user' ? '\nUser: ' : '\nAssistant: ') + chatHistory[i].content;
             }
@@ -3208,35 +3209,50 @@
             chatHistory.push({ role: 'user', content: msg });
             var prompt = buildChatPrompt();
 
-            var controller = new AbortController();
-            var timeoutId = setTimeout(function () { controller.abort(); }, 15000);
-            fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {
-                method: 'GET',
-                signal: controller.signal
-            })
-                .then(function (r) {
-                    clearTimeout(timeoutId);
-                    if (!r.ok) throw new Error('AI service failure ' + r.status);
-                    return r.text();
-                })
-                .then(function (reply) {
+            // Try QCVAI first (unified service with fallback), then direct Pollinations, then local
+            if (window.QCVAI) {
+                QCVAI.call(prompt, null, { maxRetries: 1 }).then(function (res) {
                     removeTypingIndicator();
-                    if (!reply || reply.length < 10) { reply = localChatReply(msg); }
-                    chatHistory.push({ role: 'assistant', content: reply });
-                    appendMessage('assistant', reply);
-                }).catch(function () {
-                    clearTimeout(timeoutId);
-                    removeTypingIndicator();
-                    var reply = localChatReply(msg);
-                    chatHistory.push({ role: 'assistant', content: reply });
-                    appendMessage('assistant', reply + '\n\n(عذراً، الخدمة الذكية غير متاحة حالياً. جرّب السؤال مجدداً أو تواصل معنا عبر help.html.)');
+                    if (res.ok && res.text && res.text.length > 10) {
+                        chatHistory.push({ role: 'assistant', content: res.text });
+                        appendMessage('assistant', res.text);
+                    } else {
+                        var reply = localChatReply(msg);
+                        chatHistory.push({ role: 'assistant', content: reply });
+                        appendMessage('assistant', reply);
+                    }
                 });
+            } else {
+                var controller = new AbortController();
+                var timeoutId = setTimeout(function () { controller.abort(); }, 20000);
+                fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), {
+                    method: 'GET',
+                    signal: controller.signal
+                })
+                    .then(function (r) {
+                        clearTimeout(timeoutId);
+                        if (!r.ok) throw new Error('fail');
+                        return r.text();
+                    })
+                    .then(function (reply) {
+                        removeTypingIndicator();
+                        if (!reply || reply.length < 10 || reply.trim().startsWith('<')) { reply = localChatReply(msg); }
+                        chatHistory.push({ role: 'assistant', content: reply });
+                        appendMessage('assistant', reply);
+                    }).catch(function () {
+                        clearTimeout(timeoutId);
+                        removeTypingIndicator();
+                        var reply = localChatReply(msg);
+                        chatHistory.push({ role: 'assistant', content: reply });
+                        appendMessage('assistant', reply);
+                    });
+            }
         }
 
         function localChatReply(msg) {
             var m = msg.toLowerCase();
             function getPrices() {
-                var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
+                var proM = 99, unM = 299, quick = 30;
                 try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
                 try {
                     if (window.QCVSettings && window.QCVSettings.pricing) {
@@ -3247,31 +3263,30 @@
                             if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
                         } else {
                             proM = parseInt(p.proMonthly) || proM;
-                            proY = parseInt(p.proYearly) || proY;
                             unM = parseInt(p.unlimitedMonthly) || unM;
-                            unY = parseInt(p.unlimitedYearly) || unY;
                             quick = parseInt(p.quick) || quick;
                         }
                     }
                 } catch (e) { }
-                return { proM, proY, unM, unY, quick };
+                return { proM, unM, quick };
             }
-            if (m.match(/سعر|السعر|باق|التسعير|كم|price|cost|egp|جنيه/)) {
+            if (m.match(/سعر|السعر|باق|التسعير|كم.*جنيه|price|cost|egp|جنيه|اشتراك|abonnement/)) {
                 var pr = getPrices();
-                try { pr.proY = (pr.proY && parseInt(pr.proY)) ? parseInt(pr.proY) : Math.round(pr.proM * 12 * 0.95); } catch (e) { pr.proY = Math.round(pr.proM * 12 * 0.95); }
-                try { pr.unY = (pr.unY && parseInt(pr.unY)) ? parseInt(pr.unY) : Math.round(pr.unM * 12 * 0.95); } catch (e) { pr.unY = Math.round(pr.unM * 12 * 0.95); }
-                return 'الباقة المجانية: مجاناً ✅ | الاحترافية: ' + pr.proM + ' ج.م/شهر (' + pr.proY + ' سنوي) | غير محدودة: ' + pr.unM + ' ج.م/شهر (' + pr.unY + ' سنوي). وفّر 5% بالاشتراك السنوي! تفاصيل على pay.html 🎯';
+                return '💎 باقاتنا:\n\n• المجاني: مجاناً — سيرة واحدة + قالب كلاسيك\n• الاحترافية: ' + pr.proM + ' ج.م/شهر — 5 سير + كل القوالب + AI + تحليل\n• غير المحدودة: ' + pr.unM + ' ج.م/شهر — كل شيء غير محدود + دعم 24/7\n• باقة 48 ساعة: ' + pr.quick + ' ج.م — بديل ممتاز للاشتراك\n\nالتفاصيل على pay.html 🎯';
             }
-            if (m.match(/template|قالب|تصميم|شكل/)) return 'عندنا أكثر من 15 قالب احترافي متوافق مع ATS! جرّبهم على templates.html واختار اللي يناسبك 🎨';
-            if (m.match(/ats|توافق|نظام تتبع|resume score/)) return 'ATS هو نظام تتبع المتقدمين اللي الشركات بتستخدمه. قوالبنا مصممة عشان تجتازه. جرّب فحص ATS المجاني على ats-checker.html 🔍';
-            if (m.match(/editor|محرر|ابدأ|start|begin/)) return 'ابدأ دلوقتي مجاناً على editor.html! سجّل حسابك وتبدأ تبني سيرتك الذاتية في دقائق ⚡';
-            if (m.match(/pdf|تصدير|download|تحميل/)) return 'التصدير متاح لجميع الباقات. المجاني: جودة عادية + watermark | الاحترافية: جودة عالية | غير محدودة: جودة عالية + بدون حدود 📄';
-            if (m.match(/عمل من|remote|بُعد|work from/)) return 'وظائف عن بُعد بتزيد في مصر! راجع مقالتنا على blog/remote-jobs.html لقائمة بأفضل المنصات والنصائح 💼';
-            if (m.match(/خطاب|cover letter|تغطية/)) return 'خطاب التغطية بيزيد فرص قبولك 40%. راجع مقالتنا blog/cover-letter.html فيه 5 قوالب جاهزة ✉️';
-            if (m.match(/لينكد|linkedin|ملف شخصي/)) return 'ملفك على لينكدإن بوابتك الأولى للوظائف. راجع blog/linkedin-profile.html لـ 10 نصائح ذهبية 🌐';
-            if (m.match(/مرحبا|هلا|اهلا|hi|hello|hey/)) return 'أهلاً وسهلاً! 👋 أنا مساعد QCV الذكي. أقدر أساعدك في كتابة سيرة ذاتية، اختيار قالب، أو أي سؤال عن التوظيف!';
-            if (m.match(/شكر|ممتاز|حلو|thanks|thank/)) return 'العفو! 😊 لو محتاج أي حاجة تانية أنا هنا!';
-            return 'شكراً لسؤالك! أنا مساعد QCV الذكي. أقدر أساعدك في: ✍️ كتابة CV | 🎨 اختيار قالب | 💰 الأسعار | 🔍 فحص ATS | 💼 نصائح التوظيف. اسأل عن أي حاجة!';
+            if (m.match(/template|قالب|تصميم|شكل|format/)) return '🎨 عندنا أكثر من 15 قالب احترافي متوافق مع ATS:\n\n• كلاسيك — للشركات التقليدية\n• عصري — للتقنيين والمبدعين\n• أكاديمي — للأكاديميين والباحثين\n•ATS Safe — يجتاز أنظمة التتبع\n\nجرّبهم على templates.html واختار اللي يناسبك! ✨';
+            if (m.match(/ats|توافق|نظام تتبع|resume score|فحص|analyze/)) return '🔍 ATS هو نظام تتبع المتقدمين اللي الشركات الكبيرة بتستخدمه. قوالبنا مصممة عشان تجتازه بنجاح!\n\nجرّب فحص ATS المجاني على ats-checker.html — هتعرف سيرتك بت scoring كام وهتلاقي تحسينات مقترحة 📊';
+            if (m.match(/editor|محرر|ابدأ|start|begin|ابدأ|سجّل|register/)) return '⚡ ابدأ دلوقتي مجاناً!\n\n1. ادخل editor.html\n2. سجّل حسابك (30 ثانية)\n3. ابدأ تبني سيرتك الذاتية\n\nفيه AI يساعدك تكتب الملخص والخبرات. سجّل مجاناً على editor.html 🚀';
+            if (m.match(/pdf|تصدير|download|تحميل|export/)) return '📄 التصدير متاح لجميع الباقات:\n\n• المجاني: PDF بجودة عادية + watermark\n• الاحترافية: PDF عالي الجودة بدون watermark\n• غير المحدودة: PDF + كل الميزات\n\nابدأ على editor.html وصدّر سيرتك في دقائق!';
+            if (m.match(/عمل من|remote|بُعد|work from home|freelanc/)) return '💼 وظائف عن بُعد بتزيد بسرعة في مصر!\n\nاقرأ مقالتنا الشاملة على blog/remote-jobs.html — فيه قائمة بأفضل المنصات + نصائح للتقديم بنجاح + متوسط الرواتب 🚀';
+            if (m.match(/خطاب|cover letter|تغطية|رسالة/)) return '✉️ خطاب التغطية بيزيد فرص قبولك 40%!\n\nrajanna blog/cover-letter.html — فيه 5 قوالب جاهزة + نصائح لكتابة خطاب يلفت انتباه المديرとうظيفي 💡';
+            if (m.match(/لينكد|linkedin|ملف شخصي|profile/)) return '🌐 ملفك على لينكدإن هو بوابتك الأولى للوظائف!\n\nrajanna blog/linkedin-profile.html — فيه 10 نصائح ذهبية لتحسين ملفك وجذب الشركات 🔥';
+            if (m.match(/مقابلة|interview|سؤال|准备/)) return '🎤 نصائح مقابلات العمل:\n\n• احضر للأسئلة الشائعة ( STAR method )\n• ادرس الشركة كويس\n• اسأل أسئلة ذكية في الآخر\n• البس بشكل احترافي\n\nجرّب Interview Prep في الـ editor (ميزة Pro) 🎯';
+            if (m.match(/مرحبا|هلا|اهلا|hi|hello|hey|السلام|صباح|مساء/)) return 'أهلاً وسهلاً! 👋 أنا مساعد QCV الذكي.\n\nأقدر أساعدك في:\n✍️ كتابة سيرة ذاتية\n🎨 اختيار قالب\n💰 معرفة الأسعار\n🔍 فحص ATS\n💼 نصائح التوظيف\n\nاسأل عن أي حاجة! 😊';
+            if (m.match(/شكر|ممتاز|حلو|thanks|thank|تمام|كويس/)) return 'العفو! 😊 أنا هنا دايماً لو محتاج أي حاجة. بالتوفيق في رحلتك الوظيفية! 🚀';
+            if (m.match(/وظيفة|شغل|عمل|job|career|توظيف|تقديم/)) return '🎯 نصائح للبحث عن وظيفة:\n\n1. حدّث سيرتك على editor.html\n2. فحصها بـ ATS على ats-checker.html\n3. وجّهها للوظيفة اللي عايزها\n4. قدّم على LinkedIn + وظائف.كوم + جابناير\n\nابدأ على editor.html! 💪';
+            if (m.match(/ملف|personal|personal profile|بورتفوليو|portfolio/)) return '📁 البورتفوليو الشخصي متاح لباقات Pro والـ Unlimited!\n\nابنِ صفحة بورتفوليو احترافية على editor.html — فيها شغلك وإنجازاتك بشكل بصرى جذاب 🎨';
+            return 'شكراً لسؤالك! 🤔 أنا مساعد QCV الذكي وأقدر أساعدك في:\n\n✍️ كتابة وتحسين CV\n🎨 اختيار قالب احترافي\n💰 معرفة الأسعار والباقات\n🔍 فحص التوافق مع ATS\n💼 نصائح التوظيف والمقابلات\n📝 كتابة خطاب التغطية\n\nاسأل عن أي حاجة وأنا هنا أساعدك! 💪';
         }
 
         document.addEventListener('keydown', function (event) {
