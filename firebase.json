@@ -95,6 +95,10 @@
         "destination": "/report.html"
       },
       {
+        "source": "/summary",
+        "destination": "/summary.html"
+      },
+      {
         "source": "/ai-tools",
         "destination": "/ai-tools.html"
       },

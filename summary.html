@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV - Project Summary</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root{--p:#0003c9;--pl:#0005a0;--a:#27ffed;--g:#059669;--r:#ef4444;--y:#f59e0b;--b:#0ea5e9;--pu:#8b5cf6;--pk:#ec4899;--bg:#f8fafc;--c:#fff;--bd:#e2e8f0;--t:#0f172a;--m:#64748b}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.6}
+
+        .hero{background:linear-gradient(135deg,var(--p),var(--pl),#1a0533);color:#fff;padding:50px 24px 40px;text-align:center;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(39,255,237,0.08) 0%,transparent 50%)}
+        .hero-logo{font-size:2.8rem;font-weight:900;letter-spacing:-2px;position:relative}
+        .hero-logo span{color:var(--a)}
+        .hero-sub{font-size:1rem;opacity:0.8;position:relative;margin-top:4px}
+        .hero-url{font-size:0.82rem;opacity:0.5;position:relative;margin-top:8px;font-family:monospace}
+        .hero-badges{display:flex;gap:10px;justify-content:center;margin-top:16px;position:relative;flex-wrap:wrap}
+        .h-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600}
+
+        .nav{background:var(--c);border-bottom:1px solid var(--bd);padding:0 24px;position:sticky;top:0;z-index:100}
+        .nav-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;overflow-x:auto}
+        .nav a{padding:14px 16px;font-size:0.82rem;font-weight:600;color:var(--m);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
+        .nav a:hover,.nav a.active{color:var(--p);border-bottom-color:var(--p)}
+
+        .container{max-width:1100px;margin:0 auto;padding:28px 20px}
+        .section{margin-bottom:36px}
+        .section-title{font-size:1.3rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+        .section-title i{color:var(--p)}
+
+        .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:30px}
+        .stat{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:18px;text-align:center}
+        .stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.1rem}
+        .stat-num{font-size:1.8rem;font-weight:900}
+        .stat-label{font-size:0.72rem;color:var(--m);margin-top:2px}
+
+        .card{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:14px}
+        .card h3{font-size:0.95rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+        .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+        .feat{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:16px}
+        .feat-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;margin-bottom:10px}
+        .feat h4{font-size:0.88rem;font-weight:700;margin-bottom:3px}
+        .feat p{font-size:0.75rem;color:var(--m)}
+
+        table{width:100%;border-collapse:collapse;font-size:0.82rem}
+        th{background:var(--bg);padding:10px 14px;text-align:left;font-weight:700;font-size:0.72rem;color:var(--m);text-transform:uppercase;border-bottom:2px solid var(--bd)}
+        td{padding:10px 14px;border-bottom:1px solid var(--bd)}
+        tr:hover td{background:rgba(0,3,201,0.02)}
+
+        .badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:0.65rem;font-weight:600}
+        .bg{background:rgba(5,150,105,0.1);color:var(--g)}
+        .bb{background:rgba(14,165,233,0.1);color:var(--b)}
+        .bp{background:rgba(139,92,246,0.1);color:var(--pu)}
+        .br{background:rgba(239,68,68,0.1);color:var(--r)}
+        .by{background:rgba(245,158,11,0.1);color:#d97706}
+
+        .price{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+        .price-card{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:20px;text-align:center}
+        .price-card.pop{border-color:var(--p);position:relative}
+        .price-card .pop-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;padding:2px 12px;border-radius:10px;font-size:0.62rem;font-weight:700}
+        .price-name{font-size:0.78rem;font-weight:700;color:var(--m);text-transform:uppercase;margin-bottom:6px}
+        .price-val{font-size:2rem;font-weight:900}
+        .price-val span{font-size:0.85rem;color:var(--m);font-weight:400}
+        .price-list{text-align:left;font-size:0.78rem;margin-top:12px}
+        .price-list div{padding:5px 0;border-bottom:1px solid var(--bd)}
+
+        .tech{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+        .tech-item{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:14px;text-align:center}
+        .tech-item i{font-size:1.5rem;margin-bottom:6px;display:block}
+        .tech-item .name{font-weight:700;font-size:0.82rem}
+        .tech-item .desc{font-size:0.68rem;color:var(--m)}
+
+        .tl{position:relative;padding-left:28px}
+        .tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--bd)}
+        .tl-item{position:relative;margin-bottom:20px}
+        .tl-item::before{content:'';position:absolute;left:-22px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--p);border:2px solid var(--c)}
+        .tl-date{font-size:0.68rem;color:var(--m);font-weight:600}
+        .tl-title{font-size:0.88rem;font-weight:700}
+        .tl-desc{font-size:0.78rem;color:var(--m)}
+
+        .footer{text-align:center;padding:24px;color:var(--m);font-size:0.78rem;border-top:1px solid var(--bd);margin-top:30px}
+
+        @media(max-width:768px){.stats,.grid-3,.grid-4,.tech,.price{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+        @media(max-width:480px){.stats,.tech,.price{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-logo">Q<span>CV</span></div>
+    <div class="hero-sub">Professional AI-Powered CV Builder Platform</div>
+    <div class="hero-url">qcv.vexonet.online</div>
+    <div class="hero-badges">
+        <span class="h-badge"><i class="fas fa-check-circle"></i> Live Production</span>
+        <span class="h-badge"><i class="fas fa-code-branch"></i> 52+ Commits</span>
+        <span class="h-badge"><i class="fas fa-calendar"></i> July 2026</span>
+        <span class="h-badge"><i class="fas fa-users"></i> Ready for Users</span>
+    </div>
+</div>
+
+<div class="nav">
+    <div class="nav-inner">
+        <a href="#overview" class="active">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#pages">Pages</a>
+        <a href="#tech">Tech</a>
+        <a href="#ai">AI</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#team">Team</a>
+        <a href="#timeline">Timeline</a>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- OVERVIEW -->
+<div class="section" id="overview">
+    <div class="section-title"><i class="fas fa-chart-pie"></i> Overview</div>
+    <div class="stats">
+        <div class="stat"><div class="stat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-file-alt"></i></div><div class="stat-num" style="color:var(--p)">35</div><div class="stat-label">HTML Pages</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-palette"></i></div><div class="stat-num" style="color:var(--pu)">15</div><div class="stat-label">CV Templates</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-robot"></i></div><div class="stat-num" style="color:var(--b)">14</div><div class="stat-label">AI Features</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-code"></i></div><div class="stat-num" style="color:var(--g)">~79K</div><div class="stat-label">Lines of Code</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#d97706"><i class="fas fa-blog"></i></div><div class="stat-num" style="color:#d97706">12</div><div class="stat-label">Blog Posts</div></div>
+    </div>
+    <div class="card">
+        <h3><i class="fas fa-info-circle" style="color:var(--p)"></i> What is QCV?</h3>
+        <p style="color:var(--m);font-size:0.88rem">QCV is a premium AI-powered CV/resume builder competing with tadween.me. It offers 15+ professional ATS-friendly templates, AI scoring, job matching, public portfolio pages, and a full admin panel. Hosted on GitHub Pages with Firebase backend and custom domain via Cloudflare.</p>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" id="features">
+    <div class="section-title"><i class="fas fa-star"></i> Key Features</div>
+    <div class="grid-3">
+        <div class="feat"><div class="feat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-robot"></i></div><h4>14 AI Features</h4><p>Summary, proofread, improve, skills, ATS optimize, translate, cover letter, tailor, skill gap, interview prep, LinkedIn import, template recommend, CV analysis, career advisor</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-palette"></i></div><h4>15 CV Templates</h4><p>Classic, Modern, Minimal, ATS-Safe, Creative, Executive, Elegant, Bold, Professional, Timeline, Infographic, Photo, Two-Column, Monochrome, and more</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-file-pdf"></i></div><h4>PDF Export</h4><p>High-quality PDF with html2pdf.js. Free: 1 download with watermark. Pro: 5 clean exports. Unlimited: unlimited</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-linkedin"></i></div><h4>LinkedIn Import</h4><p>Paste LinkedIn URL, AI extracts and auto-fills name, title, experience, skills, education</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(245,158,11,0.1);color:#d97706"><i class="fas fa-chart-line"></i></div><h4>CV Score & ATS</h4><p>Real-time scoring: Contact, Content, ATS, Skills, Impact. Detailed recommendations</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(236,72,153,0.1);color:var(--pk)"><i class="fas fa-globe"></i></div><h4>Portfolio & QR</h4><p>Public portfolio links, My Page, QR code for easy sharing, PDF download for employers</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-history"></i></div><h4>Version History</h4><p>Auto-saves versions on every save. Restore any previous version with one click</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-briefcase"></i></div><h4>Job Tracker</h4><p>Track applications: company, position, status (Applied/Interview/Offer/Rejected), notes</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-code-compare"></i></div><h4>CV Comparison</h4><p>Compare two CV versions side by side with AI deep analysis and improvement scoring</p></div>
+    </div>
+</div>
+
+<!-- PAGES -->
+<div class="section" id="pages">
+    <div class="section-title"><i class="fas fa-sitemap"></i> All Pages (35)</div>
+    <div style="overflow-x:auto">
+    <table>
+        <thead><tr><th>Page</th><th>URL</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Homepage</strong></td><td><code>/</code></td><td><span class="badge bg">Public</span></td><td>Landing, features, pricing, testimonials, FAQ, blog</td></tr>
+            <tr><td><strong>Editor</strong></td><td><code>/editor</code></td><td><span class="badge bb">Login</span></td><td>Full CV editor, AI, templates, live preview, undo/redo, version history</td></tr>
+            <tr><td><strong>AI Wizard</strong></td><td><code>/ai.html</code></td><td><span class="badge bg">Public</span></td><td>Step-by-step builder, LinkedIn Import, AI Template Recommender</td></tr>
+            <tr><td><strong>AI Tools</strong></td><td><code>/ai-tools</code></td><td><span class="badge bg">Public</span></td><td>Cover Letter, Career Path, Salary Estimator, Interview Coach</td></tr>
+            <tr><td><strong>Login</strong></td><td><code>/login</code></td><td><span class="badge bg">Public</span></td><td>Email/password + Google OAuth</td></tr>
+            <tr><td><strong>Sign Up</strong></td><td><code>/signup</code></td><td><span class="badge bg">Public</span></td><td>New account registration</td></tr>
+            <tr><td><strong>Dashboard</strong></td><td><code>/dashboard</code></td><td><span class="badge bb">Login</span></td><td>CV list, stats, quick actions</td></tr>
+            <tr><td><strong>ATS Checker</strong></td><td><code>/ats-checker</code></td><td><span class="badge bg">Public</span></td><td>Free ATS compatibility analysis</td></tr>
+            <tr><td><strong>Job Matcher</strong></td><td><code>/job-matcher</code></td><td><span class="badge bg">Public</span></td><td>CV vs Job Description matching</td></tr>
+            <tr><td><strong>CV Comparison</strong></td><td><code>/compare</code></td><td><span class="badge bg">Public</span></td><td>Compare two CVs side by side</td></tr>
+            <tr><td><strong>Job Tracker</strong></td><td><code>/tracker</code></td><td><span class="badge bb">Login</span></td><td>Track job applications</td></tr>
+            <tr><td><strong>Portfolio</strong></td><td><code>/portfolio</code></td><td><span class="badge bg">Public</span></td><td>Portfolio showcase</td></tr>
+            <tr><td><strong>Portfolio View</strong></td><td><code>/portfolio-view</code></td><td><span class="badge bg">Public</span></td><td>Public CV view + PDF download</td></tr>
+            <tr><td><strong>My Page</strong></td><td><code>/my-page</code></td><td><span class="badge bb">Login</span></td><td>User's public profile</td></tr>
+            <tr><td><strong>Verify CV</strong></td><td><code>/verify</code></td><td><span class="badge bg">Public</span></td><td>CV authenticity verification</td></tr>
+            <tr><td><strong>Pricing</strong></td><td><code>/pay</code></td><td><span class="badge bg">Public</span></td><td>Plans + Vodafone Cash, Fawry, InstaPay</td></tr>
+            <tr><td><strong>Support</strong></td><td><code>/support</code></td><td><span class="badge bb">Login</span></td><td>Ticket system with chat</td></tr>
+            <tr><td><strong>Admin</strong></td><td><code>/admin</code></td><td><span class="badge br">Admin</span></td><td>19 tabs: users, revenue, blog, staff, security</td></tr>
+            <tr><td><strong>Staff Panel</strong></td><td><code>/staff-panel</code></td><td><span class="badge by">Staff</span></td><td>Staff management</td></tr>
+            <tr><td><strong>Blog</strong></td><td><code>/blog</code></td><td><span class="badge bg">Public</span></td><td>12 Arabic SEO posts</td></tr>
+            <tr><td><strong>Report</strong></td><td><code>/report</code></td><td><span class="badge bg">Public</span></td><td>Full project report</td></tr>
+            <tr><td><strong>About / Terms / Careers / Contact / Help</strong></td><td><code>/about, /terms, /careers, /contact, /help</code></td><td><span class="badge bg">Public</span></td><td>Static pages</td></tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<!-- TECH -->
+<div class="section" id="tech">
+    <div class="section-title"><i class="fas fa-layer-group"></i> Tech Stack</div>
+    <div class="tech">
+        <div class="tech-item"><i class="fab fa-html5" style="color:#e34f26"></i><div class="name">HTML5</div><div class="desc">35 pages</div></div>
+        <div class="tech-item"><i class="fab fa-css3-alt" style="color:#1572b6"></i><div class="name">CSS3</div><div class="desc">Responsive, dark/light</div></div>
+        <div class="tech-item"><i class="fab fa-js" style="color:#f7df1e"></i><div class="name">JavaScript</div><div class="desc">18 modules</div></div>
+        <div class="tech-item"><i class="fab fa-google" style="color:#4285f4"></i><div class="name">Firebase</div><div class="desc">Auth + RTDB</div></div>
+        <div class="tech-item"><i class="fab fa-github" style="color:#333"></i><div class="name">GitHub Pages</div><div class="desc">Hosting + CI/CD</div></div>
+        <div class="tech-item"><i class="fas fa-cloud" style="color:var(--b)"></i><div class="name">Cloudflare</div><div class="desc">DNS</div></div>
+        <div class="tech-item"><i class="fas fa-robot" style="color:var(--pu)"></i><div class="name">Pollinations AI</div><div class="desc">Free AI</div></div>
+        <div class="tech-item"><i class="fas fa-paper-plane" style="color:#25D366"></i><div class="name">JotForm AI</div><div class="desc">Chatbot</div></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+        <h3><i class="fas fa-code-branch" style="color:var(--p)"></i> JS Modules</h3>
+        <div style="overflow-x:auto">
+        <table>
+            <thead><tr><th>Module</th><th>Purpose</th></tr></thead>
+            <tbody>
+                <tr><td><code>ai-service.js</code></td><td>Unified QCVAI - Pollinations GET + keyed fallback, 12s timeout</td></tr>
+                <tr><td><code>template-engine.js</code></td><td>15 CV template rendering engine</td></tr>
+                <tr><td><code>lang.js</code></td><td>Bilingual Arabic/English</td></tr>
+                <tr><td><code>theme.js</code></td><td>Dark/light mode</td></tr>
+                <tr><td><code>cv-analyzer.js</code></td><td>CV scoring (5 categories)</td></tr>
+                <tr><td><code>job-matcher.js</code></td><td>CV vs Job matching</td></tr>
+                <tr><td><code>tutorial.js</code></td><td>Guided tours</td></tr>
+                <tr><td><code>maintenance.js</code></td><td>Maintenance mode</td></tr>
+                <tr><td><code>auto-reload.js</code></td><td>120s polling</td></tr>
+                <tr><td><code>site-settings.js</code></td><td>Firebase settings</td></tr>
+                <tr><td><code>analytics.js</code></td><td>Tracking</td></tr>
+                <tr><td><code>notify-sounds.js</code></td><td>Web Audio notifications</td></tr>
+                <tr><td><code>admin-enhancements.js</code></td><td>Admin panel features</td></tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<!-- AI -->
+<div class="section" id="ai">
+    <div class="section-title"><i class="fas fa-robot"></i> AI System</div>
+    <div class="card">
+        <h3><i class="fas fa-bolt" style="color:var(--y)"></i> Architecture</h3>
+        <p style="font-size:0.85rem;color:var(--m)"><strong>window.QCVAI</strong> - Pollinations GET (free, no key) with Pollinations keyed fallback. Timeout: 12s. All paid providers (Groq, DeepSeek, xAI, OpenAI, OpenRouter) are expired/dead.</p>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+        <thead><tr><th>Feature</th><th>Location</th><th>Type</th></tr></thead>
+        <tbody>
+            <tr><td>Professional Summary</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Proofread Text</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Improve Content</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Suggest Skills</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>ATS Optimize</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Translate CV</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Cover Letter</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Tailor CV to Job</td><td>editor.html</td><td><span class="badge bp">Pro</span></td></tr>
+            <tr><td>Skill Gap Analysis</td><td>editor.html</td><td><span class="badge bp">Pro</span></td></tr>
+            <tr><td>Interview Prep</td><td>editor.html</td><td><span class="badge bp">Pro</span></td></tr>
+            <tr><td>CV Score</td><td>ats-checker.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>LinkedIn Import</td><td>ai.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>AI Template Rec</td><td>ai.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Cover Letter (standalone)</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Career Path Advisor</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Salary Estimator</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td>Interview Coach</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<!-- PRICING -->
+<div class="section" id="pricing">
+    <div class="section-title"><i class="fas fa-tags"></i> Pricing</div>
+    <div class="price">
+        <div class="price-card">
+            <div class="price-name">Free</div>
+            <div class="price-val">0 <span>EGP</span></div>
+            <div class="price-list">
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>1 CV</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>1 Template (Classic)</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>1 PDF Download</div>
+                <div style="color:var(--m)"><i class="fas fa-times" style="color:var(--r);margin-right:6px"></i>No AI</div>
+                <div style="color:var(--m)"><i class="fas fa-times" style="color:var(--r);margin-right:6px"></i>Watermark</div>
+            </div>
+        </div>
+        <div class="price-card pop">
+            <div class="pop-tag">POPULAR</div>
+            <div class="price-name">Pro</div>
+            <div class="price-val">99 <span>EGP/mo</span></div>
+            <div class="price-list">
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>5 CVs</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>All 15 Templates</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>5 PDF Downloads</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>All AI Features</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>No watermark</div>
+            </div>
+        </div>
+        <div class="price-card">
+            <div class="price-name">Unlimited</div>
+            <div class="price-val">299 <span>EGP/mo</span></div>
+            <div class="price-list">
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>Unlimited CVs</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>All 15 Templates</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>Unlimited Downloads</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>Priority Support</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>Custom Domain</div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+        <h3><i class="fas fa-credit-card" style="color:var(--p)"></i> Payment Methods</h3>
+        <p style="font-size:0.85rem;color:var(--m)"><strong>Vodafone Cash:</strong> 01028707543 (Mohamed Ayman) | <strong>Fawry:</strong> Available | <strong>InstaPay:</strong> Available | <strong>48h Trial:</strong> 30 EGP</p>
+    </div>
+</div>
+
+<!-- TEAM -->
+<div class="section" id="team">
+    <div class="section-title"><i class="fas fa-users"></i> Suggested Team Structure</div>
+    <div class="grid-3">
+        <div class="card">
+            <h3><i class="fas fa-paint-brush" style="color:var(--b)"></i> Frontend Developer</h3>
+            <p style="font-size:0.82rem;color:var(--m)">HTML/CSS, Responsive, Templates, UI/UX, Animations, Dark/Light mode</p>
+        </div>
+        <div class="card">
+            <h3><i class="fas fa-server" style="color:var(--g)"></i> Backend Developer</h3>
+            <p style="font-size:0.82rem;color:var(--m)">Firebase Auth, Database CRUD, Security Rules, Admin Panel, Staff system</p>
+        </div>
+        <div class="card">
+            <h3><i class="fas fa-robot" style="color:var(--pu)"></i> AI Developer</h3>
+            <p style="font-size:0.82rem;color:var(--m)">ai-service.js, AI Prompts, LinkedIn Import, Cover Letter, ATS, CV Scoring</p>
+        </div>
+    </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section" id="timeline">
+    <div class="section-title"><i class="fas fa-clock"></i> Development Timeline</div>
+    <div class="tl">
+        <div class="tl-item"><div class="tl-date">Phase 1 - July 2026</div><div class="tl-title">Foundation</div><div class="tl-desc">Project setup, Firebase, homepage, login, editor, 6 templates, PDF export</div></div>
+        <div class="tl-item"><div class="tl-date">Phase 2 - July 2026</div><div class="tl-title">Templates & Features</div><div class="tl-desc">15 templates, CV scoring, ATS checker, job matcher, portfolio, admin panel</div></div>
+        <div class="tl-item"><div class="tl-date">Phase 3 - July 2026</div><div class="tl-title">Admin & Support</div><div class="tl-desc">Full admin (19 tabs), support tickets, staff, notifications, blog CMS</div></div>
+        <div class="tl-item"><div class="tl-date">Phase 4 - July 2026</div><div class="tl-title">AI Integration</div><div class="tl-desc">Unified AI service, 14 AI features, LinkedIn Import, Cover Letter, Template Rec</div></div>
+        <div class="tl-item"><div class="tl-date">Phase 5 - July 2026</div><div class="tl-title">Speed & UX</div><div class="tl-desc">AI 60% faster, Version History, QR Codes, Job Tracker, CV Comparison, AI Tools page</div></div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    QCV Project Summary - Generated July 11, 2026 - qcv.vexonet.online
+</div>
+
+<script>
+document.querySelectorAll('.nav a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav a').forEach(n=>n.classList.remove('active'));a.classList.add('active')})});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.style.opacity=1})},{threshold:0.1});
+document.querySelectorAll('.stat,.feat,.card,.tech-item').forEach(el=>{el.style.opacity=0;el.style.transition='opacity 0.5s';obs.observe(el)});
+</script>
+</body>
+</html>
