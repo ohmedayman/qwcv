@@ -501,6 +501,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
             <div class="nav-item" onclick="switchPanel('segments')"><span class="icon"><i class="fas fa-tags"></i></span>تصنيف المستخدمين</div>
             <div class="nav-item" onclick="switchPanel('blog')"><span class="icon"><i class="fas fa-blog"></i></span>المدونة</div>
             <div class="nav-item" onclick="switchPanel('templates')"><span class="icon"><i class="fas fa-file-alt"></i></span>قوالب الإشعارات</div>
+            <div class="nav-item" onclick="switchPanel('newsletter')"><span class="icon"><i class="fas fa-envelope-open-text"></i></span>النشرة البريدية</div>
             <div class="nav-item" onclick="switchPanel('backup')"><span class="icon"><i class="fas fa-database"></i></span>النسخ الاحتياطي</div>
             <div class="nav-item" onclick="switchPanel('security')"><span class="icon"><i class="fas fa-shield-alt"></i></span>الأمان</div>
             <div class="nav-item" onclick="switchPanel('settings')"><span class="icon"><i class="fas fa-cog"></i></span>الإعدادات</div>
@@ -788,6 +789,33 @@ tr:hover td{background:rgba(0,3,201,.02)}
                 </div>
             </div>
 
+            <!-- NEWSLETTER -->
+            <div class="panel" id="panel-newsletter">
+                <div class="section-header" style="margin-bottom:20px">
+                    <h3><i class="fas fa-envelope-open-text" style="color:var(--accent);margin-left:8px"></i>النشرة البريدية</h3>
+                </div>
+                <div class="stats-grid" style="margin-bottom:20px">
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(0,3,201,.1);color:var(--accent)"><i class="fas fa-users"></i></div><div class="stat-num" id="nlTotal">0</div><div class="stat-label">إجمالي المشتركين</div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(5,150,105,.1);color:var(--green)"><i class="fas fa-check-circle"></i></div><div class="stat-num" id="nlActive">0</div><div class="stat-label">نشط</div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.1);color:var(--red)"><i class="fas fa-times-circle"></i></div><div class="stat-num" id="nlUnsub">0</div><div class="stat-label">ملغي</div></div>
+                </div>
+                <div class="settings-card" style="margin-bottom:16px">
+                    <h4><i class="fas fa-paper-plane" style="color:var(--accent);margin-left:6px"></i>إرسال بريد جماعي</h4>
+                    <div style="margin-top:12px">
+                        <div class="field"><label>الموضوع</label><input type="text" id="nlSubject" placeholder="موضوع الإيميل"></div>
+                        <div class="field"><label>الرسالة (نص عادي)</label><textarea id="nlBody" rows="5" placeholder="محتوى الرسالة..."></textarea></div>
+                        <button class="btn-primary-sm" onclick="sendNewsletter()"><i class="fas fa-paper-plane"></i> إرسال للجميع</button>
+                        <div id="nlMsg" style="margin-top:10px;font-size:0.82rem;display:none"></div>
+                    </div>
+                </div>
+                <div class="settings-card">
+                    <h4><i class="fas fa-list" style="color:var(--green);margin-left:6px"></i>قائمة المشتركين</h4>
+                    <div class="table-scroll" style="margin-top:12px">
+                        <table><thead><tr><th>البريد الإلكتروني</th><th>تاريخ الاشتراك</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="nlList"><tr><td colspan="4" class="empty-state"><p>لا يوجد مشتركين بعد</p></td></tr></tbody></table>
+                    </div>
+                </div>
+            </div>
+
             <!-- BACKUP & EXPORT -->
             <div class="panel" id="panel-backup">
                 <div class="backup-options">
@@ -1004,7 +1032,7 @@ function closeSidebar() { document.getElementById('sidebar').classList.remove('o
 function closeModal() { document.getElementById('modal').classList.remove('show'); }
 
 // ===== PANEL SWITCHING =====
-var panelTitles = { dashboard:'الرئيسية', users:'المستخدمين', subscriptions:'الاشتراكات', jobs:'الوظائف', staff:'الموظفين', affiliate:'التسويق بالعمولة', domains:'النطاقات', messages:'رسائل الدعم', sendmsg:'إرسال رسائل', reports:'التقارير', analytics:'الإحصائيات', settings:'الإعدادات', audit:'سجل النشاط', bulk:'إجراءات جماعية', segments:'تصنيف المستخدمين', blog:'المدونة', templates:'قوالب الإشعارات', backup:'النسخ الاحتياطي', security:'الأمان', revenue:'الإيرادات المتقدمة' };
+var panelTitles = { dashboard:'الرئيسية', users:'المستخدمين', subscriptions:'الاشتراكات', jobs:'الوظائف', staff:'الموظفين', affiliate:'التسويق بالعمولة', domains:'النطاقات', messages:'رسائل الدعم', sendmsg:'إرسال رسائل', reports:'التقارير', analytics:'الإحصائيات', settings:'الإعدادات', audit:'سجل النشاط', bulk:'إجراءات جماعية', segments:'تصنيف المستخدمين', blog:'المدونة', templates:'قوالب الإشعارات', backup:'النسخ الاحتياطي', security:'الأمان', revenue:'الإيرادات المتقدمة', newsletter:'النشرة البريدية' };
 function switchPanel(panel) {
     document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
     var el = document.getElementById('panel-' + panel);
@@ -1023,6 +1051,7 @@ function switchPanel(panel) {
     if (panel === 'templates') renderTemplates();
     if (panel === 'backup') renderBackupLog();
     if (panel === 'security') renderSecurityPanel();
+    if (panel === 'newsletter') loadNewsletter();
 }
 
 // ===== LOGIN LOGIC =====
@@ -1135,11 +1164,12 @@ function checkAndLoad() {
         restGetTimeout('/affiliateReferrals.json'), restGetTimeout('/affiliateCommissions.json'),
         restGetTimeout('/messages.json'), restGetTimeout('/siteSettings/maintenance.json'),
         restGetTimeout('/affiliateRequests.json'), restGetTimeout('/pointsExchange.json'),
+        restGetTimeout('/newsletter.json'),
         fetch('https://identitytoolkit.googleapis.com/v1/accounts:batchGet?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I').then(function(r){return r.json()}).catch(function(){return {users:[]}})
     ]).then(function(r) {
         window.allUsers = r[0] || {};
         // Merge Firebase Auth users into allUsers
-        var authData = r[14] || {};
+        var authData = r[15] || {};
         var authUsers = authData.users || [];
         authUsers.forEach(function(au) {
             var uid = au.localId;
@@ -1178,6 +1208,7 @@ function checkAndLoad() {
         window.allSettings.maintenance = (maintenanceData === true) || (maintenanceData && maintenanceData.enabled === true);
         window.allAffRequests = r[12] || {};
         window.allPointsExchange = r[13] || {};
+        nlData = r[14] || {};
         // Load audit logs
         restGet('/auditLogs.json').then(function(data) { allAuditLogs = Object.values(data || {}).sort(function(a, b) { return (b.timestamp || 0) - (a.timestamp || 0); }).slice(0, 500); });
         // Load tags
@@ -2615,6 +2646,47 @@ window.editStaffPermissions = function(staffId) {
     };
     document.getElementById('modal').classList.add('show');
 };
+
+// ===== NEWSLETTER =====
+var nlData = {};
+function loadNewsletter() {
+    restGet('/newsletter.json').then(function(data) {
+        nlData = data || {};
+        var entries = Object.entries(nlData);
+        var total = entries.length;
+        var active = entries.filter(function(e) { return !e[1].unsubscribed; }).length;
+        var unsub = total - active;
+        document.getElementById('nlTotal').textContent = total;
+        document.getElementById('nlActive').textContent = active;
+        document.getElementById('nlUnsub').textContent = unsub;
+        var tbody = document.getElementById('nlList');
+        if (!entries.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا يوجد مشتركين بعد</p></td></tr>'; return; }
+        tbody.innerHTML = entries.reverse().map(function(e) {
+            var d = e[1];
+            var date = d.date ? new Date(d.date).toLocaleDateString('ar-EG') : '—';
+            var status = d.unsubscribed ? '<span style="color:var(--red);font-weight:700">ملغي</span>' : '<span style="color:var(--green);font-weight:700">نشط</span>';
+            return '<tr><td>' + (d.email || e[0].replace(/_/g, '.')) + '</td><td>' + date + '</td><td>' + status + '</td><td><button class="btn-icon-sm" onclick="removeSubscriber(\'' + e[0] + '\')" title="حذف"><i class="fas fa-trash" style="color:var(--red)"></i></button></td></tr>';
+        }).join('');
+    });
+}
+function removeSubscriber(key) {
+    if (!confirm('هل أنت متأكد من حذف هذا المشترك؟')) return;
+    restDelete('/newsletter/' + key).then(function() { showToast('تم حذف المشترك', 'success'); loadNewsletter(); });
+}
+function sendNewsletter() {
+    var subject = document.getElementById('nlSubject').value.trim();
+    var body = document.getElementById('nlBody').value.trim();
+    var msg = document.getElementById('nlMsg');
+    if (!subject || !body) { msg.style.display = 'block'; msg.style.color = 'var(--red)'; msg.textContent = 'من فضلك ملأ الموضوع والرسالة'; return; }
+    var active = Object.values(nlData).filter(function(e) { return !e.unsubscribed; });
+    if (!active.length) { msg.style.display = 'block'; msg.style.color = 'var(--red)'; msg.textContent = 'لا يوجد مشتركين نشطين'; return; }
+    msg.style.display = 'block'; msg.style.color = 'var(--accent)'; msg.textContent = 'جاري الإرسال لـ ' + active.length + ' مشترك...';
+    var sent = 0;
+    active.forEach(function(sub) {
+        restPost('/emailQueue', { to: sub.email, subject: subject, body: body, type: 'newsletter', timestamp: Date.now() }).then(function() { sent++; }).catch(function() { sent++; });
+    });
+    setTimeout(function() { msg.style.color = 'var(--green)'; msg.innerHTML = '<i class="fas fa-check-circle"></i> تم إرسال ' + sent + ' من ' + active.length + ' رسائل'; logAudit('إرسال نشرة بريدية', 'newsletter', subject + ' — ' + active.length + ' مشترك'); }, 2000);
+}
 
 // ===== INIT =====
 (function() {

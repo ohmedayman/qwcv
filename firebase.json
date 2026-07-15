@@ -133,6 +133,42 @@
       {
         "source": "/verify/:code",
         "destination": "/verify.html"
+      },
+      {
+        "source": "/contact",
+        "destination": "/contact.html"
+      },
+      {
+        "source": "/blog",
+        "destination": "/blog.html"
+      },
+      {
+        "source": "/ai",
+        "destination": "/ai.html"
+      },
+      {
+        "source": "/templates",
+        "destination": "/templates.html"
+      },
+      {
+        "source": "/support",
+        "destination": "/support.html"
+      },
+      {
+        "source": "/my-page",
+        "destination": "/my-page.html"
+      },
+      {
+        "source": "/signup",
+        "destination": "/signup.html"
+      },
+      {
+        "source": "/staff-panel",
+        "destination": "/staff-panel.html"
+      },
+      {
+        "source": "/admin-setup",
+        "destination": "/admin-setup.html"
       }
     ]
   },
