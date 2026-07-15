@@ -482,15 +482,29 @@
         }
 
         .hero-right h1 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 900;
-            line-height: 1.25;
-            margin-bottom: 18px;
-            color: var(--text)
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text);
+            letter-spacing: -0.5px
         }
 
         .hero-right h1 .hl {
-            color: var(--accent)
+            color: var(--accent);
+            position: relative;
+            display: inline-block
+        }
+
+        .hero-right h1 .hl::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #27ffed);
+            border-radius: 2px
         }
 
         .hero-right p {
@@ -559,11 +573,17 @@
             max-width: 480px;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 24px;
+            border-radius: 24px;
+            padding: 28px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08)
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+            animation: float 6s ease-in-out infinite
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .hero-visual::before {
@@ -688,20 +708,20 @@
         }
 
         .section-header h2 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             color: var(--text);
-            letter-spacing: -0.5px
+            letter-spacing: -0.5px;
+            line-height: 1.2
         }
 
         .section-header .subtitle {
             color: var(--muted);
-            font-size: 0.95rem;
-            max-width: 500px;
+            font-size: 1rem;
+            max-width: 550px;
             margin: 0 auto;
-            font-variant: small-caps;
-            text-transform: lowercase
+            line-height: 1.7
         }
 
         .section-header p {
@@ -723,32 +743,55 @@
         .feature-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px 22px;
+            border-radius: 20px;
+            padding: 32px 24px;
             text-align: center;
-            transition: all 0.3s
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #27ffed);
+            opacity: 0;
+            transition: opacity 0.3s
         }
 
         .feature-card:hover {
             border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06)
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 3, 201, 0.08)
+        }
+
+        .feature-card:hover::before {
+            opacity: 1
         }
 
         .f-icon {
-            width: 55px;
-            height: 55px;
-            background: var(--accent-light);
-            border-radius: 14px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-light), rgba(39, 255, 237, 0.08));
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            margin: 0 auto 16px
+            margin: 0 auto 18px;
+            transition: transform 0.3s
+        }
+
+        .feature-card:hover .f-icon {
+            transform: scale(1.1)
         }
 
         .feature-card h3 {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             margin-bottom: 8px;
             color: var(--text)
@@ -822,26 +865,42 @@
         .price-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 36px 28px;
+            border-radius: 24px;
+            padding: 40px 28px;
             text-align: center;
-            transition: all 0.3s;
-            position: relative
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--border), var(--border));
+            transition: background 0.3s
         }
 
         .price-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06)
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08)
         }
 
         .price-card.popular {
             border-color: var(--accent);
-            transform: scale(1.04);
-            box-shadow: 0 0 40px rgba(0, 3, 201, 0.1)
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 3, 201, 0.12)
+        }
+
+        .price-card.popular::before {
+            background: linear-gradient(90deg, var(--accent), #27ffed)
         }
 
         .price-card.popular:hover {
-            transform: scale(1.04) translateY(-5px)
+            transform: scale(1.05) translateY(-8px)
         }
 
         .pop-badge {
@@ -849,13 +908,14 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #0005a0);
             color: #fff;
-            padding: 5px 18px;
+            padding: 6px 20px;
             border-radius: 20px;
             font-size: 0.72rem;
             font-weight: 800;
-            white-space: nowrap
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 3, 201, 0.3)
         }
 
         .p-icon {
@@ -1013,21 +1073,38 @@
         .test-card-new {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-            transition: all 0.3s;
-            position: relative
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden
+        }
+
+        .test-card-new::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+            opacity: 0;
+            transition: opacity 0.3s
         }
 
         .test-card-new:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
-            border-color: rgba(0, 3, 201, 0.15)
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: rgba(245, 158, 11, 0.2)
+        }
+
+        .test-card-new:hover::before {
+            opacity: 1
         }
 
         .test-card-new .quote-icon {
             font-size: 2.5rem;
-            color: rgba(0, 3, 201, 0.08);
+            color: rgba(245, 158, 11, 0.15);
             line-height: 1;
             margin-bottom: 8px;
             font-family: serif
@@ -1231,24 +1308,24 @@
         .faq-item {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 16px;
             margin-bottom: 12px;
             overflow: hidden;
-            transition: all 0.3s
+            transition: all 0.3s ease
         }
 
         .faq-item:hover {
-            border-color: rgba(0, 3, 201, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04)
+            border-color: rgba(0, 3, 201, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04)
         }
 
         .faq-item.active {
             border-color: var(--accent);
-            box-shadow: 0 4px 20px rgba(0, 3, 201, 0.08)
+            box-shadow: 0 8px 30px rgba(0, 3, 201, 0.1)
         }
 
         .faq-q {
-            padding: 20px 24px;
+            padding: 22px 24px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -1399,8 +1476,8 @@
         /* ===== FOOTER ===== */
         .footer {
             border-top: 1px solid var(--border);
-            padding: 30px 60px 20px;
-            background: var(--bg)
+            padding: 40px 60px 24px;
+            background: var(--bg2)
         }
 
         .footer-content {
@@ -1414,9 +1491,9 @@
         }
 
         .footer-brand .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 900;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: var(--text)
         }
 
@@ -1426,7 +1503,7 @@
 
         .footer-brand p {
             color: var(--muted);
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             max-width: 280px;
             line-height: 1.5
         }
@@ -1968,7 +2045,7 @@
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-bullseye"></i></div>
                 <h3>مطابقة الوظيفة</h3>
                 <p>قارن سيرتك مع وصف الوظيفة واشحنها بالكلمات المفتاحية المطلوبة.</p>
-                <a href="ats-checker.html" class="btn btn-ghost" style="margin-top:12px">جرّب المطابقة</a>
+                <a href="job-matcher.html" class="btn btn-ghost" style="margin-top:12px">جرّب المطابقة</a>
             </article>
             <article class="feature-card">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-globe"></i></div>
@@ -3111,71 +3188,6 @@
     </script>
 
 
-    <!-- ===== WHATS NEW POPUP ===== -->
-    <script>
-        (function () {
-            var today = new Date().toISOString().slice(0, 10);
-            if (localStorage.getItem('qcv_whatsnew_date') === today) return;
-
-            var updates = [
-                { icon: '💰', title: 'أسعار سنوية', desc: 'وفّر 20% مع الاشتراك السنوي — Pro 79 ج.م/شهر، Unlimited 239 ج.م/شهر' },
-                { icon: '📝', title: '12 مقال جديد', desc: 'دليل شامل للكتابة والتوظيف والمقابلات على blog.html' },
-                { icon: '🔍', title: 'فحص ATS مجاني', desc: 'حلل سيرتك الذاتية وشوف قد ايه متوافقة مع أنظمة التوظيف على ats-checker.html' },
-                { icon: '🎨', title: '15+ قالب احترافي', desc: 'قوالب مصممة خصيصاً لاجتياز فلتر ATS مع إخراج PDF احترافي' },
-                { icon: '🤖', title: 'مساعد ذكاء اصطناعي', desc: 'اكتب سيرتك بمساعدة AI — ملخص، تدقيق، تحسين، ترجمة' },
-                { icon: '📄', title: 'بورتفوليو شخصي', desc: 'انشر سيرتك كصفحة عامة مع رابط شير وتحميل PDF' }
-            ];
-
-            var overlay = document.createElement('div');
-            overlay.id = 'whatsNewOverlay';
-            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100002;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);animation:popupFadeIn 0.3s ease';
-
-            var card = document.createElement('div');
-            card.style.cssText = 'background:var(--card,#fff);border-radius:20px;max-width:460px;width:100%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);animation:popupSlideUp 0.35s cubic-bezier(0.16,1,0.3,1);max-height:80vh;display:flex;flex-direction:column';
-
-            var header = document.createElement('div');
-            header.style.cssText = 'background:linear-gradient(135deg,#0003c9,#0005a0);padding:24px 24px 18px;color:#fff;text-align:center;flex-shrink:0;position:relative';
-            header.innerHTML = '<div style="font-size:2rem;margin-bottom:4px">🚀</div><h3 style="font-size:1.15rem;font-weight:900;margin:0 0 4px">ما الجديد في QCV؟</h3><p style="font-size:0.78rem;opacity:0.8;margin:0">آخر التحديثات وال features الجديدة</p><button id="whatsNewClose" style="position:absolute;top:12px;left:12px;width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s" onmouseover="this.style.background=\'rgba(255,255,255,0.35)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.2)\'">&times;</button>';
-
-            var body = document.createElement('div');
-            body.style.cssText = 'padding:16px 20px;overflow-y:auto;flex:1';
-
-            updates.forEach(function (u, i) {
-                var item = document.createElement('div');
-                item.style.cssText = 'display:flex;gap:12px;align-items:flex-start;padding:12px 0;' + (i < updates.length - 1 ? 'border-bottom:1px solid var(--border,#e5e7eb)' : '');
-                item.innerHTML = '<div style="font-size:1.4rem;flex-shrink:0;width:36px;height:36px;background:var(--bg,#f8fafc);border-radius:10px;display:flex;align-items:center;justify-content:center">' + u.icon + '</div><div><div style="font-weight:700;font-size:0.88rem;color:var(--text,#1e293b);margin-bottom:2px">' + u.title + '</div><div style="font-size:0.78rem;color:var(--muted,#64748b);line-height:1.5">' + u.desc + '</div></div>';
-                body.appendChild(item);
-            });
-
-            var footer = document.createElement('div');
-            footer.style.cssText = 'padding:12px 20px 16px;text-align:center;flex-shrink:0';
-            footer.innerHTML = '<button id="whatsNewAction" style="width:100%;padding:12px;background:var(--accent,#0003c9);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;transition:opacity 0.2s" onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'">ابدأ الآن مجاناً</button><div style="font-size:0.68rem;color:var(--muted,#94a3b8);margin-top:8px">لا تظهر هذا العرض مرة أخرى اليوم</div>';
-
-            card.appendChild(header);
-            card.appendChild(body);
-            card.appendChild(footer);
-            overlay.appendChild(card);
-            document.body.appendChild(overlay);
-
-            function closeWhatsNew() {
-                overlay.style.opacity = '0';
-                overlay.style.transition = 'opacity 0.25s ease';
-                setTimeout(function () { overlay.remove(); }, 250);
-                localStorage.setItem('qcv_whatsnew_date', today);
-            }
-
-            document.getElementById('whatsNewClose').addEventListener('click', closeWhatsNew);
-            overlay.addEventListener('click', function (e) { if (e.target === overlay) closeWhatsNew(); });
-            document.getElementById('whatsNewAction').addEventListener('click', function () {
-                closeWhatsNew();
-                window.location.href = 'editor.html';
-            });
-
-            setTimeout(function () {
-                overlay.style.opacity = '1';
-            }, 1500);
-        })();
-    </script>
 
 </body>
 
