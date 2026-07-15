@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV - Free AI Career Tools</title>
+    <meta name="description" content="Free AI career tools: Cover Letter, Career Path, Salary Estimator, Interview Coach">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <style>
+        :root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--primary:#0003c9;--green:#059669;--red:#ef4444;--yellow:#f59e0b;--blue:#0ea5e9;--purple:#8b5cf6;--pink:#ec4899;--text:#0f172a;--muted:#64748b;--input:#f1f5f9}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+        .nav{background:var(--card);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+        .logo{font-size:1.5rem;font-weight:900;text-decoration:none;color:var(--text)}
+        .logo span{color:var(--primary)}
+        .nav-links{display:flex;gap:20px;align-items:center}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem}
+        .nav-links a:hover{color:var(--primary)}
+        .btn{padding:10px 20px;border:none;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+        .btn-primary{background:var(--primary);color:#fff}
+        .btn-primary:hover{background:#0002a0;transform:translateY(-1px)}
+        .btn-ai{background:linear-gradient(135deg,var(--purple),#6d28d9);color:#fff}
+        .btn-ai:hover{opacity:0.9;transform:translateY(-1px)}
+        .hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(39,255,237,0.04))}
+        .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:10px}
+        .hero h1 span{color:var(--primary)}
+        .hero p{color:var(--muted);font-size:1.05rem;max-width:600px;margin:0 auto}
+        .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:1000px;margin:0 auto;padding:20px 20px 60px}
+        .tool-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+        .tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity 0.3s}
+        .tool-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.06)}
+        .tool-card:hover::before{opacity:1}
+        .tool-card:nth-child(1)::before{background:linear-gradient(90deg,var(--blue),var(--primary))}
+        .tool-card:nth-child(2)::before{background:linear-gradient(90deg,var(--green),#27ffed)}
+        .tool-card:nth-child(3)::before{background:linear-gradient(90deg,var(--yellow),#f97316)}
+        .tool-card:nth-child(4)::before{background:linear-gradient(90deg,var(--purple),var(--pink))}
+        .tool-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
+        .tool-card h3{font-size:1.1rem;font-weight:800;margin-bottom:6px}
+        .tool-card p{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:16px}
+        .tool-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;background:rgba(5,150,105,0.1);color:var(--green)}
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+        .modal-overlay.show{display:flex}
+        .modal{background:var(--card);border-radius:20px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,0.2)}
+        .modal-header{padding:24px 28px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:1}
+        .modal-header h2{font-size:1.2rem;font-weight:800}
+        .modal-close{width:36px;height:36px;border-radius:50%;border:none;background:var(--input);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+        .modal-close:hover{background:var(--red);color:#fff}
+        .modal-body{padding:24px 28px}
+        .form-group{margin-bottom:16px}
+        .form-group label{display:block;font-size:0.82rem;font-weight:700;margin-bottom:6px}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:10px;font-size:0.9rem;font-family:inherit;background:var(--input)}
+        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,3,201,0.08)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .result-box{background:var(--input);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:16px;font-size:0.9rem;line-height:1.8;white-space:pre-wrap;max-height:400px;overflow-y:auto}
+        .result-box h4{font-size:0.95rem;font-weight:800;margin-bottom:10px;color:var(--primary)}
+        .loading{text-align:center;padding:30px;color:var(--muted)}
+        .loading i{font-size:1.5rem;margin-bottom:8px;display:block;color:var(--primary)}
+        .copy-btn{margin-top:8px;padding:6px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer}
+        .copy-btn:hover{background:#0002a0}
+        @media(max-width:768px){.tools-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.hero h1{font-size:1.8rem}}
+    </style>
+</head>
+<body>
+<div class="nav">
+    <a href="index.html" class="logo">Q<span>CV</span></a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="editor.html">Editor</a>
+        <a href="ats-checker.html">ATS Check</a>
+        <a href="login.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.82rem">Get Started</a>
+    </div>
+</div>
+<div class="hero">
+    <h1>Free AI <span>Career Tools</span></h1>
+    <p>Powerful AI tools to boost your job search. No login required, unlimited usage.</p>
+</div>
+<div class="tools-grid">
+    <div class="tool-card" onclick="openTool('coverletter')">
+        <div class="tool-icon" style="background:rgba(14,165,233,0.1);color:var(--blue)"><i class="fas fa-envelope-open-text"></i></div>
+        <h3>Cover Letter Generator</h3>
+        <p>Paste your info and the job description. AI writes a tailored cover letter in seconds.</p>
+        <span class="tool-badge">Free & Unlimited</span>
+    </div>
+    <div class="tool-card" onclick="openTool('career')">
+        <div class="tool-icon" style="background:rgba(5,150,105,0.1);color:var(--green)"><i class="fas fa-route"></i></div>
+        <h3>Career Path Advisor</h3>
+        <p>Tell AI your skills and experience. Get personalized career path suggestions.</p>
+        <span class="tool-badge">Free & Unlimited</span>
+    </div>
+    <div class="tool-card" onclick="openTool('salary')">
+        <div class="tool-icon" style="background:rgba(245,158,11,0.1);color:var(--yellow)"><i class="fas fa-coins"></i></div>
+        <h3>Salary Estimator</h3>
+        <p>Enter your role, experience, and location. Get AI-powered salary range estimates.</p>
+        <span class="tool-badge">Free & Unlimited</span>
+    </div>
+    <div class="tool-card" onclick="openTool('interview')">
+        <div class="tool-icon" style="background:rgba(139,92,246,0.1);color:var(--purple)"><i class="fas fa-user-tie"></i></div>
+        <h3>Interview Coach</h3>
+        <p>AI simulates a hiring manager interview. Practice tough questions with feedback.</p>
+        <span class="tool-badge">Free & Unlimited</span>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-coverletter">
+    <div class="modal">
+        <div class="modal-header"><h2><i class="fas fa-envelope-open-text" style="color:var(--blue);margin-right:8px"></i>Cover Letter Generator</h2><button class="modal-close" onclick="closeModal('coverletter')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group"><label>Your Name *</label><input id="cl_name" placeholder="Ahmed Mohamed"></div>
+                <div class="form-group"><label>Job Title *</label><input id="cl_title" placeholder="Software Engineer"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Years of Experience</label><input id="cl_exp" placeholder="3"></div>
+                <div class="form-group"><label>Key Skills</label><input id="cl_skills" placeholder="JavaScript, React, Python"></div>
+            </div>
+            <div class="form-group"><label>Job Description *</label><textarea id="cl_job" rows="4" placeholder="Paste the job description here..."></textarea></div>
+            <div class="form-group"><label>Achievements (optional)</label><input id="cl_achieve" placeholder="Led team of 5, increased revenue by 30%"></div>
+            <button class="btn btn-ai" onclick="generateCoverLetter()" id="cl_btn"><i class="fas fa-wand-magic-sparkles"></i> Generate</button>
+            <div id="cl_result"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-career">
+    <div class="modal">
+        <div class="modal-header"><h2><i class="fas fa-route" style="color:var(--green);margin-right:8px"></i>Career Path Advisor</h2><button class="modal-close" onclick="closeModal('career')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Current Job Title *</label><input id="cp_title" placeholder="Junior Frontend Developer"></div>
+            <div class="form-group"><label>Your Skills (comma separated) *</label><input id="cp_skills" placeholder="HTML, CSS, JavaScript, React"></div>
+            <div class="form-group"><label>Years of Experience</label><input id="cp_exp" placeholder="2"></div>
+            <div class="form-group"><label>Interests (optional)</label><input id="cp_interest" placeholder="AI, mobile apps, leadership"></div>
+            <button class="btn btn-ai" onclick="generateCareerPath()" id="cp_btn"><i class="fas fa-wand-magic-sparkles"></i> Analyze My Path</button>
+            <div id="cp_result"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-salary">
+    <div class="modal">
+        <div class="modal-header"><h2><i class="fas fa-coins" style="color:var(--yellow);margin-right:8px"></i>Salary Estimator</h2><button class="modal-close" onclick="closeModal('salary')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group"><label>Job Title *</label><input id="sl_title" placeholder="Senior Software Engineer"></div>
+                <div class="form-group"><label>Years of Experience *</label><input id="sl_exp" placeholder="5"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Location *</label><input id="sl_location" placeholder="Cairo, Egypt"></div>
+                <div class="form-group"><label>Industry</label><input id="sl_industry" placeholder="Tech, Finance, Healthcare"></div>
+            </div>
+            <div class="form-group"><label>Skills (comma separated)</label><input id="sl_skills" placeholder="Python, AWS, Docker"></div>
+            <button class="btn btn-ai" onclick="generateSalary()" id="sl_btn"><i class="fas fa-wand-magic-sparkles"></i> Estimate Salary</button>
+            <div id="sl_result"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-interview">
+    <div class="modal">
+        <div class="modal-header"><h2><i class="fas fa-user-tie" style="color:var(--purple);margin-right:8px"></i>Interview Coach</h2><button class="modal-close" onclick="closeModal('interview')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Target Job Title *</label><input id="iv_title" placeholder="Product Manager"></div>
+            <div class="form-group"><label>Your Experience Summary *</label><textarea id="iv_exp" rows="3" placeholder="3 years in product management, led 2 launches..."></textarea></div>
+            <div class="form-group"><label>Interview Type</label>
+                <select id="iv_type"><option value="behavioral">Behavioral (STAR)</option><option value="technical">Technical</option><option value="general">General</option><option value="case">Case Study</option></select>
+            </div>
+            <button class="btn btn-ai" onclick="generateInterview()" id="iv_btn"><i class="fas fa-wand-magic-sparkles"></i> Start Practice</button>
+            <div id="iv_result"></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/ai-service.js"></script>
+<script>
+function openTool(name){document.getElementById('modal-'+name).classList.add('show')}
+function closeModal(name){document.getElementById('modal-'+name).classList.remove('show')}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')})});
+
+async function askAI(prompt){
+    if(window.QCVAI){const r=await QCVAI.call(prompt,null,{maxRetries:1,timeout:15000});if(r.ok)return r.text}
+    return 'AI unavailable. Please try again in a moment.';
+}
+function showLoading(id){document.getElementById(id).innerHTML='<div class="loading"><i class="fas fa-spinner fa-spin"></i>Generating...</div>'}
+function showResult(id,title,text){document.getElementById(id).innerHTML='<div class="result-box"><h4>'+title+'</h4>'+escHtml(text)+'</div><button class="copy-btn" onclick="copyResult(this)"><i class="fas fa-copy"></i> Copy</button>'}
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function copyResult(btn){const t=btn.parentElement.querySelector('.result-box').innerText;navigator.clipboard.writeText(t);btn.innerHTML='<i class="fas fa-check"></i> Copied!';setTimeout(()=>btn.innerHTML='<i class="fas fa-copy"></i> Copy',2000)}
+
+async function generateCoverLetter(){
+    const name=document.getElementById('cl_name').value.trim();
+    const title=document.getElementById('cl_title').value.trim();
+    const job=document.getElementById('cl_job').value.trim();
+    if(!name||!title||!job){alert('Please fill Name, Job Title, and Job Description');return}
+    document.getElementById('cl_btn').disabled=true;
+    showLoading('cl_result');
+    const prompt='Write a professional cover letter (3-4 paragraphs).\n\nName: '+name+'\nTitle: '+title+'\nExperience: '+(document.getElementById('cl_exp').value||'N/A')+'\nSkills: '+(document.getElementById('cl_skills').value||'N/A')+'\nAchievements: '+(document.getElementById('cl_achieve').value||'N/A')+'\n\nJob Description:\n'+job+'\n\nRules: Professional but personable tone. Reference specific details from job description. No generic phrases. Max 300 words. Return ONLY the cover letter.';
+    const result=await askAI(prompt);
+    showResult('cl_result','Your Cover Letter',result);
+    document.getElementById('cl_btn').disabled=false;
+}
+
+async function generateCareerPath(){
+    const title=document.getElementById('cp_title').value.trim();
+    const skills=document.getElementById('cp_skills').value.trim();
+    if(!title||!skills){alert('Please fill Job Title and Skills');return}
+    document.getElementById('cp_btn').disabled=true;
+    showLoading('cp_result');
+    const prompt='Analyze this career profile and suggest 3 career paths:\n\nCurrent: '+title+'\nSkills: '+skills+'\nExperience: '+(document.getElementById('cp_exp').value||'N/A')+' years\nInterests: '+(document.getElementById('cp_interest').value||'N/A')+'\n\nFor each path provide:\n1. Career title\n2. Why it fits\n3. Skills to develop\n4. Expected salary range\n5. Timeline to transition\n\nKeep each path under 100 words.';
+    const result=await askAI(prompt);
+    showResult('cp_result','Your Career Paths',result);
+    document.getElementById('cp_btn').disabled=false;
+}
+
+async function generateSalary(){
+    const title=document.getElementById('sl_title').value.trim();
+    const exp=document.getElementById('sl_exp').value.trim();
+    const loc=document.getElementById('sl_location').value.trim();
+    if(!title||!exp||!loc){alert('Please fill Job Title, Experience, and Location');return}
+    document.getElementById('sl_btn').disabled=true;
+    showLoading('sl_result');
+    const prompt='Estimate salary range for this role:\n\nTitle: '+title+'\nExperience: '+exp+' years\nLocation: '+loc+'\nIndustry: '+(document.getElementById('sl_industry').value||'General')+'\nSkills: '+(document.getElementById('sl_skills').value||'N/A')+'\n\nProvide:\n1. Salary range (min-mid-max) in local currency\n2. Salary in USD equivalent\n3. Factors affecting salary\n4. How to increase salary\n5. Market demand for this role\nKeep response under 250 words.';
+    const result=await askAI(prompt);
+    showResult('sl_result','Salary Estimate',result);
+    document.getElementById('sl_btn').disabled=false;
+}
+
+async function generateInterview(){
+    const title=document.getElementById('iv_title').value.trim();
+    const exp=document.getElementById('iv_exp').value.trim();
+    if(!title||!exp){alert('Please fill Job Title and Experience');return}
+    document.getElementById('iv_btn').disabled=true;
+    showLoading('iv_result');
+    const type=document.getElementById('iv_type').value;
+    const prompt='Simulate a '+type+' interview for a '+title+' position.\n\nCandidate experience: '+exp+'\n\nProvide 8 interview questions with:\n1. The question\n2. What a strong answer looks like\n3. Red flags to avoid\n\nMake questions realistic and challenging. Format clearly with Q1, Q2, etc.';
+    const result=await askAI(prompt);
+    showResult('iv_result','Interview Questions & Tips',result);
+    document.getElementById('iv_btn').disabled=false;
+}
+</script>
+</body>
+</html>
