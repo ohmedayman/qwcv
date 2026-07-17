@@ -335,6 +335,39 @@ tr:hover td{background:rgba(0,3,201,.02)}
 .blog-card-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid var(--border);font-size:.72rem;color:var(--muted)}
 .blog-card-footer .actions{display:flex;gap:4px}
 
+/* ===== BLOG EDITOR TOOLBAR ===== */
+.editor-toolbar{display:flex;flex-wrap:wrap;gap:2px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-bottom:none;border-radius:10px 10px 0 0}
+.editor-toolbar .tb{width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;color:var(--muted);font-weight:700;transition:all .15s}
+.editor-toolbar .tb:hover{background:var(--accent);color:#fff}
+.editor-toolbar .tb-sep{width:1px;background:var(--border);margin:4px 4px;flex-shrink:0}
+.editor-toolbar select{padding:4px 6px;border:1px solid var(--border);border-radius:6px;font-size:.78rem;background:var(--card);color:var(--text);cursor:pointer;font-family:inherit}
+.editor-toolbar .preview-btn{width:auto;padding:0 10px;font-size:.75rem;gap:4px;display:flex;align-items:center;background:rgba(5,150,105,.1);color:var(--green);font-weight:700}
+.editor-toolbar .preview-btn:hover{background:var(--green);color:#fff}
+.blog-content-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.blog-content-wrap textarea{border:none;border-radius:0 0 10px 10px}
+.blog-preview-wrap{padding:24px;line-height:1.8;font-size:.9rem;background:var(--card);border-radius:10px;border:1px solid var(--border);max-height:400px;overflow-y:auto;direction:rtl;text-align:right}
+.blog-preview-wrap h1{font-size:1.6rem;font-weight:900;margin-bottom:12px}
+.blog-preview-wrap h2{font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.blog-preview-wrap h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.blog-preview-wrap p{margin-bottom:10px}
+.blog-preview-wrap ul,.blog-preview-wrap ol{margin:10px 20px}
+.blog-preview-wrap blockquote{border-right:4px solid var(--accent);padding:10px 16px;margin:10px 0;background:rgba(0,3,201,.04);border-radius:0 8px 8px 0}
+.blog-preview-wrap a{color:var(--accent);text-decoration:underline}
+.blog-preview-wrap img{max-width:100%;border-radius:8px;margin:10px 0}
+.schedule-field{margin-top:12px;padding:12px;background:var(--bg);border-radius:10px;border:1px solid var(--border);display:none}
+.schedule-field.show{display:block}
+.schedule-field label{font-size:.8rem;font-weight:700;margin-bottom:6px;display:block}
+.schedule-field input[type="datetime-local"]{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.85rem}
+
+/* ===== BLOG PREVIEW MODAL ===== */
+.blog-preview-modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5)}
+.blog-preview-modal.show{display:flex}
+.blog-preview-modal .preview-card{background:var(--card);border-radius:16px;width:90%;max-width:700px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+.blog-preview-modal .preview-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.blog-preview-modal .preview-header h3{font-size:.95rem;font-weight:800}
+.blog-preview-modal .preview-header button{background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--muted)}
+.blog-preview-modal .preview-content{padding:24px;overflow-y:auto;flex:1;line-height:1.8;direction:rtl;text-align:right}
+
 /* ===== TEMPLATES ===== */
 .tpl-list{display:grid;gap:12px}
 .tpl-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;transition:all .2s}
@@ -352,6 +385,14 @@ tr:hover td{background:rgba(0,3,201,.02)}
 .backup-card h4{font-size:.9rem;font-weight:800;margin-bottom:6px}
 .backup-card p{font-size:.78rem;color:var(--muted);margin-bottom:14px}
 .backup-card .btn-primary-sm{margin:0 auto}
+.advanced-reports-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+.advanced-reports-grid .report-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;transition:all .25s}
+.advanced-reports-grid .report-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,3,201,.08)}
+.advanced-reports-grid .report-card .r-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.advanced-reports-grid .report-card h4{font-size:.9rem;font-weight:800;margin:0}
+.advanced-reports-grid .report-card p{font-size:.78rem;color:var(--muted);margin:0;line-height:1.5}
+.advanced-reports-grid .report-card .btn-primary-sm{margin-top:auto}
+@media(max-width:600px){.advanced-reports-grid{grid-template-columns:1fr}}
 .backup-log{max-height:300px;overflow-y:auto;background:var(--bg);border-radius:10px;padding:12px}
 .backup-log-item{padding:8px 0;border-bottom:1px solid var(--border);font-size:.8rem;display:flex;justify-content:space-between}
 
@@ -518,7 +559,20 @@ tr:hover td{background:rgba(0,3,201,.02)}
                 <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
                 <h1 id="pageTitle">الرئيسية</h1>
             </div>
-            <div class="topbar-right">
+            <div class="topbar-right" style="position:relative">
+                <div id="notifBell" style="position:relative;cursor:pointer;margin-left:12px" onclick="toggleNotifPanel()">
+                    <i class="fas fa-bell" style="font-size:1.1rem;color:var(--muted)"></i>
+                    <span id="notifBadge" style="position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:0.6rem;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700">0</span>
+                </div>
+                <div id="notifPanel" style="display:none;position:absolute;top:50px;left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.12);max-height:400px;overflow-y:auto;z-index:1000;width:360px">
+                    <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+                        <h4 style="font-size:0.9rem;font-weight:700;margin:0">الإشعارات</h4>
+                        <button onclick="clearNotifications()" style="background:none;border:none;color:var(--accent);font-size:0.78rem;cursor:pointer;font-weight:600">مسح الكل</button>
+                    </div>
+                    <div id="notifList" style="padding:8px">
+                        <div style="text-align:center;color:var(--muted);padding:20px;font-size:0.82rem">لا توجد إشعارات جديدة</div>
+                    </div>
+                </div>
                 <div class="admin-info">
                     <div class="admin-avatar" id="adminAvatar">A</div>
                     <div>
@@ -532,14 +586,29 @@ tr:hover td{background:rgba(0,3,201,.02)}
         <div class="content">
             <!-- DASHBOARD -->
             <div class="panel active" id="panel-dashboard">
+                <div class="quick-actions" style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+                    <button onclick="sendNotification()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.82rem;font-family:inherit"><i class="fas fa-bell"></i> إرسال إشعار</button>
+                    <button onclick="exportReport()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.82rem;font-family:inherit"><i class="fas fa-file-export"></i> تصدير التقرير</button>
+                    <button onclick="addStaff()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.82rem;font-family:inherit"><i class="fas fa-user-plus"></i> إضافة موظف</button>
+                </div>
                 <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-users"></i></div><div class="stat-value" id="statUsers">0</div><div class="stat-label">إجمالي المستخدمين</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-user-check"></i></div><div class="stat-value" id="statActive">0</div><div class="stat-label">المستخدمين النشطين</div></div>
-                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-crown"></i></div><div class="stat-value" id="statPro">0</div><div class="stat-label">مشتركين Pro</div></div>
-                    <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-clock"></i></div><div class="stat-value" id="statPending">0</div><div class="stat-label">طلبات معلقة</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-dollar-sign"></i></div><div class="stat-value" id="statRevenue">0</div><div class="stat-label">الإيرادات (ج.م)</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-user-shield"></i></div><div class="stat-value" id="statStaff">0</div><div class="stat-label">الموظفين</div></div>
-                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-bullhorn"></i></div><div class="stat-value" id="statCampaigns">0</div><div class="stat-label">الحملات التسويقية</div></div>
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-users"></i></div><div class="stat-value" id="statUsers">0</div><div class="stat-label">إجمالي المستخدمين</div><div class="stat-growth" id="growthUsers" style="font-size:.72rem;margin-top:4px;color:#10b981"></div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-user-check"></i></div><div class="stat-value" id="statActive">0</div><div class="stat-label">المستخدمين النشطين</div><div class="stat-growth" id="growthActive" style="font-size:.72rem;margin-top:4px;color:#10b981"></div></div>
+                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-crown"></i></div><div class="stat-value" id="statPro">0</div><div class="stat-label">مشتركين Pro</div><div class="stat-growth" id="growthPro" style="font-size:.72rem;margin-top:4px;color:#10b981"></div></div>
+                    <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-clock"></i></div><div class="stat-value" id="statPending">0</div><div class="stat-label">طلبات معلقة</div><div class="stat-growth" id="growthPending" style="font-size:.72rem;margin-top:4px;color:#f59e0b"></div></div>
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-dollar-sign"></i></div><div class="stat-value" id="statRevenue">0</div><div class="stat-label">الإيرادات (ج.م)</div><div class="stat-growth" id="growthRevenue" style="font-size:.72rem;margin-top:4px;color:#10b981"></div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-user-shield"></i></div><div class="stat-value" id="statStaff">0</div><div class="stat-label">الموظفين</div><div class="stat-growth" id="growthStaff" style="font-size:.72rem;margin-top:4px;color:#10b981"></div></div>
+                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-bullhorn"></i></div><div class="stat-value" id="statCampaigns">0</div><div class="stat-label">الحملات التسويقية</div><div class="stat-growth" id="growthCampaigns" style="font-size:.72rem;margin-top:4px;color:#10b981"></div></div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card" style="padding:16px">
+                        <h4 style="margin-bottom:12px;font-size:.95rem">نمو المستخدمين</h4>
+                        <canvas id="chartUserGrowth" style="width:100%;max-height:260px"></canvas>
+                    </div>
+                    <div class="chart-card" style="padding:16px">
+                        <h4 style="margin-bottom:12px;font-size:.95rem">توزيع الباقة</h4>
+                        <canvas id="chartPlanDist" style="width:100%;max-height:260px"></canvas>
+                    </div>
                 </div>
                 <div class="charts-grid">
                     <div class="chart-card"><h4>آخر المستخدمين</h4><div class="table-scroll"><table><thead><tr><th>المستخدم</th><th>الباقة</th><th>آخر دخول</th><th>الحالة</th></tr></thead><tbody id="recentUsers"><tr><td colspan="4" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr></tbody></table></div></div>
@@ -553,12 +622,30 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     <div class="table-head">
                         <h3>المستخدمين</h3>
                         <div class="actions">
-                            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchUsers" placeholder="بحث بالاسم أو البريد..." oninput="filterUsers()"></div>
+                            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchUsers" placeholder="بحث بالاسم أو البريد أو UID..." oninput="filterUsers()"></div>
                             <button class="btn-primary-sm" onclick="showSendMessage()"><i class="fas fa-envelope"></i> إرسال رسالة</button>
                             <button class="btn-sm" onclick="exportUsersCSV()"><i class="fas fa-download"></i> تصدير CSV</button>
                         </div>
                     </div>
-                    <div class="table-scroll"><table><thead><tr><th>المستخدم</th><th>الباقة</th><th>تاريخ التسجيل</th><th>آخر دخول</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="allUsers"><tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr></tbody></table></div>
+                    <div id="userStatsSummary" style="display:flex;gap:10px;padding:12px 20px;flex-wrap:wrap;border-bottom:1px solid var(--border)">
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-users" style="color:var(--accent)"></i><strong id="userStatTotal">0</strong><span style="color:var(--muted)">إجمالي</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-user" style="color:var(--green)"></i><strong id="userStatFree">0</strong><span style="color:var(--muted)">Free</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-crown" style="color:var(--accent)"></i><strong id="userStatPro">0</strong><span style="color:var(--muted)">Pro</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-infinity" style="color:var(--purple)"></i><strong id="userStatUnlimited">0</strong><span style="color:var(--muted)">Unlimited</span></div>
+                    </div>
+                    <div id="userFilters" style="display:flex;gap:10px;padding:12px 20px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border)">
+                        <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">الباقة:</label><select id="filterPlan" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="free">Free</option><option value="pro">Pro</option><option value="unlimited">Unlimited</option></select></div>
+                        <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">الحالة:</label><select id="filterStatus" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="active">نشط</option><option value="banned">غير نشط</option></select></div>
+                        <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">التاريخ:</label><select id="filterDate" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="7">آخر 7 أيام</option><option value="30">آخر 30 يوم</option><option value="365">آخر سنة</option></select></div>
+                    </div>
+                    <div id="bulkActionsBar" style="display:none;padding:10px 20px;background:rgba(0,3,201,.05);border-bottom:1px solid var(--border);align-items:center;gap:12px;flex-wrap:wrap">
+                        <span style="font-size:.82rem;color:var(--text)"><strong id="selectedCount">0</strong> محدد</span>
+                        <button class="btn-primary-sm" onclick="bulkUpgradePro()" style="font-size:.75rem"><i class="fas fa-crown"></i> ترقية للـ Pro</button>
+                        <button class="btn-danger-sm" onclick="bulkDelete()" style="font-size:.75rem"><i class="fas fa-trash"></i> حذف المحدد</button>
+                        <button class="btn-sm" onclick="bulkNotify()" style="font-size:.75rem"><i class="fas fa-bell"></i> إرسال إشعار</button>
+                        <button onclick="clearSelection()" style="margin-right:auto;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:.75rem;font-family:inherit"><i class="fas fa-times"></i> إلغاء التحديد</button>
+                    </div>
+                    <div class="table-scroll"><table><thead><tr><th style="width:36px;text-align:center"><input type="checkbox" id="selectAllUsers" onchange="toggleSelectAll(this)" style="accent-color:var(--accent);cursor:pointer"></th><th>المستخدم</th><th>الباقة</th><th>تاريخ التسجيل</th><th>آخر دخول</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="allUsers"><tr><td colspan="7" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr></tbody></table></div>
                     <div class="pagination" id="users-pagination"></div>
                 </div>
             </div>
@@ -680,17 +767,51 @@ tr:hover td{background:rgba(0,3,201,.02)}
 
             <!-- REVENUE DASHBOARD -->
             <div class="panel" id="panel-revenue">
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-dollar-sign"></i></div><div class="stat-value" id="revMRR">0</div><div class="stat-label">MRR (ج.م/شهر)</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-calendar-alt"></i></div><div class="stat-value" id="revARR">0</div><div class="stat-label">ARR (ج.م/سنة)</div></div>
-                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-heartbeat"></i></div><div class="stat-value" id="revChurn">0%</div><div class="stat-label">معدل ال流失</div></div>
-                    <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-user-clock"></i></div><div class="stat-value" id="revLTV">0</div><div class="stat-label">LTV (ج.م)</div></div>
-                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-chart-line"></i></div><div class="stat-value" id="revAvgRev">0</div><div class="stat-label">متوسط الإيراد/مستخدم</div></div>
-                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-arrow-up"></i></div><div class="stat-value" id="revGrowth">0%</div><div class="stat-label">نمو الإيرادات الشهري</div></div>
+                <!-- Summary Row: 4 Key Metrics -->
+                <div class="stats-grid" style="margin-bottom:20px">
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-dollar-sign"></i></div><div class="stat-value" id="revMRR">0</div><div class="stat-label">MRR (الإيراد الشهري المتكرر)</div></div>
+                    <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-calendar-alt"></i></div><div class="stat-value" id="revARR">0</div><div class="stat-label">ARR (الإيراد السنوي المتكرر)</div></div>
+                    <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-user-check"></i></div><div class="stat-value" id="revAvgRev">0</div><div class="stat-label">متوسط الإيراد/مستخدم</div></div>
+                    <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-heartbeat"></i></div><div class="stat-value" id="revChurn">0%</div><div class="stat-label">معدل الاحتفاظ</div></div>
                 </div>
+                <!-- Monthly Comparison Card -->
+                <div class="chart-card" style="margin-bottom:20px" id="revComparisonCard">
+                    <h4><i class="fas fa-balance-scale"></i> مقارنة شهرية</h4>
+                    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap" id="revComparisonContent">
+                        <div style="text-align:center">
+                            <div style="font-size:.75rem;color:var(--muted);margin-bottom:4px">الشهر الحالي</div>
+                            <div style="font-size:1.4rem;font-weight:800;color:var(--green)" id="revThisMonth">0 ج.م</div>
+                        </div>
+                        <div style="font-size:1.8rem;color:var(--muted)" id="revCompareArrow">vs</div>
+                        <div style="text-align:center">
+                            <div style="font-size:.75rem;color:var(--muted);margin-bottom:4px">الشهر السابق</div>
+                            <div style="font-size:1.4rem;font-weight:800;color:var(--accent)" id="revLastMonth">0 ج.م</div>
+                        </div>
+                        <div style="text-align:center;margin-right:auto">
+                            <div style="font-size:.75rem;color:var(--muted);margin-bottom:4px">التغيير</div>
+                            <div style="font-size:1.3rem;font-weight:800" id="revChange">0%</div>
+                        </div>
+                        <div style="text-align:center">
+                            <div style="font-size:.75rem;color:var(--muted);margin-bottom:4px">نمو الإيرادات الشهري</div>
+                            <div style="font-size:1.3rem;font-weight:800;color:var(--green)" id="revGrowth">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Charts Row 1: Bar + Line -->
+                <div class="charts-grid" style="margin-bottom:20px">
+                    <div class="chart-card">
+                        <h4><i class="fas fa-chart-bar"></i> إيرادات شهرياً</h4>
+                        <canvas id="revMonthlyBarChart" height="260"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4><i class="fas fa-chart-line"></i> نمو الاشتراكات</h4>
+                        <canvas id="revSubGrowthChart" height="260"></canvas>
+                    </div>
+                </div>
+                <!-- Charts Row 2: Plan + Period + Campaign -->
                 <div class="charts-grid">
-                    <div class="chart-card"><h4>إيرادات حسب الفترة</h4><div id="revPeriodChart" class="bar-chart"></div></div>
                     <div class="chart-card"><h4>إيرادات حسب الباقة</h4><div id="revPlanChart"></div></div>
+                    <div class="chart-card"><h4>إيرادات حسب الفترة</h4><div id="revPeriodChart" class="bar-chart"></div></div>
                     <div class="chart-card"><h4>إيرادات حسب الحملة</h4><div id="revCampaignChart" class="bar-chart"></div></div>
                     <div class="chart-card"><h4>الاشتراكات النشطة vs المنتهية</h4><div id="revActiveVsExpired" class="bar-chart"></div></div>
                 </div>
@@ -770,6 +891,14 @@ tr:hover td{background:rgba(0,3,201,.02)}
             <!-- BLOG CMS -->
             <div class="panel" id="panel-blog">
                 <div class="table-head"><h3><i class="fas fa-blog"></i> إدارة المدونة</h3><div class="actions"><button class="btn-add" onclick="showAddBlogPost()"><i class="fas fa-plus"></i> إضافة مقال</button></div></div>
+                <div class="filter-tabs" id="blogFilterTabs">
+                    <button class="filter-tab active" onclick="filterBlogPosts('all',this)">الكل</button>
+                    <button class="filter-tab" onclick="filterBlogPosts('cv-writing',this)">كتابة CV</button>
+                    <button class="filter-tab" onclick="filterBlogPosts('jobs',this)">وظائف</button>
+                    <button class="filter-tab" onclick="filterBlogPosts('interviews',this)">مقابلات</button>
+                    <button class="filter-tab" onclick="filterBlogPosts('linkedin',this)">لينكدإن</button>
+                    <button class="filter-tab" onclick="filterBlogPosts('career-dev',this)">تطوير مهني</button>
+                </div>
                 <div class="blog-grid" id="blogPostsGrid"></div>
             </div>
 
@@ -823,6 +952,33 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     <div class="backup-card"><div class="b-icon" style="background:rgba(5,150,105,.1);color:var(--green)"><i class="fas fa-file-csv"></i></div><h4>تصدير المستخدمين CSV</h4><p>تصدير بيانات المستخدمين فقط</p><button class="btn-primary-sm" onclick="exportUsersCSV()"><i class="fas fa-file-csv"></i> تصدير CSV</button></div>
                     <div class="backup-card"><div class="b-icon" style="background:rgba(245,158,11,.1);color:var(--yellow)"><i class="fas fa-upload"></i></div><h4>استيراد البيانات</h4><p>استيراد نسخة احتياطية سابقة</p><input type="file" id="importFile" accept=".json" style="display:none" onchange="importDB(this)"><button class="btn-primary-sm" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> استيراد</button></div>
                     <div class="backup-card"><div class="b-icon" style="background:rgba(139,92,246,.1);color:var(--purple)"><i class="fas fa-envelope-open-text"></i></div><h4>تصدير رسائل الدعم</h4><p>تصدير جميع تذاكر الدعم</p><button class="btn-primary-sm" onclick="exportSupportCSV()"><i class="fas fa-download"></i> تصدير</button></div>
+                </div>
+                <div style="margin-bottom:8px"><h4 style="font-size:.95rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i class="fas fa-chart-bar" style="color:var(--accent)"></i> تقارير متقدمة</h4></div>
+                <div class="advanced-reports-grid">
+                    <div class="report-card">
+                        <div class="r-icon" style="background:rgba(0,3,201,.1);color:var(--accent)"><i class="fas fa-users"></i></div>
+                        <h4>تقرير المستخدمين</h4>
+                        <p>تصدير بيانات جميع المستخدمين كملف CSV يحتوي على الاسم والبريد والباقة والتسجيل وآخر دخول والحالة</p>
+                        <button class="btn-primary-sm" onclick="exportUsersReport()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                    </div>
+                    <div class="report-card">
+                        <div class="r-icon" style="background:rgba(5,150,105,.1);color:var(--green)"><i class="fas fa-dollar-sign"></i></div>
+                        <h4>تقرير الإيرادات</h4>
+                        <p>تصدير بيانات الإيرادات الشهرية مع عدد الاشتراكات الجديدة والنشطة كملف CSV</p>
+                        <button class="btn-primary-sm" onclick="exportRevenueReport()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                    </div>
+                    <div class="report-card">
+                        <div class="r-icon" style="background:rgba(245,158,11,.1);color:var(--yellow)"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>تقرير النشاط</h4>
+                        <p>تصدير جميع سجلات النشاط والإجراءات كملف CSV للمراجعة والتدقيق</p>
+                        <button class="btn-primary-sm" onclick="exportActivityReport()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                    </div>
+                    <div class="report-card">
+                        <div class="r-icon" style="background:rgba(139,92,246,.1);color:var(--purple)"><i class="fas fa-file-pdf"></i></div>
+                        <h4>ملف PDF شامل</h4>
+                        <p>تقرير ملخص يحتوي على إحصائيات المستخدمين والإيرادات والرسوم البيانية — جاهز للطباعة</p>
+                        <button class="btn-primary-sm" onclick="exportFullPDFReport()"><i class="fas fa-print"></i> إنشاء التقرير</button>
+                    </div>
                 </div>
                 <div class="settings-card">
                     <h4><i class="fas fa-history"></i> سجل النسخ الاحتياطية</h4>
@@ -974,6 +1130,17 @@ tr:hover td{background:rgba(0,3,201,.02)}
         <div class="modal-header"><h3 id="modalTitle">العنوان</h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
         <div class="modal-body" id="modalBody"></div>
         <div class="modal-actions"><button class="btn-cancel" onclick="closeModal()">إلغاء</button><button class="btn-confirm" id="modalConfirm" style="display:none">تأكيد</button></div>
+    </div>
+</div>
+
+<!-- BLOG PREVIEW MODAL -->
+<div class="blog-preview-modal" id="blogPreviewModal">
+    <div class="preview-card">
+        <div class="preview-header">
+            <h3><i class="fas fa-eye"></i> معاينة المقال</h3>
+            <button onclick="closeBlogPreview()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="preview-content" id="blogPreviewContent"></div>
     </div>
 </div>
 
@@ -1301,12 +1468,14 @@ function checkAndLoad() {
         // All Users Table
         var ut = document.getElementById('allUsers');
         if (ut) {
+            window.selectedUsers = {};
+            window.updateUserStats(entries);
             ut.innerHTML = entries.length ? entries.map(function(e) {
                 var uid = e[0], u = e[1], pl = u.plan || 'free', b = u.banned === true, c = getAvatarColor(uid);
                 var provider = u.authProvider === 'google.com' ? '<i class="fab fa-google" style="color:#4285f4;font-size:.7rem;margin-right:4px" title="Google"></i>' : u.authProvider === 'facebook.com' ? '<i class="fab fa-facebook" style="color:#1877f2;font-size:.7rem;margin-right:4px" title="Facebook"></i>' : '';
                 var authBadge = u.authOnly ? '<span style="font-size:.6rem;background:rgba(245,158,11,.1);color:#f59e0b;padding:2px 6px;border-radius:4px;margin-right:4px;font-weight:600">جديد</span>' : '';
-                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+authBadge+escHtml(u.name||'مستخدم')+'</div><div class="email">'+provider+escHtml(u.email||'-')+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
-            }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+                return '<tr><td style="text-align:center"><input type="checkbox" class="user-row-cb" data-uid="'+escHtml(uid)+'" onchange="toggleUserSelect(\''+escHtml(uid)+'\',this.checked)" style="accent-color:var(--accent);cursor:pointer"></td><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+authBadge+escHtml(u.name||'مستخدم')+'</div><div class="email">'+provider+escHtml(u.email||'-')+'</div><div style="font-size:.65rem;color:var(--muted);direction:ltr;display:inline-block">'+escHtml(uid.substring(0,10))+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+            }).join('') : '<tr><td colspan="7" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
         }
 
         // Subscriptions
@@ -1485,19 +1654,119 @@ window.deleteUser = function(uid) {
     restDelete('/users/' + uid).then(function() { showToast('تم حذف المستخدم', 'success'); loadAllData(); });
 };
 
+window.selectedUsers = {};
+
+window.updateUserStats = function(entries) {
+    var total = entries.length;
+    var free = entries.filter(function(e){ return (e[1].plan||'free')==='free'; }).length;
+    var pro = entries.filter(function(e){ return (e[1].plan||'free')==='pro'; }).length;
+    var unlimited = entries.filter(function(e){ return (e[1].plan||'free')==='unlimited'; }).length;
+    var el;
+    el = document.getElementById('userStatTotal'); if(el) el.textContent = total;
+    el = document.getElementById('userStatFree'); if(el) el.textContent = free;
+    el = document.getElementById('userStatPro'); if(el) el.textContent = pro;
+    el = document.getElementById('userStatUnlimited'); if(el) el.textContent = unlimited;
+};
+
 window.filterUsers = function() {
     var q = (document.getElementById('searchUsers').value || '').toLowerCase();
-    var filtered = {};
-    Object.entries(window.allUsers).forEach(function(e) {
-        if (!q || (e[1].name||'').toLowerCase().indexOf(q) !== -1 || (e[1].email||'').toLowerCase().indexOf(q) !== -1) filtered[e[0]] = e[1];
+    var planFilter = (document.getElementById('filterPlan') || {}).value || 'all';
+    var statusFilter = (document.getElementById('filterStatus') || {}).value || 'all';
+    var dateFilter = (document.getElementById('filterDate') || {}).value || 'all';
+    var now = Date.now();
+    var entries = Object.entries(window.allUsers).filter(function(e) {
+        var uid = e[0], u = e[1];
+        if (q && (u.name||'').toLowerCase().indexOf(q) === -1 && (u.email||'').toLowerCase().indexOf(q) === -1 && uid.toLowerCase().indexOf(q) === -1) return false;
+        if (planFilter !== 'all' && (u.plan || 'free') !== planFilter) return false;
+        if (statusFilter === 'active' && u.banned === true) return false;
+        if (statusFilter === 'banned' && u.banned !== true) return false;
+        if (dateFilter !== 'all' && u.registeredAt) {
+            var days = parseInt(dateFilter);
+            if ((now - u.registeredAt) > days * 86400000) return false;
+        }
+        return true;
     });
+    window.updateUserStats(entries);
     var ut = document.getElementById('allUsers');
     if (!ut) return;
-    var entries = Object.entries(filtered);
     ut.innerHTML = entries.length ? entries.map(function(e) {
         var uid = e[0], u = e[1], pl = u.plan || 'free', b = u.banned === true, c = getAvatarColor(uid);
-        return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+        var checked = window.selectedUsers[uid] ? ' checked' : '';
+        return '<tr><td style="text-align:center"><input type="checkbox" class="user-row-cb" data-uid="'+escHtml(uid)+'"'+checked+' onchange="toggleUserSelect(\''+escHtml(uid)+'\',this.checked)" style="accent-color:var(--accent);cursor:pointer"></td><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div><div style="font-size:.65rem;color:var(--muted);direction:ltr;display:inline-block">'+escHtml(uid.substring(0,10))+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+    }).join('') : '<tr><td colspan="7" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+    window.updateBulkBar();
+};
+
+window.toggleSelectAll = function(cb) {
+    var boxes = document.querySelectorAll('.user-row-cb');
+    boxes.forEach(function(b) {
+        b.checked = cb.checked;
+        window.selectedUsers[b.getAttribute('data-uid')] = cb.checked;
+    });
+    if (!cb.checked) window.selectedUsers = {};
+    window.updateBulkBar();
+};
+
+window.toggleUserSelect = function(uid, checked) {
+    if (checked) window.selectedUsers[uid] = true;
+    else delete window.selectedUsers[uid];
+    var total = document.querySelectorAll('.user-row-cb').length;
+    var selBox = document.getElementById('selectAllUsers');
+    if (selBox) selBox.checked = total > 0 && Object.keys(window.selectedUsers).length === total;
+    window.updateBulkBar();
+};
+
+window.updateBulkBar = function() {
+    var count = Object.keys(window.selectedUsers).length;
+    var bar = document.getElementById('bulkActionsBar');
+    var countEl = document.getElementById('selectedCount');
+    if (bar) bar.style.display = count > 0 ? 'flex' : 'none';
+    if (countEl) countEl.textContent = count;
+};
+
+window.clearSelection = function() {
+    window.selectedUsers = {};
+    var selBox = document.getElementById('selectAllUsers');
+    if (selBox) selBox.checked = false;
+    document.querySelectorAll('.user-row-cb').forEach(function(b) { b.checked = false; });
+    window.updateBulkBar();
+};
+
+window.bulkUpgradePro = async function() {
+    var uids = Object.keys(window.selectedUsers);
+    if (!uids.length) return;
+    if (!confirm('ترقية '+uids.length+' مستخدم للباقة الاحترافية؟')) return;
+    var expiry = Date.now() + (30 * 86400000);
+    for (var i = 0; i < uids.length; i++) {
+        await restPatch('/users/' + uids[i], { plan: 'pro', planExpiry: expiry });
+    }
+    logAudit('ترقية جماعية', 'user', uids.length + ' مستخدم للباقة الاحترافية');
+    showToast('تم ترقية '+uids.length+' مستخدم', 'success');
+    window.clearSelection();
+    loadAllData();
+};
+
+window.bulkDelete = async function() {
+    var uids = Object.keys(window.selectedUsers);
+    if (!uids.length) return;
+    if (!confirm('حذف '+uids.length+' مستخدم نهائياً؟ هذا الإجراء لا يمكن التراجع عنه!')) return;
+    for (var i = 0; i < uids.length; i++) {
+        await restDelete('/users/' + uids[i]);
+    }
+    logAudit('حذف جماعي', 'user', uids.length + ' مستخدم');
+    showToast('تم حذف '+uids.length+' مستخدم', 'success');
+    window.clearSelection();
+    loadAllData();
+};
+
+window.bulkNotify = function() {
+    var uids = Object.keys(window.selectedUsers);
+    if (!uids.length) return;
+    var msg = prompt('أدخل نص الإشعار لـ '+uids.length+' مستخدم:');
+    if (!msg) return;
+    var msgData = { title: 'إشعار', message: msg, timestamp: Date.now(), read: false };
+    uids.forEach(function(uid) { restPost('/users/' + uid + '/notifications', msgData); });
+    showToast('تم إرسال الإشعار لـ '+uids.length+' مستخدم', 'success');
 };
 
 window.exportUsersCSV = function() {
@@ -2155,54 +2424,137 @@ function renderRevenueDashboard() {
     var unlimCount = entries.filter(function(e) { return e[1].plan === 'unlimited'; }).length;
     var mrr = (proCount * pp) + (unlimCount * up);
     var arr = mrr * 12;
-    document.getElementById('revMRR').textContent = mrr;
-    document.getElementById('revARR').textContent = arr;
-    // Churn
+    document.getElementById('revMRR').textContent = mrr.toLocaleString() + ' ج.م';
+    document.getElementById('revARR').textContent = arr.toLocaleString() + ' ج.م';
+
     var expired = entries.filter(function(e) { return e[1].planExpiry && e[1].planExpiry < Date.now() && e[1].plan !== 'free'; }).length;
     var totalPaid = proCount + unlimCount || 1;
     var churn = ((expired / totalPaid) * 100).toFixed(1);
     document.getElementById('revChurn').textContent = churn + '%';
-    // LTV
+
     var avgRev = totalPaid > 0 ? Math.round(mrr / totalPaid) : 0;
-    var ltv = churn > 0 ? Math.round(avgRev / (parseFloat(churn) / 100)) : avgRev * 24;
-    document.getElementById('revLTV').textContent = ltv;
-    document.getElementById('revAvgRev').textContent = avgRev;
-    // Revenue by period
+    document.getElementById('revAvgRev').textContent = avgRev.toLocaleString() + ' ج.م';
+
     var revMonths = {};
+    var subCounts = {};
     entries.forEach(function(e) {
         if (e[1].registeredAt) {
             var d = new Date(e[1].registeredAt);
             var key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
-            if (e[1].plan === 'pro') revMonths[key] = (revMonths[key]||0) + pp;
-            else if (e[1].plan === 'unlimited') revMonths[key] = (revMonths[key]||0) + up;
+            if (e[1].plan === 'pro') { revMonths[key] = (revMonths[key]||0) + pp; subCounts[key] = (subCounts[key]||0) + 1; }
+            else if (e[1].plan === 'unlimited') { revMonths[key] = (revMonths[key]||0) + up; subCounts[key] = (subCounts[key]||0) + 1; }
         }
     });
+
+    var now = new Date();
+    var thisMonthKey = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+    var lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    var lastMonthKey = lastMonthDate.getFullYear() + '-' + String(lastMonthDate.getMonth()+1).padStart(2,'0');
+    var thisMonthRev = revMonths[thisMonthKey] || 0;
+    var lastMonthRev = revMonths[lastMonthKey] || 0;
+    var changeVal = lastMonthRev > 0 ? (((thisMonthRev - lastMonthRev) / lastMonthRev) * 100).toFixed(1) : '0';
+
+    document.getElementById('revThisMonth').textContent = thisMonthRev.toLocaleString() + ' ج.م';
+    document.getElementById('revLastMonth').textContent = lastMonthRev.toLocaleString() + ' ج.م';
+    document.getElementById('revChange').textContent = (changeVal > 0 ? '+' : '') + changeVal + '%';
+    document.getElementById('revChange').style.color = parseFloat(changeVal) >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('revCompareArrow').innerHTML = parseFloat(changeVal) >= 0 ? '<i class="fas fa-arrow-up" style="color:var(--green);font-size:2rem"></i>' : '<i class="fas fa-arrow-down" style="color:var(--red);font-size:2rem"></i>';
+    document.getElementById('revGrowth').textContent = (changeVal > 0 ? '+' : '') + changeVal + '%';
+    document.getElementById('revGrowth').style.color = parseFloat(changeVal) >= 0 ? 'var(--green)' : 'var(--red)';
+
     var revKeys = Object.keys(revMonths).sort().slice(-6);
     var maxR = Math.max.apply(null, revKeys.map(function(k) { return revMonths[k]; }).concat([1]));
     var revEl = document.getElementById('revPeriodChart');
     if (revEl) revEl.innerHTML = revKeys.length ? revKeys.map(function(k) { return '<div class="bar-row"><div class="bar-label">' + k + '</div><div class="bar-track"><div class="bar-fill green" style="width:' + ((revMonths[k]/maxR)*100) + '%">' + revMonths[k] + ' ج.م</div></div></div>'; }).join('') : '<div class="empty-state"><p>لا توجد بيانات</p></div>';
-    // Revenue by plan
+
     var planRevEl = document.getElementById('revPlanChart');
     if (planRevEl) {
-        var planData = [{ label: 'Pro', value: proCount * pp, color: 'var(--accent)' }, { label: 'Unlimited', value: unlimCount * up, color: 'var(--purple)' }];
         var totalRev = mrr || 1;
         planRevEl.innerHTML = '<div class="donut-chart"><div class="donut-visual" style="background:conic-gradient(var(--accent) 0deg ' + ((proCount*pp/totalRev)*360) + 'deg, var(--purple) ' + ((proCount*pp/totalRev)*360) + 'deg 360deg)"><div class="donut-center">' + mrr + '</div></div><div class="donut-legend"><div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Pro: ' + (proCount*pp) + ' ج.م</div><div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Unlimited: ' + (unlimCount*up) + ' ج.م</div></div></div>';
     }
-    // Growth rate
-    var thisMonth = new Date().getMonth();
-    var lastMonth = thisMonth === 0 ? 11 : thisMonth - 1;
-    var thisYear = new Date().getFullYear();
-    var thisMonthRev = 0, lastMonthRev = 0;
-    entries.forEach(function(e) {
-        if (e[1].registeredAt) {
-            var d = new Date(e[1].registeredAt);
-            var rev = e[1].plan === 'pro' ? pp : e[1].plan === 'unlimited' ? up : 0;
-            if (d.getMonth() === thisMonth && d.getFullYear() === thisYear) thisMonthRev += rev;
-            if (d.getMonth() === lastMonth) lastMonthRev += rev;
+
+    // --- Chart.js Bar Chart: Monthly Revenue (last 12 months) ---
+    var allRevKeys = Object.keys(revMonths).sort().slice(-12);
+    if (allRevKeys.length === 0) {
+        for (var i = 11; i >= 0; i--) {
+            var dt = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            allRevKeys.push(dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0'));
         }
+    }
+    var barCanvas = document.getElementById('revMonthlyBarChart');
+    if (barCanvas) {
+        if (window._revBarChart) { window._revBarChart.destroy(); }
+        window._revBarChart = new Chart(barCanvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: allRevKeys,
+                datasets: [{
+                    label: 'إيرادات (ج.م)',
+                    data: allRevKeys.map(function(k) { return revMonths[k] || 0; }),
+                    backgroundColor: allRevKeys.map(function(k, i) {
+                        return i === allRevKeys.length - 1 ? 'rgba(99,102,241,0.85)' : 'rgba(99,102,241,0.35)';
+                    }),
+                    borderColor: '#6366f1',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c) { return c.parsed.y.toLocaleString() + ' ج.م'; } } } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 }, maxRotation: 45 } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 }, callback: function(v) { return v.toLocaleString(); } }, beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    // --- Chart.js Line Chart: Subscription Growth ---
+    var subKeys = Object.keys(subCounts).sort().slice(-12);
+    if (subKeys.length === 0) {
+        for (var i = 11; i >= 0; i--) {
+            var dt = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            subKeys.push(dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0'));
+        }
+    }
+    var runningTotal = 0;
+    var cumData = subKeys.map(function(k) {
+        runningTotal += (subCounts[k] || 0);
+        return runningTotal;
     });
-    var growth = lastMonthRev > 0 ? (((thisMonthRev - lastMonthRev) / lastMonthRev) * 100).toFixed(1) : '0';
-    document.getElementById('revGrowth').textContent = growth + '%';
+    var lineCanvas = document.getElementById('revSubGrowthChart');
+    if (lineCanvas) {
+        if (window._revLineChart) { window._revLineChart.destroy(); }
+        window._revLineChart = new Chart(lineCanvas.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: subKeys,
+                datasets: [{
+                    label: 'الاشتراكات المتراكمة',
+                    data: cumData,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16,185,129,0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 }, maxRotation: 45 } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 }, stepSize: 1 }, beginAtZero: true }
+                }
+            }
+        });
+    }
 }
 
 // ===== AUDIT LOG =====
@@ -2385,6 +2737,93 @@ async function removeUserTag(uid, tagName) {
 }
 
 // ===== BLOG CMS =====
+var blogCurrentFilter = 'all';
+
+function buildEditorToolbar(targetId) {
+    return '<div class="editor-toolbar">' +
+        '<button class="tb" onclick="blogInsertTag(\'' + targetId + '\',\'<b>\',\'</b>\')" title="عريض"><i class="fas fa-bold"></i></button>' +
+        '<button class="tb" onclick="blogInsertTag(\'' + targetId + '\',\'<i>\',\'</i>\')" title="مائل"><i class="fas fa-italic"></i></button>' +
+        '<button class="tb" onclick="blogInsertTag(\'' + targetId + '\',\'<u>\',\'</u>\')" title="تحته خط"><i class="fas fa-underline"></i></button>' +
+        '<div class="tb-sep"></div>' +
+        '<select onchange="blogInsertHeading(this,\'' + targetId + '\')"><option value="">H</option><option value="h1">H1</option><option value="h2">H2</option><option value="h3">H3</option></select>' +
+        '<div class="tb-sep"></div>' +
+        '<button class="tb" onclick="blogInsertTag(\'' + targetId + '\',\'<ul>\\n<li>\',\'</li>\\n</ul>\')" title="قائمة"><i class="fas fa-list-ul"></i></button>' +
+        '<button class="tb" onclick="blogInsertTag(\'' + targetId + '\',\'<ol>\\n<li>\',\'</li>\\n</ol>\')" title="قائمة مرقمة"><i class="fas fa-list-ol"></i></button>' +
+        '<div class="tb-sep"></div>' +
+        '<button class="tb" onclick="blogInsertLink(\'' + targetId + '\')" title="رابط"><i class="fas fa-link"></i></button>' +
+        '<button class="tb" onclick="blogInsertImage(\'' + targetId + '\')" title="صورة"><i class="fas fa-image"></i></button>' +
+        '<button class="tb" onclick="blogInsertTag(\'' + targetId + '\',\'<blockquote>\',\'</blockquote>\')" title="اقتباس"><i class="fas fa-quote-right"></i></button>' +
+        '<div class="tb-sep"></div>' +
+        '<button class="tb preview-btn" onclick="blogShowPreview(\'' + targetId + '\')" title="معاينة"><i class="fas fa-eye"></i> معاينة</button>' +
+        '</div>';
+}
+
+function blogInsertTag(id, open, close) {
+    var ta = document.getElementById(id);
+    if (!ta) return;
+    var start = ta.selectionStart, end = ta.selectionEnd;
+    var sel = ta.value.substring(start, end) || 'نص';
+    ta.value = ta.value.substring(0, start) + open + sel + close + ta.value.substring(end);
+    ta.focus();
+    ta.selectionStart = start + open.length;
+    ta.selectionEnd = start + open.length + sel.length;
+}
+
+function blogInsertHeading(sel, id) {
+    if (!sel.value) return;
+    var tag = sel.value;
+    blogInsertTag(id, '<' + tag + '>', '</' + tag + '>');
+    sel.value = '';
+}
+
+function blogInsertLink(id) {
+    var url = prompt('أدخل رابط URL:');
+    if (!url) return;
+    var text = prompt('نص الرابط:') || url;
+    blogInsertTag(id, '<a href="' + url + '">', '</a>');
+}
+
+function blogInsertImage(id) {
+    var url = prompt('أدخل رابط الصورة:');
+    if (!url) return;
+    var alt = prompt('نص بديل للصورة:') || '';
+    var ta = document.getElementById(id);
+    if (!ta) return;
+    var start = ta.selectionStart;
+    var tag = '<img src="' + url + '" alt="' + alt + '">';
+    ta.value = ta.value.substring(0, start) + tag + ta.value.substring(ta.selectionEnd);
+    ta.focus();
+}
+
+function blogShowPreview(id) {
+    var ta = document.getElementById(id);
+    if (!ta) return;
+    var title = document.getElementById('blogTitle') ? document.getElementById('blogTitle').value : '';
+    var content = ta.value;
+    var html = (title ? '<h1>' + escHtml(title) + '</h1>' : '') + content;
+    document.getElementById('blogPreviewContent').innerHTML = html;
+    document.getElementById('blogPreviewModal').classList.add('show');
+}
+
+function closeBlogPreview() {
+    document.getElementById('blogPreviewModal').classList.remove('show');
+}
+
+function blogToggleSchedule() {
+    var st = document.getElementById('blogStatus');
+    var sf = document.getElementById('blogScheduleField');
+    if (st && sf) {
+        sf.classList.toggle('show', st.value === 'scheduled');
+    }
+}
+
+function filterBlogPosts(cat, btn) {
+    blogCurrentFilter = cat;
+    document.querySelectorAll('#blogFilterTabs .filter-tab').forEach(function(t) { t.classList.remove('active'); });
+    btn.classList.add('active');
+    renderBlogPosts();
+}
+
 function renderBlogPosts() {
     var grid = document.getElementById('blogPostsGrid');
     if (!grid) return;
@@ -2392,23 +2831,59 @@ function renderBlogPosts() {
         var posts = Object.entries(data || {});
         window.allBlogPosts = data || {};
         if (!posts.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="icon"><i class="fas fa-blog"></i></div><p>لا توجد مقالات بعد</p></div>'; return; }
+        if (blogCurrentFilter !== 'all') {
+            posts = posts.filter(function(e) { return (e[1].category || '') === blogCurrentFilter; });
+        }
+        if (!posts.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="icon"><i class="fas fa-blog"></i></div><p>لا توجد مقالات في هذا التصنيف</p></div>'; return; }
         grid.innerHTML = posts.map(function(e) {
             var p = e[1];
             var statusBadge = p.status === 'published' ? '<span class="badge badge-approved">منشور</span>' : p.status === 'scheduled' ? '<span class="badge badge-pending">مجدول</span>' : '<span class="badge badge-inactive">مسودة</span>';
-            return '<div class="blog-card"><div class="blog-card-body"><h4>' + escHtml(p.title || 'بدون عنوان') + '</h4><p>' + escHtml(p.excerpt || p.content || '') + '</p><span class="badge ' + planBadgeClass(p.category || 'free') + '" style="font-size:.68rem">' + escHtml(p.category || 'عام') + '</span></div><div class="blog-card-footer"><span>' + statusBadge + ' ' + formatDateTime(p.createdAt) + '</span><div class="actions"><button class="btn-action btn-edit" onclick="editBlogPost(\'' + e[0] + '\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteBlogPost(\'' + e[0] + '\')"><i class="fas fa-trash"></i></button></div></div></div>';
+            var catLabel = { 'general': 'عام', 'tips': 'نصائح', 'news': 'أخبار', 'tutorial': 'دليل', 'cv-writing': 'كتابة CV', 'jobs': 'وظائف', 'interviews': 'مقابلات', 'linkedin': 'لينكدإن', 'career-dev': 'تطوير مهني' }[p.category] || p.category || 'عام';
+            return '<div class="blog-card"><div class="blog-card-body"><h4>' + escHtml(p.title || 'بدون عنوان') + '</h4><p>' + escHtml(p.excerpt || p.content || '') + '</p><span class="badge ' + planBadgeClass(p.category || 'free') + '" style="font-size:.68rem">' + escHtml(catLabel) + '</span></div><div class="blog-card-footer"><span>' + statusBadge + ' ' + formatDateTime(p.createdAt) + '</span><div class="actions"><button class="btn-action btn-edit" onclick="editBlogPost(\'' + e[0] + '\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteBlogPost(\'' + e[0] + '\')"><i class="fas fa-trash"></i></button></div></div></div>';
         }).join('');
     });
 }
+
+function buildBlogFormHtml(post, isEdit) {
+    var catOptions = [
+        { v: 'general', l: 'عام' }, { v: 'cv-writing', l: 'كتابة CV' }, { v: 'jobs', l: 'وظائف' },
+        { v: 'interviews', l: 'مقابلات' }, { v: 'linkedin', l: 'لينكدإن' }, { v: 'career-dev', l: 'تطوير مهني' }
+    ];
+    var catHtml = catOptions.map(function(c) {
+        return '<option value="' + c.v + '"' + (post && post.category === c.v ? ' selected' : '') + '>' + c.l + '</option>';
+    }).join('');
+    var statusVal = post ? post.status : 'draft';
+    var schedDateVal = (post && post.scheduledAt) ? new Date(post.scheduledAt).toISOString().slice(0, 16) : '';
+    var contentVal = post ? escHtml(post.content || '') : '';
+    var excerptVal = post ? escHtml(post.excerpt || '') : '';
+    var titleVal = post ? escHtml(post.title || '') : '';
+    var imageVal = post ? escHtml(post.image || '') : '';
+    var tb = buildEditorToolbar('blogContent');
+    return '<div class="field" style="margin-bottom:12px"><label>العنوان</label><input type="text" id="blogTitle" placeholder="عنوان المقال" value="' + titleVal + '"></div>' +
+        '<div class="field" style="margin-bottom:12px"><label>المقتطف</label><textarea id="blogExcerpt" style="width:100%;min-height:60px;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:inherit;resize:vertical" placeholder="ملخص قصير...">' + excerptVal + '</textarea></div>' +
+        '<div class="field" style="margin-bottom:12px"><label>المحتوى</label><div class="blog-content-wrap">' + tb + '<textarea id="blogContent" style="width:100%;min-height:200px;padding:10px;border:1px solid var(--border);border-radius:0 0 10px 10px;font-family:monospace;resize:vertical" placeholder="اكتب المحتوى هنا... (يدعم HTML)">' + contentVal + '</textarea></div></div>' +
+        '<div class="settings-row"><div class="field"><label>التصنيف</label><select id="blogCategory">' + catHtml + '</select></div>' +
+        '<div class="field"><label>الحالة</label><select id="blogStatus" onchange="blogToggleSchedule()"><option value="draft"' + (statusVal === 'draft' ? ' selected' : '') + '>مسودة</option><option value="published"' + (statusVal === 'published' ? ' selected' : '') + '>منشور</option><option value="scheduled"' + (statusVal === 'scheduled' ? ' selected' : '') + '>مجدول</option></select></div>' +
+        '<div class="field"><label>صورة الغلاف</label><input type="text" id="blogImage" placeholder="رابط الصورة" value="' + imageVal + '"></div></div>' +
+        '<div class="schedule-field' + (statusVal === 'scheduled' ? ' show' : '') + '" id="blogScheduleField"><label>موعد النشر</label><input type="datetime-local" id="blogScheduleDate" value="' + schedDateVal + '"></div>';
+}
+
 function showAddBlogPost() {
     document.getElementById('modalTitle').textContent = 'إضافة مقال';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>العنوان</label><input type="text" id="blogTitle" placeholder="عنوان المقال"></div><div class="field" style="margin-bottom:12px"><label>المقتطف</label><textarea id="blogExcerpt" style="width:100%;min-height:60px;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:inherit;resize:vertical" placeholder="ملخص قصير..."></textarea></div><div class="field" style="margin-bottom:12px"><label>المحتوى (Markdown)</label><textarea id="blogContent" style="width:100%;min-height:200px;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:monospace;resize:vertical" placeholder="اكتب المحتوى هنا..."></textarea></div><div class="settings-row"><div class="field"><label>التصنيف</label><select id="blogCategory"><option value="general">عام</option><option value="tips">نصائح</option><option value="news">أخبار</option><option value="tutorial">دليل</option></select></div><div class="field"><label>الحالة</label><select id="blogStatus"><option value="draft">مسودة</option><option value="published">منشور</option><option value="scheduled">مجدول</option></select></div><div class="field"><label>صورة الغلاف</label><input type="text" id="blogImage" placeholder="رابط الصورة"></div></div>';
+    document.getElementById('modalBody').innerHTML = buildBlogFormHtml(null, false);
     document.getElementById('modalConfirm').style.display = 'block';
     document.getElementById('modalConfirm').textContent = 'نشر';
     document.getElementById('modalConfirm').onclick = async function() {
         var title = document.getElementById('blogTitle').value.trim();
         if (!title) { showToast('أدخل العنوان', 'error'); return; }
         var slug = title.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]+/g, '-').replace(/^-|-$/g, '');
-        await restPost('/blogPosts', { title: title, slug: slug, excerpt: document.getElementById('blogExcerpt').value, content: document.getElementById('blogContent').value, category: document.getElementById('blogCategory').value, status: document.getElementById('blogStatus').value, image: document.getElementById('blogImage').value, createdAt: Date.now(), updatedAt: Date.now() });
+        var status = document.getElementById('blogStatus').value;
+        var postData = { title: title, slug: slug, excerpt: document.getElementById('blogExcerpt').value, content: document.getElementById('blogContent').value, category: document.getElementById('blogCategory').value, status: status, image: document.getElementById('blogImage').value, createdAt: Date.now(), updatedAt: Date.now() };
+        if (status === 'scheduled') {
+            var schedDate = document.getElementById('blogScheduleDate').value;
+            if (schedDate) postData.scheduledAt = new Date(schedDate).getTime();
+        }
+        await restPost('/blogPosts', postData);
         logAudit('إضافة مقال', 'settings', title);
         showToast('تمت إضافة المقال', 'success');
         closeModal();
@@ -2416,15 +2891,24 @@ function showAddBlogPost() {
     };
     document.getElementById('modal').classList.add('show');
 }
+
 function editBlogPost(id) {
     var p = (window.allBlogPosts || {})[id];
     if (!p) return;
     document.getElementById('modalTitle').textContent = 'تعديل المقال';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>العنوان</label><input type="text" id="blogTitle" value="' + escHtml(p.title || '') + '"></div><div class="field" style="margin-bottom:12px"><label>المقتطف</label><textarea id="blogExcerpt" style="width:100%;min-height:60px;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:inherit;resize:vertical">' + escHtml(p.excerpt || '') + '</textarea></div><div class="field" style="margin-bottom:12px"><label>المحتوى</label><textarea id="blogContent" style="width:100%;min-height:200px;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:monospace;resize:vertical">' + escHtml(p.content || '') + '</textarea></div><div class="settings-row"><div class="field"><label>التصنيف</label><select id="blogCategory"><option value="general"' + (p.category === 'general' ? ' selected' : '') + '>عام</option><option value="tips"' + (p.category === 'tips' ? ' selected' : '') + '>نصائح</option><option value="news"' + (p.category === 'news' ? ' selected' : '') + '>أخبار</option><option value="tutorial"' + (p.category === 'tutorial' ? ' selected' : '') + '>دليل</option></select></div><div class="field"><label>الحالة</label><select id="blogStatus"><option value="draft"' + (p.status === 'draft' ? ' selected' : '') + '>مسودة</option><option value="published"' + (p.status === 'published' ? ' selected' : '') + '>منشور</option><option value="scheduled"' + (p.status === 'scheduled' ? ' selected' : '') + '>مجدول</option></select></div><div class="field"><label>صورة الغلاف</label><input type="text" id="blogImage" value="' + escHtml(p.image || '') + '"></div></div>';
+    document.getElementById('modalBody').innerHTML = buildBlogFormHtml(p, true);
     document.getElementById('modalConfirm').style.display = 'block';
     document.getElementById('modalConfirm').textContent = 'حفظ';
     document.getElementById('modalConfirm').onclick = async function() {
-        await restPatch('/blogPosts/' + id, { title: document.getElementById('blogTitle').value, excerpt: document.getElementById('blogExcerpt').value, content: document.getElementById('blogContent').value, category: document.getElementById('blogCategory').value, status: document.getElementById('blogStatus').value, image: document.getElementById('blogImage').value, updatedAt: Date.now() });
+        var status = document.getElementById('blogStatus').value;
+        var updateData = { title: document.getElementById('blogTitle').value, excerpt: document.getElementById('blogExcerpt').value, content: document.getElementById('blogContent').value, category: document.getElementById('blogCategory').value, status: status, image: document.getElementById('blogImage').value, updatedAt: Date.now() };
+        if (status === 'scheduled') {
+            var schedDate = document.getElementById('blogScheduleDate').value;
+            if (schedDate) updateData.scheduledAt = new Date(schedDate).getTime();
+        } else {
+            updateData.scheduledAt = null;
+        }
+        await restPatch('/blogPosts/' + id, updateData);
         logAudit('تعديل مقال', 'settings', document.getElementById('blogTitle').value);
         showToast('تم حفظ التعديلات', 'success');
         closeModal();
@@ -2432,6 +2916,7 @@ function editBlogPost(id) {
     };
     document.getElementById('modal').classList.add('show');
 }
+
 function deleteBlogPost(id) {
     if (!confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
     restDelete('/blogPosts/' + id).then(function() { logAudit('حذف مقال', 'settings', id); showToast('تم حذف المقال', 'success'); renderBlogPosts(); });
@@ -2564,6 +3049,212 @@ function exportSupportCSV() {
         var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })); a.download = 'support-tickets-' + new Date().toISOString().slice(0,10) + '.csv'; a.click();
         showToast('تم تصدير التذاكر', 'success');
     });
+}
+
+// ===== ADVANCED REPORTS =====
+function exportUsersReport() {
+    var entries = Object.entries(window.allUsers || {});
+    if (!entries.length) { showToast('لا يوجد مستخدمين', 'error'); return; }
+    var headers = ['Name', 'Email', 'Plan', 'Registration Date', 'Last Login', 'Status'];
+    var rows = entries.map(function(e) {
+        var u = e[1];
+        return [
+            u.name || '',
+            u.email || '',
+            u.plan || 'free',
+            u.registeredAt ? new Date(u.registeredAt).toLocaleDateString('ar-EG') : '',
+            u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '',
+            u.banned ? 'Banned' : 'Active'
+        ];
+    });
+    var csv = '\uFEFF' + [headers].concat(rows).map(function(r) {
+        return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+    }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'users-report-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
+    URL.revokeObjectURL(url);
+    logAudit('تقرير المستخدمين المتقدم', 'system', entries.length + ' مستخدم');
+    showToast('تم تصدير تقرير المستخدمين (' + entries.length + ')', 'success');
+}
+
+function exportRevenueReport() {
+    var entries = Object.entries(window.allUsers || {});
+    var pp = parseInt(window.allSettings.proPrice) || 99;
+    var up = parseInt(window.allSettings.unlimitedPrice) || 299;
+    var months = {};
+    var newSubs = {};
+    var activeSubs = {};
+    entries.forEach(function(e) {
+        if (e[1].registeredAt) {
+            var d = new Date(e[1].registeredAt);
+            var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+            if (e[1].plan === 'pro') {
+                months[key] = (months[key] || 0) + pp;
+                newSubs[key] = (newSubs[key] || 0) + 1;
+            } else if (e[1].plan === 'unlimited') {
+                months[key] = (months[key] || 0) + up;
+                newSubs[key] = (newSubs[key] || 0) + 1;
+            }
+        }
+    });
+    Object.entries(months).forEach(function(e) {
+        var key = e[0];
+        activeSubs[key] = entries.filter(function(u) {
+            if (!u[1].registeredAt) return false;
+            var rd = new Date(u[1].registeredAt);
+            var rk = rd.getFullYear() + '-' + String(rd.getMonth() + 1).padStart(2, '0');
+            return rk <= key && (u[1].plan === 'pro' || u[1].plan === 'unlimited');
+        }).length;
+    });
+    var allKeys = Object.keys(months).sort();
+    if (!allKeys.length) { showToast('لا توجد بيانات إيرادات', 'error'); return; }
+    var headers = ['Month', 'Revenue', 'New Subscriptions', 'Active Subscriptions'];
+    var rows = allKeys.map(function(k) {
+        return [k, (months[k] || 0) + ' EGP', newSubs[k] || 0, activeSubs[k] || 0];
+    });
+    var csv = '\uFEFF' + [headers].concat(rows).map(function(r) {
+        return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+    }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'revenue-report-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
+    URL.revokeObjectURL(url);
+    logAudit('تقرير الإيرادات المتقدم', 'system', allKeys.length + ' شهر');
+    showToast('تم تصدير تقرير الإيرادات', 'success');
+}
+
+function exportActivityReport() {
+    if (!allAuditLogs || !allAuditLogs.length) { showToast('لا توجد سجلات نشاط', 'error'); return; }
+    var headers = ['Action', 'Category', 'Detail', 'Admin', 'Timestamp'];
+    var rows = allAuditLogs.map(function(l) {
+        return [
+            l.action || '',
+            l.category || '',
+            l.detail || '',
+            l.admin || '',
+            new Date(l.timestamp).toLocaleString('ar-EG')
+        ];
+    });
+    var csv = '\uFEFF' + [headers].concat(rows).map(function(r) {
+        return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+    }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'activity-report-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
+    URL.revokeObjectURL(url);
+    logAudit('تقرير النشاط المتقدم', 'system', allAuditLogs.length + ' سجل');
+    showToast('تم تصدير تقرير النشاط (' + allAuditLogs.length + ' سجل)', 'success');
+}
+
+function exportFullPDFReport() {
+    var entries = Object.entries(window.allUsers || {});
+    var totalUsers = entries.length;
+    var activeUsers = entries.filter(function(e) { return !e[1].banned; }).length;
+    var bannedUsers = entries.filter(function(e) { return e[1].banned; }).length;
+    var proCount = entries.filter(function(e) { return e[1].plan === 'pro'; }).length;
+    var unlimitedCount = entries.filter(function(e) { return e[1].plan === 'unlimited'; }).length;
+    var freeCount = totalUsers - proCount - unlimitedCount;
+    var pp = parseInt(window.allSettings.proPrice) || 99;
+    var up = parseInt(window.allSettings.unlimitedPrice) || 299;
+    var mrr = (proCount * pp) + (unlimitedCount * up);
+    var arr = mrr * 12;
+    var totalStaff = Object.keys(window.allStaff || {}).length;
+    var totalJobs = Object.keys(window.allJobs || {}).length;
+    var totalCampaigns = Object.keys(window.allCampaigns || {}).length;
+    var pendingSubs = Object.values(window.allSubs || {}).filter(function(s) { return s.status === 'pending'; }).length;
+
+    var months = {};
+    var revMonths = {};
+    entries.forEach(function(e) {
+        if (e[1].registeredAt) {
+            var d = new Date(e[1].registeredAt);
+            var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+            months[key] = (months[key] || 0) + 1;
+            if (e[1].plan === 'pro') revMonths[key] = (revMonths[key] || 0) + pp;
+            else if (e[1].plan === 'unlimited') revMonths[key] = (revMonths[key] || 0) + up;
+        }
+    });
+    var monthKeys = Object.keys(months).sort().slice(-6);
+    var maxM = Math.max.apply(null, monthKeys.map(function(k) { return months[k]; }).concat([1]));
+    var maxR = Math.max.apply(null, monthKeys.map(function(k) { return revMonths[k] || 0; }).concat([1]));
+
+    var growthBars = monthKeys.map(function(k) {
+        var pct = Math.round((months[k] / maxM) * 100);
+        return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="min-width:80px;font-size:.78rem;font-weight:600;color:#6b7280">' + k + '</div><div style="flex:1;height:22px;background:#f1f5f9;border-radius:4px;overflow:hidden"><div style="width:' + pct + '%;height:100%;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:.68rem;color:#fff;font-weight:700">' + months[k] + '</div></div></div>';
+    }).join('');
+
+    var revBars = monthKeys.map(function(k) {
+        var rev = revMonths[k] || 0;
+        var pct = maxR > 0 ? Math.round((rev / maxR) * 100) : 0;
+        return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="min-width:80px;font-size:.78rem;font-weight:600;color:#6b7280">' + k + '</div><div style="flex:1;height:22px;background:#f1f5f9;border-radius:4px;overflow:hidden"><div style="width:' + pct + '%;height:100%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:.68rem;color:#fff;font-weight:700">' + rev + ' EGP</div></div></div>';
+    }).join('');
+
+    var recentUsers = entries.sort(function(a, b) { return (b[1].lastLogin || 0) - (a[1].lastLogin || 0); }).slice(0, 10);
+    var recentRows = recentUsers.map(function(e) {
+        var u = e[1];
+        var pl = u.plan || 'free';
+        var status = u.banned ? '<span style="color:#ef4444">محظور</span>' : '<span style="color:#10b981">نشط</span>';
+        return '<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-size:.82rem">' + escHtml(u.name || '-') + '</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-size:.82rem;color:#6b7280">' + escHtml(u.email || '-') + '</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-size:.82rem">' + planText(pl) + '</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-size:.82rem">' + formatDateTime(u.lastLogin) + '</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-size:.82rem">' + status + '</td></tr>';
+    }).join('');
+
+    var auditRows = (allAuditLogs || []).slice(0, 15).map(function(l) {
+        return '<tr><td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;font-size:.78rem">' + escHtml(l.action) + '</td><td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;font-size:.78rem;color:#6b7280">' + escHtml(l.category) + '</td><td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;font-size:.78rem;color:#6b7280">' + escHtml(l.admin || '-') + '</td><td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;font-size:.78rem;color:#9ca3af">' + formatDateTime(l.timestamp) + '</td></tr>';
+    }).join('');
+
+    var html = '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير شامل - QCV</title><style>' +
+        '*{box-sizing:border-box;margin:0;padding:0}body{font-family:Cairo,sans-serif;color:#111827;background:#fff;padding:40px;line-height:1.6}' +
+        '.header{text-align:center;margin-bottom:32px;padding-bottom:20px;border-bottom:3px solid #6366f1}' +
+        '.header h1{font-size:1.8rem;font-weight:900;color:#6366f1;margin-bottom:4px}' +
+        '.header p{color:#6b7280;font-size:.88rem}' +
+        '.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}' +
+        '.stat{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:18px;text-align:center}' +
+        '.stat .val{font-size:1.6rem;font-weight:900}' +
+        '.stat .lbl{font-size:.75rem;color:#6b7280;font-weight:600;margin-top:2px}' +
+        '.stat.blue .val{color:#6366f1}.stat.green .val{color:#10b981}.stat.purple .val{color:#8b5cf6}.stat.yellow .val{color:#f59e0b}' +
+        'section{margin-bottom:28px}section h2{font-size:1.1rem;font-weight:800;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;display:flex;align-items:center;gap:8px}' +
+        'table{width:100%;border-collapse:collapse;margin-top:8px}' +
+        'th{background:#f1f5f9;padding:10px 12px;text-align:right;font-size:.75rem;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb}' +
+        '.footer{text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid #e5e7eb;color:#9ca3af;font-size:.75rem}' +
+        '@media print{body{padding:20px}.no-print{display:none}}' +
+        '</style></head><body>' +
+        '<div class="header"><h1>QCV - تقرير شامل</h1><p>تاريخ الإنشاء: ' + new Date().toLocaleString('ar-EG') + '</p></div>' +
+        '<div class="stats-grid">' +
+        '<div class="stat blue"><div class="val">' + totalUsers + '</div><div class="lbl">إجمالي المستخدمين</div></div>' +
+        '<div class="stat green"><div class="val">' + activeUsers + '</div><div class="lbl">المستخدمين النشطين</div></div>' +
+        '<div class="stat purple"><div class="val">' + mrr.toLocaleString() + ' EGP</div><div class="lbl">الإيراد الشهري (MRR)</div></div>' +
+        '<div class="stat yellow"><div class="val">' + arr.toLocaleString() + ' EGP</div><div class="lbl">الإيراد السنوي (ARR)</div></div>' +
+        '</div>' +
+        '<div class="stats-grid">' +
+        '<div class="stat blue"><div class="val">' + proCount + '</div><div class="lbl">مشتركين Pro</div></div>' +
+        '<div class="stat purple"><div class="val">' + unlimitedCount + '</div><div class="lbl">مشتركين Unlimited</div></div>' +
+        '<div class="stat green"><div class="val">' + freeCount + '</div><div class="lbl">مستخدمين مجانيين</div></div>' +
+        '<div class="stat yellow"><div class="val">' + pendingSubs + '</div><div class="lbl">اشتراكات معلقة</div></div>' +
+        '</div>' +
+        '<div class="stats-grid">' +
+        '<div class="stat blue"><div class="val">' + totalStaff + '</div><div class="lbl">الموظفين</div></div>' +
+        '<div class="stat green"><div class="val">' + totalJobs + '</div><div class="lbl">الوظائف</div></div>' +
+        '<div class="stat purple"><div class="val">' + totalCampaigns + '</div><div class="lbl">الحملات</div></div>' +
+        '<div class="stat yellow"><div class="val">' + bannedUsers + '</div><div class="lbl">محظورين</div></div>' +
+        '</div>' +
+        '<section><h2>📈 نمو المستخدمين (آخر 6 أشهر)</h2>' + (growthBars || '<p style="color:#6b7280">لا توجد بيانات</p>') + '</section>' +
+        '<section><h2>💰 الإيرادات الشهرية</h2>' + (revBars || '<p style="color:#6b7280">لا توجد بيانات</p>') + '</section>' +
+        '<section><h2>👥 آخر المستخدمين النشطين</h2><table><thead><tr><th>الاسم</th><th>البريد</th><th>الباقة</th><th>آخر دخول</th><th>الحالة</th></tr></thead><tbody>' + (recentRows || '<tr><td colspan="5" style="text-align:center;color:#6b7280;padding:16px">لا يوجد بيانات</td></tr>') + '</tbody></table></section>' +
+        '<section><h2>📋 آخر الإجراءات</h2><table><thead><tr><th>الإجراء</th><th>الفئة</th><th>المدير</th><th>التاريخ</th></tr></thead><tbody>' + (auditRows || '<tr><td colspan="4" style="text-align:center;color:#6b7280;padding:16px">لا توجد سجلات</td></tr>') + '</tbody></table></section>' +
+        '<div class="footer">تقرير QCV — تم إنشاؤه تلقائياً في ' + new Date().toLocaleString('ar-EG') + '</div>' +
+        '<div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 32px;background:#6366f1;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:Cairo,sans-serif">🖨️ طباعة / حفظ كـ PDF</button></div>' +
+        '</body></html>';
+
+    var win = window.open('', '_blank');
+    if (win) {
+        win.document.write(html);
+        win.document.close();
+    } else {
+        showToast('الرجاء السماح بالنوافذ المنبثقة', 'error');
+        return;
+    }
+    logAudit('تقرير PDF شامل', 'system', 'تقرير ملخص — ' + totalUsers + ' مستخدم');
+    showToast('تم إنشاء التقرير الشامل — يمكنك طباعته أو حفظه كـ PDF', 'success');
 }
 
 // ===== SECURITY =====
@@ -2699,8 +3390,170 @@ function sendNewsletter() {
         document.getElementById('blockScreen').classList.add('hidden');
     }
 })();
+
+// ===== NOTIFICATIONS =====
+var notifications = [];
+function toggleNotifPanel() {
+    var panel = document.getElementById('notifPanel');
+    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+function addNotification(type, title, detail) {
+    var icons = { user: 'fa-user-plus', subscription: 'fa-credit-card', support: 'fa-headset', system: 'fa-cog' };
+    var colors = { user: 'var(--accent)', subscription: 'var(--green)', support: 'var(--yellow)', system: 'var(--muted)' };
+    var n = { type: type, title: title, detail: detail || '', time: Date.now(), id: Date.now() };
+    notifications.unshift(n);
+    renderNotifications();
+    showToast(title, 'info');
+}
+function renderNotifications() {
+    var list = document.getElementById('notifList');
+    var badge = document.getElementById('notifBadge');
+    if (!list) return;
+    if (!notifications.length) { list.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;font-size:0.82rem">لا توجد إشعارات جديدة</div>'; badge.style.display = 'none'; return; }
+    badge.style.display = 'flex'; badge.textContent = notifications.length;
+    list.innerHTML = notifications.slice(0, 20).map(function(n) {
+        var icons = { user: 'fa-user-plus', subscription: 'fa-credit-card', support: 'fa-headset', system: 'fa-cog' };
+        var colors = { user: 'var(--accent)', subscription: 'var(--green)', support: 'var(--yellow)', system: 'var(--muted)' };
+        var timeAgo = Math.floor((Date.now() - n.time) / 60000);
+        var timeStr = timeAgo < 1 ? 'الآن' : timeAgo < 60 ? timeAgo + ' دقيقة' : Math.floor(timeAgo/60) + ' ساعة';
+        return '<div style="display:flex;align-items:start;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:background 0.2s;border-bottom:1px solid var(--border)" onmouseover="this.style.background=\'var(--bg2)\'" onmouseout="this.style.background=\'transparent\'">' +
+            '<div style="width:36px;height:36px;border-radius:10px;background:' + (colors[n.type]||'var(--muted)') + '15;color:' + (colors[n.type]||'var(--muted)') + ';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem"><i class="fas ' + (icons[n.type]||'fa-bell') + '"></i></div>' +
+            '<div style="flex:1;min-width:0"><div style="font-size:0.82rem;font-weight:600;margin-bottom:2px">' + n.title + '</div><div style="font-size:0.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (n.detail||'') + '</div></div>' +
+            '<div style="font-size:0.65rem;color:var(--muted);white-space:nowrap">' + timeStr + '</div></div>';
+    }).join('');
+}
+function clearNotifications() { notifications = []; renderNotifications(); }
+setInterval(function() {
+    if (!window.allUsers) return;
+    var count = Object.keys(window.allUsers).length;
+    if (window._prevUserCount && count > window._prevUserCount) {
+        addNotification('user', 'مستخدم جديد سجل', 'إجمالي المستخدمين: ' + count);
+    }
+    window._prevUserCount = count;
+}, 60000);
 </script>
 <script src="js/notify-sounds.js"></script>
 <script src="js/admin-enhancements.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script>
+(function(){
+    function waitForData(){
+        if(window.allUsers && window.allSubs){ renderDashboardCharts(); return; }
+        setTimeout(waitForData, 500);
+    }
+
+    function renderDashboardCharts(){
+        const users = Object.values(window.allUsers || {});
+        const subs = Object.values(window.allSubs || {});
+
+        // --- Growth badges ---
+        const now = Date.now();
+        const monthMs = 30*24*60*60*1000;
+        const prevMonth = now - monthMs;
+        const thisMonth = users.filter(u => (u.createdAt||u.lastSeen||0) >= prevMonth).length;
+        const lastMonth = users.filter(u => (u.createdAt||u.lastSeen||0) >= prevMonth - monthMs && (u.createdAt||u.lastSeen||0) < prevMonth).length;
+        const growthPct = lastMonth > 0 ? Math.round(((thisMonth - lastMonth) / lastMonth) * 100) : (thisMonth > 0 ? 100 : 0);
+        const badge = (growthPct >= 0 ? '+' : '') + growthPct + '%';
+        const badgeColor = growthPct >= 0 ? '#10b981' : '#ef4444';
+        document.querySelectorAll('.stat-growth').forEach(el => {
+            el.textContent = badge;
+            el.style.color = badgeColor;
+        });
+
+        // --- Line chart: User Growth (last 12 months) ---
+        const months = [];
+        const counts = [];
+        for(let i = 11; i >= 0; i--){
+            const d = new Date();
+            d.setMonth(d.getMonth() - i);
+            const label = d.toLocaleDateString('ar-EG',{month:'short',year:'2-digit'});
+            const start = new Date(d.getFullYear(), d.getMonth(), 1).getTime();
+            const end = new Date(d.getFullYear(), d.getMonth()+1, 0, 23,59,59).getTime();
+            const c = users.filter(u => {
+                const t = u.createdAt || u.lastSeen || 0;
+                return t >= start && t <= end;
+            }).length;
+            months.push(label);
+            counts.push(c);
+        }
+
+        const ctxGrowth = document.getElementById('chartUserGrowth');
+        if(ctxGrowth){
+            new Chart(ctxGrowth.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'مستخدمين جدد',
+                        data: counts,
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99,102,241,0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#6366f1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 }, stepSize: 1 }, beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // --- Doughnut chart: Plan Distribution ---
+        let free=0, pro=0, unlimited=0;
+        subs.forEach(s => {
+            const plan = (s.plan || s.type || 'free').toLowerCase();
+            if(plan === 'pro' || plan === 'pro-monthly' || plan === 'pro-yearly') pro++;
+            else if(plan === 'unlimited' || plan === 'unlimited-monthly') unlimited++;
+            else free++;
+        });
+        const noSub = Math.max(0, users.length - free - pro - unlimited);
+        free += noSub;
+
+        const ctxPlan = document.getElementById('chartPlanDist');
+        if(ctxPlan){
+            new Chart(ctxPlan.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['مجاني', 'Pro', 'Unlimited'],
+                    datasets: [{
+                        data: [free, pro, unlimited],
+                        backgroundColor: ['#64748b', '#6366f1', '#f59e0b'],
+                        borderWidth: 0,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    cutout: '60%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 16, font: { size: 12 } } }
+                    }
+                }
+            });
+        }
+    }
+
+    // Quick actions stubs
+    window.sendNotification = function(){
+        const msg = prompt('أدخل نص الإشعار:');
+        if(msg) alert('تم إرسال: ' + msg);
+    };
+    window.exportReport = function(){
+        alert('جاري تصدير التقرير...');
+    };
+    window.addStaff = function(){
+        alert('إضافة موظف جديد...');
+    };
+
+    waitForData();
+})();
+</script>
 </body>
 </html>
