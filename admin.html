@@ -1510,8 +1510,7 @@ function checkAndLoad() {
             var jobs = Object.entries(window.allJobs);
             jt.innerHTML = jobs.length ? jobs.map(function(e) {
                 var j = e[1], jid = e[0];
-                var dropdownId = 'jobMenu_' + jid;
-                return '<tr><td><strong>'+escHtml(j.title)+'</strong>'+(j.applyLink?'<div style="font-size:.65rem;color:var(--accent);margin-top:2px"><i class="fas fa-link" style="margin-left:2px"></i>'+escHtml(j.applyLink)+'</div>':'')+'</td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td style="position:relative"><div class="actions" style="position:relative;display:inline-block"><button class="btn-action" onclick="toggleJobMenu(\''+jid+'\')" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text)"><i class="fas fa-ellipsis-v"></i> إجراءات</button><div id="'+dropdownId+'" class="job-dropdown" style="display:none;position:absolute;left:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 25px rgba(0,0,0,.12);z-index:50;min-width:180px;overflow:hidden"><button onclick="editJob(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-edit" style="color:var(--accent);width:16px"></i> تعديل</button><button onclick="addJobLink(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-link" style="color:var(--green);width:16px"></i> '+(j.applyLink?'تعديل الرابط':'إضافة رابط التقديم')+'</button><button onclick="duplicateJob(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-copy" style="color:var(--purple);width:16px"></i> نسخ الوظيفة</button><button onclick="toggleJobStatus(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-'+(j.active!==false?'ban':'check')+'" style="color:var(--yellow);width:16px"></i> '+(j.active!==false?'تعطيل':'تفعيل')+'</button><div style="border-top:1px solid var(--border)"></div><button onclick="shareJobWhatsApp(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fab fa-whatsapp" style="color:#25d366;width:16px"></i> مشاركة واتساب</button><button onclick="shareJobTwitter(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fab fa-twitter" style="color:#1da1f2;width:16px"></i> مشاركة تويتر</button><div style="border-top:1px solid var(--border)"></div><button onclick="deleteJob(\''+jid+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--red)"><i class="fas fa-trash" style="width:16px"></i> حذف</button></div></div></td></tr>';
+                return '<tr><td><strong>'+escHtml(j.title)+'</strong>'+(j.applyLink?'<div style="font-size:.65rem;color:var(--accent);margin-top:2px"><i class="fas fa-link" style="margin-left:2px"></i>'+escHtml(j.applyLink)+'</div>':'')+'</td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td><button class="btn-action" onclick="toggleJobMenu(\''+jid+'\',event)" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text)"><i class="fas fa-ellipsis-v"></i> إجراءات</button></td></tr>';
             }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف</p></td></tr>';
         }
 
@@ -2039,11 +2038,46 @@ window.deleteJob = function(id) {
     restDelete('/jobs/' + id).then(function() { showToast('تم حذف الوظيفة', 'success'); loadAllData(); });
 };
 
-window.toggleJobMenu = function(id) {
-    var menu = document.getElementById('jobMenu_' + id);
-    var isVisible = menu && menu.style.display !== 'none';
+window.toggleJobMenu = function(id, e) {
+    // Create or reuse a single floating dropdown
+    var dd = document.getElementById('globalJobDropdown');
+    if (!dd) {
+        dd = document.createElement('div');
+        dd.id = 'globalJobDropdown';
+        dd.className = 'job-dropdown';
+        dd.style.cssText = 'display:none;position:fixed;z-index:9999;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 25px rgba(0,0,0,.15);min-width:180px;overflow:hidden';
+        document.body.appendChild(dd);
+    }
+
+    var isVisible = dd.style.display !== 'none' && dd.dataset.jobId === id;
     hideAllJobMenus();
-    if (menu && !isVisible) menu.style.display = 'block';
+    if (!isVisible) {
+        var j = (window.allJobs || {})[id]; if (!j) return;
+        dd.dataset.jobId = id;
+        dd.innerHTML =
+            '<button onclick="editJob(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-edit" style="color:var(--accent);width:16px"></i> تعديل</button>' +
+            '<button onclick="addJobLink(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-link" style="color:var(--green);width:16px"></i> '+(j.applyLink?'تعديل الرابط':'إضافة رابط التقديم')+'</button>' +
+            '<button onclick="duplicateJob(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-copy" style="color:#8b5cf6;width:16px"></i> نسخ الوظيفة</button>' +
+            '<button onclick="toggleJobStatus(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fas fa-'+(j.active!==false?'ban':'check')+'" style="color:#f59e0b;width:16px"></i> '+(j.active!==false?'تعطيل':'تفعيل')+'</button>' +
+            '<div style="border-top:1px solid var(--border)"></div>' +
+            '<button onclick="shareJobWhatsApp(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fab fa-whatsapp" style="color:#25d366;width:16px"></i> مشاركة واتساب</button>' +
+            '<button onclick="shareJobTwitter(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)"><i class="fab fa-twitter" style="color:#1da1f2;width:16px"></i> مشاركة تويتر</button>' +
+            '<div style="border-top:1px solid var(--border)"></div>' +
+            '<button onclick="deleteJob(\''+id+'\');hideAllJobMenus()" style="width:100%;padding:8px 14px;border:none;background:none;text-align:right;font-size:.78rem;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;color:#ef4444"><i class="fas fa-trash" style="width:16px"></i> حذف</button>';
+        var btn = e ? e.currentTarget : null;
+        if (btn) {
+            var rect = btn.getBoundingClientRect();
+            dd.style.top = (rect.bottom + 4) + 'px';
+            dd.style.left = 'auto';
+            dd.style.right = (window.innerWidth - rect.right) + 'px';
+        }
+        dd.style.display = 'block';
+    }
+};
+
+window.hideAllJobMenus = function() {
+    var dd = document.getElementById('globalJobDropdown');
+    if (dd) dd.style.display = 'none';
 };
 
 window.hideAllJobMenus = function() {
