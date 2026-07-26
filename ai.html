@@ -571,12 +571,15 @@
 
         /* Mobile */
         @media(max-width:768px) {
+            body { height: 100vh; height: 100dvh; }
+
             .sidebar {
                 position: fixed;
-                top: 0; right: -280px; bottom: 0;
+                top: 0; right: -300px; bottom: 0;
                 z-index: 1000;
-                transition: right 0.3s;
+                transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
                 width: 280px;
+                box-shadow: -4px 0 24px rgba(0,0,0,0.3);
             }
             .sidebar.open { right: 0; }
             .sidebar-overlay {
@@ -585,18 +588,80 @@
                 inset: 0;
                 background: rgba(0,0,0,0.5);
                 z-index: 999;
+                backdrop-filter: blur(3px);
             }
             .sidebar-overlay.open { display: block; }
             .mobile-menu { display: flex; }
-            .welcome { padding: 30px 16px 20px; }
-            .welcome h1 { font-size: 1.2rem; }
-            .quick-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .quick-card { padding: 12px 8px; }
-            .quick-card h3 { font-size: 0.75rem; }
-            .quick-card p { font-size: 0.65rem; }
-            .msg.user .msg-bubble { max-width: 88%; }
-            .msg.ai .msg-bubble { max-width: 92%; }
-            .voice-popup { padding: 28px 20px; }
+
+            /* Topbar mobile */
+            .topbar { padding: 8px 12px; gap: 6px; }
+            .topbar-title { font-size: 0.82rem; }
+            .tb-btn { padding: 5px 8px; font-size: 0.72rem; border-radius: 6px; }
+            .tb-btn.accent { padding: 5px 10px; font-size: 0.72rem; }
+
+            /* Chat area mobile */
+            .chat-messages { padding: 16px 12px; }
+            .msg { gap: 8px; margin-bottom: 14px; }
+            .msg-avatar { width: 30px; height: 30px; font-size: 0.7rem; border-radius: 8px; }
+            .msg-bubble { font-size: 0.84rem; line-height: 1.7; padding: 10px 14px; }
+            .msg.user .msg-bubble { max-width: 88%; border-radius: 14px 14px 4px 14px; padding: 10px 14px; }
+            .msg.ai .msg-bubble { max-width: 94%; border-radius: 14px 14px 14px 4px; padding: 10px 14px; }
+            .msg-name { font-size: 0.68rem; margin-bottom: 3px; }
+            .msg-actions { gap: 4px; }
+            .msg-action-btn { font-size: 0.68rem; padding: 2px 5px; }
+
+            /* Welcome mobile */
+            .welcome { padding: 24px 12px 16px; }
+            .welcome-icon { width: 52px; height: 52px; border-radius: 14px; font-size: 1.3rem; margin-bottom: 14px; }
+            .welcome-badge { font-size: 0.68rem; padding: 5px 12px; margin-bottom: 12px; }
+            .welcome h1 { font-size: 1.15rem; margin-bottom: 4px; }
+            .welcome p { font-size: 0.82rem; margin-bottom: 16px; line-height: 1.5; }
+            .welcome-stats { gap: 16px; }
+            .welcome-stat .num { font-size: 0.95rem; }
+            .welcome-stat .lbl { font-size: 0.62rem; }
+            .quick-grid { grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 16px !important; }
+            .quick-card { padding: 12px 8px; border-radius: 10px; }
+            .quick-card .qi { width: 34px; height: 34px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 6px; }
+            .quick-card h3 { font-size: 0.75rem; margin-bottom: 1px; }
+            .quick-card p { font-size: 0.62rem; }
+
+            /* Gen CV bar mobile */
+            .gen-cv-bar { padding: 0 12px 8px; }
+            .gen-cv-btn { padding: 11px; font-size: 0.82rem; border-radius: 10px; }
+
+            /* Input area mobile */
+            .input-area { padding: 0 10px 12px; }
+            .input-wrap { border-radius: 14px; padding: 6px; gap: 6px; }
+            .input-wrap textarea { font-size: 0.85rem; padding: 6px 6px; max-height: 100px; }
+            .send-btn { width: 38px; height: 38px; border-radius: 10px; font-size: 0.88rem; }
+            .mic-btn { width: 38px; height: 38px; border-radius: 10px; font-size: 0.92rem; }
+            .input-hint { font-size: 0.62rem; margin-top: 5px; }
+
+            /* Voice popup mobile */
+            .voice-popup { padding: 24px 16px; border-radius: 20px; width: 92vw; }
+            .voice-popup h3 { font-size: 1rem; }
+            .voice-orb { width: 100px; height: 100px; }
+            .voice-orb i { font-size: 2rem; }
+            .voice-transcript { font-size: 0.82rem; padding: 10px 12px; min-height: 40px; }
+            .voice-btn { padding: 9px 18px; font-size: 0.8rem; }
+
+            /* Typing indicator mobile */
+            .typing-dots { padding: 12px 14px; }
+
+            /* JSON card mobile */
+            .json-card { padding: 12px; }
+
+            /* Safe area for notched phones */
+            .topbar { padding-top: max(8px, env(safe-area-inset-top)); }
+            .input-area { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+        }
+
+        @media(max-width:380px) {
+            .quick-grid { grid-template-columns: 1fr; gap: 6px; }
+            .quick-card { display: flex; align-items: center; gap: 10px; text-align: right; padding: 10px 12px; }
+            .quick-card .qi { margin-bottom: 0; flex-shrink: 0; }
+            .welcome-stats { flex-wrap: wrap; justify-content: center; gap: 12px; }
+            .topbar-actions .tb-btn span { display: none; }
         }
     </style>
 </head>
