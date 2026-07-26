@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -629,12 +629,12 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     </div>
                     <div id="userStatsSummary" style="display:flex;gap:10px;padding:12px 20px;flex-wrap:wrap;border-bottom:1px solid var(--border)">
                         <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-users" style="color:var(--accent)"></i><strong id="userStatTotal">0</strong><span style="color:var(--muted)">إجمالي</span></div>
-                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-user" style="color:var(--green)"></i><strong id="userStatFree">0</strong><span style="color:var(--muted)">Free</span></div>
-                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-crown" style="color:var(--accent)"></i><strong id="userStatPro">0</strong><span style="color:var(--muted)">Pro</span></div>
-                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-infinity" style="color:var(--purple)"></i><strong id="userStatUnlimited">0</strong><span style="color:var(--muted)">Unlimited</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-user" style="color:var(--green)"></i><strong id="userStatFree">0</strong><span style="color:var(--muted)">مجاني</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-crown" style="color:var(--accent)"></i><strong id="userStatPro">0</strong><span style="color:var(--muted)">محترف</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;background:var(--bg);padding:8px 16px;border-radius:10px;font-size:.82rem"><i class="fas fa-infinity" style="color:var(--purple)"></i><strong id="userStatUnlimited">0</strong><span style="color:var(--muted)">غير محدود</span></div>
                     </div>
                     <div id="userFilters" style="display:flex;gap:10px;padding:12px 20px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border)">
-                        <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">الباقة:</label><select id="filterPlan" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="free">Free</option><option value="pro">Pro</option><option value="unlimited">Unlimited</option></select></div>
+                        <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">الباقة:</label><select id="filterPlan" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="free">مجاني</option><option value="pro">محترف</option><option value="unlimited">غير محدود</option></select></div>
                         <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">الحالة:</label><select id="filterStatus" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="active">نشط</option><option value="banned">غير نشط</option></select></div>
                         <div style="display:flex;align-items:center;gap:6px"><label style="font-size:.78rem;color:var(--muted);font-weight:600">التاريخ:</label><select id="filterDate" onchange="filterUsers()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.78rem;font-family:inherit;outline:none"><option value="all">الكل</option><option value="7">آخر 7 أيام</option><option value="30">آخر 30 يوم</option><option value="365">آخر سنة</option></select></div>
                     </div>
@@ -910,7 +910,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     <h4><i class="fas fa-clock"></i> إرسال مجدول</h4>
                     <div class="settings-row">
                         <div class="field"><label>القالب</label><select id="schedTemplate"></select></div>
-                        <div class="field"><label>المستلم</label><select id="schedTarget"><option value="all">الكل</option><option value="free">مجاني</option><option value="pro">Pro</option><option value="unlimited">Unlimited</option></select></div>
+                        <div class="field"><label>المستلم</label><select id="schedTarget"><option value="all">الكل</option><option value="free">مجاني</option><option value="pro">محترف</option><option value="unlimited">غير محدود</option></select></div>
                         <div class="field"><label>التاريخ والوقت</label><input type="datetime-local" id="schedDate"></div>
                     </div>
                     <button class="btn-primary-sm" onclick="scheduleSend()" style="margin-top:12px"><i class="fas fa-clock"></i> جدولة الإرسال</button>
@@ -1099,20 +1099,20 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <div class="toggle-switch" id="settingsMaintenance" onclick="toggleMaintenance()"></div>
                     </div>
                     <div class="toggle-row">
-                        <div class="toggle-info"><div class="toggle-label">تتبع الإحصائيات</div><div class="toggle-desc">Analytics Tracker</div></div>
+                        <div class="toggle-info"><div class="toggle-label">تتبع الإحصائيات</div><div class="toggle-desc">تتبع التحليلات</div></div>
                         <div class="toggle-switch" id="settingsAnalytics" onclick="toggleAnalytics()"></div>
                     </div>
                 </div>
                 <div class="settings-card">
                     <h4><i class="fas fa-key"></i> مفاتيح API</h4>
                     <div class="settings-row">
-                        <div class="field"><label>OpenAI API Key</label><input type="password" id="settingsAiKey" placeholder="sk-..."></div>
-                        <div class="field"><label>Groq API Key (free - groq.com)</label><input type="password" id="settingsGroqKey" placeholder="gsk_..."></div>
-                        <div class="field"><label>xAI/Grok API Key (free - console.x.ai)</label><input type="password" id="settingsXaiKey" placeholder="...-xai"></div>
-                        <div class="field"><label>DeepSeek API Key (cheap - deepseek.ai)</label><input type="password" id="settingsDeepseekKey" placeholder="...-sk"></div>
-                        <div class="field"><label>NaraRouter API Key (router.bynarai.id)</label><input type="password" id="settingsNaraKey" placeholder="...-sk-nry"></div>
-                        <div class="field"><label>OpenRouter API Key (free - openrouter.ai)</label><input type="password" id="settingsOpenrouterKey" placeholder="...-sk-or"></div>
-                        <div class="field"><label>Gemini API Key (fallback)</label><input type="password" id="settingsGeminiKey" placeholder="...AI"></div>
+                        <div class="field"><label>مفتاح OpenAI API</label><input type="password" id="settingsAiKey" placeholder="sk-..."></div>
+                        <div class="field"><label>مفتاح Groq API (مجاني)</label><input type="password" id="settingsGroqKey" placeholder="gsk_..."></div>
+                        <div class="field"><label>مفتاح xAI/Grok API (مجاني)</label><input type="password" id="settingsXaiKey" placeholder="...-xai"></div>
+                        <div class="field"><label>مفتاح DeepSeek API (رخيص)</label><input type="password" id="settingsDeepseekKey" placeholder="...-sk"></div>
+                        <div class="field"><label>مفتاح NaraRouter API</label><input type="password" id="settingsNaraKey" placeholder="...-sk-nry"></div>
+                        <div class="field"><label>مفتاح OpenRouter API (مجاني)</label><input type="password" id="settingsOpenrouterKey" placeholder="...-sk-or"></div>
+                        <div class="field"><label>مفتاح Gemini API (احتياطي)</label><input type="password" id="settingsGeminiKey" placeholder="...AI"></div>
                     </div>
                 </div>
                 <div style="text-align:left;padding:8px 0;display:flex;gap:10px;align-items:center">
@@ -2676,8 +2676,8 @@ function renderSegments() {
         { label: 'نشط', count: entries.filter(function(e) { return !e[1].banned; }).length, filter: function(e) { return !e[1].banned; } },
         { label: 'محظور', count: entries.filter(function(e) { return e[1].banned; }).length, filter: function(e) { return e[1].banned; } },
         { label: 'مجاني', count: entries.filter(function(e) { return (e[1].plan||'free') === 'free'; }).length, filter: function(e) { return (e[1].plan||'free') === 'free'; } },
-        { label: 'Pro', count: entries.filter(function(e) { return e[1].plan === 'pro'; }).length, filter: function(e) { return e[1].plan === 'pro'; } },
-        { label: 'Unlimited', count: entries.filter(function(e) { return e[1].plan === 'unlimited'; }).length, filter: function(e) { return e[1].plan === 'unlimited'; } },
+        { label: 'محترف', count: entries.filter(function(e) { return e[1].plan === 'pro'; }).length, filter: function(e) { return e[1].plan === 'pro'; } },
+        { label: 'غير محدود', count: entries.filter(function(e) { return e[1].plan === 'unlimited'; }).length, filter: function(e) { return e[1].plan === 'unlimited'; } },
         { label: 'جديد (7 أيام)', count: entries.filter(function(e) { return e[1].registeredAt && (Date.now() - e[1].registeredAt) < 7*86400000; }).length, filter: function(e) { return e[1].registeredAt && (Date.now() - e[1].registeredAt) < 7*86400000; } },
         { label: 'مسوق', count: entries.filter(function(e) { return e[1].affiliateStatus === 'approved'; }).length, filter: function(e) { return e[1].affiliateStatus === 'approved'; } }
     ];
@@ -3557,3 +3557,4 @@ setInterval(function() {
 </script>
 </body>
 </html>
+
