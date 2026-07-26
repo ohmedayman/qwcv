@@ -485,21 +485,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15)
         }
 
-        .method-icon.vodafone {
-            background: linear-gradient(135deg, #ff1744, #d50000);
-            box-shadow: 0 4px 20px rgba(255, 23, 68, 0.25)
-        }
-
-        .method-icon.fawry {
-            background: linear-gradient(135deg, #ffab00, #ff6d00);
-            box-shadow: 0 4px 20px rgba(255, 171, 0, 0.25)
-        }
-
-        .method-icon.instapay {
-            background: linear-gradient(135deg, #00e676, #00c853);
-            box-shadow: 0 4px 20px rgba(0, 230, 118, 0.25)
-        }
-
         .method-info {
             flex: 1
         }
@@ -1344,21 +1329,6 @@
 
     <div class="container">
         <div style="max-width:900px;margin:0 auto 18px;text-align:center">
-            <button id="togglePayCfg" class="btn btn-secondary" style="padding:8px 14px;font-size:0.82rem">Configure
-                Payments</button>
-            <div id="payCfg"
-                style="display:none;margin-top:10px;max-width:720px;margin-left:auto;margin-right:auto;text-align:right;padding:12px;border:1px dashed var(--border);border-radius:8px">
-                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="cfgStripeEndpoint"
-                        placeholder="Stripe create-checkout endpoint (POST)"
-                        style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px"><input
-                        id="cfgPublishableKey" placeholder="Publishable Key (optional)"
-                        style="flex:0.6;padding:8px;border:1px solid var(--border);border-radius:6px"></div>
-                <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-primary"
-                        id="savePayCfg">Save</button><button class="btn btn-secondary" id="clearPayCfg">Clear</button>
-                </div>
-                <div style="font-size:0.82rem;color:var(--muted);margin-top:8px">Tip: your server endpoint should create
-                    a Stripe Checkout session and return JSON { checkoutUrl } or { sessionId, publishableKey }.</div>
-            </div>
         </div>
         <a href="index.html" class="back-link" data-i18n="go_back"><i class="fas fa-arrow-right"></i> العودة
             للرئيسية</a>
@@ -1484,7 +1454,9 @@
                     <div class="methods-title"><i class="fas fa-credit-card"></i> اختر طريقة الدفع</div>
 
                     <div class="method-card selected" onclick="selectMethod(this,'vodafone')">
-                        <div class="method-icon vodafone"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="method-icon" style="background:#fff;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+                            <img src="pay p/فودافون.png" alt="فودافون كاش" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
+                        </div>
                         <div class="method-info">
                             <div class="method-name" data-i18n="pay_vodafone">فودافون كاش</div>
                             <div class="method-desc" data-i18n="pay_vodafone_desc">تحويل فوري على المحفظة</div>
@@ -1492,18 +1464,10 @@
                         <div class="method-check">&#10003;</div>
                     </div>
 
-                    <div class="method-card" onclick="selectMethod(this,'stripe')" id="stripeMethodCard">
-                        <div class="method-icon" style="background:linear-gradient(135deg,#6772e5,#5469d4)"><i
-                                class="fas fa-credit-card"></i></div>
-                        <div class="method-info">
-                            <div class="method-name">Card (Stripe)</div>
-                            <div class="method-desc">Pay securely with card via Stripe Checkout</div>
-                        </div>
-                        <div class="method-check">&#10003;</div>
-                    </div>
-
                     <div class="method-card" onclick="selectMethod(this,'fawry')">
-                        <div class="method-icon fawry"><i class="fas fa-store"></i></div>
+                        <div class="method-icon" style="background:#fff;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+                            <img src="pay p/فوري.jpeg" alt="فوري" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
+                        </div>
                         <div class="method-info">
                             <div class="method-name" data-i18n="pay_fawry">فوري</div>
                             <div class="method-desc" data-i18n="pay_fawry_desc">ادفع عن طريق فوري</div>
@@ -1512,7 +1476,9 @@
                     </div>
 
                     <div class="method-card" onclick="selectMethod(this,'instapay')">
-                        <div class="method-icon instapay"><i class="fas fa-bolt"></i></div>
+                        <div class="method-icon" style="background:#fff;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+                            <img src="pay p/انستا.png" alt="إنستاباي" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
+                        </div>
                         <div class="method-info">
                             <div class="method-name" data-i18n="pay_instapay">إنستاباي</div>
                             <div class="method-desc" data-i18n="pay_instapay_desc">تحويل فوري من البنك</div>
