@@ -46,12 +46,16 @@
             padding: 0
         }
 
+        html, body {
+            overflow-x: hidden
+        }
+
         body {
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', 'Cairo', sans-serif;
             height: 100vh;
-            overflow: hidden
+            overflow-y: hidden
         }
 
         /* ===== TOP BAR ===== */
@@ -3464,6 +3468,11 @@
             .profile-name {
                 display: none
             }
+
+            .btn-upload-cv .btn-label,
+            .btn-save .btn-label {
+                display: none
+            }
         }
 
         @media(max-width:900px) {
@@ -3473,24 +3482,78 @@
 
             .sidebar-nav {
                 width: 100%;
-                max-height: 45vh;
+                max-height: none;
+                min-width: auto;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
-                min-width: auto
+                overflow-x: auto;
+                overflow-y: hidden;
+                flex-direction: row;
+                align-items: center
+            }
+
+            .sidebar-nav > div:not(.nav-tabs) {
+                display: none
+            }
+
+            .nav-tabs {
+                flex: 1;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                overflow-y: hidden;
+                gap: 0;
+                padding: 4px 8px;
+                scrollbar-width: none
+            }
+
+            .nav-tabs::-webkit-scrollbar {
+                display: none
+            }
+
+            .nav-tab {
+                margin-bottom: 0;
+                margin-right: 2px;
+                white-space: nowrap;
+                padding: 7px 10px;
+                font-size: 0.75rem;
+                flex-shrink: 0
+            }
+
+            .nav-tab .icon {
+                width: 22px;
+                height: 22px;
+                font-size: 0.68rem
             }
 
             .editor-forms {
                 width: 100%;
                 min-width: auto;
-                max-height: 45vh
+                max-height: none;
+                overflow-y: auto;
+                flex: 1
             }
 
             .preview-zone {
-                min-height: 50vh
+                min-height: 0;
+                flex: 1
+            }
+
+            .preview-container {
+                padding: 12px
+            }
+
+            .cv-page {
+                transform-origin: top center
             }
 
             .topbar {
-                padding: 0 12px
+                padding: 0 10px;
+                height: 48px
+            }
+
+            .editor-layout {
+                height: calc(100vh - 48px)
             }
 
             .topbar-nav {
@@ -3498,22 +3561,43 @@
             }
 
             .topbar-center {
-                flex: 1
+                flex: 1;
+                overflow-x: auto;
+                gap: 4px;
+                scrollbar-width: none
+            }
+
+            .topbar-center::-webkit-scrollbar {
+                display: none
             }
 
             .topbar-left {
-                gap: 6px
+                gap: 4px;
+                flex-shrink: 0
+            }
+
+            .topbar-logo {
+                font-size: 1.1rem
+            }
+
+            .topbar-divider {
+                display: none
             }
 
             .btn-export,
             .btn-html-export {
-                padding: 6px 12px;
-                font-size: 0.72rem
+                padding: 5px 10px;
+                font-size: 0.68rem
             }
 
             .btn-save {
-                padding: 6px 12px;
-                font-size: 0.72rem
+                padding: 5px 10px;
+                font-size: 0.68rem
+            }
+
+            .btn-upload-cv {
+                padding: 5px 8px;
+                font-size: 0.68rem
             }
 
             .profile-dropdown {
@@ -3528,65 +3612,108 @@
                 width: calc(100vw - 24px);
                 right: 0
             }
+
+            .zoom-controls {
+                padding: 6px 12px
+            }
         }
 
         @media(max-width:600px) {
-            .sidebar-nav {
-                max-height: 35vh;
-                overflow-y: auto
-            }
-
-            .nav-tabs {
-                padding: 4px 6px
-            }
-
             .nav-tab {
-                font-size: 0.72rem;
+                font-size: 0.7rem;
                 padding: 6px 8px
             }
 
             .nav-tab .icon {
-                width: 24px;
-                height: 24px;
-                font-size: 0.72rem
+                width: 20px;
+                height: 20px;
+                font-size: 0.65rem
+            }
+
+            .nav-tab .tab-label {
+                font-size: 0.68rem
             }
 
             .editor-forms {
-                max-height: 40vh;
-                padding: 10px
+                padding: 8px
             }
 
             .field input,
             .field textarea,
             .field select {
-                font-size: 0.8rem;
-                padding: 8px 10px
+                font-size: 16px;
+                padding: 10px 12px;
+                min-height: 44px
             }
 
             .form-card {
-                padding: 12px
+                padding: 10px;
+                margin-bottom: 8px
+            }
+
+            .form-card-header {
+                margin-bottom: 10px;
+                padding-bottom: 8px
+            }
+
+            .form-card-header h3 {
+                font-size: 0.82rem
             }
 
             .preview-zone {
-                padding: 6px
+                padding: 4px
+            }
+
+            .preview-container {
+                padding: 8px
             }
 
             .cv-page {
-                transform: scale(0.5);
+                transform: scale(0.6);
                 transform-origin: top center
             }
 
             .topbar-logo {
-                font-size: 1.1rem
+                font-size: 1rem
+            }
+
+            .topbar {
+                height: 44px;
+                padding: 0 8px
+            }
+
+            .editor-layout {
+                height: calc(100vh - 44px)
             }
 
             .topbar-center select {
-                font-size: 0.68rem;
-                max-width: 80px
+                font-size: 0.65rem;
+                max-width: 70px;
+                padding: 3px 4px
+            }
+
+            .topbar-center .ctrl-group label {
+                display: none
             }
 
             .slider-group input[type="range"] {
-                width: 40px
+                width: 36px
+            }
+
+            .slider-val {
+                font-size: 0.55rem
+            }
+
+            .theme-toggle {
+                width: 28px;
+                height: 28px;
+                font-size: 0.75rem
+            }
+
+            .undo-redo button {
+                width: 26px;
+                height: 26px;
+                font-size: 0.65rem
             }
 
             .add-section-btn {
@@ -3595,7 +3722,7 @@
             }
 
             .profile-dropdown {
-                width: 260px;
+                width: 250px;
                 right: -10px
             }
 
@@ -3610,25 +3737,52 @@
             .ctrl-group label {
                 display: none
             }
+
+            .notif-bell {
+                width: 32px;
+                height: 32px
+            }
+
+            .zoom-controls {
+                padding: 5px 10px
+            }
+
+            .zoom-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem
+            }
+
+            .zoom-pct {
+                font-size: 0.7rem;
+                min-width: 36px
+            }
         }
 
         @media(max-width:400px) {
             .cv-page {
-                transform: scale(0.38)
+                transform: scale(0.45)
             }
 
             .topbar {
                 flex-wrap: wrap;
                 height: auto;
-                padding: 6px 8px;
-                gap: 6px
+                min-height: 40px;
+                padding: 4px 6px;
+                gap: 4px
             }
 
             .topbar-center {
                 order: 3;
                 width: 100%;
                 justify-content: flex-start;
-                flex-wrap: wrap
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                scrollbar-width: none
+            }
+
+            .topbar-center::-webkit-scrollbar {
+                display: none
             }
 
             .topbar-divider {
@@ -3636,31 +3790,47 @@
             }
 
             .sidebar-nav {
-                max-height: 30vh
+                min-height: 32px
+            }
+
+            .nav-tab {
+                padding: 5px 6px;
+                font-size: 0.65rem
+            }
+
+            .nav-tab .tab-label {
+                font-size: 0.62rem
             }
 
             .editor-forms {
-                max-height: 35vh
+                padding: 6px
+            }
+
+            .field input,
+            .field textarea,
+            .field select {
+                font-size: 16px;
+                padding: 10px
             }
 
             .ai-assist-btn {
-                width: 48px;
-                height: 48px;
-                bottom: 70px;
-                right: 16px
+                width: 44px;
+                height: 44px;
+                bottom: 60px;
+                right: 12px
             }
 
             .ai-menu {
-                right: 16px;
-                bottom: 128px;
-                width: 200px
+                right: 12px;
+                bottom: 112px;
+                width: 180px
             }
 
             .ai-result-panel {
-                right: 16px;
-                bottom: 70px;
-                width: calc(100vw - 32px);
-                max-width: 380px
+                right: 8px;
+                bottom: 60px;
+                width: calc(100vw - 16px);
+                max-width: 360px
             }
         }
 
