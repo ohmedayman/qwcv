@@ -441,6 +441,114 @@
             color: var(--light);
         }
 
+        /* Voice Popup */
+        .voice-popup-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            z-index: 9999; justify-content: center; align-items: center;
+            backdrop-filter: blur(6px);
+        }
+        .voice-popup-overlay.show { display: flex; }
+        .voice-popup {
+            background: var(--card); border-radius: 24px; padding: 40px 32px;
+            width: 380px; max-width: 92vw; text-align: center;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+            animation: voicePopIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            position: relative;
+        }
+        @keyframes voicePopIn { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
+        .voice-popup h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
+        .voice-popup .sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 24px; }
+        .voice-orb {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #27ffed);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px; cursor: pointer; position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .voice-orb:hover { transform: scale(1.05); }
+        .voice-orb.listening {
+            animation: voicePulse 1.2s ease-in-out infinite;
+            box-shadow: 0 0 0 0 rgba(0,3,201,0.4);
+        }
+        @keyframes voicePulse {
+            0% { box-shadow: 0 0 0 0 rgba(0,3,201,0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(0,3,201,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,3,201,0); }
+        }
+        .voice-orb i { font-size: 2.5rem; color: #fff; }
+        .voice-orb .ring {
+            position: absolute; inset: -8px; border-radius: 50%;
+            border: 2px solid rgba(0,3,201,0.2);
+        }
+        .voice-orb.listening .ring { animation: ringExpand 1.5s ease-out infinite; }
+        @keyframes ringExpand { from{transform:scale(1);opacity:1} to{transform:scale(1.4);opacity:0} }
+        .voice-transcript {
+            min-height: 48px; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 16px; font-size: 0.88rem;
+            color: var(--text); margin-bottom: 16px; text-align: right;
+            direction: rtl; line-height: 1.6; max-height: 100px; overflow-y: auto;
+        }
+        .voice-transcript:empty::before {
+            content: 'اضغط على الدائرة وابدأ التحدث...'; color: var(--light);
+        }
+        .voice-actions { display: flex; gap: 10px; justify-content: center; }
+        .voice-btn {
+            padding: 10px 24px; border-radius: 12px; font-weight: 700;
+            font-size: 0.85rem; cursor: pointer; font-family: inherit;
+            border: none; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+        }
+        .voice-btn.send { background: var(--accent); color: #fff; }
+        .voice-btn.send:hover { background: #0002a3; }
+        .voice-btn.send:disabled { background: #d1d5db; cursor: not-allowed; }
+        .voice-btn.cancel { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+        .voice-btn.cancel:hover { border-color: var(--red); color: var(--red); }
+
+        /* Mic button in input */
+        .mic-btn {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: transparent; border: 1px solid var(--border);
+            color: var(--muted); cursor: pointer; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; transition: all 0.2s; font-family: inherit;
+        }
+        .mic-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+        /* Typewriter cursor */
+        .typewriter-cursor {
+            display: inline-block; width: 2px; height: 1em;
+            background: var(--accent); margin-left: 2px;
+            animation: blink 0.8s step-end infinite; vertical-align: text-bottom;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* Typewriter container */
+        .tw-bubble { min-height: 20px; }
+
+        /* Enhanced welcome */
+        .welcome-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: linear-gradient(135deg, rgba(0,3,201,0.08), rgba(39,255,237,0.08));
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 6px 14px; font-size: 0.72rem; font-weight: 600;
+            color: var(--accent); margin-bottom: 16px;
+        }
+        .welcome-stats {
+            display: flex; justify-content: center; gap: 24px; margin-top: 16px;
+            padding-top: 16px; border-top: 1px solid var(--border);
+        }
+        .welcome-stat { text-align: center; }
+        .welcome-stat .num { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+        .welcome-stat .lbl { font-size: 0.68rem; color: var(--muted); }
+
+        /* Voice input wave */
+        .voice-wave { display: flex; gap: 3px; align-items: center; justify-content: center; height: 24px; margin-top: 8px; }
+        .voice-wave span { width: 3px; background: var(--accent); border-radius: 2px; animation: waveBar 0.8s ease-in-out infinite; }
+        .voice-wave span:nth-child(2) { animation-delay: 0.1s; }
+        .voice-wave span:nth-child(3) { animation-delay: 0.2s; }
+        .voice-wave span:nth-child(4) { animation-delay: 0.3s; }
+        .voice-wave span:nth-child(5) { animation-delay: 0.4s; }
+        @keyframes waveBar { 0%,100%{height:4px} 50%{height:20px} }
+
         /* Dark Mode */
         body.dark-mode {
             --bg: #0a0e1a;
@@ -458,6 +566,8 @@
         body.dark-mode .msg-bubble pre { background: #0f172a; }
         body.dark-mode .msg-bubble code { background: #1e293b; }
         body.dark-mode .topbar { background: #111827; border-color: #1f2937; }
+        body.dark-mode .voice-popup { background: #111827; }
+        body.dark-mode .voice-transcript { background: #1f2937; border-color: #374151; }
 
         /* Mobile */
         @media(max-width:768px) {
@@ -486,6 +596,7 @@
             .quick-card p { font-size: 0.65rem; }
             .msg.user .msg-bubble { max-width: 88%; }
             .msg.ai .msg-bubble { max-width: 92%; }
+            .voice-popup { padding: 28px 20px; }
         }
     </style>
 </head>
@@ -553,9 +664,15 @@
                 <!-- Welcome -->
                 <div class="welcome" id="welcomeScreen">
                     <div class="welcome-icon"><i class="fas fa-robot"></i></div>
+                    <div class="welcome-badge"><i class="fas fa-bolt" style="color:#27ffed"></i> مدعوم بـ GPT-5.5 — مجاني بالكامل</div>
                     <h1>مرحباً! أنا مساعد QCV الذكي</h1>
                     <p>أساعدك في كتابة سيرة ذاتية احترافية، تحسينها، التحضير للمقابلات، وتحديد مسارك المهني.</p>
-                    <div class="quick-grid">
+                    <div class="welcome-stats">
+                        <div class="welcome-stat"><div class="num">+15</div><div class="lbl">قالب احترافي</div></div>
+                        <div class="welcome-stat"><div class="num">24/7</div><div class="lbl">مساعد متاح</div></div>
+                        <div class="welcome-stat"><div class="num">مجاني</div><div class="lbl">بدون حدود</div></div>
+                    </div>
+                    <div class="quick-grid" style="margin-top:24px">
                         <div class="quick-card" onclick="quickAsk('اكتب لي سيرة ذاتية احترافية لمهندس برمجيات بخبرة 5 سنوات في React وNode.js')">
                             <div class="qi"><i class="fas fa-pen-fancy"></i></div>
                             <h3>اكتب سيرة ذاتية</h3>
@@ -613,9 +730,30 @@
         <div class="input-area">
             <div class="input-wrap">
                 <textarea id="userInput" rows="1" placeholder="اكتب رسالتك هنا..." oninput="autoResize(this)"></textarea>
+                <button class="mic-btn" id="micBtn" onclick="openVoice()" title="إدخال صوتي"><i class="fas fa-microphone"></i></button>
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
-            <div class="input-hint">Enter للإرسال • Shift+Enter لسطر جديد</div>
+            <div class="input-hint">Enter للإرسال • Shift+Enter لسطر جديد • <i class="fas fa-microphone" style="color:var(--accent)"></i> اضغط للتحدث</div>
+        </div>
+    </div>
+
+    <!-- Voice Popup -->
+    <div class="voice-popup-overlay" id="voiceOverlay">
+        <div class="voice-popup">
+            <h3 id="voiceTitle">تحدث الآن</h3>
+            <div class="sub" id="voiceSub">اضغط على الدائرة وابدأ التحدث</div>
+            <div class="voice-orb" id="voiceOrb" onclick="toggleVoiceListening()">
+                <div class="ring"></div>
+                <i class="fas fa-microphone"></i>
+            </div>
+            <div class="voice-wave" id="voiceWave" style="display:none">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="voice-transcript" id="voiceTranscript"></div>
+            <div class="voice-actions">
+                <button class="voice-btn cancel" onclick="closeVoice()"><i class="fas fa-xmark"></i> إلغاء</button>
+                <button class="voice-btn send" id="voiceSendBtn" onclick="sendVoiceMessage()" disabled><i class="fas fa-paper-plane"></i> إرسال</button>
+            </div>
         </div>
     </div>
 
@@ -625,35 +763,48 @@
         let cvDataExtracted = null;
         let currentChatId = null;
 
-        const SYSTEM_PROMPT = `أنت مساعد ذكي متخصص في السيرة الذاتية والوظائف لمنصة QCV. تتحدث العربية بشكل احترافي وودود.
+        const SYSTEM_PROMPT = `أنت مساعد ذكي متخصص في السيرة الذاتية والوظائف لمنصة QCV. تتحدث العربية بشكل احترافي وودود. أنت تعرف كل شيء عن المنصة وتستطيع مساعدة المستخدمين بشكل شامل.
 
-مهماتك الأساسية:
-1. كتابة سير ذاتية احترافية من بيانات المستخدم
-2. تحسين وتحليل السير الذاتية existing
-3. تقديم أسئلة مقابلات شائعة مع نصائح للإجابة
-4. كتابة خطابات تعريف (Cover Letter)
+== معلومات المنصة ==
+- منصة QCV (qcv.vexonet.online) هي منصة مصرية متخصصة في إنشاء السير الذاتية الاحترافية
+- تابعة لشركة Vexonet (vexonet.online)
+- بها 15+ قالب CV احترافي (أبيض وأسود، أنيق، عصري، كلاسيكي، إبداعي، تقني، مطور، بسيط، ملون، مينيمال، مرتين، أنيق برونزي، احترافي، إبداعي، مميز)
+- محرر سيرة ذاتية ذكي مع قسم معلومات شخصية، ملخص، خبرات، تعليم، مهارات، لغات، مشاريع، شهادات
+- قسم وظائف شاغرة من موقع الويب
+- أدوات AI مجانية: تحليل السيرة الذاتية، محاكاة مقابلة، كتابة Cover Letter، تحويل السيرة الذاتية ل链接
+- صفحة بورتفوليو احترافية لكل مستخدم (portfolio.html?user=UID)
+- خطة مجانية: CV واحد، قالب واحد، تنزيل PDF واحد، بدون AI
+- باقة Pro: 99 جنيه مصري/شهر — 5 سير ذاتية، 5 قوالب، 10 تنزيلات، AI متقدم، إزالة العلامة المائية
+- باقة Unlimited: 299 جنيه مصري/شهر — سير ذاتية غير محدودة، كل القوالب، تنزيلات غير محدودة، AI بلا حدود
+- الدفع عبر: فودافون كاش، فوري، انستاباي
+
+== المهام الأساسية ==
+1. كتابة سير ذاتية احترافية من بيانات المستخدم — اجمع كل البيانات أولاً
+2. تحسين وتحليل السير الذاتية существة مع تقديم ملاحظات محددة
+3. تقديم أسئلة مقابلات شائعة مع نصائح للإجابة حسبالتخصص
+4. كتابة خطابات تعريف (Cover Letter) مخصصة لكل وظيفة
 5. اقتراح مسار مهني وفرص عمل مناسبة
 6. شرح أفضل الممارسات في كتابة السيرة الذاتية
+7. نصائح للتطوير المهني والتعلم المستمر
+8. مساعدة المستخدم في اختيار القوالب المناسبة
 
-قواعد الإجابة:
-- رد بالعربية دائماً
+== قواعد الإجابة ==
+- رد بالعربية دائماً حتى لو المستخدم كتب بالإنجليزية
 - كن مختصراً وواضحاً ما لم يطلب التفصيل
 - استخدم تنسيق markdown: **للتنبيه**، \`كود\`، قوائم منقطة، عناوين ##
-- لا تستخدم كلمات مثل "بالتأكيد" أو "بكل سرور" كثيراً، كن مباشرة
+- لا تستخدم كلمات مثل "بالتأكيد" أو "بكل سرور" كثيراً، كن مباشرة ومحترفاً
 - إذا كان لديك توصيات، اقترحها دون سؤال
+- عند كتابة سيرة ذاتية، اجمع البيانات أولاً بسؤال واحد شامل
+- اعرض السيرة الذاتية بصيغة markdown منظمة مع عناوين واضحة
+- في النهاية أضف JSON في كتلة كود محددة بـ \`\`\`json以便 المستخدم يضغط "إنشاء CV"
+- لا تستخدم جداول markdown، استخدم قوائم بدلاً منها
 
-عندما يطلب المستخدم إنشاء سيرة ذاتية:
-- اجمع البيانات أولاً بسؤال واحد شامل
-- ثم اعرض السيرة الذاتية بصيغة markdown منظمة مع عناوين واضحة
-- في النهاية، أضف JSON في كتلة كود محددة بـ \`\`\`json以便 المستخدم يضغط "إنشاء CV" لتحويلها
-- قدم النص بشكل جميل ومقروء قبل الـ JSON
-
-تنسيق الردوع:
+== تنسيق الردوع ==
 - استخدم ## للعناوين الرئيسية
 - استخدم ** للنص العريض
 - استخدم - للقوائم
 - افصل بين الأقسام بسطر فارغ
-- لا تستخدم جداول markdown، استخدم قوائم بدلاً منها`;
+- قدم نصائح عملية وقابلة للتطبيق فوراً`;
 
         /* ===== Chat Management ===== */
         function genChatId() { return 'chat_' + Date.now(); }
@@ -699,9 +850,15 @@
             container.innerHTML = `
                 <div class="welcome" id="welcomeScreen">
                     <div class="welcome-icon"><i class="fas fa-robot"></i></div>
+                    <div class="welcome-badge"><i class="fas fa-bolt" style="color:#27ffed"></i> مدعوم بـ GPT-5.5 — مجاني بالكامل</div>
                     <h1>مرحباً! أنا مساعد QCV الذكي</h1>
                     <p>أساعدك في كتابة سيرة ذاتية احترافية، تحسينها، التحضير للمقابلات، وتحديد مسارك المهني.</p>
-                    <div class="quick-grid">
+                    <div class="welcome-stats">
+                        <div class="welcome-stat"><div class="num">+15</div><div class="lbl">قالب احترافي</div></div>
+                        <div class="welcome-stat"><div class="num">24/7</div><div class="lbl">مساعد متاح</div></div>
+                        <div class="welcome-stat"><div class="num">مجاني</div><div class="lbl">بدون حدود</div></div>
+                    </div>
+                    <div class="quick-grid" style="margin-top:24px">
                         <div class="quick-card" onclick="quickAsk('اكتب لي سيرة ذاتية احترافية لمهندس برمجيات بخبرة 5 سنوات في React وNode.js')">
                             <div class="qi"><i class="fas fa-pen-fancy"></i></div>
                             <h3>اكتب سيرة ذاتية</h3>
@@ -986,6 +1143,9 @@
                     }
                 }
 
+                // Typewriter effect on final render
+                typewriterRender(streamId, fullText);
+
                 chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
                 saveCurrentChat(text);
                 detectCvData(text, fullText);
@@ -1059,6 +1219,145 @@
         function closeSidebar() {
             document.getElementById('sidebar').classList.remove('open');
             document.getElementById('sidebarOverlay').classList.remove('open');
+        }
+
+        /* ===== VOICE INPUT ===== */
+        let voiceRecognition = null;
+        let isVoiceListening = false;
+        let voiceTranscriptText = '';
+
+        function openVoice() {
+            document.getElementById('voiceOverlay').classList.add('show');
+            document.getElementById('voiceTranscript').textContent = '';
+            document.getElementById('voiceSendBtn').disabled = true;
+            document.getElementById('voiceTitle').textContent = 'تحدث الآن';
+            document.getElementById('voiceSub').textContent = 'اضغط على الدائرة وابدأ التحدث';
+            document.getElementById('voiceOrb').classList.remove('listening');
+            document.getElementById('voiceWave').style.display = 'none';
+            voiceTranscriptText = '';
+            initVoiceRecognition();
+        }
+
+        function closeVoice() {
+            document.getElementById('voiceOverlay').classList.remove('show');
+            if (voiceRecognition) { try { voiceRecognition.stop(); } catch(e){} }
+            isVoiceListening = false;
+        }
+
+        function initVoiceRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                document.getElementById('voiceSub').textContent = 'متصفحك لا يدعم التعرف على الصوت — اكتب بدلاً من ذلك';
+                document.getElementById('voiceOrb').style.opacity = '0.5';
+                document.getElementById('voiceOrb').style.pointerEvents = 'none';
+                return;
+            }
+            voiceRecognition = new SpeechRecognition();
+            voiceRecognition.lang = 'ar-SA';
+            voiceRecognition.continuous = true;
+            voiceRecognition.interimResults = true;
+
+            voiceRecognition.onresult = function(event) {
+                let final = '', interim = '';
+                for (let i = 0; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) final += event.results[i][0].transcript + ' ';
+                    else interim += event.results[i][0].transcript;
+                }
+                voiceTranscriptText = final || interim;
+                document.getElementById('voiceTranscript').textContent = voiceTranscriptText;
+                document.getElementById('voiceSendBtn').disabled = !voiceTranscriptText.trim();
+            };
+
+            voiceRecognition.onerror = function(event) {
+                if (event.error === 'no-speech') {
+                    document.getElementById('voiceSub').textContent = 'لم يتم اكتشاف صوت — حاول مرة أخرى';
+                } else if (event.error === 'not-allowed') {
+                    document.getElementById('voiceSub').textContent = 'يرجى السماح بالوصول للمايكروفون';
+                } else {
+                    document.getElementById('voiceSub').textContent = 'حدث خطأ: ' + event.error;
+                }
+                stopVoiceListening();
+            };
+
+            voiceRecognition.onend = function() {
+                if (isVoiceListening) {
+                    try { voiceRecognition.start(); } catch(e) { stopVoiceListening(); }
+                }
+            };
+        }
+
+        function toggleVoiceListening() {
+            if (isVoiceListening) stopVoiceListening();
+            else startVoiceListening();
+        }
+
+        function startVoiceListening() {
+            if (!voiceRecognition) { initVoiceRecognition(); if (!voiceRecognition) return; }
+            try {
+                voiceRecognition.start();
+                isVoiceListening = true;
+                document.getElementById('voiceOrb').classList.add('listening');
+                document.getElementById('voiceWave').style.display = 'flex';
+                document.getElementById('voiceTitle').textContent = 'جاري الاستماع...';
+                document.getElementById('voiceSub').textContent = 'تحدث الآن — اضغط مرة أخرى للإيقاف';
+            } catch(e) {}
+        }
+
+        function stopVoiceListening() {
+            isVoiceListening = false;
+            if (voiceRecognition) { try { voiceRecognition.stop(); } catch(e){} }
+            document.getElementById('voiceOrb').classList.remove('listening');
+            document.getElementById('voiceWave').style.display = 'none';
+            document.getElementById('voiceTitle').textContent = 'تحدث الآن';
+            document.getElementById('voiceSub').textContent = voiceTranscriptText.trim() ? 'اضغط "إرسال" أو تحدث مرة أخرى' : 'اضغط على الدائرة وابدأ التحدث';
+        }
+
+        function sendVoiceMessage() {
+            const text = voiceTranscriptText.trim();
+            if (!text) return;
+            closeVoice();
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        /* ===== TYPEWRITER EFFECT ===== */
+        let typewriterQueue = [];
+        let typewriterRunning = false;
+
+        function typewriterRender(id, fullText) {
+            typewriterQueue.push({ id, fullText });
+            if (!typewriterRunning) processTypewriterQueue();
+        }
+
+        function processTypewriterQueue() {
+            if (typewriterQueue.length === 0) { typewriterRunning = false; return; }
+            typewriterRunning = true;
+            const { id, fullText } = typewriterQueue.shift();
+            const bubble = document.getElementById(id + '_bubble');
+            if (!bubble) { processTypewriterQueue(); return; }
+
+            bubble.classList.add('tw-bubble');
+            bubble.innerHTML = '<span class="typewriter-cursor"></span>';
+            let i = 0;
+            const chunkSize = 3;
+            const delay = 12;
+
+            function typeChunk() {
+                if (i >= fullText.length) {
+                    bubble.innerHTML = formatMd(fullText);
+                    const copyBtn = document.getElementById(id + '_copy');
+                    if (copyBtn) copyBtn.setAttribute('data-text', fullText);
+                    scrollDown();
+                    processTypewriterQueue();
+                    return;
+                }
+                i = Math.min(i + chunkSize, fullText.length);
+                const shown = fullText.substring(0, i);
+                bubble.innerHTML = formatMd(shown) + '<span class="typewriter-cursor"></span>';
+                scrollDown();
+                setTimeout(typeChunk, delay);
+            }
+            typeChunk();
         }
 
         /* ===== Init ===== */
