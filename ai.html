@@ -597,6 +597,19 @@
             </button>
         </div>
 
+        <!-- Puter Login Banner -->
+        <div id="puterLoginBanner" style="display:none;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:16px 20px;text-align:center">
+            <div style="max-width:780px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
+                <div>
+                    <div style="font-weight:700;font-size:0.95rem;margin-bottom:2px">سجّل دخولك للمتابعة</div>
+                    <div style="font-size:0.78rem;opacity:0.8">محتاج تسجل دخول بحساب Puter المجاني عشان تستخدم المساعد الذكي</div>
+                </div>
+                <button onclick="puter.auth.onAuthChange(()=>{})||puter.auth.signIn()" style="background:#27ffed;color:#0003c9;border:none;padding:10px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s">
+                    <i class="fas fa-user" style="margin-left:6px"></i> تسجيل دخول Puter
+                </button>
+            </div>
+        </div>
+
         <div class="input-area">
             <div class="input-wrap">
                 <textarea id="userInput" rows="1" placeholder="اكتب رسالتك هنا..." oninput="autoResize(this)"></textarea>
@@ -828,10 +841,35 @@
         }
 
         /* ===== Send / Receive via Puter.js ===== */
+        let puterReady = false;
+
+        async function checkPuterAuth() {
+            try {
+                const user = await puter.auth.getUser();
+                if (user && user.username) {
+                    puterReady = true;
+                    document.getElementById('puterLoginBanner').style.display = 'none';
+                    document.getElementById('userInput').disabled = false;
+                    document.getElementById('userInput').placeholder = 'اكتب رسالتك هنا...';
+                    return true;
+                }
+            } catch(e) {}
+            puterReady = false;
+            document.getElementById('puterLoginBanner').style.display = 'block';
+            document.getElementById('userInput').disabled = true;
+            document.getElementById('userInput').placeholder = 'سجّل دخولك أولاً...';
+            return false;
+        }
+
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const text = input.value.trim();
             if (!text || isTyping) return;
+
+            if (!puterReady) {
+                const ok = await checkPuterAuth();
+                if (!ok) return;
+            }
 
             input.value = '';
             input.style.height = 'auto';
@@ -948,6 +986,12 @@
         /* ===== Init ===== */
         if (localStorage.getItem('qcv_dark') === 'true') document.body.classList.add('dark-mode');
 
+        // Check Puter auth
+        puter.auth.onAuthChange(function(user) {
+            checkPuterAuth();
+        });
+        checkPuterAuth();
+
         const chatList = getChatList();
         if (chatList.length > 0) {
             switchChat(chatList[0][0]);
@@ -957,7 +1001,6 @@
         document.getElementById('userInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
         });
-        document.getElementById('userInput').focus();
     </script>
 </body>
 </html>
