@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QCV — Job Application Tracker</title>
+    <title>QCV — متتبع طلبات العمل</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,48 +58,48 @@
     <div class="topbar">
         <a href="index.html" class="logo">Q<span>CV</span></a>
         <div style="display:flex;gap:10px;align-items:center">
-            <a href="editor.html" class="btn" style="background:var(--input);color:var(--text);text-decoration:none;font-size:0.82rem"><i class="fas fa-edit"></i> Editor</a>
+            <a href="editor.html" class="btn" style="background:var(--input);color:var(--text);text-decoration:none;font-size:0.82rem"><i class="fas fa-edit"></i> المحرر</a>
         </div>
     </div>
     <div class="container">
-        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:4px"><i class="fas fa-briefcase" style="color:var(--primary);margin-right:8px"></i>Job Application Tracker</h1>
-        <p style="color:var(--muted);font-size:0.88rem;margin-bottom:24px">Track your job applications and their status</p>
+        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:4px"><i class="fas fa-briefcase" style="color:var(--primary);margin-right:8px"></i>متتبع طلبات العمل</h1>
+        <p style="color:var(--muted);font-size:0.88rem;margin-bottom:24px">تتبع طلبات عملك وحالتها</p>
 
         <div class="stats-row" id="statsRow">
-            <div class="stat-card"><div class="stat-num" id="statTotal" style="color:var(--primary)">0</div><div class="stat-label">Total Applied</div></div>
-            <div class="stat-card"><div class="stat-num" id="statInterview" style="color:var(--yellow)">0</div><div class="stat-label">Interviews</div></div>
-            <div class="stat-card"><div class="stat-num" id="statOffer" style="color:var(--green)">0</div><div class="stat-label">Offers</div></div>
-            <div class="stat-card"><div class="stat-num" id="statRejected" style="color:var(--red)">0</div><div class="stat-label">Rejected</div></div>
+            <div class="stat-card"><div class="stat-num" id="statTotal" style="color:var(--primary)">0</div><div class="stat-label">إجمالي التقديمات</div></div>
+            <div class="stat-card"><div class="stat-num" id="statInterview" style="color:var(--yellow)">0</div><div class="stat-label">المقابلات</div></div>
+            <div class="stat-card"><div class="stat-num" id="statOffer" style="color:var(--green)">0</div><div class="stat-label">العروض</div></div>
+            <div class="stat-card"><div class="stat-num" id="statRejected" style="color:var(--red)">0</div><div class="stat-label">المرفوضة</div></div>
         </div>
 
         <div class="add-form">
-            <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px"><i class="fas fa-plus-circle" style="color:var(--primary);margin-right:6px"></i>Add Application</h3>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px"><i class="fas fa-plus-circle" style="color:var(--primary);margin-right:6px"></i>إضافة طلب</h3>
             <div class="form-row">
-                <div class="form-group"><label>Company *</label><input id="appCompany" placeholder="Google"></div>
-                <div class="form-group"><label>Position *</label><input id="appPosition" placeholder="Software Engineer"></div>
-                <div class="form-group"><label>Status</label>
+                <div class="form-group"><label>الشركة *</label><input id="appCompany" placeholder="Google"></div>
+                <div class="form-group"><label>المنصب *</label><input id="appPosition" placeholder="مهندس برمجيات"></div>
+                <div class="form-group"><label>الحالة</label>
                     <select id="appStatus">
-                        <option value="applied">Applied</option>
-                        <option value="interview">Interview</option>
-                        <option value="offer">Offer</option>
-                        <option value="rejected">Rejected</option>
+                        <option value="applied">تم التقديم</option>
+                        <option value="interview">مقابلة</option>
+                        <option value="offer">عرض</option>
+                        <option value="rejected">مرفوض</option>
                     </select>
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label>Date Applied</label><input id="appDate" type="date"></div>
-                <div class="form-group"><label>Salary Range</label><input id="appSalary" placeholder="e.g. $80k-$120k"></div>
-                <div class="form-group"><label>Link</label><input id="appLink" placeholder="https://..."></div>
+                <div class="form-group"><label>تاريخ التقديم</label><input id="appDate" type="date"></div>
+                <div class="form-group"><label>نطاق الراتب</label><input id="appSalary" placeholder="مثال: 80,000 - 120,000 ج.م"></div>
+                <div class="form-group"><label>الرابط</label><input id="appLink" placeholder="https://..."></div>
             </div>
             <div class="form-row full">
-                <div class="form-group"><label>Notes</label><textarea id="appNotes" rows="2" placeholder="Interview scheduled for next week..."></textarea></div>
+                <div class="form-group"><label>ملاحظات</label><textarea id="appNotes" rows="2" placeholder="مقابلة مجدولة للأسبوع القادم..."></textarea></div>
             </div>
-            <button class="btn btn-primary" onclick="addApplication()"><i class="fas fa-plus"></i> Add Application</button>
+            <button class="btn btn-primary" onclick="addApplication()"><i class="fas fa-plus"></i> إضافة طلب</button>
         </div>
 
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px"><i class="fas fa-list" style="color:var(--primary);margin-right:6px"></i>Applications</h3>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px"><i class="fas fa-list" style="color:var(--primary);margin-right:6px"></i>الطلبات</h3>
         <div class="apps-list" id="appsList">
-            <div class="empty"><i class="fas fa-inbox"></i>No applications yet. Add your first one above!</div>
+            <div class="empty"><i class="fas fa-inbox"></i>لا توجد طلبات بعد. أضف أول طلب أعلاه!</div>
         </div>
     </div>
 
@@ -122,7 +122,7 @@
         function addApplication() {
             const company = document.getElementById('appCompany').value.trim();
             const position = document.getElementById('appPosition').value.trim();
-            if (!company || !position) { alert('Please fill in Company and Position'); return; }
+            if (!company || !position) { alert('من فضلك أدخل الشركة والمنصب'); return; }
             const app = {
                 company, position,
                 status: document.getElementById('appStatus').value,
@@ -149,18 +149,20 @@
             });
         }
 
+        const statusLabels = { applied: 'تم التقديم', interview: 'مقابلة', offer: 'عرض', rejected: 'مرفوض' };
+
         function renderApplications(apps) {
             const list = document.getElementById('appsList');
-            if (!apps.length) { list.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i>No applications yet. Add your first one above!</div>'; updateStats(apps); return; }
+            if (!apps.length) { list.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i>لا توجد طلبات بعد. أضف أول طلب أعلاه!</div>'; updateStats(apps); return; }
             list.innerHTML = apps.map(a =>
                 '<div class="app-card">' +
                 '<div class="app-status ' + (a.status || 'applied') + '"></div>' +
                 '<div class="app-info">' +
                 '<div class="app-company">' + esc(a.company) + '</div>' +
                 '<div class="app-position">' + esc(a.position) + (a.salary ? ' — ' + esc(a.salary) : '') + '</div>' +
-                '<div class="app-date">' + (a.date || 'No date') + (a.notes ? ' — ' + esc(a.notes.substring(0, 80)) : '') + '</div>' +
+                '<div class="app-date">' + (a.date || 'بدون تاريخ') + (a.notes ? ' — ' + esc(a.notes.substring(0, 80)) : '') + '</div>' +
                 '</div>' +
-                '<span class="status-badge ' + (a.status || 'applied') + '">' + (a.status || 'applied') + '</span>' +
+                '<span class="status-badge ' + (a.status || 'applied') + '">' + (statusLabels[a.status] || statusLabels['applied']) + '</span>' +
                 '<div class="app-actions">' +
                 '<button class="btn btn-sm" style="background:var(--input)" onclick="cycleStatus(\'' + a.id + '\',\'' + a.status + '\')"><i class="fas fa-sync-alt"></i></button>' +
                 (a.link ? '<a href="' + esc(a.link) + '" target="_blank" class="btn btn-sm" style="background:var(--input);text-decoration:none"><i class="fas fa-external-link-alt"></i></a>' : '') +
@@ -184,7 +186,7 @@
         }
 
         function deleteApplication(id) {
-            if (!confirm('Delete this application?')) return;
+            if (!confirm('حذف هذا الطلب؟')) return;
             db.ref('users/' + currentUid + '/applications/' + id).remove();
         }
 

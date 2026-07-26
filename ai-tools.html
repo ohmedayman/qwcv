@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QCV - Free AI Career Tools</title>
-    <meta name="description" content="Free AI career tools: Cover Letter, Career Path, Salary Estimator, Interview Coach">
+    <title>QCV - أدوات AI المجانية للوظائف</title>
+    <meta name="description" content="أدوات AI مجانية للوظائف: خطابات التعريف، المسار المهني، تقدير الرواتب، مدرب المقابلات">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,58 +68,58 @@
 <div class="nav">
     <a href="index.html" class="logo">Q<span>CV</span></a>
     <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="editor.html">Editor</a>
-        <a href="ats-checker.html">ATS Check</a>
-        <a href="login.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.82rem">Get Started</a>
+        <a href="index.html">الرئيسية</a>
+        <a href="editor.html">المحرر</a>
+        <a href="ats-checker.html">فحص ATS</a>
+        <a href="login.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.82rem">ابدأ الآن</a>
     </div>
 </div>
 <div class="hero">
-    <h1>Free AI <span>Career Tools</span></h1>
-    <p>Powerful AI tools to boost your job search. No login required, unlimited usage.</p>
+    <h1>أدوات AI مجانية <span>للبحث عن وظائف</span></h1>
+    <p>أدوات ذكاء اصطناعي قوية لتحسين بحثك عن وظائف. بدون تسجيل دخول، استخدام غير محدود.</p>
 </div>
 <div class="tools-grid">
     <div class="tool-card" onclick="openTool('coverletter')">
         <div class="tool-icon" style="background:rgba(14,165,233,0.1);color:var(--blue)"><i class="fas fa-envelope-open-text"></i></div>
-        <h3>Cover Letter Generator</h3>
-        <p>Paste your info and the job description. AI writes a tailored cover letter in seconds.</p>
-        <span class="tool-badge">Free & Unlimited</span>
+        <h3>مُنشئ خطابات التعريف</h3>
+        <p>الصق بياناتك ووصف الوظيفة. سيكتب الذكاء الاصطناعي خطاب تعريف مخصص في ثوانٍ.</p>
+        <span class="tool-badge">مجاني وغير محدود</span>
     </div>
     <div class="tool-card" onclick="openTool('career')">
         <div class="tool-icon" style="background:rgba(5,150,105,0.1);color:var(--green)"><i class="fas fa-route"></i></div>
-        <h3>Career Path Advisor</h3>
-        <p>Tell AI your skills and experience. Get personalized career path suggestions.</p>
-        <span class="tool-badge">Free & Unlimited</span>
+        <h3>مستشار المسار المهني</h3>
+        <p>أخبر الذكاء الاصطناعي بمهاراتك وخبراتك. احصل على اقتراحات مخصصة لمسارك المهني.</p>
+        <span class="tool-badge">مجاني وغير محدود</span>
     </div>
     <div class="tool-card" onclick="openTool('salary')">
         <div class="tool-icon" style="background:rgba(245,158,11,0.1);color:var(--yellow)"><i class="fas fa-coins"></i></div>
-        <h3>Salary Estimator</h3>
-        <p>Enter your role, experience, and location. Get AI-powered salary range estimates.</p>
-        <span class="tool-badge">Free & Unlimited</span>
+        <h3>مُقدّر الرواتب</h3>
+        <p>أدخل وظيفتك وخبرتك وموقعك. احصل على تقدير لنطاق الرواتب بالذكاء الاصطناعي.</p>
+        <span class="tool-badge">مجاني وغير محدود</span>
     </div>
     <div class="tool-card" onclick="openTool('interview')">
         <div class="tool-icon" style="background:rgba(139,92,246,0.1);color:var(--purple)"><i class="fas fa-user-tie"></i></div>
-        <h3>Interview Coach</h3>
-        <p>AI simulates a hiring manager interview. Practice tough questions with feedback.</p>
-        <span class="tool-badge">Free & Unlimited</span>
+        <h3>مدرب المقابلات</h3>
+        <p>يحاكي الذكاء الاصطناعي مقابلة توظيف. تدرّب على الأسئلة الصعبة مع تقييم.</p>
+        <span class="tool-badge">مجاني وغير محدود</span>
     </div>
 </div>
 
 <div class="modal-overlay" id="modal-coverletter">
     <div class="modal">
-        <div class="modal-header"><h2><i class="fas fa-envelope-open-text" style="color:var(--blue);margin-right:8px"></i>Cover Letter Generator</h2><button class="modal-close" onclick="closeModal('coverletter')">&times;</button></div>
+        <div class="modal-header"><h2><i class="fas fa-envelope-open-text" style="color:var(--blue);margin-right:8px"></i>مُنشئ خطابات التعريف</h2><button class="modal-close" onclick="closeModal('coverletter')">&times;</button></div>
         <div class="modal-body">
             <div class="form-row">
-                <div class="form-group"><label>Your Name *</label><input id="cl_name" placeholder="Ahmed Mohamed"></div>
-                <div class="form-group"><label>Job Title *</label><input id="cl_title" placeholder="Software Engineer"></div>
+                <div class="form-group"><label>اسمك *</label><input id="cl_name" placeholder="أحمد محمد"></div>
+                <div class="form-group"><label>المسمى الوظيفي *</label><input id="cl_title" placeholder="مهندس برمجيات"></div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label>Years of Experience</label><input id="cl_exp" placeholder="3"></div>
-                <div class="form-group"><label>Key Skills</label><input id="cl_skills" placeholder="JavaScript, React, Python"></div>
+                <div class="form-group"><label>سنوات الخبرة</label><input id="cl_exp" placeholder="3"></div>
+                <div class="form-group"><label>المهارات الرئيسية</label><input id="cl_skills" placeholder="جافاسكريبت، رياكت، بايثون"></div>
             </div>
-            <div class="form-group"><label>Job Description *</label><textarea id="cl_job" rows="4" placeholder="Paste the job description here..."></textarea></div>
-            <div class="form-group"><label>Achievements (optional)</label><input id="cl_achieve" placeholder="Led team of 5, increased revenue by 30%"></div>
-            <button class="btn btn-ai" onclick="generateCoverLetter()" id="cl_btn"><i class="fas fa-wand-magic-sparkles"></i> Generate</button>
+            <div class="form-group"><label>وصف الوظيفة *</label><textarea id="cl_job" rows="4" placeholder="الصق وصف الوظيفة هنا..."></textarea></div>
+            <div class="form-group"><label>الإنجازات (اختياري)</label><input id="cl_achieve" placeholder="قيادة فريق من 5 أشخاص، زيادة الإيرادات بنسبة 30%"></div>
+            <button class="btn btn-ai" onclick="generateCoverLetter()" id="cl_btn"><i class="fas fa-wand-magic-sparkles"></i> إنشاء</button>
             <div id="cl_result"></div>
         </div>
     </div>
@@ -127,13 +127,13 @@
 
 <div class="modal-overlay" id="modal-career">
     <div class="modal">
-        <div class="modal-header"><h2><i class="fas fa-route" style="color:var(--green);margin-right:8px"></i>Career Path Advisor</h2><button class="modal-close" onclick="closeModal('career')">&times;</button></div>
+        <div class="modal-header"><h2><i class="fas fa-route" style="color:var(--green);margin-right:8px"></i>مستشار المسار المهني</h2><button class="modal-close" onclick="closeModal('career')">&times;</button></div>
         <div class="modal-body">
-            <div class="form-group"><label>Current Job Title *</label><input id="cp_title" placeholder="Junior Frontend Developer"></div>
-            <div class="form-group"><label>Your Skills (comma separated) *</label><input id="cp_skills" placeholder="HTML, CSS, JavaScript, React"></div>
-            <div class="form-group"><label>Years of Experience</label><input id="cp_exp" placeholder="2"></div>
-            <div class="form-group"><label>Interests (optional)</label><input id="cp_interest" placeholder="AI, mobile apps, leadership"></div>
-            <button class="btn btn-ai" onclick="generateCareerPath()" id="cp_btn"><i class="fas fa-wand-magic-sparkles"></i> Analyze My Path</button>
+            <div class="form-group"><label>المسمى الوظيفي الحالي *</label><input id="cp_title" placeholder="مطور واجهات أمامية مبتدئ"></div>
+            <div class="form-group"><label>مهاراتك (مفصولة بفاصلة) *</label><input id="cp_skills" placeholder="HTML, CSS, JavaScript, React"></div>
+            <div class="form-group"><label>سنوات الخبرة</label><input id="cp_exp" placeholder="2"></div>
+            <div class="form-group"><label>الاهتمامات (اختياري)</label><input id="cp_interest" placeholder="الذكاء الاصطناعي، تطبيقات الهاتف، القيادة"></div>
+            <button class="btn btn-ai" onclick="generateCareerPath()" id="cp_btn"><i class="fas fa-wand-magic-sparkles"></i> تحليل مساري</button>
             <div id="cp_result"></div>
         </div>
     </div>
@@ -141,18 +141,18 @@
 
 <div class="modal-overlay" id="modal-salary">
     <div class="modal">
-        <div class="modal-header"><h2><i class="fas fa-coins" style="color:var(--yellow);margin-right:8px"></i>Salary Estimator</h2><button class="modal-close" onclick="closeModal('salary')">&times;</button></div>
+        <div class="modal-header"><h2><i class="fas fa-coins" style="color:var(--yellow);margin-right:8px"></i>مُقدّر الرواتب</h2><button class="modal-close" onclick="closeModal('salary')">&times;</button></div>
         <div class="modal-body">
             <div class="form-row">
-                <div class="form-group"><label>Job Title *</label><input id="sl_title" placeholder="Senior Software Engineer"></div>
-                <div class="form-group"><label>Years of Experience *</label><input id="sl_exp" placeholder="5"></div>
+                <div class="form-group"><label>المسمى الوظيفي *</label><input id="sl_title" placeholder="مهندس برمجيات أول"></div>
+                <div class="form-group"><label>سنوات الخبرة *</label><input id="sl_exp" placeholder="5"></div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label>Location *</label><input id="sl_location" placeholder="Cairo, Egypt"></div>
-                <div class="form-group"><label>Industry</label><input id="sl_industry" placeholder="Tech, Finance, Healthcare"></div>
+                <div class="form-group"><label>الموقع *</label><input id="sl_location" placeholder="القاهرة، مصر"></div>
+                <div class="form-group"><label>القطاع</label><input id="sl_industry" placeholder="تقنية، مالية، صحة"></div>
             </div>
-            <div class="form-group"><label>Skills (comma separated)</label><input id="sl_skills" placeholder="Python, AWS, Docker"></div>
-            <button class="btn btn-ai" onclick="generateSalary()" id="sl_btn"><i class="fas fa-wand-magic-sparkles"></i> Estimate Salary</button>
+            <div class="form-group"><label>المهارات (مفصولة بفاصلة)</label><input id="sl_skills" placeholder="Python, AWS, Docker"></div>
+            <button class="btn btn-ai" onclick="generateSalary()" id="sl_btn"><i class="fas fa-wand-magic-sparkles"></i> تقدير الراتب</button>
             <div id="sl_result"></div>
         </div>
     </div>
@@ -160,14 +160,14 @@
 
 <div class="modal-overlay" id="modal-interview">
     <div class="modal">
-        <div class="modal-header"><h2><i class="fas fa-user-tie" style="color:var(--purple);margin-right:8px"></i>Interview Coach</h2><button class="modal-close" onclick="closeModal('interview')">&times;</button></div>
+        <div class="modal-header"><h2><i class="fas fa-user-tie" style="color:var(--purple);margin-right:8px"></i>مدرب المقابلات</h2><button class="modal-close" onclick="closeModal('interview')">&times;</button></div>
         <div class="modal-body">
-            <div class="form-group"><label>Target Job Title *</label><input id="iv_title" placeholder="Product Manager"></div>
-            <div class="form-group"><label>Your Experience Summary *</label><textarea id="iv_exp" rows="3" placeholder="3 years in product management, led 2 launches..."></textarea></div>
-            <div class="form-group"><label>Interview Type</label>
-                <select id="iv_type"><option value="behavioral">Behavioral (STAR)</option><option value="technical">Technical</option><option value="general">General</option><option value="case">Case Study</option></select>
+            <div class="form-group"><label>المسمى الوظيفي المستهدف *</label><input id="iv_title" placeholder="مدير منتجات"></div>
+            <div class="form-group"><label>ملخص خبراتك *</label><textarea id="iv_exp" rows="3" placeholder="3 سنوات في إدارة المنتجات، قاد إطلاقين..."></textarea></div>
+            <div class="form-group"><label>نوع المقابلة</label>
+                <select id="iv_type"><option value="behavioral">سلوكية (STAR)</option><option value="technical">تقنية</option><option value="general">عامة</option><option value="case">دراسة حالة</option></select>
             </div>
-            <button class="btn btn-ai" onclick="generateInterview()" id="iv_btn"><i class="fas fa-wand-magic-sparkles"></i> Start Practice</button>
+            <button class="btn btn-ai" onclick="generateInterview()" id="iv_btn"><i class="fas fa-wand-magic-sparkles"></i> بدء التدريب</button>
             <div id="iv_result"></div>
         </div>
     </div>
@@ -183,10 +183,10 @@ async function askAI(prompt){
     if(window.QCVAI){const r=await QCVAI.call(prompt,null,{maxRetries:1,timeout:15000});if(r.ok)return r.text}
     return 'AI unavailable. Please try again in a moment.';
 }
-function showLoading(id){document.getElementById(id).innerHTML='<div class="loading"><i class="fas fa-spinner fa-spin"></i>Generating...</div>'}
-function showResult(id,title,text){document.getElementById(id).innerHTML='<div class="result-box"><h4>'+title+'</h4>'+escHtml(text)+'</div><button class="copy-btn" onclick="copyResult(this)"><i class="fas fa-copy"></i> Copy</button>'}
+function showLoading(id){document.getElementById(id).innerHTML='<div class="loading"><i class="fas fa-spinner fa-spin"></i>جاري الإنشاء...</div>'}
+function showResult(id,title,text){document.getElementById(id).innerHTML='<div class="result-box"><h4>'+title+'</h4>'+escHtml(text)+'</div><button class="copy-btn" onclick="copyResult(this)"><i class="fas fa-copy"></i> نسخ</button>'}
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function copyResult(btn){const t=btn.parentElement.querySelector('.result-box').innerText;navigator.clipboard.writeText(t);btn.innerHTML='<i class="fas fa-check"></i> Copied!';setTimeout(()=>btn.innerHTML='<i class="fas fa-copy"></i> Copy',2000)}
+function copyResult(btn){const t=btn.parentElement.querySelector('.result-box').innerText;navigator.clipboard.writeText(t);btn.innerHTML='<i class="fas fa-check"></i> تم النسخ!';setTimeout(()=>btn.innerHTML='<i class="fas fa-copy"></i> نسخ',2000)}
 
 async function generateCoverLetter(){
     const name=document.getElementById('cl_name').value.trim();

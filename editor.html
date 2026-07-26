@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
@@ -4238,32 +4238,32 @@
     <div class="topbar">
         <div class="topbar-logo">Q<span>CV</span></div>
         <div class="topbar-nav">
-            <a href="editor.html" class="active">Editor</a>
-            <a href="portfolio-view.html" target="_blank" rel="noopener noreferrer" id="myPageLink">My Page</a>
+            <a href="editor.html" class="active">المحرر</a>
+            <a href="portfolio-view.html" target="_blank" rel="noopener noreferrer" id="myPageLink">صفي</a>
         </div>
         <div class="topbar-divider"></div>
         <div class="topbar-center">
             <div class="ctrl-group">
-                <select id="templateSelect" onchange="changeTemplate(this.value)" title="Template">
-                    <option value="classic">Classic</option>
-                    <option value="modern">Modern</option>
-                    <option value="professional">Professional</option>
-                    <option value="creative">Creative</option>
-                    <option value="executive">Executive</option>
-                    <option value="technical">Technical</option>
-                    <option value="minimalist">Minimalist</option>
-                    <option value="sidebar">Sidebar</option>
-                    <option value="two-column">Two Column</option>
-                    <option value="bold">Bold</option>
-                    <option value="elegant">Elegant</option>
-                    <option value="ats-safe">ATS Safe</option>
-                    <option value="academic">Academic</option>
-                    <option value="startup">Startup</option>
-                    <option value="international">International</option>
+                <select id="templateSelect" onchange="changeTemplate(this.value)" title="القالب">
+                    <option value="classic">كلاسيك</option>
+                    <option value="modern">عصري</option>
+                    <option value="professional">محترف</option>
+                    <option value="creative">إبداعي</option>
+                    <option value="executive">تنفيذي</option>
+                    <option value="technical">تقني</option>
+                    <option value="minimalist">بسيط</option>
+                    <option value="sidebar">شريط جانبي</option>
+                    <option value="two-column">عمودين</option>
+                    <option value="bold">جريء</option>
+                    <option value="elegant">أنيق</option>
+                    <option value="ats-safe">آمن لل ATS</option>
+                    <option value="academic">أكاديمي</option>
+                    <option value="startup">ناشئ</option>
+                    <option value="international">دولي</option>
                 </select>
             </div>
             <div class="ctrl-group">
-                <select id="fontFamily" onchange="setFontFamily(this.value)" title="Font">
+                <select id="fontFamily" onchange="setFontFamily(this.value)" title="الخط">
                     <option value="Inter">Inter</option>
                     <option value="Cairo">Cairo</option>
                     <option value="Arial">Arial</option>
@@ -4290,120 +4290,118 @@
             </div>
             <div class="ctrl-group">
                 <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)"
-                    title="Text Color">
+                    title="لون النص">
             </div>
         </div>
         <div class="topbar-left">
-            <div class="notif-bell" onclick="toggleNotifPanel()" title="Notifications">
+            <div class="notif-bell" onclick="toggleNotifPanel()" title="الإشعارات">
                 <i class="fas fa-bell"></i>
                 <span class="notif-badge" id="notifBadge" data-count="0"></span>
                 <div class="notif-panel" id="notifPanel">
                     <div class="notif-header">
-                        <h4><i class="fas fa-bell" style="margin-left:6px;color:var(--accent)"></i> Notifications</h4>
-                        <button class="notif-clear" onclick="event.stopPropagation();markAllRead()">Mark all
-                            read</button>
+                        <h4><i class="fas fa-bell" style="margin-left:6px;color:var(--accent)"></i> الإشعارات</h4>
+                        <button class="notif-clear" onclick="event.stopPropagation();markAllRead()">تعيين الكل كمقروء</button>
                     </div>
                     <div class="notif-list" id="notifList">
-                        <div class="notif-empty"><i class="fas fa-bell-slash"></i>No notifications yet</div>
+                        <div class="notif-empty"><i class="fas fa-bell-slash"></i>لا توجد إشعارات بعد</div>
                     </div>
                 </div>
             </div>
-            <button class="theme-toggle" onclick="QCVTheme.toggle()" title="Toggle theme">
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" title="تبديل المظهر">
                 <i class="fas fa-sun icon-sun" style="color:#f59e0b"></i>
                 <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
             </button>
             <div class="undo-redo">
-                <button id="undoBtn" onclick="undoAction()" disabled title="Undo (Ctrl+Z)"><i
+                <button id="undoBtn" onclick="undoAction()" disabled title="تراجع (Ctrl+Z)"><i
                         class="fas fa-undo"></i></button>
-                <button id="redoBtn" onclick="redoAction()" disabled title="Redo (Ctrl+Y)"><i
+                <button id="redoBtn" onclick="redoAction()" disabled title="إعادة (Ctrl+Y)"><i
                         class="fas fa-undo redo-arrow"></i></button>
             </div>
-            <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="Upload CV"><i
-                    class="fas fa-cloud-upload-alt"></i> <span class="btn-label">Upload CV</span></button>
+            <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="رفع سيرة ذاتية"><i
+                    class="fas fa-cloud-upload-alt"></i> <span class="btn-label">رفع سيرة ذاتية</span></button>
             <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> <span
-                    class="btn-label">Save</span></button>
-            <button class="btn-save" onclick="showVersionHistory()" title="Version History" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">History</span></button>
+                    class="btn-label">حفظ</span></button>
+            <button class="btn-save" onclick="showVersionHistory()" title="سجل الإصدارات" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">السجل</span></button>
 
             <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i
-                    class="fas fa-robot"></i> <span class="btn-label">AI</span></button>
+                    class="fas fa-robot"></i> <span class="btn-label">الذكاء الاصطناعي</span></button>
             <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i
-                        class="fas fa-file-pdf"></i> Export PDF</span>
+                        class="fas fa-file-pdf"></i> تصدير PDF</span>
                 <div class="spinner"></div>
             </button>
 
             <div class="profile-area">
                 <div class="profile-trigger" onclick="toggleProfile()">
                     <div class="profile-avatar" id="userAvatar">U</div>
-                    <span class="profile-name" id="userName">User</span>
+                    <span class="profile-name" id="userName">المستخدم</span>
                 </div>
                 <div class="profile-dropdown" id="profileDropdown">
                     <div class="dd-header">
                         <div class="dd-avatar" id="ddAvatar">U</div>
                         <div class="dd-info">
-                            <div class="d-name" id="ddName">User</div>
+                            <div class="d-name" id="ddName">المستخدم</div>
                             <div class="d-email" id="ddEmail">user@email.com</div>
                         </div>
                     </div>
                     <div class="dd-plan">
-                        <span class="pl">Current Plan</span>
-                        <span class="pn" id="ddPlan">Free</span>
+                        <span class="pl">الباقة الحالية</span>
+                        <span class="pn" id="ddPlan">مجاني</span>
                     </div>
                     <div class="dd-subscription" id="ddSubscription">
-                        <div class="dd-sub-row"><span class="dd-sub-label">Downloads</span><span class="dd-sub-value"
+                        <div class="dd-sub-row"><span class="dd-sub-label">التحميلات</span><span class="dd-sub-value"
                                 id="ddDownloads" style="font-weight:700">0 / 1</span></div>
-                        <div class="dd-sub-row"><span class="dd-sub-label">Expires</span><span class="dd-sub-value"
+                        <div class="dd-sub-row"><span class="dd-sub-label">تنتهي</span><span class="dd-sub-value"
                                 id="ddExpiry" style="font-weight:700">-</span></div>
-                        <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> Upgrade
-                            Plan</button>
+                        <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> ترقية
+                            الباقة</button>
                     </div>
                     <div class="dd-divider"></div>
                     <div class="dd-section">
                         <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i
-                                    class="fas fa-user"></i></span> Profile</div>
+                                    class="fas fa-user"></i></span> الملف الشخصي</div>
                         <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i
-                                    class="fas fa-file-alt"></i></span> My CVs</div>
+                                    class="fas fa-file-alt"></i></span> سيري الذاتية</div>
                         <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i
-                                    class="fas fa-trash"></i></span> Trash <span id="trashBadge"
+                                    class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge"
                                 style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span>
                         </div>
                         <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i
-                                    class="fas fa-cog"></i></span> Settings</div>
+                                    class="fas fa-cog"></i></span> الإعدادات</div>
                     </div>
                     <div class="dd-divider"></div>
                     <!-- Affiliate Section -->
                     <div class="dd-affiliate" id="ddAffiliateSection">
                         <div id="affApplyView">
                             <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i>
-                                <span>Affiliate Account</span>
+                                <span>حساب الشراكة</span>
                             </div>
-                            <div class="dd-aff-apply-desc">Submit your request, get your unique link and earn <strong>5
-                                    points</strong> for each new member who signs up through you</div>
+                            <div class="dd-aff-apply-desc">أرسل طلبك، واحصل على رابطك الخاص واكسب <strong>5
+                                    نقاط</strong> لكل عضو جديد يسجل من خلالك</div>
                             <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i
-                                    class="fas fa-paper-plane"></i> Submit Request</button>
+                                    class="fas fa-paper-plane"></i> إرسال الطلب</button>
                         </div>
                         <div id="affPendingView" style="display:none">
-                            <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> Your request
-                                is under review</div>
-                            <div class="dd-aff-pending-desc">Your request will be reviewed by admin and you will be
-                                notified upon approval</div>
+                            <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك
+                                قيد المراجعة</div>
+                            <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من قبل الإدارة وستتلقى إشعاراً عند الموافقة</div>
                         </div>
                         <div id="affActiveView" style="display:none">
                             <div class="dd-aff-header">
                                 <i class="fas fa-coins" style="color:#f59e0b"></i>
-                                <span>Share & Earn</span>
+                                <span>شارك واكسب</span>
                             </div>
-                            <div class="dd-aff-desc">Share your link and earn <strong>5 points</strong> for each new
-                                sign-up</div>
+                            <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل
+                                جديد</div>
                             <div class="dd-aff-stats">
                                 <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span
-                                        class="lbl">Visits</span></div>
+                                        class="lbl">الزيارات</span></div>
                                 <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span
-                                        class="lbl">Sign-ups</span></div>
+                                        class="lbl">التسجيلات</span></div>
                                 <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span
-                                        class="lbl">Points</span></div>
+                                        class="lbl">النقاط</span></div>
                             </div>
                             <div class="dd-aff-link-box">
-                                <input type="text" id="ddAffLink" readonly value="Loading..." title="Click to copy">
+                                <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="انقر للنسخ">
                                 <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
                             </div>
                             <div class="dd-aff-share">
@@ -4419,14 +4417,14 @@
                             <div class="dd-divider" style="margin:12px 0"></div>
                             <div class="dd-aff-exchange" id="affExchangeSection">
                                 <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i>
-                                    Redeem Points</div>
-                                <div class="dd-aff-exchange-desc">Redeem <strong>100 points</strong> for a
-                                    <strong>Pro</strong> plan for 30 days
+                                    استبدال النقاط</div>
+                                <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> لباقة
+                                    <strong>Pro</strong> لمدة 30 يوم
                                 </div>
                                 <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i
-                                        class="fas fa-sync-alt"></i> Redeem 100 Points</button>
+                                        class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
                                 <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i
-                                        class="fas fa-clock" style="color:#f59e0b"></i> Redemption request under review
+                                        class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة
                                 </div>
                             </div>
                         </div>
@@ -4441,7 +4439,7 @@
                     <div class="dd-divider"></div>
                     <div class="dd-section">
                         <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i
-                                    class="fas fa-sign-out-alt"></i></span> Logout</div>
+                                    class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
                     </div>
                 </div>
             </div>
@@ -4459,14 +4457,14 @@
                     style="width:100%;padding:9px 14px;background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.12));border:1px solid rgba(56,189,248,0.2);color:#1a1a2e;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s"
                     onmouseover="this.style.borderColor='rgba(56,189,248,0.4)';this.style.transform='translateY(-1px)'"
                     onmouseout="this.style.borderColor='rgba(56,189,248,0.2)';this.style.transform='none'">
-                    <span style="font-size:1rem"><i class="fas fa-file-alt"></i></span> My CVs
+                    <span style="font-size:1rem"><i class="fas fa-file-alt"></i></span> سيري الذاتية
                 </button>
             </div>
 
             <!-- AI Score Widget (paid only) -->
             <div class="ai-score-widget" id="aiScoreWidget">
                 <div class="ai-score-header">
-                    <h3><i class="fas fa-bolt"></i> CV Score</h3>
+                    <h3><i class="fas fa-bolt"></i> تقييم السيرة الذاتية</h3>
                 </div>
                 <div class="ai-score-ring">
                     <svg viewBox="0 0 100 100">
@@ -4476,7 +4474,7 @@
                     </svg>
                     <div class="ai-score-value" id="scoreValue">0</div>
                 </div>
-                <div class="ai-score-label" id="scoreLabel">Analyzing...</div>
+                <div class="ai-score-label" id="scoreLabel">جاري التحليل...</div>
                 <div class="ai-score-details" id="scoreDetails"></div>
                 <div class="ai-score-summary" id="scoreSummary"></div>
                 <div class="ai-recs" id="scoreRecs"></div>
@@ -4484,92 +4482,92 @@
 
             <div class="nav-tabs" id="navTabs">
                 <div class="nav-tab active" data-section="personal" onclick="switchTab('personal',this)">
-                    <span class="icon"><i class="fas fa-user"></i></span><span class="tab-label">Personal Info</span>
+                    <span class="icon"><i class="fas fa-user"></i></span><span class="tab-label">المعلومات الشخصية</span>
                     <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                     <div class="nav-tab-menu">
-                        <button onclick="renameTabPrompt('personal')">&#9998; Rename</button>
-                        <button onclick="moveSection('personal',-1)">&#9650; Move Up</button>
-                        <button onclick="moveSection('personal',1)">&#9660; Move Down</button>
+                        <button onclick="renameTabPrompt('personal')">&#9998; إعادة تسمية</button>
+                        <button onclick="moveSection('personal',-1)">&#9650; تحريك للأعلى</button>
+                        <button onclick="moveSection('personal',1)">&#9660; تحريك للأسفل</button>
                         <div class="menu-divider"></div>
-                        <button class="danger" onclick="deleteSection('personal')">&#128465; Delete</button>
+                        <button class="danger" onclick="deleteSection('personal')">&#128465; حذف</button>
                     </div>
                 </div>
                 <div class="nav-tab" data-section="experience" onclick="switchTab('experience',this)">
-                    <span class="icon"><i class="fas fa-briefcase"></i></span><span class="tab-label">Work
-                        Experience</span>
+                    <span class="icon"><i class="fas fa-briefcase"></i></span><span class="tab-label">الخبرة
+                        العملية</span>
                     <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                     <div class="nav-tab-menu">
-                        <button onclick="renameTabPrompt('experience')">&#9998; Rename</button>
-                        <button onclick="moveSection('experience',-1)">&#9650; Move Up</button>
-                        <button onclick="moveSection('experience',1)">&#9660; Move Down</button>
+                        <button onclick="renameTabPrompt('experience')">&#9998; إعادة تسمية</button>
+                        <button onclick="moveSection('experience',-1)">&#9650; تحريك للأعلى</button>
+                        <button onclick="moveSection('experience',1)">&#9660; تحريك للأسفل</button>
                         <div class="menu-divider"></div>
-                        <button class="danger" onclick="deleteSection('experience')">&#128465; Delete</button>
+                        <button class="danger" onclick="deleteSection('experience')">&#128465; حذف</button>
                     </div>
                 </div>
                 <div class="nav-tab" data-section="education" onclick="switchTab('education',this)">
                     <span class="icon"><i class="fas fa-graduation-cap"></i></span><span
-                        class="tab-label">Education</span>
+                        class="tab-label">التعليم</span>
                     <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                     <div class="nav-tab-menu">
-                        <button onclick="renameTabPrompt('education')">&#9998; Rename</button>
-                        <button onclick="moveSection('education',-1)">&#9650; Move Up</button>
-                        <button onclick="moveSection('education',1)">&#9660; Move Down</button>
+                        <button onclick="renameTabPrompt('education')">&#9998; إعادة تسمية</button>
+                        <button onclick="moveSection('education',-1)">&#9650; تحريك للأعلى</button>
+                        <button onclick="moveSection('education',1)">&#9660; تحريك للأسفل</button>
                         <div class="menu-divider"></div>
-                        <button class="danger" onclick="deleteSection('education')">&#128465; Delete</button>
+                        <button class="danger" onclick="deleteSection('education')">&#128465; حذف</button>
                     </div>
                 </div>
                 <div class="nav-tab" data-section="skills" onclick="switchTab('skills',this)">
-                    <span class="icon"><i class="fas fa-tools"></i></span><span class="tab-label">Skills</span>
+                    <span class="icon"><i class="fas fa-tools"></i></span><span class="tab-label">المهارات</span>
                     <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                     <div class="nav-tab-menu">
-                        <button onclick="renameTabPrompt('skills')">&#9998; Rename</button>
-                        <button onclick="moveSection('skills',-1)">&#9650; Move Up</button>
-                        <button onclick="moveSection('skills',1)">&#9660; Move Down</button>
+                        <button onclick="renameTabPrompt('skills')">&#9998; إعادة تسمية</button>
+                        <button onclick="moveSection('skills',-1)">&#9650; تحريك للأعلى</button>
+                        <button onclick="moveSection('skills',1)">&#9660; تحريك للأسفل</button>
                         <div class="menu-divider"></div>
-                        <button class="danger" onclick="deleteSection('skills')">&#128465; Delete</button>
+                        <button class="danger" onclick="deleteSection('skills')">&#128465; حذف</button>
                     </div>
                 </div>
                 <div class="nav-tab" data-section="languages" onclick="switchTab('languages',this)">
-                    <span class="icon"><i class="fas fa-globe"></i></span><span class="tab-label">Languages</span>
+                    <span class="icon"><i class="fas fa-globe"></i></span><span class="tab-label">اللغات</span>
                     <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                     <div class="nav-tab-menu">
-                        <button onclick="renameTabPrompt('languages')">&#9998; Rename</button>
-                        <button onclick="moveSection('languages',-1)">&#9650; Move Up</button>
-                        <button onclick="moveSection('languages',1)">&#9660; Move Down</button>
+                        <button onclick="renameTabPrompt('languages')">&#9998; إعادة تسمية</button>
+                        <button onclick="moveSection('languages',-1)">&#9650; تحريك للأعلى</button>
+                        <button onclick="moveSection('languages',1)">&#9660; تحريك للأسفل</button>
                         <div class="menu-divider"></div>
-                        <button class="danger" onclick="deleteSection('languages')">&#128465; Delete</button>
+                        <button class="danger" onclick="deleteSection('languages')">&#128465; حذف</button>
                     </div>
                 </div>
                 <div class="nav-tab paid-only" data-section="jobmatch" id="jobmatchTab"
                     onclick="switchTab('jobmatch',this)" style="display:none">
-                    <span class="icon"><i class="fas fa-crosshairs"></i></span><span class="tab-label">Job Match</span>
+                    <span class="icon"><i class="fas fa-crosshairs"></i></span><span class="tab-label">مطابقة الوظائف</span>
                     <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                     <div class="nav-tab-menu">
-                        <button onclick="renameTabPrompt('jobmatch')">&#9998; Rename</button>
-                        <button onclick="moveSection('jobmatch',-1)">&#9650; Move Up</button>
-                        <button onclick="moveSection('jobmatch',1)">&#9660; Move Down</button>
+                        <button onclick="renameTabPrompt('jobmatch')">&#9998; إعادة تسمية</button>
+                        <button onclick="moveSection('jobmatch',-1)">&#9650; تحريك للأعلى</button>
+                        <button onclick="moveSection('jobmatch',1)">&#9660; تحريك للأسفل</button>
                     </div>
                 </div>
             </div>
-            <button class="add-section-btn" onclick="openSectionModal()">+ Add Section</button>
+            <button class="add-section-btn" onclick="openSectionModal()">+ إضافة قسم</button>
 
             <!-- Portfolio Link -->
             <div id="portfolioLinkWrap" style="padding:8px 10px;border-top:1px solid var(--border);flex-shrink:0">
                 <div class="portfolio-link-box">
-                    <div class="pl-title"><i class="fas fa-link" style="margin-left:4px"></i> Portfolio Link</div>
+                    <div class="pl-title"><i class="fas fa-link" style="margin-left:4px"></i> رابط المعرض</div>
                     <div class="portfolio-url">
-                        <input type="text" id="portfolioUrl" readonly value="Loading...">
+                        <input type="text" id="portfolioUrl" readonly value="جاري التحميل...">
                         <div class="portfolio-url-btns">
                             <button class="btn-copy" onclick="copyPortfolioLink()" id="copyPortBtn"><i
-                                    class="fas fa-copy"></i> Copy</button>
+                                    class="fas fa-copy"></i> نسخ</button>
                             <button class="btn-open" onclick="openPortfolioLink()"><i
-                                    class="fas fa-external-link-alt"></i> Open</button>
+                                    class="fas fa-external-link-alt"></i> فتح</button>
                         </div>
                     </div>
                     <div style="text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
-                        <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px">QR Code for your portfolio</div>
+                        <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px">رمز QR للمعرض الخاص بك</div>
                         <img id="portfolioQr" style="width:120px;height:120px;border-radius:8px;border:1px solid var(--border)" alt="QR Code">
-                        <div style="margin-top:8px"><a id="qrDownload" href="#" download="qcv-portfolio-qr.png" style="font-size:0.72rem;color:var(--accent);font-weight:600;text-decoration:none"><i class="fas fa-download"></i> Download QR</a></div>
+                        <div style="margin-top:8px"><a id="qrDownload" href="#" download="qcv-portfolio-qr.png" style="font-size:0.72rem;color:var(--accent);font-weight:600;text-decoration:none"><i class="fas fa-download"></i> تحميل الرمز</a></div>
                     </div>
                 </div>
             </div>
@@ -4577,30 +4575,30 @@
             <div class="sidebar-bottom">
                 <!-- Pro Plan Upsell (free users only) -->
                 <div class="pro-upsell" id="proUpsell">
-                    <div class="pro-upsell-header"><i class="fas fa-crown" style="color:#f59e0b"></i> Pro Plan</div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> All templates (+15)
+                    <div class="pro-upsell-header"><i class="fas fa-crown" style="color:#f59e0b"></i> باقة Pro</div>
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> جميع القوالب (+15)
                     </div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> PDF export without
-                        watermark</div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> Personal & visual
-                        portfolios</div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> Personal portfolio
-                        page</div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> AI-powered CV
-                        scoring</div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> AI writing assistant
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> تصدير PDF بدون
+                        علامة مائية</div>
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> معرض شخصي ومرئي
                     </div>
-                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> AI job matching
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> صفحة المعرض
+                        الشخصي</div>
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> تقييم السيرة الذاتية بالذكاء الاصطناعي
                     </div>
-                    <button class="pro-upsell-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> Subscribe
-                        Now - 99 EGP/mo</button>
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مساعد الكتابة بالذكاء الاصطناعي
+                    </div>
+                    <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مطابقة الوظائف بالذكاء الاصطناعي
+                    </div>
+                    <button class="pro-upsell-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> اشترك
+                        الآن - 99 ج.م/شهر</button>
                 </div>
                 <div class="sidebar-feature" onclick="showTemplates()"><span class="icon"><i
-                            class="fas fa-file-alt"></i></span> Change Template</div>
+                            class="fas fa-file-alt"></i></span> تغيير القالب</div>
                 <div class="sidebar-feature paid-only" id="aiAssistantBtn" onclick="window.open('ai.html')"
-                    style="display:none"><span class="icon"><i class="fas fa-brain"></i></span> AI Assistant</div>
+                    style="display:none"><span class="icon"><i class="fas fa-brain"></i></span> مساعد الذكاء الاصطناعي</div>
                 <div class="sidebar-feature" onclick="window.open('help.html')"><span class="icon"><i
-                            class="fas fa-question-circle"></i></span> Help</div>
+                            class="fas fa-question-circle"></i></span> المساعدة</div>
             </div>
         </div>
 
@@ -4609,54 +4607,54 @@
             <!-- Personal Info -->
             <div class="form-card active" id="tab-personal">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-user"></i></span>
-                    <h3>Personal Info</h3>
+                    <h3>المعلومات الشخصية</h3>
                 </div>
-                <div class="field"><label>Full Name</label><input type="text" id="inputName" oninput="renderCV()"
+                <div class="field"><label>الاسم الكامل</label><input type="text" id="inputName" oninput="renderCV()"
                         placeholder="John Doe"></div>
-                <div class="field"><label>Job Title</label><input type="text" id="inputTitle" oninput="renderCV()"
+                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" oninput="renderCV()"
                         placeholder="UI/UX Designer"></div>
-                <div class="field"><label>Email</label><input type="email" id="inputEmail" oninput="renderCV()"
+                <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" oninput="renderCV()"
                         placeholder="john@example.com"></div>
-                <div class="field"><label>Phone</label><input type="text" id="inputPhone" oninput="renderCV()"
+                <div class="field"><label>الهاتف</label><input type="text" id="inputPhone" oninput="renderCV()"
                         placeholder="+1 234 567 890"></div>
-                <div class="field"><label>Location</label><input type="text" id="inputLocation" oninput="renderCV()"
+                <div class="field"><label>الموقع</label><input type="text" id="inputLocation" oninput="renderCV()"
                         placeholder="New York, NY"></div>
-                <div class="field"><label>LinkedIn</label><input type="text" id="inputLinkedin" oninput="renderCV()"
+                <div class="field"><label>لينكدإن</label><input type="text" id="inputLinkedin" oninput="renderCV()"
                         placeholder="linkedin.com/in/johndoe"></div>
-                <div class="field"><label>Professional Summary <span class="char-count" id="summaryCount">0 /
+                <div class="field"><label>الملخص المهني <span class="char-count" id="summaryCount">0 /
                             100</span></label><textarea id="inputSummary"
                         oninput="updateCharCount('summary');renderCV()"
                         placeholder="A passionate designer creating exceptional digital experiences..."
                         style="min-height:110px"></textarea><button type="button" class="btn-generate-summary"
-                        onclick="generateProfessionalSummary()"><i class="fas fa-magic"></i> Generate Summary</button>
-                    <div class="field-hint">Recommended 50-100 words</div>
+                        onclick="generateProfessionalSummary()"><i class="fas fa-magic"></i> إنشاء ملخص</button>
+                    <div class="field-hint">يُنصح بـ 50-100 كلمة</div>
                 </div>
             </div>
 
             <!-- Experience -->
             <div class="form-card" id="tab-experience">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-briefcase"></i></span>
-                    <h3>Work Experience</h3>
+                    <h3>الخبرة العملية</h3>
                 </div>
                 <div id="expContainer"></div>
-                <button class="btn-add" onclick="addExp()">+ Add Experience</button>
+                <button class="btn-add" onclick="addExp()">+ إضافة خبرة</button>
             </div>
 
             <!-- Education -->
             <div class="form-card" id="tab-education">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-graduation-cap"></i></span>
-                    <h3>Education</h3>
+                    <h3>التعليم</h3>
                 </div>
                 <div id="eduContainer"></div>
-                <button class="btn-add" onclick="addEdu()">+ Add Education</button>
+                <button class="btn-add" onclick="addEdu()">+ إضافة تعليم</button>
             </div>
 
             <!-- Skills -->
             <div class="form-card" id="tab-skills">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-tools"></i></span>
-                    <h3>Skills</h3>
+                    <h3>المهارات</h3>
                 </div>
-                <div class="field"><label>Skills <span class="char-count">(one per line)</span></label><textarea
+                <div class="field"><label>المهارات <span class="char-count">(واحدة لكل سطر)</span></label><textarea
                         id="inputSkills" oninput="renderCV()"
                         placeholder="UI Design, Figma, Prototyping&#10;User Research, Wireframing&#10;Design Systems, CSS"
                         style="min-height:150px"></textarea></div>
@@ -4665,26 +4663,26 @@
             <!-- Languages -->
             <div class="form-card" id="tab-languages">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-globe"></i></span>
-                    <h3>Languages</h3>
+                    <h3>اللغات</h3>
                 </div>
                 <div id="langContainer"></div>
-                <button class="btn-add" onclick="addLang()">+ Add Language</button>
+                <button class="btn-add" onclick="addLang()">+ إضافة لغة</button>
             </div>
 
             <!-- Job Match (paid only) -->
             <div class="form-card paid-only" id="tab-jobmatch" style="display:none">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-crosshairs"></i></span>
-                    <h3>Job Match</h3>
+                    <h3>مطابقة الوظائف</h3>
                 </div>
-                <div class="field"><label>Paste job posting here</label>
+                <div class="field"><label>الصق إعلان الوظيفة هنا</label>
                     <textarea class="job-match-input" id="jobDescInput"
                         placeholder="Paste the job posting here...\n\nExample: We are looking for a frontend developer with experience in React and Angular..."></textarea>
                 </div>
-                <button class="btn-match" onclick="runJobMatch()">Match Now</button>
+                <button class="btn-match" onclick="runJobMatch()">مطابقة الآن</button>
                 <div class="match-results" id="matchResults"></div>
                 <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
                     <button onclick="trackApplication()" style="width:100%;padding:8px;background:rgba(5,150,105,0.1);border:1px solid rgba(5,150,105,0.3);color:#059669;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">
-                        <i class="fas fa-calendar-check"></i>Track This Application
+                        <i class="fas fa-calendar-check"></i>تتبع هذا الطلب
                     </button>
                 </div>
             </div>
@@ -4692,12 +4690,12 @@
             <!-- Follow-up Reminders Panel -->
             <div class="form-card" id="tab-followups" style="display:none">
                 <div class="form-card-header"><span class="icon" style="background:rgba(249,115,22,0.08);color:#f97316"><i class="fas fa-bell"></i></span>
-                    <h3>Follow-up Reminders</h3>
+                    <h3>تذكيرات المتابعة</h3>
                 </div>
                 <div id="followupList" style="margin-bottom:12px"></div>
                 <div id="followupEmpty" style="text-align:center;padding:20px;color:var(--muted);font-size:0.78rem">
                     <i class="fas fa-bell-slash" style="font-size:1.5rem;margin-bottom:8px;display:block;opacity:0.4"></i>
-                    No tracked applications yet.<br>Paste a job description and click "Track This Application" to start.
+                    لا توجد طلبات متابعة بعد.<br>الصق وصف الوظيفة واضغط "تتبع هذا الطلب" للبدء.
                 </div>
             </div>
         </div>
@@ -4705,12 +4703,12 @@
         <!-- Preview -->
         <div class="preview-zone">
             <div class="preview-container" id="previewContainer">
-                <div class="ai-cv-badge" id="aiCvBadge" style="display:none"><i class="fas fa-magic"></i> AI Enhanced
+                <div class="ai-cv-badge" id="aiCvBadge" style="display:none"><i class="fas fa-magic"></i> مُحسّن بالذكاء الاصطناعي
                 </div>
                 <div class="cv-page tpl-classic" id="cvPage"></div>
             </div>
             <div class="zoom-controls">
-                <button class="zoom-btn" onclick="toggleGridView()" title="Grid View" id="gridViewBtn">
+                <button class="zoom-btn" onclick="toggleGridView()" title="عرض شبكي" id="gridViewBtn">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <rect x="0" y="0" width="7" height="7" rx="1" />
                         <rect x="9" y="0" width="7" height="7" rx="1" />
@@ -4718,10 +4716,10 @@
                         <rect x="9" y="9" width="7" height="7" rx="1" />
                     </svg>
                 </button>
-                <button class="zoom-btn" onclick="zoomPreview(-10)" title="Zoom Out">-</button>
+                <button class="zoom-btn" onclick="zoomPreview(-10)" title="تصغير">-</button>
                 <span class="zoom-pct" id="zoomPct">100%</span>
-                <button class="zoom-btn" onclick="zoomPreview(10)" title="Zoom In">+</button>
-                <button class="zoom-btn" onclick="resetZoom()" title="Reset">&#8635;</button>
+                <button class="zoom-btn" onclick="zoomPreview(10)" title="تكبير">+</button>
+                <button class="zoom-btn" onclick="resetZoom()" title="إعادة ضبط">&#8635;</button>
             </div>
         </div>
     </div>
@@ -4729,15 +4727,15 @@
     <!-- Template Gallery Panel -->
     <div class="template-panel" id="templatePanel">
         <div class="tpl-panel-header">
-            <h2>Choose a Template</h2>
+            <h2>اختر قالباً</h2>
             <button class="tpl-close" onclick="hideTemplates()">&times;</button>
         </div>
         <div class="tpl-filters">
-            <button class="tpl-filter active" onclick="filterTemplates('all',this)">All</button>
+            <button class="tpl-filter active" onclick="filterTemplates('all',this)">الكل</button>
             <button class="tpl-filter" onclick="filterTemplates('ats',this)">ATS</button>
-            <button class="tpl-filter" onclick="filterTemplates('modern',this)">Modern</button>
-            <button class="tpl-filter" onclick="filterTemplates('creative',this)">Creative</button>
-            <button class="tpl-filter" onclick="filterTemplates('classic',this)">Classic</button>
+            <button class="tpl-filter" onclick="filterTemplates('modern',this)">عصري</button>
+            <button class="tpl-filter" onclick="filterTemplates('creative',this)">إبداعي</button>
+            <button class="tpl-filter" onclick="filterTemplates('classic',this)">كلاسيك</button>
         </div>
         <div class="tpl-grid" id="templateGrid"></div>
     </div>
@@ -4750,42 +4748,42 @@
     <!-- Upgrade Modal -->
     <div class="upgrade-overlay" id="upgradeOverlay" onclick="closeUpgradeModal(event)">
         <div class="upgrade-card" onclick="event.stopPropagation()">
-            <div class="upgrade-badge">Most Popular</div>
+            <div class="upgrade-badge">الأكثر شعبية</div>
             <button class="upgrade-close" onclick="closeUpgradeModal()">&times;</button>
             <div class="upgrade-card-top">
                 <span class="rocket"><i class="fas fa-rocket"></i></span>
-                <div class="plan-label">Pro Plan</div>
-                <div class="plan-sub">For professionals and job seekers</div>
+                <div class="plan-label">باقة Pro</div>
+                <div class="plan-sub">للمحترفين وباحثين عن العمل</div>
             </div>
             <div class="upgrade-price">
                 <span class="price-num">99</span>
-                <span class="price-currency"> EGP / </span>
-                <span class="price-period">Monthly</span>
+                <span class="price-currency"> ج.م / </span>
+                <span class="price-period">شهري</span>
             </div>
             <div class="upgrade-features">
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">5 professional CVs</span></div>
+                        class="feat-text">5 سير ذاتية احترافية</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">All templates (+15)</span></div>
+                        class="feat-text">جميع القوالب (+15)</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">PDF export without watermark</span></div>
+                        class="feat-text">تصدير PDF بدون علامة مائية</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">Personal & visual portfolios</span></div>
+                        class="feat-text">معرض شخصي ومرئي</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">Personal portfolio page</span></div>
+                        class="feat-text">صفحة المعرض الشخصي</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">AI-powered CV scoring</span></div>
+                        class="feat-text">تقييم بالذكاء الاصطناعي</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">AI writing assistant</span></div>
+                        class="feat-text">مساعد كتابة بالذكاء الاصطناعي</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">AI job matching</span></div>
+                        class="feat-text">مطابقة وظائف بالذكاء الاصطناعي</span></div>
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
-                        class="feat-text">Upload & analyze CV (3 times/month)</span></div>
+                        class="feat-text">رفع وتحليل السيرة الذاتية (3 مرات/شهر)</span></div>
             </div>
             <div class="upgrade-actions">
                 <button class="upgrade-btn-primary" onclick="window.location.href='pay.html'"><i
-                        class="fas fa-star"></i> Subscribe Now</button>
-                <button class="upgrade-btn-secondary" onclick="closeUpgradeModal()">Later</button>
+                        class="fas fa-star"></i> اشترك الآن</button>
+                <button class="upgrade-btn-secondary" onclick="closeUpgradeModal()">لاحقاً</button>
             </div>
         </div>
     </div>
@@ -4900,16 +4898,16 @@
                         const daysLeft = Math.ceil(diff / 86400000);
                         expEl.textContent = d.toLocaleDateString('en', { year: 'numeric', month: 'short', day: 'numeric' });
                         if (diff < 0) {
-                            expEl.textContent += ' (Expired)';
+                            expEl.textContent += ' (منتهية)';
                             expEl.style.color = '#ef4444';
                         } else if (daysLeft <= 7) {
-                            expEl.textContent += ' (' + daysLeft + ' days left)';
+                        expEl.textContent += ' (' + daysLeft + ' أيام متبقية)';
                             expEl.style.color = '#f59e0b';
                         } else {
                             expEl.style.color = '#059669';
                         }
                     } else if (!isFree) {
-                        expEl.textContent = 'Lifetime';
+                        expEl.textContent = 'بصورة دائمة';
                         expEl.style.color = '#059669';
                     } else {
                         expEl.textContent = '-';
@@ -4996,10 +4994,10 @@
             function getTimeAgo(ts) {
                 if (!ts) return '';
                 const diff = Date.now() - ts;
-                if (diff < 60000) return 'Just now';
-                if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
-                if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
-                return Math.floor(diff / 86400000) + 'd ago';
+                if (diff < 60000) return 'الآن';
+                if (diff < 3600000) return Math.floor(diff / 60000) + ' د';
+                if (diff < 86400000) return Math.floor(diff / 3600000) + ' س';
+                return Math.floor(diff / 86400000) + ' ي';
             }
 
             // Cache AI keys on load
@@ -5120,7 +5118,7 @@
         window.applyAffiliate = function () {
             if (!window.currentUid) return;
             var btn = document.querySelector('.dd-aff-apply-btn');
-            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...' }
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...' }
             set(ref(db, 'affiliateRequests/' + window.currentUid), {
                 uid: window.currentUid,
                 name: userData.name || '',
@@ -5130,10 +5128,10 @@
             }).then(function () {
                 return set(ref(db, 'users/' + window.currentUid + '/affiliateStatus'), 'pending');
             }).then(function () {
-                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-check"></i> Sent' }
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-check"></i> تم الإرسال' }
                 if (window.QCVNotify) QCVNotify.success();
             }).catch(function () {
-                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request' }
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب' }
                 if (window.QCVNotify) QCVNotify.error();
             });
         };
@@ -5180,11 +5178,11 @@
             var pts = parseInt(ptsEl ? ptsEl.textContent : '0');
             if (pts < 100) {
                 if (window.QCVNotify) QCVNotify.error();
-                alert('Not enough points. You need at least 100 points');
+                alert('نقاط غير كافية. تحتاج على الأقل 100 نقطة');
                 return;
             }
-            if (!confirm('Do you want to redeem 100 points for a Pro plan for 30 days?')) return;
-            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...' }
+            if (!confirm('هل تريد استبدال 100 نقطة لباقة Pro لمدة 30 يوم؟')) return;
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...' }
             push(ref(db, 'pointsExchange'), {
                 uid: window.currentUid,
                 name: userData.name || '',
@@ -5201,7 +5199,7 @@
                 if (btn2) btn2.style.display = 'none';
                 if (window.QCVNotify) QCVNotify.success();
             }).catch(function () {
-                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-sync-alt"></i> Redeem 100 Points' }
+                    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-sync-alt"></i> استبدال 100 نقطة' }
                 if (window.QCVNotify) QCVNotify.error();
             });
         };
@@ -5257,7 +5255,7 @@
                         opt.disabled = !paid;
                         opt.text = paid ? opt.value.charAt(0).toUpperCase() + opt.value.slice(1).replace(/-/g, ' ') : opt.value.charAt(0).toUpperCase() + opt.value.slice(1).replace(/-/g, ' ') + ' 🔒';
                     } else {
-                        opt.text = opt.value.charAt(0).toUpperCase() + opt.value.slice(1) + ' (Free)';
+                        opt.text = opt.value.charAt(0).toUpperCase() + opt.value.slice(1) + ' (مجاني)';
                     }
                 });
             }
@@ -5268,15 +5266,15 @@
         window.openPanel = function (type) {
             document.getElementById('profileDropdown').classList.remove('show');
             const p = document.getElementById('panelContent'); let h = '';
-            if (type === 'profile') { h = `<div class="panel-header"><h2>Profile</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-field"><label>Name</label><input type="text" id="panelName" value="${userData?.name || ''}"></div><div class="panel-field"><label>Email</label><input type="email" value="${userData?.email || ''}" disabled style="opacity:0.5"></div><button class="panel-btn panel-btn-primary" onclick="saveProfile()">Save</button></div>` }
+            if (type === 'profile') { h = `<div class="panel-header"><h2>الملف الشخصي</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-field"><label>الاسم</label><input type="text" id="panelName" value="${userData?.name || ''}"></div><div class="panel-field"><label>البريد الإلكتروني</label><input type="email" value="${userData?.email || ''}" disabled style="opacity:0.5"></div><button class="panel-btn panel-btn-primary" onclick="saveProfile()">حفظ</button></div>` }
             else if (type === 'cvs') {
                 const paid = isPaidPlan();
                 const addBtn = paid
-                    ? `<button class="btn-add" style="margin-top:12px" onclick="createNewCV()">+ Create New CV</button>`
-                    : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="closePanel();openUpgradeModal()">Subscribe to create more CVs</button>`;
-                h = `<div class="panel-header"><h2>My CVs</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}</div>`
+                    ? `<button class="btn-add" style="margin-top:12px" onclick="createNewCV()">+ إنشاء سيرة ذاتية جديدة</button>`
+                    : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="closePanel();openUpgradeModal()">اشترك لإنشاء المزيد من السير الذاتية</button>`;
+                h = `<div class="panel-header"><h2>سيري الذاتية</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}</div>`
             }
-            else if (type === 'settings') { h = `<div class="panel-header"><h2>Settings</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-row"><div class="panel-row-info"><div class="pr-title">Notifications</div><div class="pr-desc">Receive updates</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div><div class="panel-row"><div class="panel-row-info"><div class="pr-title">Auto Save</div><div class="pr-desc">Save automatically</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div></div>` }
+            else if (type === 'settings') { h = `<div class="panel-header"><h2>الإعدادات</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-row"><div class="panel-row-info"><div class="pr-title">الإشعارات</div><div class="pr-desc">استقبال التحديثات</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div><div class="panel-row"><div class="panel-row-info"><div class="pr-title">حفظ تلقائي</div><div class="pr-desc">حفظ تلقائياً</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div></div>` }
             p.innerHTML = h; document.getElementById('panelOverlay').classList.add('show');
             if (type === 'cvs') loadCvsList();
         };
@@ -5307,9 +5305,9 @@
             const list = snap.val() || {};
             const container = document.getElementById('cvsListPanel');
             if (!container) return;
-            let html = `<div class="cv-list-item ${currentCvId === 'default' ? 'active' : ''}" onclick="switchToCV('default')"><div class="cv-icon"><i class="fas fa-file-alt"></i></div><div class="cv-info"><div class="cv-title">Main CV</div><div class="cv-date">Default</div></div></div>`;
+            let html = `<div class="cv-list-item ${currentCvId === 'default' ? 'active' : ''}" onclick="switchToCV('default')"><div class="cv-icon"><i class="fas fa-file-alt"></i></div><div class="cv-info"><div class="cv-title">السيرة الذاتية الرئيسية</div><div class="cv-date">افتراضي</div></div></div>`;
             Object.entries(list).forEach(([id, cv]) => {
-                html += `<div class="cv-list-item ${currentCvId === id ? 'active' : ''}" onclick="switchToCV('${id}')"><div class="cv-icon">&#128196;</div><div class="cv-info"><div class="cv-title">${cv.name || 'Untitled'}</div><div class="cv-date">${new Date(cv.createdAt).toLocaleDateString('en')}</div></div><button class="cv-delete" onclick="event.stopPropagation();deleteCV('${id}')">&#128465;</button></div>`;
+                html += `<div class="cv-list-item ${currentCvId === id ? 'active' : ''}" onclick="switchToCV('${id}')"><div class="cv-icon">&#128196;</div><div class="cv-info"><div class="cv-title">${cv.name || 'بدون عنوان'}</div><div class="cv-date">${new Date(cv.createdAt).toLocaleDateString('en')}</div></div><button class="cv-delete" onclick="event.stopPropagation();deleteCV('${id}')">&#128465;</button></div>`;
             });
             container.innerHTML = html;
         };
@@ -5337,7 +5335,7 @@
             if (!container) return;
             const keys = Object.keys(list);
             if (keys.length === 0) {
-                container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--muted)"><i class="fas fa-trash" style="font-size:2rem;margin-bottom:10px;display:block;opacity:0.3"></i><div style="font-size:0.85rem;font-weight:600">Trash is empty</div></div>';
+                container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--muted)"><i class="fas fa-trash" style="font-size:2rem;margin-bottom:10px;display:block;opacity:0.3"></i><div style="font-size:0.85rem;font-weight:600">سلة المهملات فارغة</div></div>';
                 return;
             }
             let html = '';
@@ -5349,10 +5347,10 @@
                 <div style="width:40px;height:40px;border-radius:10px;background:rgba(239,68,68,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-file-alt" style="color:var(--muted)"></i></div>
                 <div style="flex:1;min-width:0">
                     <div style="font-weight:700;font-size:0.82rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cv.name || cv.data?.name || 'Untitled CV'}</div>
-                    <div style="font-size:0.68rem;color:var(--muted)">Deleted ${daysLeft > 0 ? daysLeft + ' days left' : '— expires soon'}</div>
+                    <div style="font-size:0.68rem;color:var(--muted)">محذوف ${daysLeft > 0 ? daysLeft + ' أيام متبقية' : '— تنتهي قريباً'}</div>
                 </div>
-                <button onclick="restoreFromTrash('${id}')" style="padding:6px 12px;background:#059669;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">Restore</button>
-                <button onclick="permanentDelete('${id}')" style="padding:6px 12px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">Delete</button>
+                <button onclick="restoreFromTrash('${id}')" style="padding:6px 12px;background:#059669;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">استعادة</button>
+                <button onclick="permanentDelete('${id}')" style="padding:6px 12px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">حذف</button>
             </div>`;
             });
             container.innerHTML = html;
@@ -5368,16 +5366,16 @@
             await set(ref(db, 'users/' + window.currentUid + '/trash/' + id), null);
             loadTrashList();
             updateTrashBadge(Math.max(0, (document.getElementById('trashList')?.children.length || 1) - 1));
-            if (window.QCVNotify) QCVNotify.toast('CV restored!', 'success');
+            if (window.QCVNotify) QCVNotify.toast('تمت الاستعادة!', 'success');
         };
 
         window.permanentDelete = async function (id) {
-            if (!confirm('Permanently delete this CV? This cannot be undone.')) return;
+            if (!confirm('حذف هذه السيرة الذاتية نهائياً؟ لا يمكن التراجع.')) return;
             if (!window.currentUid) return;
             await set(ref(db, 'users/' + window.currentUid + '/trash/' + id), null);
             loadTrashList();
             updateTrashBadge(Math.max(0, (document.getElementById('trashList')?.children.length || 1) - 1));
-            if (window.QCVNotify) QCVNotify.toast('CV permanently deleted', 'info');
+            if (window.QCVNotify) QCVNotify.toast('تم الحذف نهائياً', 'info');
         };
 
         window.cleanExpiredTrash = async function () {
@@ -5428,7 +5426,7 @@
             loadCvsList();
             // Update trash badge
             get(ref(db, 'users/' + window.currentUid + '/trash')).then(s => { updateTrashBadge(Object.keys(s.val() || {}).length); }).catch(() => { });
-            if (window.QCVNotify) QCVNotify.toast('CV moved to trash', 'info');
+            if (window.QCVNotify) QCVNotify.toast('تم النقل لسلة المهملات', 'info');
         };
 
         window._set = set;
@@ -5445,10 +5443,10 @@
                 const path = cid === 'default' ? 'users/' + window.currentUid + '/cvData' : 'users/' + window.currentUid + '/cvs/' + cid + '/data';
                 set(ref(db, path), data).then(() => {
                     if (window.QCVNotify) { QCVNotify.save(); QCVNotify.success() }
-                    if (btn) { const o = btn.innerHTML; btn.innerHTML = '&#10003; Saved'; btn.style.color = '#38bdf8'; btn.style.borderColor = '#38bdf8'; setTimeout(() => { btn.innerHTML = o; btn.style.color = ''; btn.style.borderColor = '' }, 2000) }
+                    if (btn) { const o = btn.innerHTML; btn.innerHTML = '&#10003; تم الحفظ'; btn.style.color = '#38bdf8'; btn.style.borderColor = '#38bdf8'; setTimeout(() => { btn.innerHTML = o; btn.style.color = ''; btn.style.borderColor = '' }, 2000) }
                     // Save version history (max 20 versions, skip if identical to last)
                     saveCvVersion(cid, data);
-                }).catch(e => { console.error('Firebase save error:', e); if (btn) { btn.innerHTML = '&#10007; Save failed'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; Save'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
+                }).catch(e => { console.error('Firebase save error:', e); if (btn) { btn.innerHTML = '&#10007; فشل الحفظ'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; حفظ'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
             } catch (e) { console.error('saveToFirebase exception:', e); }
         };
 
@@ -5485,11 +5483,11 @@
                 const panel = document.getElementById('aiResultPanel');
                 const title = document.getElementById('aiResultTitle');
                 const body = document.getElementById('aiResultBody');
-                title.textContent = 'Version History';
+                title.textContent = 'سجل الإصدارات';
                 panel.classList.add('show');
 
                 if (list.length === 0) {
-                    body.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-history" style="font-size:2rem;margin-bottom:8px;display:block;color:var(--border)"></i>No versions saved yet.<br><span style="font-size:0.72rem">Versions are saved automatically each time you save your CV.</span></div>';
+                    body.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-history" style="font-size:2rem;margin-bottom:8px;display:block;color:var(--border)"></i>لا توجد إصدارات محفوظة بعد.<br><span style="font-size:0.72rem">يتم حفظ الإصدارات تلقائياً عند حفظ السيرة الذاتية.</span></div>';
                     return;
                 }
 
@@ -5497,7 +5495,7 @@
                     '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;background:var(--bg)">' +
                     '<div><div style="font-weight:600;font-size:0.82rem">' + (v.label || 'Unknown') + '</div>' +
                     '<div style="font-size:0.7rem;color:var(--muted)">' + timeAgo(v.timestamp) + '</div></div>' +
-                    '<button onclick="restoreVersion(\'' + cid + '\',\'' + key + '\')" style="padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer">Restore</button>' +
+                    '<button onclick="restoreVersion(\'' + cid + '\',\'' + key + '\')" style="padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer">استعادة</button>' +
                     '</div>'
                 ).join('') + '</div>';
             } catch (e) {
@@ -5509,21 +5507,21 @@
             try {
                 const snap = await get(ref(db, 'users/' + window.currentUid + '/cvVersions/' + cvId + '/' + versionKey));
                 const version = snap.val();
-                if (!version || !version.data) { alert('Version not found'); return; }
-                if (!confirm('Restore this version? Your current data will be replaced.')) return;
+                if (!version || !version.data) { alert('الإصدار غير موجود'); return; }
+                if (!confirm('استعادة هذا الإصدار؟ سيتم استبدال بياناتك الحالية.')) return;
                 const path = cvId === 'default' ? 'users/' + window.currentUid + '/cvData' : 'users/' + window.currentUid + '/cvs/' + cvId + '/data';
                 await set(ref(db, path), version.data);
                 window.location.reload();
-            } catch (e) { alert('Restore failed: ' + e.message); }
+            } catch (e) { alert('فشلت الاستعادة: ' + e.message); }
         };
 
         function timeAgo(ts) {
             if (!ts) return '';
             const diff = Date.now() - ts;
-            if (diff < 60000) return 'Just now';
-            if (diff < 3600000) return Math.floor(diff / 60000) + ' min ago';
-            if (diff < 86400000) return Math.floor(diff / 3600000) + ' hours ago';
-            return Math.floor(diff / 86400000) + ' days ago';
+            if (diff < 60000) return 'الآن';
+            if (diff < 3600000) return Math.floor(diff / 60000) + ' دقائق مضت';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + ' ساعات مضت';
+            return Math.floor(diff / 86400000) + ' أيام مضت';
         }
     </script>
     <!-- Reports Panel -->
@@ -5544,11 +5542,11 @@
         <div
             style="width:720px;max-width:94%;background:var(--bg2);border-radius:12px;padding:12px;box-shadow:0 8px 40px rgba(0,0,0,0.25);height:72vh;display:flex;flex-direction:column">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
-                <div style="font-weight:800">AI Assistant</div>
+                <div style="font-weight:800">مساعد الذكاء الاصطناعي</div>
                 <div style="display:flex;gap:8px;align-items:center">
-                    <input id="editorAiApiKey" placeholder="API Key (optional)"
+                    <input id="editorAiApiKey" placeholder="مفتاح API (اختياري)"
                         style="padding:8px;border:1px solid var(--border);border-radius:8px;font-size:0.85rem">
-                    <button class="btn btn-outline" onclick="closeAiModal()">Close</button>
+                    <button class="btn btn-outline" onclick="closeAiModal()">إغلاق</button>
                 </div>
             </div>
             <div id="aiModalMessages"
@@ -5557,7 +5555,7 @@
             <div style="display:flex;gap:8px;margin-top:8px">
                 <input id="aiModalInput" placeholder="اطرح سؤالاً أو اطلب مساعدة..."
                     style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px">
-                <button class="btn btn-primary" id="aiModalSend">Send</button>
+                <button class="btn btn-primary" id="aiModalSend">إرسال</button>
             </div>
         </div>
     </div>
@@ -5616,13 +5614,13 @@
             const cv = await getEditorCvForAi();
             const cvText = cv ? (['Name: ' + (cv.name || ''), 'Title: ' + (cv.title || ''), 'Summary: ' + (cv.summary || ''), 'Skills: ' + (Array.isArray(cv.skills) ? cv.skills.join(', ') : cv.skills)].join('\n\n')) : '';
             const prompt = txt + '\n\n' + cvText;
-            appendEditorAiMessage('assistant', 'Thinking...');
+            appendEditorAiMessage('assistant', 'جاري التفكير...');
             // Use existing callAI pipeline defined earlier
             callAI(prompt, function (result) {
                 // remove last 'Thinking...' entry
-                try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('Thinking')) last.remove(); } catch (e) { }
+                try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('جاري التفكير')) last.remove(); } catch (e) { }
                 appendEditorAiMessage('assistant', result);
-            }, function (err) { try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('Thinking')) last.remove(); } catch (e) { }; appendEditorAiMessage('assistant', 'AI Error: ' + (err || '')); });
+            }, function (err) { try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('جاري التفكير')) last.remove(); } catch (e) { }; appendEditorAiMessage('assistant', 'خطأ في الذكاء الاصطناعي: ' + (err || '')); });
         });
 
         // Add a floating AI button to open modal
@@ -5913,14 +5911,14 @@
 
         window.addExp = function (role = '', company = '', dur = '', desc = '') {
             const id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-            document.getElementById('expContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Experience</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">Delete</button></div><div class="field"><label>Title</label><input type="text" value="${role}" oninput="renderCV()" placeholder="UI/UX Designer"></div><div class="field"><label>Company</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Company Name"></div><div class="field"><label>Duration</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2020 - Present"></div><div class="field"><label>Description</label><textarea oninput="renderCV()" placeholder="- Redesigned the main interface\n- Reduced load time by 30%">${desc}</textarea></div></div>`);
+            document.getElementById('expContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">خبرة</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">حذف</button></div><div class="field"><label>المسمى</label><input type="text" value="${role}" oninput="renderCV()" placeholder="UI/UX Designer"></div><div class="field"><label>الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Company Name"></div><div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2020 - Present"></div><div class="field"><label>الوصف</label><textarea oninput="renderCV()" placeholder="- Redesigned the main interface\n- Reduced load time by 30%">${desc}</textarea></div></div>`);
             renderCV();
             snapshotState();
         };
 
         window.addEdu = function (deg = '', sch = '', dur = '', desc = '') {
             const id = 'edu_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-            document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Education</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">Delete</button></div><div class="field"><label>Degree</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div><div class="field"><label>School</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="University Name"></div><div class="field"><label>Duration</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div><div class="field"><label>Details</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8\n- Computer Science Club member">${desc}</textarea></div></div>`);
+            document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">تعليم</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">حذف</button></div><div class="field"><label>الدرجة</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div><div class="field"><label>المؤسسة</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="University Name"></div><div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div><div class="field"><label>التفاصيل</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8\n- Computer Science Club member">${desc}</textarea></div></div>`);
             renderCV();
             snapshotState();
         };
@@ -5929,7 +5927,7 @@
             const id = 'lang_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
             const levels = ['Native', 'Fluent', 'Advanced', 'Intermediate', 'Beginner'];
             const options = levels.map(l => `<option value="${l}" ${l === level ? 'selected' : ''}>${l}</option>`).join('');
-            document.getElementById('langContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Language</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">Delete</button></div><div class="field"><label>Language</label><input type="text" value="${name}" oninput="renderCV()" placeholder="English"></div><div class="field"><label>Level</label><select oninput="renderCV()">${options}</select></div></div>`);
+            document.getElementById('langContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">لغة</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">حذف</button></div><div class="field"><label>اللغة</label><input type="text" value="${name}" oninput="renderCV()" placeholder="English"></div><div class="field"><label>المستوى</label><select oninput="renderCV()">${options}</select></div></div>`);
             renderCV();
             snapshotState();
         };
@@ -5938,7 +5936,7 @@
             const paid = isPaidPlan();
             if (isTemplateLocked(tpl)) {
                 if (window.QCVNotify) QCVNotify.error();
-                alert('This template is for Pro users only. Upgrade to unlock all templates.');
+                alert('هذا القالب لمستخدمي Pro فقط. رقِّ لفتح جميع القوالب.');
                 document.getElementById('templateSelect').value = currentTemplate;
                 return;
             }
@@ -6046,11 +6044,11 @@
 
             // Score breakdown with progress bars
             const categories = [
-                { key: 'contact', label: 'Contact', data: scores.contact },
-                { key: 'content', label: 'Content', data: scores.content },
-                { key: 'ats', label: 'ATS Score', data: scores.ats },
-                { key: 'skills', label: 'Skills', data: scores.skills },
-                { key: 'impact', label: 'Impact', data: scores.impact }
+                { key: 'contact', label: 'جهات الاتصال', data: scores.contact },
+                { key: 'content', label: 'المحتوى', data: scores.content },
+                { key: 'ats', label: 'تقييم ATS', data: scores.ats },
+                { key: 'skills', label: 'المهارات', data: scores.skills },
+                { key: 'impact', label: 'التأثير', data: scores.impact }
             ];
 
             const details = document.getElementById('scoreDetails');
@@ -6085,13 +6083,13 @@
             const summaryEl = document.getElementById('scoreSummary');
             if (summaryEl) {
                 if (totalIssues === 0) {
-                    summaryEl.innerHTML = '<strong>Score: 100/100</strong> — Perfect! Your CV is fully optimized.';
+                    summaryEl.innerHTML = '<strong>التقييم: 100/100</strong> — ممتاز! سيرتك الذاتية محسّنة بالكامل.';
                     summaryEl.style.background = 'rgba(5,150,105,0.06)';
                     summaryEl.style.borderColor = 'rgba(5,150,105,0.15)';
                     summaryEl.style.color = '#059669';
                 } else {
                     const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + parseInt(r.fix.replace('+', '')), 0);
-                    summaryEl.innerHTML = `Fix <strong>${totalIssues} issue${totalIssues > 1 ? 's' : ''}</strong> to reach <strong>${Math.min(100, potential)}/100</strong>`;
+                    summaryEl.innerHTML = `إصلاح <strong>${totalIssues} مشكلة${totalIssues > 1 ? '' : ''}</strong> للوصول إلى <strong>${Math.min(100, potential)}/100</strong>`;
                     summaryEl.style.background = 'rgba(0,3,201,0.04)';
                     summaryEl.style.borderColor = 'rgba(0,3,201,0.1)';
                     summaryEl.style.color = 'var(--text)';
@@ -6103,12 +6101,12 @@
             if (recs) {
                 let html = '';
                 if (totalIssues === 0) {
-                    html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> Perfect! Your CV is fully optimized</div>';
+                    html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> ممتاز! سيرتك الذاتية محسّنة بالكامل</div>';
                 } else {
                     html = `<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">`;
-                    if (criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} error(s)</span>`;
-                    if (warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} warning(s)</span>`;
-                    if (infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} tip(s)</span>`;
+                    if (criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} خطأ</span>`;
+                    if (warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} تحذير</span>`;
+                    if (infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} معلومة</span>`;
                     html += '</div>';
                     html += scores.recommendations.slice(0, 8).map(r => {
                         const arTitle = translateIssue(r.title);
@@ -6119,7 +6117,7 @@
                     </div>`;
                     }).join('');
                     if (scores.recommendations.length > 8) {
-                        html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} more issues</div>`;
+                        html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} مشاكل أخرى</div>`;
                     }
                 }
                 recs.innerHTML = html;
@@ -6139,19 +6137,19 @@
             if (result.sections) {
                 html += '<div style="margin-bottom:12px">';
                 Object.entries(result.sections).forEach(([key, sec]) => {
-                    const names = { title: 'Job Title', summary: 'Summary', skills: 'Skills', experience: 'Experience' };
+                    const names = { title: 'المسمى الوظيفي', summary: 'الملخص', skills: 'المهارات', experience: 'الخبرة' };
                     const secLabel = JobMatcher.getMatchLabel(sec.score);
                     html += `<div class="match-section"><div class="ms-header"><span>${names[key] || key}</span><span style="color:${secLabel.color}">${sec.score}%</span></div><div class="match-bar"><div class="match-bar-fill" style="width:${sec.score}%;background:${secLabel.color}"></div></div></div>`;
                 });
                 html += '</div>';
             }
             if (result.matched.length) {
-                html += '<div style="font-size:0.72rem;font-weight:700;margin-bottom:6px">Matched Skills:</div><div class="match-keywords">';
+                html += '<div style="font-size:0.72rem;font-weight:700;margin-bottom:6px">المهارات المطابقة:</div><div class="match-keywords">';
                 result.matched.forEach(k => { html += `<span class="match-kw found">${k}</span>`; });
                 html += '</div>';
             }
             if (result.missing.length) {
-                html += '<div style="font-size:0.72rem;font-weight:700;margin:10px 0 6px">Missing Skills:</div><div class="match-keywords">';
+                html += '<div style="font-size:0.72rem;font-weight:700;margin:10px 0 6px">المهارات الناقصة:</div><div class="match-keywords">';
                 result.missing.forEach(k => { html += `<span class="match-kw missing">${k}</span>`; });
                 html += '</div>';
             }
@@ -6253,7 +6251,7 @@
         window.exportHTML = function () {
             const nameVal = document.getElementById('inputName').value.trim() || 'cv';
             const defaultName = nameVal + '_CV';
-            const fileName = prompt('File name:', defaultName);
+            const fileName = prompt('اسم الملف:', defaultName);
             if (fileName === null) return;
             const finalName = (fileName.trim() || defaultName).replace(/[^a-zA-Z0-9\u0600-\u06FF_-]/g, '_');
 
@@ -6391,9 +6389,9 @@
                     card.className = 'form-card';
                     card.id = 'tab-' + sec.id;
                     if (sec.content) {
-                        card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'Section') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">Delete</button></div><textarea id="blank-' + sec.id + '" placeholder="Type here..." style="width:100%;min-height:200px;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;line-height:1.8;resize:vertical;outline:none;color:var(--text);direction:ltr" oninput="updateBlankContent(\'' + sec.id + '\',this.value)">' + (sec.content || '') + '</textarea>';
+                        card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">حذف</button></div><textarea id="blank-' + sec.id + '" placeholder="اكتب هنا..." style="width:100%;min-height:200px;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;line-height:1.8;resize:vertical;outline:none;color:var(--text);direction:rtl" oninput="updateBlankContent(\'' + sec.id + '\',this.value)">' + (sec.content || '') + '</textarea>';
                     } else {
-                        card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'Section') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">Delete</button></div><div id="' + sec.id + '-items"></div><button class="btn-add" onclick="addCustomItem(\'' + sec.id + '\')">+ Add item</button>';
+                        card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">حذف</button></div><div id="' + sec.id + '-items"></div><button class="btn-add" onclick="addCustomItem(\'' + sec.id + '\')">+ إضافة عنصر</button>';
                     }
                     forms.appendChild(card);
                 });
@@ -6447,7 +6445,7 @@
                     <div class="tpl-card-name">${t.nameAr} — ${t.name}</div>
                     <div class="tpl-card-desc">${t.description}</div>
                     <div class="tpl-card-badge" style="background:${(catColors[t.category] || '#666')}18;color:${catColors[t.category] || '#888'}">${t.category.toUpperCase()}</div>
-                    ${locked ? '<div class="tpl-card-lock">&#128274; Subscribe to unlock</div>' : ''}
+                    ${locked ? '<div class="tpl-card-lock">&#128274; اشترك للفتح</div>' : ''}
                 </div>`;
                 }).join('');
                 document.getElementById('templatePanel').classList.add('show');
@@ -6536,7 +6534,7 @@
             const tab = document.querySelector(`.nav-tab[data-section="${secId}"]`);
             const label = tab ? tab.querySelector('.tab-label') : null;
             const current = label ? label.textContent : '';
-            const newName = prompt('Rename section:', current);
+            const newName = prompt('إعادة تسمية القسم:', current);
             if (newName && newName.trim()) {
                 if (label) label.textContent = newName.trim();
                 const card = document.getElementById('tab-' + secId);
@@ -6554,7 +6552,7 @@
         // ---- Delete Section ----
         window.deleteSection = function (secId) {
             document.querySelectorAll('.nav-tab-menu.show').forEach(m => m.classList.remove('show'));
-            if (!confirm('Delete this section?')) return;
+            if (!confirm('حذف هذا القسم؟')) return;
 
             // Remove from sidebar nav
             const tab = document.querySelector(`.nav-tab[data-section="${secId}"]`);
@@ -6609,7 +6607,7 @@
             var plan = ud ? (ud.plan || 'free') : 'free';
             if (plan === 'free') {
                 if (window.QCVNotify) QCVNotify.error();
-                alert('This is a paid feature - upgrade to Pro');
+                alert('هذه ميزة مدفوعة - رقِّ لباقة Pro');
                 return;
             }
             uploadedData = null;
@@ -6641,7 +6639,7 @@
         window.handleUploadFile = function (input) {
             var file = input.files ? input.files[0] : null;
             if (!file) return;
-            if (file.size > 5 * 1024 * 1024) { alert('File is larger than 5MB'); return; }
+            if (file.size > 5 * 1024 * 1024) { alert('الملف أكبر من 5 ميجا'); return; }
 
             document.getElementById('uploadDropzone').style.display = 'none';
             document.getElementById('uploadProgress').classList.add('show');
@@ -6672,12 +6670,12 @@
             document.getElementById('uploadActions').style.display = '';
             if (success && data) {
                 var fieldCount = Object.keys(data).filter(k => data[k] && (typeof data[k] === 'string' ? data[k].trim() : true)).length;
-                result.innerHTML = '<i class="fas fa-check-circle ur-success"></i><div class="ur-text">Analysis complete!</div><div class="ur-sub">Found ' + fieldCount + ' fields ready for import</div>';
+                result.innerHTML = '<i class="fas fa-check-circle ur-success"></i><div class="ur-text">اكتمل التحليل!</div><div class="ur-sub">تم العثور على ' + fieldCount + ' حقول جاهزة للاستيراد</div>';
                 document.getElementById('uploadConfirmBtn').disabled = false;
             } else if (success && !data) {
-                result.innerHTML = '<i class="fas fa-exclamation-triangle ur-error"></i><div class="ur-text">Could not recognize data</div><div class="ur-sub">Try an HTML, TXT, JSON, or PDF file</div>';
+                result.innerHTML = '<i class="fas fa-exclamation-triangle ur-error"></i><div class="ur-text">تعذر التعرف على البيانات</div><div class="ur-sub">جرب ملف HTML أو TXT أو JSON أو PDF</div>';
             } else {
-                result.innerHTML = '<i class="fas fa-times-circle ur-error"></i><div class="ur-text">Error reading file</div><div class="ur-sub">' + (errMsg || 'Unsupported file') + '</div>';
+                result.innerHTML = '<i class="fas fa-times-circle ur-error"></i><div class="ur-text">خطأ في قراءة الملف</div><div class="ur-sub">' + (errMsg || 'Unsupported file') + '</div>';
             }
         };
 
@@ -6931,7 +6929,7 @@
                         var company = escapeHtml(exp.company || '');
                         var dur = escapeHtml(exp.duration || '');
                         var desc = escapeHtml(exp.description || '');
-                        expContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="' + id + '"><div class="rb-header"><span class="rb-title">Experience</span><button class="btn-rb-delete" onclick="document.getElementById(\'' + id + '\').remove();renderCV()">Delete</button></div><div class="field"><label>Title</label><input type="text" value="' + role + '" oninput="renderCV()"></div><div class="field"><label>Company</label><input type="text" value="' + company + '" oninput="renderCV()"></div><div class="field"><label>Duration</label><input type="text" value="' + dur + '" oninput="renderCV()"></div><div class="field"><label>Description</label><textarea oninput="renderCV()">' + desc + '</textarea></div></div>');
+                        expContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="' + id + '"><div class="rb-header"><span class="rb-title">خبرة</span><button class="btn-rb-delete" onclick="document.getElementById(\'' + id + '\').remove();renderCV()">حذف</button></div><div class="field"><label>المسمى</label><input type="text" value="' + role + '" oninput="renderCV()"></div><div class="field"><label>الشركة</label><input type="text" value="' + company + '" oninput="renderCV()"></div><div class="field"><label>المدة</label><input type="text" value="' + dur + '" oninput="renderCV()"></div><div class="field"><label>الوصف</label><textarea oninput="renderCV()">' + desc + '</textarea></div></div>');
                     });
                 }
             }
@@ -6947,7 +6945,7 @@
                         var sch = (edu.school || '').replace(/"/g, '&quot;');
                         var dur = (edu.date || '').replace(/"/g, '&quot;');
                         var desc = (edu.description || edu.details || '').replace(/</g, '&lt;');
-                        eduContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="' + id + '"><div class="rb-header"><span class="rb-title">Education</span><button class="btn-rb-delete" onclick="document.getElementById(\'' + id + '\').remove();renderCV()">Delete</button></div><div class="field"><label>Degree</label><input type="text" value="' + deg + '" oninput="renderCV()"></div><div class="field"><label>School</label><input type="text" value="' + sch + '" oninput="renderCV()"></div><div class="field"><label>Duration</label><input type="text" value="' + dur + '" oninput="renderCV()"></div><div class="field"><label>Details</label><textarea oninput="renderCV()">' + desc + '</textarea></div></div>');
+                        eduContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="' + id + '"><div class="rb-header"><span class="rb-title">تعليم</span><button class="btn-rb-delete" onclick="document.getElementById(\'' + id + '\').remove();renderCV()">حذف</button></div><div class="field"><label>الدرجة</label><input type="text" value="' + deg + '" oninput="renderCV()"></div><div class="field"><label>المؤسسة</label><input type="text" value="' + sch + '" oninput="renderCV()"></div><div class="field"><label>المدة</label><input type="text" value="' + dur + '" oninput="renderCV()"></div><div class="field"><label>التفاصيل</label><textarea oninput="renderCV()">' + desc + '</textarea></div></div>');
                     });
                 }
             }
@@ -6982,7 +6980,7 @@
                             // Add content textarea
                             var itemsDiv = document.getElementById(lastSec.id + '-items');
                             if (itemsDiv) {
-                                itemsDiv.innerHTML = '<div class="field"><label>Content</label><textarea oninput="updateCustomItem(\'' + lastSec.id + '\',\'' + lastSec.id + '_content\',\'content\',this.value)" style="min-height:80px">' + (cs.content || '') + '</textarea></div>';
+                                itemsDiv.innerHTML = '<div class="field"><label>المحتوى</label><textarea oninput="updateCustomItem(\'' + lastSec.id + '\',\'' + lastSec.id + '_content\',\'content\',this.value)" style="min-height:80px">' + (cs.content || '') + '</textarea></div>';
                             }
                         }
                     }
@@ -6996,7 +6994,7 @@
 
         window.addBlankPage = function () {
             const id = 'sec_' + Date.now();
-            const section = { id, type: 'custom', title: 'New Section', content: '' };
+            const section = { id, type: 'custom', title: 'قسم جديد', content: '' };
             customSections.push(section);
             sectionOrder.push(id);
 
@@ -7005,7 +7003,7 @@
             tab.className = 'nav-tab nav-tab-custom';
             tab.id = 'nav-' + id;
             tab.dataset.section = id;
-            tab.innerHTML = '<span class="icon">&#128196;</span><span class="tab-label" contenteditable="true" onblur="renameSection(\'' + id + '\',this.textContent)">New Section</span><span class="tab-move"><button onclick="event.stopPropagation();moveSection(\'' + id + '\',-1)" title="&#9650;">&#9650;</button><button onclick="event.stopPropagation();moveSection(\'' + id + '\',1)" title="&#9660;">&#9660;</button></span>';
+            tab.innerHTML = '<span class="icon">&#128196;</span><span class="tab-label" contenteditable="true" onblur="renameSection(\'' + id + '\',this.textContent)">قسم جديد</span><span class="tab-move"><button onclick="event.stopPropagation();moveSection(\'' + id + '\',-1)" title="&#9650;">&#9650;</button><button onclick="event.stopPropagation();moveSection(\'' + id + '\',1)" title="&#9660;">&#9660;</button></span>';
             tab.onclick = function () { switchTab(id, this); };
             navTabs.appendChild(tab);
 
@@ -7030,12 +7028,12 @@
             closeSectionModal();
             const id = 'sec_' + Date.now();
             const labels = {
-                certifications: 'Certifications',
-                projects: 'Projects',
-                awards: 'Awards',
-                volunteer: 'Volunteer',
-                interests: 'Interests',
-                custom: 'Custom Section'
+                certifications: 'الشهادات',
+                projects: 'المشاريع',
+                awards: 'الجوائز',
+                volunteer: 'التطوع',
+                interests: 'الاهتمامات',
+                custom: 'قسم مخصص'
             };
             const icons = {
                 certifications: '&#127942;',
@@ -7135,11 +7133,11 @@
             block.className = 'repeater-block';
             block.id = itemId;
             block.innerHTML = `
-            <div class="rb-header"><span class="rb-title">Item</span><button class="btn-rb-delete" onclick="removeCustomItem('${sectionId}','${itemId}')">Delete</button></div>
-            <div class="field"><label>Title</label><input type="text" oninput="updateCustomItem('${sectionId}','${itemId}','title',this.value)" placeholder="e.g. AWS Certified Solutions Architect"></div>
-            <div class="field"><label>Subtitle / Organization</label><input type="text" oninput="updateCustomItem('${sectionId}','${itemId}','subtitle',this.value)" placeholder="e.g. Amazon Web Services"></div>
-            <div class="field"><label>Date</label><input type="text" oninput="updateCustomItem('${sectionId}','${itemId}','date',this.value)" placeholder="e.g. 2024"></div>
-            <div class="field"><label>Description</label><textarea oninput="updateCustomItem('${sectionId}','${itemId}','description',this.value)" placeholder="- Description of this item"></textarea></div>
+            <div class="rb-header"><span class="rb-title">عنصر</span><button class="btn-rb-delete" onclick="removeCustomItem('${sectionId}','${itemId}')">حذف</button></div>
+            <div class="field"><label>العنوان</label><input type="text" oninput="updateCustomItem('${sectionId}','${itemId}','title',this.value)" placeholder="مثال: AWS Certified Solutions Architect"></div>
+            <div class="field"><label>العنوان الفرعي / المنظمة</label><input type="text" oninput="updateCustomItem('${sectionId}','${itemId}','subtitle',this.value)" placeholder="مثال: Amazon Web Services"></div>
+            <div class="field"><label>التاريخ</label><input type="text" oninput="updateCustomItem('${sectionId}','${itemId}','date',this.value)" placeholder="مثال: 2024"></div>
+            <div class="field"><label>الوصف</label><textarea oninput="updateCustomItem('${sectionId}','${itemId}','description',this.value)" placeholder="- وصف هذا العنصر"></textarea></div>
         `;
             container.appendChild(block);
             renderCV();
@@ -7167,28 +7165,28 @@
     <div class="section-modal-overlay" id="sectionModal">
         <div class="section-modal">
             <div class="section-modal-header">
-                <h2>Add Section</h2>
+                <h2>إضافة قسم</h2>
                 <button class="section-modal-close" onclick="closeSectionModal()">&times;</button>
             </div>
             <div class="section-modal-body">
                 <button class="section-option" onclick="addCustomSection('certifications')"><span
-                        class="sec-icon">&#127942;</span><span class="sec-name">Certifications</span><span
-                        class="sec-desc">Licenses and professional certificates</span></button>
+                        class="sec-icon">&#127942;</span><span class="sec-name">الشهادات</span><span
+                        class="sec-desc">التراخيص والشهادات المهنية</span></button>
                 <button class="section-option" onclick="addCustomSection('projects')"><span
-                        class="sec-icon">&#128194;</span><span class="sec-name">Projects</span><span
-                        class="sec-desc">Work and portfolio</span></button>
+                        class="sec-icon">&#128194;</span><span class="sec-name">المشاريع</span><span
+                        class="sec-desc">العمل والمعرض</span></button>
                 <button class="section-option" onclick="addCustomSection('awards')"><span
-                        class="sec-icon">&#127941;</span><span class="sec-name">Awards</span><span
-                        class="sec-desc">Recognition and awards</span></button>
+                        class="sec-icon">&#127941;</span><span class="sec-name">الجوائز</span><span
+                        class="sec-desc">التقدير والجوائز</span></button>
                 <button class="section-option" onclick="addCustomSection('volunteer')"><span
-                        class="sec-icon">&#129309;</span><span class="sec-name">Volunteer</span><span
-                        class="sec-desc">Volunteer experience</span></button>
+                        class="sec-icon">&#129309;</span><span class="sec-name">التطوع</span><span
+                        class="sec-desc">الخبرة التطوعية</span></button>
                 <button class="section-option" onclick="addCustomSection('interests')"><span
-                        class="sec-icon">&#127775;</span><span class="sec-name">Interests</span><span
-                        class="sec-desc">Hobbies and interests</span></button>
+                        class="sec-icon">&#127775;</span><span class="sec-name">الاهتمامات</span><span
+                        class="sec-desc">الهوايات والاهتمامات</span></button>
                 <button class="section-option" onclick="addCustomSection('custom')"><span
-                        class="sec-icon">&#9998;</span><span class="sec-name">Custom Section</span><span
-                        class="sec-desc">Add your own section</span></button>
+                        class="sec-icon">&#9998;</span><span class="sec-name">قسم مخصص</span><span
+                        class="sec-desc">أضف قسمك الخاص</span></button>
             </div>
         </div>
     </div>
@@ -7196,8 +7194,8 @@
     <!-- Upload CV Modal -->
     <div class="upload-modal-overlay" id="uploadModal">
         <div class="upload-modal">
-            <h3><i class="fas fa-cloud-upload-alt" style="color:#6366f1;margin-left:6px"></i> Upload CV</h3>
-            <p>Upload your CV and QCV editor will automatically import the content.</p>
+            <h3><i class="fas fa-cloud-upload-alt" style="color:#6366f1;margin-left:6px"></i> رفع سيرة ذاتية</h3>
+            <p>ارفع سيرتك الذاتية وسيستورد المحرر المحتوى تلقائياً.</p>
             <div class="upload-formats">
                 <span>HTML</span>
                 <span>TXT</span>
@@ -7207,19 +7205,19 @@
             <div class="upload-dropzone" id="uploadDropzone"
                 onclick="document.getElementById('uploadFileInput').click()">
                 <i class="fas fa-file-upload"></i>
-                <div class="uz-text">Drop file here or click to select</div>
-                <div class="uz-sub">Supports HTML, TXT, JSON, PDF — Max 5MB</div>
+                <div class="uz-text">اسحب الملف هنا أو انقر للاختيار</div>
+                <div class="uz-sub">يدعم HTML, TXT, JSON, PDF — حد أقصى 5 ميجا</div>
                 <input type="file" id="uploadFileInput" accept=".html,.htm,.txt,.json,.pdf"
                     onchange="handleUploadFile(this)">
             </div>
             <div class="upload-progress" id="uploadProgress">
                 <i class="fas fa-spinner"></i>
-                <div style="font-weight:600;font-size:0.85rem;color:var(--text)">Analyzing file...</div>
+                <div style="font-weight:600;font-size:0.85rem;color:var(--text)">جاري تحليل الملف...</div>
             </div>
             <div class="upload-result" id="uploadResult"></div>
             <div class="upload-actions" id="uploadActions">
-                <button class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
-                <button class="btn-upload" id="uploadConfirmBtn" disabled onclick="confirmUpload()">Import Data</button>
+                <button class="btn-cancel" onclick="closeUploadModal()">إلغاء</button>
+                <button class="btn-upload" id="uploadConfirmBtn" disabled onclick="confirmUpload()">استيراد البيانات</button>
             </div>
         </div>
     </div>
@@ -7227,58 +7225,57 @@
     <!-- Trash Modal -->
     <div class="upload-modal-overlay" id="trashModal">
         <div class="upload-modal" style="max-width:500px">
-            <h3 style="display:flex;align-items:center;gap:8px"><i class="fas fa-trash" style="color:#ef4444"></i> Trash
+            <h3 style="display:flex;align-items:center;gap:8px"><i class="fas fa-trash" style="color:#ef4444"></i> سلة المهملات
             </h3>
-            <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px">Deleted CVs are kept for 30 days. You can
-                restore or permanently delete them.</p>
+            <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px">السير الذاتية المحذوفة تُحفظ لمدة 30 يوماً. يمكنك استعادتها أو حذفها نهائياً.</p>
             <div id="trashList" style="max-height:400px;overflow-y:auto"></div>
             <div class="upload-actions" id="trashActions">
-                <button class="btn-cancel" onclick="closeTrash()">Close</button>
+                <button class="btn-cancel" onclick="closeTrash()">إغلاق</button>
             </div>
         </div>
     </div>
 
     <!-- AI Assistant -->
-    <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="AI Assistant">
+    <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="مساعد الذكاء الاصطناعي">
         <i class="fas fa-wand-magic-sparkles"></i>
     </button>
     <div class="ai-menu" id="aiMenu">
         <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt"
-                style="color:#0003c9"></i>Professional Summary<span class="ai-shortcut">AI</span></button>
+                style="color:#0003c9"></i>ملخص مهني<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check"
-                style="color:#059669"></i>Proofread Text<span class="ai-shortcut">AI</span></button>
+                style="color:#059669"></i>تدقيق النص<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots"
-                style="color:#f59e0b"></i>Improve Content<span class="ai-shortcut">AI</span></button>
+                style="color:#f59e0b"></i>تحسين المحتوى<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb"
-                style="color:#8b5cf6"></i>Suggest Skills<span class="ai-shortcut">AI</span></button>
-        <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>ATS
-            Optimize<span class="ai-shortcut">AI</span></button>
+                style="color:#8b5cf6"></i>اقتراح مهارات<span class="ai-shortcut">AI</span></button>
+        <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>تحسين
+            لل ATS<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('translate')"><i class="fas fa-language"
-                style="color:#ec4899"></i>Translate CV<span class="ai-shortcut">AI</span></button>
+                style="color:#ec4899"></i>ترجمة السيرة الذاتية<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('coverletter')"><i class="fas fa-envelope-open-text"
-                style="color:#0ea5e9"></i>Cover Letter<span class="ai-shortcut">AI</span></button>
+                style="color:#0ea5e9"></i>خطاب تعريف<span class="ai-shortcut">AI</span></button>
         <div class="ai-menu-divider"></div>
         <button class="ai-menu-item" onclick="aiAction('tailor')"><i class="fas fa-crosshairs"
-                style="color:#f97316"></i>Tailor CV to Job<span class="ai-shortcut">PRO</span></button>
+                style="color:#f97316"></i>تخصيص السيرة للوظيفة<span class="ai-shortcut">PRO</span></button>
         <button class="ai-menu-item" onclick="aiAction('skillgap')"><i class="fas fa-chart-bar"
-                style="color:#06b6d4"></i>Skill Gap Analysis<span class="ai-shortcut">PRO</span></button>
+                style="color:#06b6d4"></i>تحليل فجوات المهارات<span class="ai-shortcut">PRO</span></button>
         <button class="ai-menu-item" onclick="aiAction('interview')"><i class="fas fa-user-tie"
-                style="color:#8b5cf6"></i>Interview Prep<span class="ai-shortcut">PRO</span></button>
+                style="color:#8b5cf6"></i>تحضير المقابلة<span class="ai-shortcut">PRO</span></button>
         <div class="ai-menu-divider"></div>
         <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots"
-                style="color:var(--muted)"></i>Ask AI Anything<span class="ai-shortcut">AI</span></button>
+                style="color:var(--muted)"></i>اسأل الذكاء الاصطناعي<span class="ai-shortcut">AI</span></button>
     </div>
     <div class="ai-result-panel" id="aiResultPanel">
         <div class="ai-result-header">
-            <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">AI Assistant</span></h4>
+            <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">مساعد الذكاء الاصطناعي</span></h4>
             <button class="ai-result-close" onclick="closeAiPanel()">&times;</button>
         </div>
         <div class="ai-result-body" id="aiResultBody">
-            <div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>
+            <div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>
         </div>
         <div class="ai-result-actions">
-            <button id="aiCopyBtn" onclick="copyAiResult()"><i class="fas fa-copy"></i>Copy</button>
-            <button id="aiApplyBtn" class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>Apply</button>
+            <button id="aiCopyBtn" onclick="copyAiResult()"><i class="fas fa-copy"></i>نسخ</button>
+            <button id="aiApplyBtn" class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>تطبيق</button>
         </div>
     </div>
 
@@ -7335,14 +7332,14 @@
                 { target: '.sidebar-nav', title: 'التنقل بين الأقسام', message: 'من هنا تتنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، وغيرها.', tip: 'اضغط على أي قسم عشان تعدّل فيه. التغييرات بتظهر فوراً في المعاينة!' },
                 { target: '.editor-forms', title: 'إدخال البيانات', message: 'اكتب معلوماتك في كل قسم. الذكاء الاصطناعي هيساعدك في كتابة الملخص الوظيفي واختيار المهارات.', tip: 'كل ما بياناتك كانت أكمل، كل ما السيرة الذاتية كانت أقوى.' },
                 { target: '.preview-zone', title: 'معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
-                { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "Save" عشان تحفظ شغلك، أو "Export PDF" عشان تحمل السيرة الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي شغال على طول. بياناتك آمنة في السحابة!' },
+                { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "حفظ" عشان تحفظ شغلك، أو "تصدير PDF" عشان تحمل السيرة الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي شغال على طول. بياناتك آمنة في السحابة!' },
                 { target: '.portfolio-link-box', title: 'رابط المحفظة', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
             ] : [
-                { target: '.sidebar-nav', title: 'Navigating Sections', message: 'Navigate between CV sections: Personal Info, Experience, Education, Skills, and more.', tip: 'Click any section to edit it. Changes appear instantly in the preview!' },
-                { target: '.editor-forms', title: 'Entering Data', message: 'Fill in your info in each section. AI can help you write the professional summary and suggest skills.', tip: 'The more complete your data, the stronger your CV will be.' },
-                { target: '.preview-zone', title: 'Live Preview', message: 'Your CV updates as you type. See the final look before you export.', tip: 'You can zoom in/out using the buttons above the preview.' },
-                { target: '.topbar', title: 'Save & Export', message: 'Press "Save" to save your work, or "Export PDF" to download your CV as a PDF.', tip: 'Auto-save is always on. Your data is safe in the cloud!' },
-                { target: '.portfolio-link-box', title: 'Portfolio Link', message: 'Copy your personal page link from here. Share it with employers to view your CV online.', tip: 'The link works on any device including mobile.' }
+                { target: '.sidebar-nav', title: 'التنقل بين الأقسام', message: 'تنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، وغيرها.', tip: 'اضغط على أي قسم للتعديل. التغييرات تظهر فوراً في المعاينة!' },
+                { target: '.editor-forms', title: 'إدخال البيانات', message: 'أدخل معلوماتك في كل قسم. يمكن للذكاء الاصطناعي مساعدتك في كتابة الملخص المهني واقتراح المهارات.', tip: 'كلما كانت بياناتك أكمل، كانت سيرتك الذاتية أقوى.' },
+                { target: '.preview-zone', title: 'معاينة مباشرة', message: 'تتحدث سيرتك الذاتية أثناء الكتابة. شاهد الشكل النهائي قبل التصدير.', tip: 'يمكنك التكبير والتصغير باستخدام الأزرار أعلاه المعاينة.' },
+                { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "حفظ" لحفظ عملك، أو "تصدير PDF" لتحميل سيرتك الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي مفعّل دائماً. بياناتك آمنة في السحابة!' },
+                { target: '.portfolio-link-box', title: 'رابط المعرض', message: 'انسخ رابط صفحتك الشخصية من هنا. شاركه مع أصحاب العمل لعرض سيرتك الذاتية عبر الإنترنت.', tip: 'الرابط يعمل على جميع الأجهزة بما في ذلك الجوال.' }
             ];
             QCVTutorial.start(t);
             localStorage.setItem('qcv_editor_tutorial_done', '1');
@@ -7404,7 +7401,7 @@
         window.copyAiResult = function () {
             if (!aiResultText) return;
             navigator.clipboard.writeText(aiResultText).then(function () {
-                if (window.QCVNotify) QCVNotify.success('Copied!');
+                if (window.QCVNotify) QCVNotify.success('تم النسخ!');
             }).catch(function () {
                 var ta = document.createElement('textarea');
                 ta.value = aiResultText;
@@ -7412,7 +7409,7 @@
                 ta.select();
                 document.execCommand('copy');
                 document.body.removeChild(ta);
-                if (window.QCVNotify) QCVNotify.success('Copied!');
+                if (window.QCVNotify) QCVNotify.success('تم النسخ!');
             });
         };
 
@@ -7492,7 +7489,7 @@
                 if (sM.length) { var sv = sM.join(' '); document.getElementById('inputSummary').value = sv; data.summary = sv; }
                 if (skM) { var sarr = skM.split(/[,،\n]+/).map(function (x) { return x.trim(); }).filter(function (x) { return x; }); data.skills = sarr; var isk = document.getElementById('inputSkills'); if (isk) isk.value = sarr.join('\n'); }
             } else if (action === 'custom') {
-                document.getElementById('aiResultBody').innerHTML = '<div style="padding:12px;text-align:center;color:var(--muted);font-size:0.8rem">AI suggestions are for reference only. Apply manually if needed.</div>';
+                document.getElementById('aiResultBody').innerHTML = '<div style="padding:12px;text-align:center;color:var(--muted);font-size:0.8rem">اقتراحات الذكاء الاصطناعي للمعاينة فقط. يُنصح بالتطبيق يدوياً عند الحاجة.</div>';
                 return;
             }
 
@@ -7512,8 +7509,8 @@
                 var ud = window._userData || userData;
                 var plan = ud ? (ud.plan || 'free') : 'free';
                 if (plan === 'free') {
-                    document.getElementById('aiResultTitle').textContent = 'Pro Feature';
-                    document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">This is a Pro Feature</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">Upgrade to Pro to unlock ' + (action === 'tailor' ? 'CV Tailoring' : action === 'skillgap' ? 'Skill Gap Analysis' : 'Interview Prep') + '</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">Upgrade to Pro</a></div>';
+                    document.getElementById('aiResultTitle').textContent = 'ميزة Pro';
+                    document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">هذه ميزة Pro</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">رقِّ لباقة Pro لفتح ' + (action === 'tailor' ? 'تخصيص السيرة الذاتية' : action === 'skillgap' ? 'تحليل فجوات المهارات' : 'تحضير المقابلة') + '</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">ترقية لباقة Pro</a></div>';
                     setAiLoading(false);
                     return;
                 }
@@ -7523,19 +7520,19 @@
 
             aiResultAction = action;
             const titles = {
-                summarize: 'Professional Summary',
-                proofread: 'Proofread Text',
-                improve: 'Improve Content',
-                skills: 'Suggest Skills',
-                ats: 'ATS Optimize',
-                translate: 'Translate CV',
-                coverletter: 'Cover Letter',
-                tailor: 'Tailor CV to Job',
-                skillgap: 'Skill Gap Analysis',
-                interview: 'Interview Prep',
-                custom: 'AI Assistant'
+                summarize: 'ملخص مهني',
+                proofread: 'تدقيق النص',
+                improve: 'تحسين المحتوى',
+                skills: 'اقتراح مهارات',
+                ats: 'تحسين لل ATS',
+                translate: 'ترجمة السيرة الذاتية',
+                coverletter: 'خطاب تعريف',
+                tailor: 'تخصيص السيرة للوظيفة',
+                skillgap: 'تحليل فجوات المهارات',
+                interview: 'تحضير المقابلة',
+                custom: 'مساعد الذكاء الاصطناعي'
             };
-            document.getElementById('aiResultTitle').textContent = titles[action] || 'AI Assistant';
+            document.getElementById('aiResultTitle').textContent = titles[action] || 'مساعد الذكاء الاصطناعي';
 
             const cvText = [
                 data.name ? 'Name: ' + data.name : '',
@@ -7551,9 +7548,9 @@
             if (action === 'custom') {
                 var body = document.getElementById('aiResultBody');
                 body.innerHTML = '<div style="padding:12px">' +
-                    '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">Ask anything about your CV:</label>' +
-                    '<textarea id="aiCustomInput" rows="3" placeholder="e.g. How can I improve my summary? What skills should I add?..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;resize:vertical;font-family:inherit"></textarea></div>' +
-                    '<button onclick="sendCustomAi()" style="width:100%;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem">Send</button></div>';
+                    '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">اسأل أي شيء عن سيرتك الذاتية:</label>' +
+                    '<textarea id="aiCustomInput" rows="3" placeholder="مثال: كيف يمكنني تحسين الملخص؟ ما المهارات التي يجب أن أضيفها؟..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;resize:vertical;font-family:inherit"></textarea></div>' +
+                    '<button onclick="sendCustomAi()" style="width:100%;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem">إرسال</button></div>';
                 setAiLoading(false);
                 setTimeout(function () { var inp = document.getElementById('aiCustomInput'); if (inp) inp.focus(); }, 100);
                 return;
@@ -7564,7 +7561,7 @@
                 var jobInput = document.getElementById('jobDescInput');
                 var existingJob = jobInput ? jobInput.value.trim() : '';
                 var body = document.getElementById('aiResultBody');
-                var actionLabels = { tailor: 'Tailor CV to Job', skillgap: 'Skill Gap Analysis', interview: 'Interview Prep', coverletter: 'Generate Cover Letter' };
+                var actionLabels = { tailor: 'تخصيص السيرة للوظيفة', skillgap: 'تحليل فجوات المهارات', interview: 'تحضير المقابلة', coverletter: 'إنشاء خطاب تعريف' };
                 var placeholders = {
                     tailor: 'Paste the job description here...\n\nThe AI will rewrite your summary and experience to match this job perfectly.',
                     skillgap: 'Paste the job description here...\n\nThe AI will analyze what skills you\'re missing and create a learning roadmap.',
@@ -7572,7 +7569,7 @@
                     coverletter: 'Paste the job description here...\n\nThe AI will generate a tailored cover letter for this position.'
                 };
                 body.innerHTML = '<div style="padding:12px">' +
-                    '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">Job Description:</label>' +
+                    '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">وصف الوظيفة:</label>' +
                     '<textarea id="aiJobInput" rows="5" placeholder="' + placeholders[action] + '" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;resize:vertical;font-family:inherit">' + existingJob + '</textarea></div>' +
                     '<button onclick="runAiAction(\'' + action + '\')" style="width:100%;padding:10px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem"><i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i>' + actionLabels[action] + '</button></div>';
                 setAiLoading(false);
@@ -7580,7 +7577,7 @@
                 return;
             }
 
-            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>';
+            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
             setAiLoading(true);
 
             const prompts = {
@@ -7607,7 +7604,7 @@
                 document.getElementById('aiResultBody').innerHTML = renderAiMarkdown(result);
             }, function (err) {
                 setAiLoading(false);
-                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
+                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>الذكاء الاصطناعي غير متاح حالياً<br><span style="font-size:0.72rem;color:var(--muted)">حاول مرة أخرى لاحقاً أو تحقق من إعداداتك</span></div>';
             });
         };
 
@@ -7631,17 +7628,17 @@
                 'User question: ' + question + '\n\n' +
                 'Answer the user\'s question in a helpful and concise way. If the question is about improving the CV, suggest practical improvements.';
 
-            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>';
+            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
             aiResultAction = 'custom';
             setAiLoading(true);
 
             callAI(prompt, function (result) {
                 aiResultText = result;
                 setAiLoading(false);
-                document.getElementById('aiResultBody').innerHTML = '<div style="margin-bottom:12px;padding:10px;background:var(--bg-alt,#f5f5f5);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">Your question:</strong> ' + escHtml(question) + '</div>' + renderAiMarkdown(result);
+                document.getElementById('aiResultBody').innerHTML = '<div style="margin-bottom:12px;padding:10px;background:var(--bg-alt,#f5f5f5);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">سؤالك:</strong> ' + escHtml(question) + '</div>' + renderAiMarkdown(result);
             }, function (err) {
                 setAiLoading(false);
-                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
+                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>الذكاء الاصطناعي غير متاح حالياً<br><span style="font-size:0.72rem;color:var(--muted)">حاول مرة أخرى لاحقاً أو تحقق من إعداداتك</span></div>';
             });
         };
 
@@ -7650,7 +7647,7 @@
             var jobInput = document.getElementById('aiJobInput');
             var jobDesc = jobInput ? jobInput.value.trim() : '';
             if (!jobDesc) {
-                alert('Please paste a job description first.');
+                alert('يرجى لصق وصف الوظيفة أولاً.');
                 return;
             }
 
@@ -7665,7 +7662,7 @@
                 'Skills: ' + (data.skills || []).join(', ')
             ].filter(Boolean).join('\n\n');
 
-            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Analyzing job description...</div>';
+            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري تحليل وصف الوظيفة...</div>';
             setAiLoading(true);
 
             var prompts = {
@@ -7770,13 +7767,12 @@
             callAI(prompts[action] || prompts.custom, function (result) {
                 aiResultText = result;
                 setAiLoading(false);
-                document.getElementById('aiResultBody').innerHTML =
-                    '<div style="margin-bottom:12px;padding:10px;background:rgba(0,3,201,0.06);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">Job:</strong> ' + escHtml(jobDesc.substring(0, 150)) + (jobDesc.length > 150 ? '...' : '') + '</div>' +
+                document.getElementById('aiResultBody').innerHTML = '<div style="margin-bottom:12px;padding:10px;background:rgba(0,3,201,0.06);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">الوظيفة:</strong> ' + escHtml(jobDesc.substring(0, 150)) + (jobDesc.length > 150 ? '...' : '') + '</div>' +
                     renderAiMarkdown(result) +
-                    (action === 'tailor' ? '<div style="margin-top:12px;padding:10px;background:rgba(5,150,105,0.08);border-radius:8px;font-size:0.72rem;color:#059669"><i class="fas fa-info-circle"></i> Copy the optimized content above and paste it into your CV fields manually.</div>' : '');
+                    (action === 'tailor' ? '<div style="margin-top:12px;padding:10px;background:rgba(5,150,105,0.08);border-radius:8px;font-size:0.72rem;color:#059669"><i class="fas fa-info-circle"></i> انسخ المحتوى المحسّن أعلاه والصقه في حقول سيرتك الذاتية يدوياً.</div>' : '');
             }, function (err) {
                 setAiLoading(false);
-                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
+                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>الذكاء الاصطناعي غير متاح حالياً<br><span style="font-size:0.72rem;color:var(--muted)">حاول مرة أخرى لاحقاً أو تحقق من إعداداتك</span></div>';
             });
         };
 
@@ -7786,8 +7782,8 @@
             var plan = ud ? (ud.plan || 'free') : 'free';
             if (plan === 'free') {
                 document.getElementById('aiResultPanel').classList.add('show');
-                document.getElementById('aiResultTitle').textContent = 'AI Fix';
-                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">AI is a Pro Feature</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">Upgrade to Pro to use AI-powered CV improvements</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">Upgrade to Pro</a></div>';
+                document.getElementById('aiResultTitle').textContent = 'إصلاح بالذكاء الاصطناعي';
+                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">الذكاء الاصطناعي ميزة Pro</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">رقِّ لباقة Pro لاستخدام تحسينات السيرة الذاتية بالذكاء الاصطناعي</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">ترقية لباقة Pro</a></div>';
                 return;
             }
             const data = collectData();
@@ -7837,7 +7833,7 @@
 
             document.getElementById('aiResultPanel').classList.add('show');
             document.getElementById('aiResultTitle').textContent = isEn ? 'Fix: ' + section : 'إصلاح: ' + section;
-            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>';
+            document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
             setAiLoading(true);
 
             callAI(prompt, function (result) {
@@ -7846,7 +7842,7 @@
                 document.getElementById('aiResultBody').innerHTML = renderAiMarkdown(result);
             }, function (err) {
                 setAiLoading(false);
-                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI Error<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? escHtml(err) : 'Check your connection') + '</span></div>';
+                document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>خطأ في الذكاء الاصطناعي<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? escHtml(err) : 'تحقق من اتصالك') + '</span></div>';
             });
         };
 
