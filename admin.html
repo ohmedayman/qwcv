@@ -623,6 +623,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <h3>المستخدمين</h3>
                         <div class="actions">
                             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchUsers" placeholder="بحث بالاسم أو البريد أو UID..." oninput="filterUsers()"></div>
+                            <button class="btn-add" onclick="showAddUser()"><i class="fas fa-user-plus"></i> إضافة مستخدم</button>
                             <button class="btn-primary-sm" onclick="showSendMessage()"><i class="fas fa-envelope"></i> إرسال رسالة</button>
                             <button class="btn-sm" onclick="exportUsersCSV()"><i class="fas fa-download"></i> تصدير CSV</button>
                         </div>
@@ -1583,13 +1584,21 @@ window.viewUser = function(uid) {
     document.getElementById('modalTitle').textContent = 'ملف المستخدم';
     document.getElementById('modalBody').innerHTML = '<div class="profile-header"><div class="profile-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div>' +
         '<div class="profile-section"><h4><i class="fas fa-info-circle"></i> المعلومات الأساسية</h4>' +
-        '<div class="profile-row"><div class="label">الباقة</div><div class="value"><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></div></div>' +
-        '<div class="profile-row"><div class="label">رقم التليفون</div><div class="value" style="direction:ltr;text-align:right">'+escHtml(u.phone || '-')+'</div></div>' +
+        '<div class="profile-row"><div class="label">UID</div><div class="value" style="font-family:monospace;font-size:.75rem;color:var(--accent)">'+escHtml(uid)+'</div></div>' +
+        '<div class="profile-row"><div class="label">الباقة</div><div class="value"><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span>'+(u.planExpiry?' <span style="font-size:.7rem;color:var(--muted)">(تنتهي: '+formatDateTime(u.planExpiry)+')</span>':'')+'</div></div>' +
+        '<div class="profile-row"><div class="label">رقم الهاتف</div><div class="value" style="direction:ltr;text-align:right">'+escHtml(u.phone || '-')+'</div></div>' +
         '<div class="profile-row"><div class="label">تاريخ التسجيل</div><div class="value">'+formatDateTime(u.registeredAt)+'</div></div>' +
         '<div class="profile-row"><div class="label">آخر دخول</div><div class="value">'+formatDateTime(u.lastLogin)+'</div></div>' +
         '<div class="profile-row"><div class="label">الحالة</div><div class="value">'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</div></div>' +
+        '<div class="profile-row"><div class="label">مصدر التسجيل</div><div class="value">'+escHtml(u.authProvider === 'google.com' ? 'Google' : u.createdByAdmin ? 'من الأدمن' : 'بريد إلكتروني')+'</div></div>' +
         '<div class="profile-row"><div class="label">التحميلات</div><div class="value">'+(u.downloads||0)+(pl==='free'?' / 1':pl==='pro'?' / 5':' / ∞')+'</div></div></div>' +
+        '<div class="profile-section"><h4><i class="fas fa-globe"></i> معلومات الاتصال</h4>' +
+        '<div class="profile-row"><div class="label">آخر IP</div><div class="value" style="direction:ltr;text-align:right;font-family:monospace">'+escHtml(u.lastIP || '-')+'</div></div>' +
+        '<div class="profile-row"><div class="label">المدينة</div><div class="value">'+escHtml(u.lastCity || '-')+'</div></div>' +
+        '<div class="profile-row"><div class="label">الجهاز</div><div class="value">'+escHtml(u.lastDevice || '-')+'</div></div>' +
+        '<div class="profile-row"><div class="label">المتصفح</div><div class="value">'+escHtml(u.lastBrowser || '-')+'</div></div></div>' +
         '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">' +
+        '<button class="btn-primary-sm" onclick="closeModal();editUserCV(\''+uid+'\')"><i class="fas fa-pen"></i> تعديل السيرة الذاتية</button>' +
         '<button class="btn-primary-sm" onclick="closeModal();changePlan(\''+uid+'\')"><i class="fas fa-exchange-alt"></i> تغيير الباقة</button>' +
         (u.affiliateStatus === 'approved' ?
             '<button class="btn-primary-sm" style="background:var(--yellow)" onclick="closeModal();toggleMarketer(\''+uid+'\',false)"><i class="fas fa-user-minus"></i> إلغاء مسوق</button>' :
@@ -1610,7 +1619,7 @@ window.viewUser = function(uid) {
             logs.map(function(n){
                 return '<div style="background:var(--bg);border-radius:10px;padding:10px 14px;margin-bottom:8px;border:1px solid var(--border)">' +
                     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">' +
-                    '<span style="font-weight:700;font-size:.82rem;color:var(--green)"><i class="fas fa-check-circle"></i> ادخول من '+(n.device||'جهاز')+'</span>' +
+                    '<span style="font-weight:700;font-size:.82rem;color:var(--green)"><i class="fas fa-check-circle"></i> ادخال من '+(n.device||'جهاز')+'</span>' +
                     '<span style="font-size:.7rem;color:var(--muted)">'+getTimeAgo(n.timestamp)+'</span>' +
                     '</div>' +
                     '<div style="display:flex;flex-wrap:wrap;gap:6px">' +
@@ -1624,6 +1633,111 @@ window.viewUser = function(uid) {
         var el = document.getElementById('userLoginHistory');
         if (el) el.innerHTML = '';
     });
+};
+
+window.editUserCV = async function(uid) {
+    var u = window.allUsers[uid]; if (!u) return;
+    // Fetch user's CV data from Firebase
+    try {
+        var snap = await fetch(DB + '/users/' + uid + '/cvData.json');
+        var cvData = await snap.json();
+        if (!cvData || typeof cvData !== 'object') {
+            // Try to find CV data in resumes or drafts
+            var snap2 = await fetch(DB + '/users/' + uid + '/resumes.json');
+            var resumes = await snap2.json();
+            if (resumes && typeof resumes === 'object') {
+                var keys = Object.keys(resumes);
+                if (keys.length) cvData = resumes[keys[0]];
+            }
+        }
+    } catch(e) { cvData = null; }
+
+    document.getElementById('modalTitle').textContent = 'تعديل سيرة ذاتية — ' + (u.name || u.email);
+    var html = '<div style="max-height:60vh;overflow-y:auto">';
+    html += '<p style="font-size:.82rem;color:var(--muted);margin-bottom:14px"><i class="fas fa-info-circle" style="color:var(--accent);margin-left:4px"></i>عدّل بيانات السيرة الذاتية مباشرة من هنا. اضغط "حفظ" ثم "فتح في المحرر" لتعديل التصميم.</p>';
+
+    var fields = [
+        { key: 'name', label: 'الاسم', placeholder: 'محمد أحمد' },
+        { key: 'title', label: 'المسمى الوظيفي', placeholder: 'مطور واجهات أمامية' },
+        { key: 'email', label: 'البريد', placeholder: 'user@email.com' },
+        { key: 'phone', label: 'الهاتف', placeholder: '01028707543' },
+        { key: 'location', label: 'الموقع', placeholder: 'القاهرة، مصر' },
+        { key: 'summary', label: 'الملخص', placeholder: 'مطور واجهات أمامية بخبرة...', multiline: true }
+    ];
+
+    fields.forEach(function(f) {
+        var val = cvData ? (cvData[f.key] || (cvData.contact && cvData.contact[f.key]) || '') : '';
+        html += '<div class="field" style="margin-bottom:10px"><label style="font-size:.78rem;font-weight:600;color:var(--muted)">' + f.label + '</label>';
+        if (f.multiline) {
+            html += '<textarea id="cvEdit_' + f.key + '" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.82rem;min-height:60px;resize:vertical" placeholder="' + f.placeholder + '">' + escHtml(val) + '</textarea>';
+        } else {
+            html += '<input type="text" id="cvEdit_' + f.key + '" value="' + escHtml(val) + '" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.82rem" placeholder="' + f.placeholder + '">';
+        }
+        html += '</div>';
+    });
+
+    // Skills
+    var skills = cvData && cvData.skills ? (Array.isArray(cvData.skills) ? cvData.skills.join(', ') : '') : '';
+    html += '<div class="field" style="margin-bottom:10px"><label style="font-size:.78rem;font-weight:600;color:var(--muted)">المهارات (مفصولة بفاصلة)</label>';
+    html += '<input type="text" id="cvEdit_skills" value="' + escHtml(skills) + '" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.82rem" placeholder="React, Node.js, Python..."></div>';
+
+    // Experience count
+    var expCount = cvData && cvData.experience ? cvData.experience.length : 0;
+    html += '<div class="field" style="margin-bottom:10px"><label style="font-size:.78rem;font-weight:600;color:var(--muted)">الخبرات (' + expCount + ')</label>';
+    html += '<div id="cvEditExpList" style="max-height:150px;overflow-y:auto">';
+    if (cvData && cvData.experience) {
+        cvData.experience.forEach(function(exp, i) {
+            html += '<div style="padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;margin-bottom:4px;font-size:.75rem">';
+            html += '<strong>' + escHtml(exp.position || exp.role || 'خبرة ' + (i+1)) + '</strong> — ' + escHtml(exp.company || '');
+            html += '<input type="hidden" id="cvEdit_exp_' + i + '_position" value="' + escHtml(exp.position || exp.role || '') + '">';
+            html += '<input type="hidden" id="cvEdit_exp_' + i + '_company" value="' + escHtml(exp.company || '') + '">';
+            html += '<input type="hidden" id="cvEdit_exp_' + i + '_description" value="' + escHtml(exp.description || '') + '">';
+            html += '</div>';
+        });
+    }
+    html += '</div></div>';
+
+    html += '</div>';
+
+    html += '<div style="display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap">';
+    html += '<button class="btn-primary-sm" onclick="saveUserCV(\'' + uid + '\')"><i class="fas fa-save"></i> حفظ البيانات</button>';
+    html += '<button class="btn-primary-sm" style="background:var(--green)" onclick="openEditorAsUser(\'' + uid + '\')"><i class="fas fa-pen-fancy"></i> فتح في المحرر</button>';
+    html += '</div>';
+
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('modalConfirm').style.display = 'none';
+    document.getElementById('modal').classList.add('show');
+};
+
+window.saveUserCV = async function(uid) {
+    var cvData = {
+        name: document.getElementById('cvEdit_name').value.trim(),
+        title: document.getElementById('cvEdit_title').value.trim(),
+        email: document.getElementById('cvEdit_email').value.trim(),
+        phone: document.getElementById('cvEdit_phone').value.trim(),
+        location: document.getElementById('cvEdit_location').value.trim(),
+        summary: document.getElementById('cvEdit_summary').value.trim(),
+        skills: document.getElementById('cvEdit_skills').value.split(',').map(function(s){return s.trim()}).filter(Boolean),
+        updatedAt: Date.now(),
+        updatedBy: 'admin'
+    };
+    await restPatch('/users/' + uid + '/cvData', cvData);
+    // Also update name in user profile if changed
+    if (cvData.name && cvData.name !== (window.allUsers[uid]||{}).name) {
+        await restPatch('/users/' + uid, { name: cvData.name });
+    }
+    logAudit('تعديل CV المستخدم', 'user', cvData.name + ' — ' + uid);
+    showToast('تم حفظ بيانات السيرة الذاتية', 'success');
+    loadAllData();
+};
+
+window.openEditorAsUser = function(uid) {
+    // Store target user data in sessionStorage for the editor to pick up
+    var u = window.allUsers[uid];
+    sessionStorage.setItem('qcv_admin_edit_user', uid);
+    sessionStorage.setItem('qcv_admin_edit_user_name', (u||{}).name || '');
+    sessionStorage.setItem('qcv_admin_edit_user_email', (u||{}).email || '');
+    window.open('editor.html?adminEdit=' + uid, '_blank');
 };
 
 window.changePlan = function(uid) {
@@ -1664,6 +1778,65 @@ window.toggleMarketer = async function(uid, approve) {
     }
     showToast(approve ? 'تم تفعيل التسويق للمستخدم' : 'تم إلغاء التسويق', approve ? 'success' : 'warning');
     loadAllData();
+};
+
+window.showAddUser = function() {
+    document.getElementById('modalTitle').textContent = 'إضافة مستخدم جديد';
+    document.getElementById('modalBody').innerHTML =
+        '<div class="field" style="margin-bottom:12px"><label>الاسم الكامل <span style="color:var(--red)">*</span></label><input type="text" id="newUserName" placeholder="محمد أحمد"></div>' +
+        '<div class="field" style="margin-bottom:12px"><label>البريد الإلكتروني <span style="color:var(--red)">*</span></label><input type="email" id="newUserEmail" placeholder="user@example.com"></div>' +
+        '<div class="field" style="margin-bottom:12px"><label>كلمة المرور <span style="color:var(--red)">*</span></label><input type="text" id="newUserPass" placeholder="6 أحرف على الأقل"></div>' +
+        '<div class="field" style="margin-bottom:12px"><label>رقم الهاتف</label><input type="text" id="newUserPhone" placeholder="01xxxxxxxxx" maxlength="11"></div>' +
+        '<div class="field" style="margin-bottom:12px"><label>الباقة</label><select id="newUserPlan"><option value="free">مجانية</option><option value="pro">احترافية</option><option value="unlimited">غير محدودة</option></select></div>' +
+        '<div style="background:rgba(0,3,201,.04);border:1px solid rgba(0,3,201,.15);border-radius:10px;padding:10px 14px;font-size:.75rem;color:var(--muted)"><i class="fas fa-info-circle" style="color:var(--accent);margin-left:4px"></i>سيتم إنشاء حساب جديد بالبريد وكلمة المرور المدخلين.</div>';
+    document.getElementById('modalConfirm').style.display = 'block';
+    document.getElementById('modalConfirm').textContent = 'إنشاء المستخدم';
+    document.getElementById('modalConfirm').onclick = async function() {
+        var name = document.getElementById('newUserName').value.trim();
+        var email = document.getElementById('newUserEmail').value.trim();
+        var pass = document.getElementById('newUserPass').value.trim();
+        var phone = document.getElementById('newUserPhone').value.trim();
+        var plan = document.getElementById('newUserPlan').value;
+        if (!name || !email || !pass) { showToast('أكمل جميع الحقول المطلوبة', 'error'); return; }
+        if (pass.length < 6) { showToast('كلمة المرور 6 أحرف على الأقل', 'error'); return; }
+        try {
+            var btn = document.getElementById('modalConfirm');
+            btn.disabled = true; btn.textContent = 'جاري الإنشاء...';
+            // Create user via Firebase Auth REST API
+            var resp = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: pass, returnSecureToken: true })
+            });
+            var data = await resp.json();
+            if (data.error) throw new Error(data.error.message);
+            var uid = data.localId;
+            // Save user data to database
+            await restPatch('/users/' + uid, {
+                name: name,
+                email: email,
+                phone: phone,
+                plan: plan,
+                planExpiry: plan === 'free' ? null : Date.now() + 30 * 86400000,
+                registeredAt: Date.now(),
+                lastLogin: Date.now(),
+                banned: false,
+                downloads: 0,
+                authProvider: 'admin',
+                createdByAdmin: true
+            });
+            logAudit('إنشاء مستخدم', 'user', name + ' (' + email + ')');
+            closeModal();
+            showToast('تم إنشاء المستخدم بنجاح: ' + email, 'success');
+            loadAllData();
+        } catch (e) {
+            showToast('خطأ: ' + (e.message || 'فشل الإنشاء'), 'error');
+        } finally {
+            var btn2 = document.getElementById('modalConfirm');
+            if (btn2) { btn2.disabled = false; btn2.textContent = 'إنشاء المستخدم'; }
+        }
+    };
+    document.getElementById('modal').classList.add('show');
 };
 
 window.deleteUser = function(uid) {

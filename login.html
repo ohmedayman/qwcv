@@ -1447,6 +1447,60 @@
             });
         }
 
+        // Track login details: IP, city, device, browser
+        async function trackLoginDetails(uid) {
+            try {
+                // Get IP and city
+                let ip = '', city = '';
+                try {
+                    const r = await fetch('https://ipapi.co/json/');
+                    const d = await r.json();
+                    ip = d.ip || '';
+                    city = (d.city ? d.city + ', ' : '') + (d.country_name || '');
+                } catch(e) {}
+
+                // Detect device & browser
+                const ua = navigator.userAgent;
+                let device = 'Desktop';
+                if (/android/i.test(ua)) device = 'Android';
+                else if (/iphone|ipad/i.test(ua)) device = 'iOS';
+                else if (/mac/i.test(ua)) device = 'Mac';
+                else if (/windows/i.test(ua)) device = 'Windows';
+                else if (/linux/i.test(ua)) device = 'Linux';
+
+                let browser = 'Unknown';
+                if (/chrome/i.test(ua) && !/edge|opr/i.test(ua)) browser = 'Chrome';
+                else if (/firefox/i.test(ua)) browser = 'Firefox';
+                else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = 'Safari';
+                else if (/edge/i.test(ua)) browser = 'Edge';
+                else if (/opr|opera/i.test(ua)) browser = 'Opera';
+
+                // Save lastLogin + login details
+                const updates = {
+                    lastLogin: Date.now(),
+                    lastIP: ip,
+                    lastCity: city,
+                    lastDevice: device,
+                    lastBrowser: browser
+                };
+                await set(ref(db, 'users/' + uid + '/lastLogin'), Date.now());
+                await set(ref(db, 'users/' + uid + '/lastIP'), ip);
+                await set(ref(db, 'users/' + uid + '/lastCity'), city);
+                await set(ref(db, 'users/' + uid + '/lastDevice'), device);
+                await set(ref(db, 'users/' + uid + '/lastBrowser'), browser);
+
+                // Push login notification
+                await push(ref(db, 'users/' + uid + '/notifications'), {
+                    type: 'login',
+                    ip: ip,
+                    city: city,
+                    device: device,
+                    browser: browser,
+                    timestamp: Date.now()
+                });
+            } catch(e) { console.error('trackLoginDetails error:', e); }
+        }
+
         onAuthStateChanged(auth, (user) => {
             if (user && !isSignUpMode && !isResetting) {
                 showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
@@ -1613,7 +1667,8 @@
                 } else {
                     const res = await signInWithEmailAndPassword(auth, email, pass);
                     setPersistence(auth, browserLocalPersistence).catch(() => { });
-                    set(ref(db, 'users/' + auth.currentUser.uid + '/lastLogin'), Date.now()).catch(() => { });
+                    // Track login details: IP, city, device, browser
+                    trackLoginDetails(auth.currentUser.uid);
                     if (window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('مرحباً بك!', 'جاري التحويل...');
                     setTimeout(() => location.replace("editor.html"), 400);
