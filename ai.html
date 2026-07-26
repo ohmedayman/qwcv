@@ -628,20 +628,32 @@
         const SYSTEM_PROMPT = `أنت مساعد ذكي متخصص في السيرة الذاتية والوظائف لمنصة QCV. تتحدث العربية بشكل احترافي وودود.
 
 مهماتك الأساسية:
-1. كتابة سير ذاتية احترافية من بيانات المستخدم (بصيغة JSON)
+1. كتابة سير ذاتية احترافية من بيانات المستخدم
 2. تحسين وتحليل السير الذاتية existing
 3. تقديم أسئلة مقابلات شائعة مع نصائح للإجابة
 4. كتابة خطابات تعريف (Cover Letter)
 5. اقتراح مسار مهني وفرص عمل مناسبة
 6. شرح أفضل الممارسات في كتابة السيرة الذاتية
 
-قواعدرد:
+قواعد الإجابة:
 - رد بالعربية دائماً
 - كن مختصراً وواضحاً ما لم يطلب التفصيل
-- استخدم تنسيق markdown: **للتنبيه**، \`كود\`، قوائم منقطة
-- عندما يطلب المستخدم إنشاء سيرة ذاتية، اجمع البيانات وقدمها كـ JSON في كتلة كود محددة بـ \`\`\`json
+- استخدم تنسيق markdown: **للتنبيه**، \`كود\`، قوائم منقطة، عناوين ##
 - لا تستخدم كلمات مثل "بالتأكيد" أو "بكل سرور" كثيراً، كن مباشرة
-- إذا كان لديك توصيات، اقترحها دون سؤال`;
+- إذا كان لديك توصيات، اقترحها دون سؤال
+
+عندما يطلب المستخدم إنشاء سيرة ذاتية:
+- اجمع البيانات أولاً بسؤال واحد شامل
+- ثم اعرض السيرة الذاتية بصيغة markdown منظمة مع عناوين واضحة
+- في النهاية، أضف JSON في كتلة كود محددة بـ \`\`\`json以便 المستخدم يضغط "إنشاء CV" لتحويلها
+- قدم النص بشكل جميل ومقروء قبل الـ JSON
+
+تنسيق الردوع:
+- استخدم ## للعناوين الرئيسية
+- استخدم ** للنص العريض
+- استخدم - للقوائم
+- افصل بين الأقسام بسطر فارغ
+- لا تستخدم جداول markdown، استخدم قوائم بدلاً منها`;
 
         /* ===== Chat Management ===== */
         function genChatId() { return 'chat_' + Date.now(); }
@@ -813,20 +825,86 @@
 
         function formatMd(text) {
             if (!text) return '';
-            let s = text
+            let s = text;
+
+            // First, handle JSON code blocks — render as nice card
+            s = s.replace(/```json\n([\s\S]*?)```/g, function(match, jsonStr) {
+                try {
+                    const obj = JSON.parse(jsonStr.trim());
+                    return renderJsonCard(obj);
+                } catch(e) {
+                    return '<pre style="background:#1e293b;color:#e2e8f0;padding:14px;border-radius:10px;font-size:0.78rem;overflow-x:auto;margin:10px 0;font-family:monospace;line-height:1.6"><code>' + escHtml(jsonStr.trim()) + '</code></pre>';
+                }
+            });
+
+            // Handle generic code blocks
+            s = s.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#1e293b;color:#e2e8f0;padding:14px;border-radius:10px;font-size:0.78rem;overflow-x:auto;margin:10px 0;font-family:monospace;line-height:1.6"><code>$2</code></pre>');
+
+            s = s
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
-                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/`([^`]+)`/g, '<code style="background:rgba(0,3,201,0.06);padding:2px 6px;border-radius:4px;font-size:0.82rem;color:var(--accent)">$1</code>')
                 .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.+?)\*/g, '<em>$1</em>')
-                .replace(/^### (.+)$/gm, '<h3 style="font-size:0.95rem;font-weight:700;margin:12px 0 6px">$1</h3>')
-                .replace(/^## (.+)$/gm, '<h2 style="font-size:1.05rem;font-weight:700;margin:14px 0 6px">$1</h2>')
-                .replace(/^# (.+)$/gm, '<h1 style="font-size:1.15rem;font-weight:700;margin:16px 0 8px">$1</h1>')
-                .replace(/^- (.+)$/gm, '<li>$1</li>')
-                .replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
-                .replace(/(<li>.*<\/li>)/gs, '<ul style="padding-right:18px;margin:6px 0">$1</ul>')
+                .replace(/^### (.+)$/gm, '<h3 style="font-size:0.95rem;font-weight:700;margin:14px 0 6px;color:var(--text)">$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2 style="font-size:1.05rem;font-weight:700;margin:16px 0 8px;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:4px">$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1 style="font-size:1.15rem;font-weight:700;margin:18px 0 10px;color:var(--accent)">$1</h1>')
+                .replace(/^- (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:var(--accent);font-weight:700;flex-shrink:0">•</span><span>$1</span></div>')
+                .replace(/^(\d+)\. (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:var(--accent);font-weight:700;flex-shrink:0">$1.</span><span>$2</span></div>')
+                .replace(/\n{2,}/g, '<div style="height:10px"></div>')
                 .replace(/\n/g, '<br>');
             return s;
+        }
+
+        function renderJsonCard(obj) {
+            let html = '<div style="background:linear-gradient(135deg,rgba(0,3,201,0.03),rgba(39,255,237,0.03));border:1px solid var(--border);border-radius:14px;padding:18px;margin:12px 0">';
+            html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)"><i class="fas fa-file-alt" style="color:var(--accent);font-size:1rem"></i><strong style="font-size:0.9rem;color:var(--text)">بيانات السيرة الذاتية</strong><span style="margin-right:auto;font-size:0.65rem;background:rgba(5,150,105,0.1);color:#059669;padding:2px 8px;border-radius:10px;font-weight:700">جاهز للتحويل</span></div>';
+
+            if (obj.name) html += '<div style="margin-bottom:6px"><span style="font-size:0.72rem;color:var(--muted)">الاسم:</span> <strong style="font-size:0.88rem">' + escHtml(obj.name) + '</strong></div>';
+            if (obj.jobTitle || obj.title) html += '<div style="margin-bottom:6px"><span style="font-size:0.72rem;color:var(--muted)">المسمى الوظيفي:</span> <strong style="font-size:0.85rem">' + escHtml(obj.jobTitle || obj.title) + '</strong></div>';
+
+            if (obj.contact) {
+                html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0">';
+                if (obj.contact.email) html += '<span style="font-size:0.72rem;background:var(--card);padding:3px 10px;border-radius:6px;border:1px solid var(--border)"><i class="fas fa-envelope" style="color:var(--accent);margin-left:4px"></i>' + escHtml(obj.contact.email) + '</span>';
+                if (obj.contact.phone) html += '<span style="font-size:0.72rem;background:var(--card);padding:3px 10px;border-radius:6px;border:1px solid var(--border)"><i class="fas fa-phone" style="color:var(--accent);margin-left:4px"></i>' + escHtml(obj.contact.phone) + '</span>';
+                if (obj.contact.location) html += '<span style="font-size:0.72rem;background:var(--card);padding:3px 10px;border-radius:6px;border:1px solid var(--border)"><i class="fas fa-map-marker-alt" style="color:var(--accent);margin-left:4px"></i>' + escHtml(obj.contact.location) + '</span>';
+                html += '</div>';
+            }
+
+            if (obj.summary) html += '<div style="margin:10px 0;padding:10px;background:var(--card);border-radius:8px;border:1px solid var(--border)"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px">الملخص:</div><div style="font-size:0.82rem;line-height:1.6;color:var(--text)">' + escHtml(obj.summary) + '</div></div>';
+
+            if (obj.experience && obj.experience.length) {
+                html += '<div style="margin:10px 0"><div style="font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:6px"><i class="fas fa-briefcase" style="color:var(--accent);margin-left:4px"></i>الخبرات (' + obj.experience.length + ')</div>';
+                obj.experience.forEach(function(exp) {
+                    html += '<div style="padding:8px 10px;background:var(--card);border-radius:8px;border:1px solid var(--border);margin-bottom:6px">';
+                    html += '<div style="font-weight:700;font-size:0.82rem">' + escHtml(exp.position || exp.role || '') + '</div>';
+                    html += '<div style="font-size:0.72rem;color:var(--accent)">' + escHtml(exp.company || '') + (exp.duration ? ' • ' + escHtml(exp.duration) : '') + '</div>';
+                    if (exp.responsibilities && exp.responsibilities.length) {
+                        exp.responsibilities.forEach(function(r) { html += '<div style="font-size:0.72rem;color:var(--muted);margin-top:2px">• ' + escHtml(r) + '</div>'; });
+                    }
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            if (obj.education && obj.education.length) {
+                html += '<div style="margin:10px 0"><div style="font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:6px"><i class="fas fa-graduation-cap" style="color:var(--accent);margin-left:4px"></i>التعليم</div>';
+                obj.education.forEach(function(edu) {
+                    html += '<div style="padding:8px 10px;background:var(--card);border-radius:8px;border:1px solid var(--border);margin-bottom:6px">';
+                    html += '<div style="font-weight:700;font-size:0.82rem">' + escHtml(edu.degree || '') + '</div>';
+                    html += '<div style="font-size:0.72rem;color:var(--accent)">' + escHtml(edu.school || edu.institution || '') + (edu.year ? ' • ' + escHtml(edu.year) : '') + '</div>';
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            if (obj.skills && obj.skills.length) {
+                html += '<div style="margin:10px 0;display:flex;flex-wrap:wrap;gap:6px">';
+                obj.skills.forEach(function(sk) { html += '<span style="font-size:0.7rem;background:rgba(0,3,201,0.06);color:var(--accent);padding:3px 10px;border-radius:20px;font-weight:600">' + escHtml(sk) + '</span>'; });
+                html += '</div>';
+            }
+
+            html += '</div>';
+            return html;
         }
 
         function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
