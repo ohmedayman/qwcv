@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qcv-v1';
+const CACHE_NAME = 'qcv-v2';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
@@ -12,8 +12,13 @@ const STATIC_ASSETS = [
     '/careers.html',
     '/templates.html',
     '/ai.html',
+    '/ai-tools.html',
+    '/portfolio.html',
+    '/contact.html',
+    '/blog.html',
     '/404.html',
     '/components.css',
+    '/mobile.css',
     '/templates/templates.css',
     '/js/theme.js',
     '/js/lang.js',
@@ -56,11 +61,11 @@ self.addEventListener('fetch', function(e) {
     var url = new URL(e.request.url);
 
     // Don't cache Firebase, API calls, or external scripts
-    if(url.hostname.includes('firebaseio.com') ||
+    if(       url.hostname.includes('firebaseio.com') ||
        url.hostname.includes('gstatic.com') ||
        url.hostname.includes('googleapis.com') ||
        url.hostname.includes('api.') ||
-       url.hostname.includes('puter.com') ||
+       url.hostname.includes('pollinations.ai') ||
        url.hostname.includes('groq.com') ||
        url.hostname.includes('deepseek.com') ||
        url.hostname.includes('openai.com') ||
@@ -69,6 +74,7 @@ self.addEventListener('fetch', function(e) {
        url.hostname.includes('ipify.org') ||
        url.hostname.includes('postimg.cc') ||
        url.hostname.includes('cloudflare.com') ||
+       url.hostname.includes('ipapi.co') ||
        url.pathname.includes('.json') ||
        e.request.method !== 'GET') {
         return;
