@@ -6201,6 +6201,7 @@
             el.style.overflow = 'hidden';
 
             let watermark = null;
+            let domainWatermark = null;
             if (!paid) {
                 watermark = document.createElement('div');
                 watermark.style.cssText = 'position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:8px;color:#999;font-family:Inter,sans-serif;white-space:nowrap;z-index:10;pointer-events:none;letter-spacing:0.5px';
@@ -6208,6 +6209,24 @@
                 el.style.position = 'relative';
                 el.appendChild(watermark);
             }
+            // Domain watermark — show if user email matches a configured domain
+            try {
+                var _dw = (window.QCVSettings && window.QCVSettings.domainWatermark) || (window.allSettings && window.allSettings.domainWatermark) || null;
+                if (_dw && _dw.enabled !== false && _dw.domains && _dw.domains.length) {
+                    var _email = (currentUser && currentUser.email) ? currentUser.email.toLowerCase() : '';
+                    if (_email) {
+                        var _domain = _email.split('@')[1];
+                        var _match = _dw.domains.find(function(d) { return d.domain === _domain; });
+                        if (_match) {
+                            el.style.position = 'relative';
+                            domainWatermark = document.createElement('div');
+                            domainWatermark.style.cssText = 'position:absolute;bottom:12px;right:12px;font-size:9px;color:#0003c9;font-family:Cairo,Inter,sans-serif;white-space:nowrap;z-index:10;pointer-events:none;font-weight:700;opacity:0.7;letter-spacing:0.3px';
+                            domainWatermark.textContent = _match.label || _match.domain;
+                            el.appendChild(domainWatermark);
+                        }
+                    }
+                }
+            } catch (e) { console.error('Domain watermark error:', e); }
 
             try {
                 const opt = {
@@ -6243,6 +6262,7 @@
             } finally {
                 el.style.overflow = origOverflow || 'visible';
                 if (watermark && watermark.parentNode) watermark.remove();
+                if (domainWatermark && domainWatermark.parentNode) domainWatermark.remove();
                 b.classList.remove('loading');
             }
         };

@@ -1115,6 +1115,19 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <div class="field"><label>مفتاح Gemini API (احتياطي)</label><input type="password" id="settingsGeminiKey" placeholder="...AI"></div>
                     </div>
                 </div>
+                <div class="settings-card">
+                    <h4><i class="fas fa-building"></i> علامة مائية النطاق</h4>
+                    <p style="font-size:.78rem;color:var(--muted);margin-bottom:12px">أضف نطاقات الشركات. أي مستخدم يسجل بـ email من هذا النطاق هتظهر علامة مائية باسم النطاق على CV عند التصدير.</p>
+                    <div class="settings-row">
+                        <div class="field" style="flex:2"><label>اسم النطاق</label><input type="text" id="settingsDomainName" placeholder="مثال: company.com"></div>
+                        <div class="field" style="flex:1"><label>نص العلامة المائية</label><input type="text" id="settingsDomainLabel" placeholder="مثال: ABC Corp"></div>
+                        <div class="field" style="flex:0.5"><label>تفعيل</label>
+                            <div class="toggle-switch active" id="settingsDomainEnabled" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                    </div>
+                    <div id="domainList" style="margin-top:10px"></div>
+                    <button class="btn-primary-sm" onclick="addDomain()" style="margin-top:10px;padding:8px 16px;font-size:.78rem"><i class="fas fa-plus"></i> إضافة نطاق</button>
+                </div>
                 <div style="text-align:left;padding:8px 0;display:flex;gap:10px;align-items:center">
                     <button class="btn-primary-sm" onclick="saveSettings()" style="padding:12px 32px;font-size:.9rem"><i class="fas fa-save"></i> حفظ الإعدادات</button>
                     <button class="btn-primary-sm" onclick="bumpVersion()" style="padding:12px 20px;font-size:.9rem;background:#ef4444"><i class="fas fa-sync-alt"></i> إجبار التحديث للجميع</button>
@@ -1537,6 +1550,11 @@ function checkAndLoad() {
         el = document.getElementById('settingsNaraKey'); if (el) el.value = window.allSettings.naraKey || '';
         el = document.getElementById('settingsOpenrouterKey'); if (el) el.value = window.allSettings.openrouterKey || '';
         el = document.getElementById('settingsGeminiKey'); if (el) el.value = window.allSettings.geminiKey || '';
+
+        // Domain Watermark
+        var dw = window.allSettings.domainWatermark || { enabled: true, domains: [] };
+        el = document.getElementById('settingsDomainEnabled'); if (el) el.className = 'toggle-switch' + (dw.enabled !== false ? ' active' : '');
+        renderDomains();
 
         // Activity Feed
         var af = document.getElementById('activityFeed');
@@ -2065,12 +2083,68 @@ window.saveSettings = async function() {
         naraKey: document.getElementById('settingsNaraKey') ? document.getElementById('settingsNaraKey').value : '',
         openrouterKey: document.getElementById('settingsOpenrouterKey') ? document.getElementById('settingsOpenrouterKey').value : '',
         geminiKey: document.getElementById('settingsGeminiKey') ? document.getElementById('settingsGeminiKey').value : '',
+        domainWatermark: window.allSettings.domainWatermark || { enabled: true, domains: [] },
         updatedAt: Date.now()
     };
     await restPatch('/settings', settings);
     logAudit('تحديث الإعدادات', 'settings', 'الباقة الافتراضية: ' + settings.defaultPlan);
     showToast('تم حفظ الإعدادات', 'success');
 };
+
+// ===== DOMAIN WATERMARK =====
+window.addDomain = async function() {
+    var domainInput = document.getElementById('settingsDomainName');
+    var labelInput = document.getElementById('settingsDomainLabel');
+    var domain = (domainInput.value || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+    var label = (labelInput.value || '').trim();
+    if (!domain) { alert('أدخل اسم النطاق'); return; }
+    if (!label) label = domain;
+
+    var dw = window.allSettings.domainWatermark || { enabled: true, domains: [] };
+    if (!dw.domains) dw.domains = [];
+    // Check duplicate
+    if (dw.domains.some(function(d) { return d.domain === domain; })) {
+        alert('هذا النطاق موجود بالفعل');
+        return;
+    }
+    dw.domains.push({ domain: domain, label: label });
+    dw.enabled = document.getElementById('settingsDomainEnabled').classList.contains('active');
+    window.allSettings.domainWatermark = dw;
+    await restPatch('/settings/domainWatermark', dw);
+    domainInput.value = '';
+    labelInput.value = '';
+    renderDomains();
+    showToast('تم إضافة النطاق', 'success');
+};
+
+window.removeDomain = async function(idx) {
+    if (!confirm('حذف هذا النطاق؟')) return;
+    var dw = window.allSettings.domainWatermark || { enabled: true, domains: [] };
+    dw.domains.splice(idx, 1);
+    window.allSettings.domainWatermark = dw;
+    await restPatch('/settings/domainWatermark', dw);
+    renderDomains();
+    showToast('تم حذف النطاق', 'success');
+};
+
+function renderDomains() {
+    var el = document.getElementById('domainList');
+    if (!el) return;
+    var dw = window.allSettings.domainWatermark || { enabled: true, domains: [] };
+    var domains = dw.domains || [];
+    if (!domains.length) {
+        el.innerHTML = '<div style="text-align:center;padding:12px;color:var(--muted);font-size:.78rem;border:1px dashed var(--border);border-radius:8px">لا توجد نطاقات مسجلة</div>';
+        return;
+    }
+    el.innerHTML = domains.map(function(d, i) {
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px">' +
+            '<i class="fas fa-globe" style="color:var(--accent);font-size:.85rem"></i>' +
+            '<span style="flex:1;font-size:.82rem;font-weight:700">' + escHtml(d.domain) + '</span>' +
+            '<span style="font-size:.72rem;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:4px">' + escHtml(d.label) + '</span>' +
+            '<button onclick="removeDomain(' + i + ')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem"><i class="fas fa-trash"></i></button>' +
+            '</div>';
+    }).join('');
+}
 
 // ===== SUPPORT TICKETS =====
 var allSupportTickets = {};
