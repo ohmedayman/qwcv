@@ -1204,11 +1204,10 @@
                 for await (const part of response) {
                     if (part?.text) {
                         fullText += part.text;
-                        updateStreamingMsg(streamId, fullText);
                     }
                 }
 
-                // Typewriter effect on final render
+                // Typewriter effect — slow reveal
                 typewriterRender(streamId, fullText);
 
                 chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
@@ -1404,8 +1403,8 @@
             bubble.classList.add('tw-bubble');
             bubble.innerHTML = '<span class="typewriter-cursor"></span>';
             let i = 0;
-            const chunkSize = 3;
-            const delay = 12;
+            const chunkSize = 1;
+            const delay = 35;
 
             function typeChunk() {
                 if (i >= fullText.length) {
