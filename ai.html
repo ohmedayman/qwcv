@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://js.puter.com/v2/"></script>
     <style>
         :root {
             --sidebar-bg: #111827;
@@ -606,10 +607,6 @@
     </div>
 
     <script>
-        const GEMINI_URL_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-        let GEMINI_KEY = '';
-        let GEMINI_URL = '';
-
         let chatHistory = [];
         let isTyping = false;
         let cvDataExtracted = null;
@@ -758,6 +755,34 @@
             document.getElementById('chatMessages').insertAdjacentHTML('beforeend', html);
         }
 
+        function createStreamingMsg() {
+            const id = 'streamMsg_' + Date.now();
+            const html = `
+                <div class="msg ai" id="${id}">
+                    <div class="msg-avatar">AI</div>
+                    <div class="msg-content">
+                        <div class="msg-name">مساعد QCV</div>
+                        <div class="msg-bubble" id="${id}_bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+                        <div class="msg-actions">
+                            <button class="msg-action-btn" onclick="copyText(this)" data-text="" id="${id}_copy"><i class="fas fa-copy"></i> نسخ</button>
+                        </div>
+                    </div>
+                </div>`;
+            document.getElementById('chatMessages').insertAdjacentHTML('beforeend', html);
+            scrollDown();
+            return id;
+        }
+
+        function updateStreamingMsg(id, text) {
+            const bubble = document.getElementById(id + '_bubble');
+            if (bubble) {
+                bubble.innerHTML = formatMd(text);
+                scrollDown();
+            }
+            const copyBtn = document.getElementById(id + '_copy');
+            if (copyBtn) copyBtn.setAttribute('data-text', text);
+        }
+
         function showTyping() {
             document.getElementById('chatMessages').insertAdjacentHTML('beforeend', `
                 <div class="typing-indicator" id="typingEl">
@@ -802,16 +827,11 @@
             });
         }
 
-        /* ===== Send / Receive ===== */
+        /* ===== Send / Receive via Puter.js ===== */
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const text = input.value.trim();
             if (!text || isTyping) return;
-
-            if (!GEMINI_KEY) {
-                renderMsg('ai', 'جاري تحميل مفتاح الذكاء الاصطناعي... انتظر لحظة ثم أعد الإرسال.');
-                return;
-            }
 
             input.value = '';
             input.style.height = 'auto';
@@ -819,48 +839,47 @@
             if (!currentChatId) currentChatId = genChatId();
 
             renderMsg('user', text);
+
+            const messages = [
+                { role: 'system', content: SYSTEM_PROMPT },
+                ...chatHistory.map(m => ({
+                    role: m.role === 'user' ? 'user' : 'assistant',
+                    content: m.parts?.[0]?.text || ''
+                })),
+                { role: 'user', content: text }
+            ];
+
             chatHistory.push({ role: 'user', parts: [{ text }] });
 
             isTyping = true;
             document.getElementById('sendBtn').disabled = true;
-            showTyping();
+
+            const streamId = createStreamingMsg();
+            let fullText = '';
 
             try {
-                const reply = await callGemini();
-                hideTyping();
-                renderMsg('ai', reply);
-                chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+                const response = await puter.ai.chat(messages, {
+                    model: 'openai/gpt-5.5',
+                    stream: true
+                });
+
+                for await (const part of response) {
+                    if (part?.text) {
+                        fullText += part.text;
+                        updateStreamingMsg(streamId, fullText);
+                    }
+                }
+
+                chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
                 saveCurrentChat(text);
-                detectCvData(text, reply);
+                detectCvData(text, fullText);
             } catch (err) {
-                hideTyping();
-                renderMsg('ai', 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n`' + (err.message || 'unknown error') + '`');
+                updateStreamingMsg(streamId, 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n`' + (err.message || 'unknown error') + '`');
             }
 
             isTyping = false;
             document.getElementById('sendBtn').disabled = false;
             input.focus();
-        }
-
-        async function callGemini() {
-            const body = {
-                contents: chatHistory,
-                systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-                generationConfig: { temperature: 0.7, topP: 0.9, maxOutputTokens: 2048 }
-            };
-            const res = await fetch(GEMINI_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            });
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err.error?.message || 'API error ' + res.status);
-            }
-            const data = await res.json();
-            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (!text) throw new Error('No response');
-            return text;
         }
 
         function saveCurrentChat(firstMsg) {
@@ -929,24 +948,6 @@
         /* ===== Init ===== */
         if (localStorage.getItem('qcv_dark') === 'true') document.body.classList.add('dark-mode');
 
-        // Load Gemini key from Firebase RTDB
-        (async function loadGeminiKey() {
-            try {
-                const snap = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/siteSettings/geminiApiKey.json');
-                const key = await snap.json();
-                if (key) {
-                    GEMINI_KEY = key;
-                    GEMINI_URL = GEMINI_URL_BASE + '?key=' + GEMINI_KEY;
-                }
-            } catch(e) {}
-            if (!GEMINI_KEY) {
-                // fallback: try localStorage
-                GEMINI_KEY = localStorage.getItem('qcv_gemini_key') || '';
-                GEMINI_URL = GEMINI_URL_BASE + '?key=' + GEMINI_KEY;
-            }
-        })();
-
-        // Load last chat or show welcome
         const chatList = getChatList();
         if (chatList.length > 0) {
             switchChat(chatList[0][0]);
