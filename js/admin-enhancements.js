@@ -337,8 +337,8 @@
         if(!jt) return;
         var jobs = Object.entries(window.allJobs);
         jt.innerHTML = jobs.length ? jobs.map(function(e){
-            var j=e[1];
-            return '<tr><td><strong>'+escHtml(j.title)+'</strong></td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="editJob(\''+e[0]+'\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteJob(\''+e[0]+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+            var j=e[1], jid=e[0];
+            return '<tr><td><strong>'+escHtml(j.title)+'</strong>'+(j.applyLink?'<div style="font-size:.65rem;color:var(--accent);margin-top:2px"><i class="fas fa-link" style="margin-left:2px"></i>'+escHtml(j.applyLink)+'</div>':'')+'</td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td><button class="btn-action" onclick="toggleJobMenu(\''+jid+'\',event)" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text)"><i class="fas fa-ellipsis-v"></i> إجراءات</button></td></tr>';
         }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف</p></td></tr>';
     }
 
