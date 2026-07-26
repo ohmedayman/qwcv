@@ -3214,6 +3214,17 @@
         })();
     </script>
 
+    <!-- ===== PARTNERS INFINITE SCROLL ===== -->
+    <script>
+        (function () {
+            var track = document.getElementById('partnersTrack');
+            if (track) {
+                var items = track.innerHTML;
+                track.innerHTML = items + items;
+            }
+        })();
+    </script>
+
 
 
 </body>

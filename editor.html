@@ -4797,7 +4797,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-        import { getDatabase, ref, get, set, push, update, onValue, query, orderByValue, equalTo } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+        import { getDatabase, ref, get, set, push, update, remove, onValue, query, orderByValue, equalTo } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
         const firebaseConfig = { apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I", authDomain: "qwcv-1cfad.firebaseapp.com", projectId: "qwcv-1cfad", storageBucket: "qwcv-1cfad.firebasestorage.app", messagingSenderId: "792471802122", appId: "1:792471802122:web:808e04099afc90315aaaf3", databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com" };
         const app = initializeApp(firebaseConfig);
@@ -7865,6 +7865,189 @@
                     .catch(function () { clearTimeout(timer); if (onError) onError('AI unavailable'); });
             }
         }
+
+        // ===== TRACK APPLICATION =====
+        window.trackApplication = async function () {
+            var jobDesc = (document.getElementById('jobDescInput') || {}).value || '';
+            if (!jobDesc.trim()) { alert('الصق وصف الوظيفة أولاً'); return; }
+            if (!currentUser) { alert('سجّل دخولك أولاً'); return; }
+
+            var data = collectData();
+            var entry = {
+                userId: currentUser.uid,
+                userName: data.name || '',
+                jobDescription: jobDesc.substring(0, 1000),
+                company: extractCompany(jobDesc),
+                status: 'applied',
+                createdAt: Date.now(),
+                followups: []
+            };
+
+            try {
+                var newRef = await push(ref(db, 'applications'), entry);
+                entry.id = newRef.key;
+
+                // Add default reminders
+                var reminders = [
+                    { title: 'متابعة أولى', days: 7 },
+                    { title: 'متابعة ثانية', days: 14 },
+                    { title: 'متابعة أخيرة', days: 30 }
+                ];
+                for (var i = 0; i < reminders.length; i++) {
+                    await push(ref(db, 'applications/' + newRef.key + '/reminders'), {
+                        title: reminders[i].title,
+                        dueDate: Date.now() + reminders[i].days * 86400000,
+                        done: false
+                    });
+                }
+
+                showToast('تم تسجيل الطلب وتذكيرات المتابعة', 'ok');
+                loadApplications();
+            } catch (e) {
+                console.error('trackApplication error:', e);
+                alert('حدث خطأ أثناء الحفظ');
+            }
+        };
+
+        function extractCompany(text) {
+            var lines = text.split('\n');
+            for (var i = 0; i < Math.min(lines.length, 5); i++) {
+                var line = lines[i].trim();
+                if (line.length > 2 && line.length < 80) return line;
+            }
+            return 'شركة غير محددة';
+        }
+
+        // ===== LOAD APPLICATIONS =====
+        async function loadApplications() {
+            if (!currentUser) return;
+            try {
+                var snap = await get(ref(db, 'applications'));
+                var apps = [];
+                snap.forEach(function (child) {
+                    var val = child.val();
+                    if (val.userId === currentUser.uid) {
+                        apps.push({ id: child.key, ...val });
+                    }
+                });
+                renderFollowups(apps);
+            } catch (e) {
+                console.error('loadApplications error:', e);
+            }
+        }
+
+        function renderFollowups(apps) {
+            var list = document.getElementById('followupList');
+            var empty = document.getElementById('followupEmpty');
+            if (!list || !empty) return;
+
+            if (!apps || apps.length === 0) {
+                list.innerHTML = '';
+                empty.style.display = '';
+                return;
+            }
+
+            empty.style.display = 'none';
+            var html = '';
+            var statusLabels = {
+                applied: 'تم التقديم',
+                interviewed: 'مقابلة',
+                rejected: 'مرفوض',
+                accepted: 'مقبول',
+                pending: 'قيد المراجعة'
+            };
+            var statusColors = {
+                applied: '#0003c9',
+                interviewed: '#f59e0b',
+                rejected: '#ef4444',
+                accepted: '#059669',
+                pending: '#6b7280'
+            };
+
+            for (var i = apps.length - 1; i >= 0; i--) {
+                var app = apps[i];
+                var st = app.status || 'applied';
+                var sl = statusLabels[st] || st;
+                var sc = statusColors[st] || '#6b7280';
+                var date = new Date(app.createdAt);
+                var dateStr = date.toLocaleDateString('ar-EG', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                html += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px">';
+                html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
+                html += '<div style="font-weight:800;font-size:0.85rem;color:var(--text)">' + escHtml(app.company || 'شركة') + '</div>';
+                html += '<span style="font-size:0.68rem;padding:3px 10px;border-radius:20px;font-weight:700;background:' + sc + '22;color:' + sc + '">' + sl + '</span>';
+                html += '</div>';
+                html += '<div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px">' + dateStr + '</div>';
+
+                // Status changer
+                html += '<select onchange="updateAppStatus(\'' + app.id + '\',this.value)" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.72rem;font-family:inherit;margin-bottom:8px;background:var(--card);cursor:pointer">';
+                var statuses = ['applied', 'pending', 'interviewed', 'accepted', 'rejected'];
+                for (var j = 0; j < statuses.length; j++) {
+                    html += '<option value="' + statuses[j] + '"' + (statuses[j] === st ? ' selected' : '') + '>' + (statusLabels[statuses[j]] || statuses[j]) + '</option>';
+                }
+                html += '</select>';
+
+                // Reminders
+                if (app.reminders) {
+                    var now = Date.now();
+                    var keys = Object.keys(app.reminders);
+                    for (var k = 0; k < keys.length; k++) {
+                        var rm = app.reminders[keys[k]];
+                        var due = new Date(rm.dueDate);
+                        var dueStr = due.toLocaleDateString('ar-EG', { day: 'numeric', month: 'short' });
+                        var isOverdue = rm.dueDate < now && !rm.done;
+                        var rmColor = rm.done ? '#059669' : (isOverdue ? '#ef4444' : '#f59e0b');
+                        var rmIcon = rm.done ? 'fa-check-circle' : (isOverdue ? 'fa-exclamation-circle' : 'fa-clock');
+
+                        html += '<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--card);border-radius:6px;margin-bottom:4px;border:1px solid var(--border)">';
+                        html += '<i class="fas ' + rmIcon + '" style="color:' + rmColor + ';font-size:0.7rem"></i>';
+                        html += '<span style="flex:1;font-size:0.72rem;font-weight:600;color:var(--text)">' + escHtml(rm.title) + '</span>';
+                        html += '<span style="font-size:0.65rem;color:' + rmColor + '">' + dueStr + '</span>';
+                        if (!rm.done) {
+                            html += '<button onclick="completeReminder(\'' + app.id + '\',\'' + keys[k] + '\')" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:0.65rem;cursor:pointer;color:var(--green);font-family:inherit">✓</button>';
+                        }
+                        html += '</div>';
+                    }
+                }
+
+                html += '<button onclick="deleteApplication(\'' + app.id + '\')" style="margin-top:6px;background:none;border:none;color:var(--red);font-size:0.7rem;cursor:pointer;font-family:inherit;font-weight:600">حذف</button>';
+                html += '</div>';
+            }
+
+            list.innerHTML = html;
+        }
+
+        window.updateAppStatus = async function (appId, newStatus) {
+            try {
+                await update(ref(db, 'applications/' + appId), { status: newStatus });
+                loadApplications();
+            } catch (e) { console.error(e); }
+        };
+
+        window.completeReminder = async function (appId, reminderId) {
+            try {
+                await update(ref(db, 'applications/' + appId + '/reminders/' + reminderId), { done: true });
+                loadApplications();
+            } catch (e) { console.error(e); }
+        };
+
+        window.deleteApplication = async function (appId) {
+            if (!confirm('حذف هذا الطلب؟')) return;
+            try {
+                await remove(ref(db, 'applications/' + appId));
+                loadApplications();
+            } catch (e) { console.error(e); }
+        };
+
+        // Load followups on tab switch
+        (function () {
+            var followupTab = document.querySelector('[onclick*="tab-followups"]');
+            if (followupTab) {
+                followupTab.addEventListener('click', function () { setTimeout(loadApplications, 300); });
+            }
+            // Also load if hash is #followups
+            if (location.hash === '#followups') setTimeout(loadApplications, 500);
+        })();
 
     </script>
     <a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"
