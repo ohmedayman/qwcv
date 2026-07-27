@@ -107,6 +107,10 @@
     "pointsExchange": {
       ".read": true,
       ".write": true
+    },
+    "adminNotifications": {
+      ".read": true,
+      ".write": true
     }
   }
 }

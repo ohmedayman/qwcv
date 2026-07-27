@@ -1056,15 +1056,17 @@
                 var subId = newSubRef.key;
 
                 // 2. Save to user's payment history
-                await _fb.dbSet(_fb.dbRef(rootRef, 'users/' + _fb.user.uid + '/payments/' + subId), {
-                    subscriptionId: subId,
-                    plan: plan,
-                    price: planPrices[plan],
-                    method: method,
-                    refId: refId,
-                    status: 'pending',
-                    createdAt: Date.now()
-                });
+                try {
+                    await _fb.dbSet(_fb.dbRef(rootRef, 'users/' + _fb.user.uid + '/payments/' + subId), {
+                        subscriptionId: subId,
+                        plan: plan,
+                        price: planPrices[plan],
+                        method: method,
+                        refId: refId,
+                        status: 'pending',
+                        createdAt: Date.now()
+                    });
+                } catch(e2) { console.warn('Payment history save skipped:', e2); }
 
                 // 3. Send admin notification (WhatsApp auto-message)
                 var adminMsg = encodeURIComponent(
@@ -1091,30 +1093,34 @@
                 } catch(waErr) { console.log('WA notify skipped:', waErr); }
 
                 // 4. Save admin notification in Firebase
-                await _fb.dbPush(_fb.dbRef(rootRef, 'adminNotifications'), {
-                    type: 'subscription',
-                    title: 'اشتراك جديد',
-                    body: name + ' — ' + labels[plan] + ' — ' + pricesText[plan],
-                    userId: _fb.user.uid,
-                    userName: name,
-                    userEmail: subData.userEmail,
-                    userPhone: phone,
-                    plan: plan,
-                    price: planPrices[plan],
-                    refId: refId,
-                    paymentMethod: methodLabel,
-                    subId: subId,
-                    status: 'pending',
-                    read: false,
-                    createdAt: Date.now()
-                });
+                try {
+                    await _fb.dbPush(_fb.dbRef(rootRef, 'adminNotifications'), {
+                        type: 'subscription',
+                        title: 'اشتراك جديد',
+                        body: name + ' — ' + labels[plan] + ' — ' + pricesText[plan],
+                        userId: _fb.user.uid,
+                        userName: name,
+                        userEmail: subData.userEmail,
+                        userPhone: phone,
+                        plan: plan,
+                        price: planPrices[plan],
+                        refId: refId,
+                        paymentMethod: methodLabel,
+                        subId: subId,
+                        status: 'pending',
+                        read: false,
+                        createdAt: Date.now()
+                    });
+                } catch(e4) { console.warn('Admin notification skipped:', e4); }
 
                 // 5. Update user's current plan status
-                await _fb.dbUpdate(_fb.dbRef(rootRef, 'users/' + _fb.user.uid), {
-                    lastPaymentAt: Date.now(),
-                    lastPaymentRef: refId,
-                    pendingPlan: plan
-                });
+                try {
+                    await _fb.dbUpdate(_fb.dbRef(rootRef, 'users/' + _fb.user.uid), {
+                        lastPaymentAt: Date.now(),
+                        lastPaymentRef: refId,
+                        pendingPlan: plan
+                    });
+                } catch(e5) { console.warn('User update skipped:', e5); }
 
                 // Success!
                 updateProgress(3);
