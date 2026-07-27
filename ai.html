@@ -854,6 +854,7 @@
         </div>
     </div>
 
+    <script src="js/config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script>
@@ -1246,8 +1247,8 @@
         }
 
         /* ===== Send / Receive via OpenRouter AI ===== */
-        const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-        const OPENROUTER_KEY = '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';
+        const OPENROUTER_URL = (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1/chat/completions';
+        const OPENROUTER_KEY = (window.QCVConfig && window.QCVConfig.openrouterKey) || '';
         const AI_MODELS = ['google/gemini-2.5-flash', 'openai/gpt-4o-mini', 'openai/gpt-4.1-nano'];
         let currentModelIndex = 0;
 

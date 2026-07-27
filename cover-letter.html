@@ -219,6 +219,7 @@
     © 2026 QCV - جميع الحقوق محفوظة | منتج من <a href="https://vexonet.online" target="_blank" rel="noopener">Vexonet</a>
 </footer>
 
+<script src="js/config.js"></script>
 <script src="js/ai-service.js"></script>
 <script>
 let currentTpl = 'professional';
@@ -385,7 +386,7 @@ async function generateWithAI() {
         } else {
             const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
                 body: JSON.stringify({
                     model: 'google/gemini-2.5-flash',
                     messages: [{ role: 'system', content: 'You are a professional cover letter writer. Write in English. Keep it under 250 words. No markdown.' }, { role: 'user', content: prompt }],

@@ -8072,6 +8072,7 @@
 
     <script src="js/tutorial.js"></script>
     <script src="js/site-settings.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/ai-service.js"></script>
     <script src="js/auto-reload.js"></script>
     <script src="js/analytics.js"></script>
@@ -8651,7 +8652,7 @@
             } else {
                 fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
                     body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
                 }).then(function(r){return r.json()}).then(function(d){var t=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'';if(t.length>5)onSuccess(t.trim());else onError('Empty response')}).catch(function(){onError('AI unavailable')});
             }

@@ -26,6 +26,7 @@
     </noscript>
     <script defer src="js/theme.js"></script>
     <script defer src="js/lang.js"></script>
+    <script defer src="js/config.js"></script>
     <script defer src="js/ai-service.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -764,7 +765,7 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
                     try {
                         var response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
                             body: JSON.stringify({
                                 model: 'google/gemini-2.5-flash',
                                 messages: [

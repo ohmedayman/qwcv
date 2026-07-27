@@ -3,11 +3,11 @@
  * Unified AI with caching, retry, and model fallback
  */
 const QCVAI = {
-    /** OpenRouter API key */
-    _apiKey: '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',
+    /** OpenRouter API key — loaded from config.js */
+    _apiKey: (window.QCVConfig && window.QCVConfig.openrouterKey) || '',
 
     /** OpenRouter endpoint */
-    _endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    _endpoint: (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1/chat/completions',
 
     /** Available models in priority order */
     _models: ['google/gemini-2.5-flash', 'openai/gpt-4o-mini', 'openai/gpt-4.1-nano'],
