@@ -3503,7 +3503,7 @@
                 overflow-x: auto;
                 overflow-y: hidden;
                 gap: 0;
-                padding: 4px 8px;
+                padding: 6px 10px;
                 scrollbar-width: none
             }
 
@@ -3515,15 +3515,20 @@
                 margin-bottom: 0;
                 margin-right: 2px;
                 white-space: nowrap;
-                padding: 7px 10px;
-                font-size: 0.75rem;
-                flex-shrink: 0
+                padding: 8px 12px;
+                font-size: 0.78rem;
+                flex-shrink: 0;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                border-radius: 8px
             }
 
             .nav-tab .icon {
-                width: 22px;
-                height: 22px;
-                font-size: 0.68rem
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem
             }
 
             .editor-forms {
@@ -3549,11 +3554,11 @@
 
             .topbar {
                 padding: 0 10px;
-                height: 48px
+                height: 50px
             }
 
             .editor-layout {
-                height: calc(100vh - 48px)
+                height: calc(100vh - 50px)
             }
 
             .topbar-nav {
@@ -3563,7 +3568,7 @@
             .topbar-center {
                 flex: 1;
                 overflow-x: auto;
-                gap: 4px;
+                gap: 6px;
                 scrollbar-width: none
             }
 
@@ -3572,7 +3577,7 @@
             }
 
             .topbar-left {
-                gap: 4px;
+                gap: 6px;
                 flex-shrink: 0
             }
 
@@ -3586,22 +3591,25 @@
 
             .btn-export,
             .btn-html-export {
-                padding: 5px 10px;
-                font-size: 0.68rem
+                padding: 7px 12px;
+                font-size: 0.72rem;
+                min-height: 36px
             }
 
             .btn-save {
-                padding: 5px 10px;
-                font-size: 0.68rem
+                padding: 7px 12px;
+                font-size: 0.72rem;
+                min-height: 36px
             }
 
             .btn-upload-cv {
-                padding: 5px 8px;
-                font-size: 0.68rem
+                padding: 7px 10px;
+                font-size: 0.72rem;
+                min-height: 36px
             }
 
             .profile-dropdown {
-                width: 260px
+                width: 280px
             }
 
             #sidebarPlanInfo {
@@ -3620,35 +3628,38 @@
 
         @media(max-width:600px) {
             .nav-tab {
-                font-size: 0.7rem;
-                padding: 6px 8px
+                font-size: 0.72rem;
+                padding: 7px 10px;
+                min-height: 38px
             }
 
             .nav-tab .icon {
-                width: 20px;
-                height: 20px;
-                font-size: 0.65rem
-            }
-
-            .nav-tab .tab-label {
+                width: 22px;
+                height: 22px;
                 font-size: 0.68rem
             }
 
+            .nav-tab .tab-label {
+                font-size: 0.7rem
+            }
+
             .editor-forms {
-                padding: 8px
+                padding: 10px
             }
 
             .field input,
             .field textarea,
             .field select {
                 font-size: 16px;
-                padding: 10px 12px;
-                min-height: 44px
+                padding: 12px 14px;
+                min-height: 48px;
+                border-radius: 12px
             }
 
             .form-card {
-                padding: 10px;
-                margin-bottom: 8px
+                padding: 12px;
+                margin-bottom: 10px;
+                border-radius: 14px
             }
 
             .form-card-header {
@@ -3657,7 +3668,7 @@
             }
 
             .form-card-header h3 {
-                font-size: 0.82rem
+                font-size: 0.85rem
             }
 
             .preview-zone {
@@ -3678,18 +3689,19 @@
             }
 
             .topbar {
-                height: 44px;
+                height: 46px;
                 padding: 0 8px
             }
 
             .editor-layout {
-                height: calc(100vh - 44px)
+                height: calc(100vh - 46px)
             }
 
             .topbar-center select {
-                font-size: 0.65rem;
-                max-width: 70px;
-                padding: 3px 4px
+                font-size: 0.68rem;
+                max-width: 72px;
+                padding: 4px 6px;
+                min-height: 32px
             }
 
             .topbar-center .ctrl-group label {
@@ -3697,32 +3709,33 @@
             }
 
             .slider-group input[type="range"] {
-                width: 36px
+                width: 40px
             }
 
             .slider-val {
-                font-size: 0.55rem
+                font-size: 0.6rem
             }
 
             .theme-toggle {
-                width: 28px;
-                height: 28px;
-                font-size: 0.75rem
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem
             }
 
             .undo-redo button {
-                width: 26px;
-                height: 26px;
-                font-size: 0.65rem
+                width: 30px;
+                height: 30px;
+                font-size: 0.7rem
             }
 
             .add-section-btn {
-                font-size: 0.7rem;
-                padding: 6px 8px
+                font-size: 0.75rem;
+                padding: 8px 12px;
+                min-height: 40px
             }
 
             .profile-dropdown {
-                width: 250px;
+                width: 260px;
                 right: -10px
             }
 
@@ -3739,8 +3752,8 @@
             }
 
             .notif-bell {
-                width: 32px;
-                height: 32px
+                width: 36px;
+                height: 36px
             }
 
             .zoom-controls {
@@ -3748,14 +3761,14 @@
             }
 
             .zoom-btn {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
                 font-size: 0.8rem
             }
 
             .zoom-pct {
-                font-size: 0.7rem;
-                min-width: 36px
+                font-size: 0.72rem;
+                min-width: 38px
             }
 
             .ai-result-panel {
@@ -3763,14 +3776,16 @@
                 bottom: 60px;
                 width: calc(100vw - 16px);
                 max-width: none;
-                max-height: 60vh
+                max-height: 60vh;
+                border-radius: 16px
             }
 
             .ai-menu {
                 right: 8px;
                 bottom: 60px;
                 width: calc(100vw - 16px);
-                max-width: 320px
+                max-width: 320px;
+                border-radius: 16px
             }
 
             .template-panel .tpl-grid {
@@ -3790,7 +3805,8 @@
             .section-modal {
                 width: 95%;
                 max-height: 80vh;
-                margin: 10px
+                margin: 10px;
+                border-radius: 16px
             }
 
             .section-modal-body {
@@ -3800,7 +3816,7 @@
 
             .profile-dropdown {
                 position: fixed;
-                top: 44px;
+                top: 46px;
                 right: 8px;
                 left: auto;
                 width: auto;
@@ -3823,11 +3839,11 @@
             }
 
             .ai-assist-btn {
-                width: 48px;
-                height: 48px;
+                width: 50px;
+                height: 50px;
                 bottom: 60px;
                 right: 12px;
-                font-size: 0.85rem
+                font-size: 0.9rem
             }
 
             .zoom-controls {
@@ -3838,9 +3854,9 @@
             }
 
             .zoom-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 0.75rem
+                width: 32px;
+                height: 32px;
+                font-size: 0.78rem
             }
         }
 
@@ -3852,7 +3868,7 @@
             .topbar {
                 flex-wrap: wrap;
                 height: auto;
-                min-height: 40px;
+                min-height: 42px;
                 padding: 4px 6px;
                 gap: 4px
             }
@@ -3875,32 +3891,34 @@
             }
 
             .sidebar-nav {
-                min-height: 32px
+                min-height: 34px
             }
 
             .nav-tab {
-                padding: 5px 6px;
-                font-size: 0.65rem
+                padding: 6px 8px;
+                font-size: 0.68rem;
+                min-height: 34px
             }
 
             .nav-tab .tab-label {
-                font-size: 0.62rem
+                font-size: 0.64rem
             }
 
             .editor-forms {
-                padding: 6px
+                padding: 8px
             }
 
             .field input,
             .field textarea,
             .field select {
                 font-size: 16px;
-                padding: 10px
+                padding: 12px;
+                min-height: 48px
             }
 
             .ai-assist-btn {
-                width: 44px;
-                height: 44px;
+                width: 46px;
+                height: 46px;
                 bottom: 60px;
                 right: 12px
             }
