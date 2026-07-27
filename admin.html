@@ -3711,12 +3711,12 @@ function exportFullPDFReport() {
         '<div class="stat purple"><div class="val">' + totalCampaigns + '</div><div class="lbl">الحملات</div></div>' +
         '<div class="stat yellow"><div class="val">' + bannedUsers + '</div><div class="lbl">محظورين</div></div>' +
         '</div>' +
-        '<section><h2>📈 نمو المستخدمين (آخر 6 أشهر)</h2>' + (growthBars || '<p style="color:#6b7280">لا توجد بيانات</p>') + '</section>' +
-        '<section><h2>💰 الإيرادات الشهرية</h2>' + (revBars || '<p style="color:#6b7280">لا توجد بيانات</p>') + '</section>' +
-        '<section><h2>👥 آخر المستخدمين النشطين</h2><table><thead><tr><th>الاسم</th><th>البريد</th><th>الباقة</th><th>آخر دخول</th><th>الحالة</th></tr></thead><tbody>' + (recentRows || '<tr><td colspan="5" style="text-align:center;color:#6b7280;padding:16px">لا يوجد بيانات</td></tr>') + '</tbody></table></section>' +
-        '<section><h2>📋 آخر الإجراءات</h2><table><thead><tr><th>الإجراء</th><th>الفئة</th><th>المدير</th><th>التاريخ</th></tr></thead><tbody>' + (auditRows || '<tr><td colspan="4" style="text-align:center;color:#6b7280;padding:16px">لا توجد سجلات</td></tr>') + '</tbody></table></section>' +
+'<section><h2><i class="fas fa-chart-line"></i> نمو المستخدمين (آخر 6 أشهر)</h2>' + (growthBars || '<p style="color:#6b7280">لا توجد بيانات</p>') + '</section>' +
+        '<section><h2><i class="fas fa-dollar-sign"></i> الإيرادات الشهرية</h2>' + (revBars || '<p style="color:#6b7280">لا توجد بيانات</p>') + '</section>' +
+        '<section><h2><i class="fas fa-users"></i> آخر المستخدمين النشطين</h2><table><thead><tr><th>الاسم</th><th>البريد</th><th>الباقة</th><th>آخر دخول</th><th>الحالة</th></tr></thead><tbody>' + (recentRows || '<tr><td colspan="5" style="text-align:center;color:#6b7280;padding:16px">لا يوجد بيانات</td></tr>') + '</tbody></table></section>' +
+        '<section><h2><i class="fas fa-clipboard-list"></i> آخر الإجراءات</h2><table><thead><tr><th>الإجراء</th><th>الفئة</th><th>المدير</th><th>التاريخ</th></tr></thead><tbody>' + (auditRows || '<tr><td colspan="4" style="text-align:center;color:#6b7280;padding:16px">لا توجد سجلات</td></tr>') + '</tbody></table></section>' +
         '<div class="footer">تقرير QCV — تم إنشاؤه تلقائياً في ' + new Date().toLocaleString('ar-EG') + '</div>' +
-        '<div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 32px;background:#6366f1;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:Cairo,sans-serif">🖨️ طباعة / حفظ كـ PDF</button></div>' +
+        '<div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 32px;background:#6366f1;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:Cairo,sans-serif"><i class="fas fa-print"></i> طباعة / حفظ كـ PDF</button></div>' +
         '</body></html>';
 
     var win = window.open('', '_blank');
