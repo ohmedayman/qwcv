@@ -1020,6 +1020,10 @@
                 toast('جاري تحميل النظام...', 'info');
                 return;
             }
+            if (!_fb.dbRef || !_fb.dbPush) {
+                toast('جاري تحميل النظام...', 'info');
+                return;
+            }
 
             var btn = document.getElementById('btnSubmit');
             btn.disabled = true;
@@ -1048,12 +1052,21 @@
                 deviceType: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
             };
 
+            var subId = null;
+            var dbFailed = false;
+
             try {
                 var rootRef = _fb.dbRef(_fb.db);
 
                 // 1. Save subscription
-                var newSubRef = await _fb.dbPush(_fb.dbRef(rootRef, 'subscriptions'), subData);
-                var subId = newSubRef.key;
+                try {
+                    var newSubRef = await _fb.dbPush(_fb.dbRef(rootRef, 'subscriptions'), subData);
+                    subId = newSubRef.key;
+                } catch(e1) {
+                    console.error('Subscription save failed:', e1);
+                    dbFailed = true;
+                    subId = 'local-' + Date.now();
+                }
 
                 // 2. Save to user's payment history
                 try {
@@ -1136,6 +1149,13 @@
                 document.getElementById('rRef').textContent = refId;
                 document.getElementById('rBarcode').textContent = generateReceiptBarcode(refId);
 
+                if (dbFailed) {
+                    var warnEl = document.createElement('div');
+                    warnEl.style.cssText = 'background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 18px;margin-top:16px;font-size:0.85rem;color:#92400e;font-weight:600';
+                    warnEl.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-left:6px"></i>تم إرسال طلبك بنجاح. سيتم تفعيل اشتراكك بعد مراجعة الإدارة.';
+                    document.getElementById('step3').querySelector('.receipt-body').appendChild(warnEl);
+                }
+
                 window._receipt = {
                     name: name,
                     plan: labels[plan],
@@ -1146,12 +1166,17 @@
                     subId: subId
                 };
 
-                toast('تم إرسال طلبك بنجاح!', 'ok');
+                toast(dbFailed ? 'تم إرسال الطلب — بانتظار المراجعة' : 'تم إرسال طلبك بنجاح!', 'ok');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
             } catch (e) {
                 console.error('Payment error:', e);
-                toast('حدث خطأ أثناء إرسال الطلب — يرجى المحاولة مرة أخرى', 'err');
+                var errMsg = 'حدث خطأ أثناء إرسال الطلب — يرجى المحاولة مرة أخرى';
+                if (e && e.message) {
+                    console.error('Error details:', e.message);
+                    if (e.message.includes('permission')) errMsg = 'خطأ في الصلاحيات — تواصل مع الدعم';
+                }
+                toast(errMsg, 'err');
                 btn.disabled = false;
                 btn.classList.remove('loading');
             }
