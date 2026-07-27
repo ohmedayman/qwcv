@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QCV - اشترك الآن</title>
-    <meta name="description" content="اشترك في QCV: Pro بـ99 ج.م/شهر أو غير محدود بـ299 ج.م/شهر. باقة 48 ساعة بـ30 ج.م.">
+    <meta name="description" content="اشترك في QCV: Pro بـ49 ج.م/شهر (خصم 50%) أو غير محدود بـ299 ج.م/شهر. باقة 48 ساعة بـ30 ج.م.">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="mobile.css">
@@ -634,12 +634,12 @@
                 </div>
 
                 <div class="plan pop" onclick="pickPlan(this,'pro')">
-                    <div class="pop-tag"><i class="fas fa-fire" style="margin-left:4px"></i> الأكثر طلباً</div>
+                    <div class="pop-tag"><i class="fas fa-fire" style="margin-left:4px"></i> عرض خاص — خصم 50%</div>
                     <div class="plan-icon"><i class="fas fa-rocket" style="color:#0003c9"></i></div>
                     <div class="plan-name">Pro</div>
                     <div class="plan-desc">للمحترفين والباحثين عن عمل</div>
-                    <div class="plan-price">99 <span class="cur">ج.م/شهر</span></div>
-                    <div class="plan-period">أو 30 ج.م لـ 48 ساعة فقط</div>
+                    <div class="plan-price"><span style="text-decoration:line-through;color:var(--light);font-size:1rem;font-weight:500">99</span> 49 <span class="cur">ج.م/شهر</span></div>
+                    <div class="plan-period" style="color:var(--green);font-weight:700">خصم 50% — العرض لفترة محدودة!</div>
                     <ul class="plan-feats">
                         <li><i class="fas fa-check"></i> 5 سير ذاتية احترافية</li>
                         <li><i class="fas fa-check"></i> 30+ قالب ATS متوافق</li>
@@ -803,9 +803,9 @@
     <script id="payScript">
         var _fb = { user: null, userData: null, db: null, auth: null };
         var plan = null, method = 'vodafone';
-        var labels = { free: 'مجاني', pro: 'Pro — 99 ج.م/شهر', unlimited: 'Unlimited — 299 ج.م/شهر', quick48: '48 ساعة — 30 ج.م' };
-        var pricesText = { free: 'مجاني', pro: '99 ج.م', unlimited: '299 ج.م', quick48: '30 ج.م' };
-        var planPrices = { free: 0, pro: 99, unlimited: 299, quick48: 30 };
+        var labels = { free: 'مجاني', pro: 'Pro — 49 ج.م/شهر', unlimited: 'Unlimited — 299 ج.م/شهر', quick48: '48 ساعة — 30 ج.م' };
+        var pricesText = { free: 'مجاني', pro: '49 ج.م', unlimited: '299 ج.م', quick48: '30 ج.م' };
+        var planPrices = { free: 0, pro: 49, unlimited: 299, quick48: 30 };
 
         function toast(msg, type) {
             var t = document.getElementById('toast');

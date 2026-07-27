@@ -80,7 +80,7 @@
     <script>
         (function () {
             function buildAndRender() {
-                var proM = 99, proY = 79, unM = 299, unY = 239, quick = 30;
+                var proM = 49, proY = 39, unM = 299, unY = 239, quick = 30;
                 try { if (window.allSettings) { proM = parseInt(window.allSettings.proPrice) || proM; unM = parseInt(window.allSettings.unlimitedPrice) || unM; } } catch (e) { }
                 try {
                     if (window.QCVSettings && window.QCVSettings.pricing) {
@@ -2550,12 +2550,12 @@
                 <a href="login.html" class="btn-plan btn-plan-free" data-i18n="start_free">ابدأ مجاناً</a>
             </div>
             <div class="price-card popular">
-                <div class="pop-badge" data-i18n="plan_pro_badge">الأكثر شعبية</div>
+                <div class="pop-badge" style="background:linear-gradient(135deg,#059669,#10b981)"><i class="fas fa-tag" style="margin-left:4px"></i> خصم 50%</div>
                 <div class="p-icon"><i class="fas fa-rocket"></i></div>
                 <div class="p-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
                 <div class="p-desc" data-i18n="plan_pro_desc">للمحترفين والباحثين عن عمل</div>
-                <div class="p-price"><span class="curr">ج.م</span><span class="val" data-monthly="99"
-                        data-yearly="79">99</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
+                <div class="p-price"><span class="curr">ج.م</span><span style="text-decoration:line-through;color:#9ca3af;font-size:1rem;font-weight:500;margin-left:6px">99</span><span class="val" data-monthly="49"
+                        data-yearly="39">49</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
                 <ul class="p-features">
                     <li><i class="fas fa-check"></i> <span data-i18n="plan_pro_f1">5 سير ذاتية احترافية</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="plan_pro_f2">جميع القوالب (+15)</span></li>
@@ -3379,7 +3379,7 @@
                         var popup = document.createElement('div');
                         popup.style.cssText = 'background:var(--card,#fff);border-radius:20px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);animation:popupSlideUp 0.3s cubic-bezier(0.16,1,0.3,1);text-align:center;position:relative';
                         // dynamic promo
-                        var proM = 99;
+                        var proM = 49;
                         try { if (window.allSettings && window.allSettings.proPrice) proM = parseInt(window.allSettings.proPrice) || proM; } catch (e) { }
                         try { if (window.QCVSettings && window.QCVSettings.pricing && window.QCVSettings.pricing.proMonthly) proM = parseInt(window.QCVSettings.pricing.proMonthly) || proM; } catch (e) { }
                         var annual = Math.round(proM * 12 * 0.95);

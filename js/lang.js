@@ -103,7 +103,7 @@
         plan_pro_name: { ar: 'الباقة الاحترافية', en: 'Pro' },
         plan_pro_desc: { ar: 'للمحترفين والباحثين عن عمل', en: 'For professionals and job seekers' },
         plan_pro_period: { ar: '/ شهرياً', en: '/ month' },
-        plan_pro_badge: { ar: 'الأكثر شعبية', en: 'Most Popular' },
+        plan_pro_badge: { ar: 'خصم 50%', en: '50% OFF' },
         plan_pro_f1: { ar: '5 سير ذاتية احترافية', en: '5 professional CVs' },
         plan_pro_f2: { ar: 'جميع القوالب (+15)', en: 'All templates (+15)' },
         plan_pro_f3: { ar: 'تصدير PDF بدون علامة مائية', en: 'PDF without watermark' },

@@ -5206,7 +5206,7 @@
                     <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مطابقة الوظائف بالذكاء الاصطناعي
                     </div>
                     <button class="pro-upsell-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> اشترك
-                        الآن - 99 ج.م/شهر</button>
+                        الآن - 49 ج.م/شهر (خصم 50%)</button>
                 </div>
                 <div class="sidebar-feature" onclick="showTemplates()"><span class="icon"><i
                             class="fas fa-file-alt"></i></span> تغيير القالب</div>
@@ -5305,6 +5305,53 @@
                     <option value="Non-Profit Director">
                     <option value="Consultant">
                     <option value="Freelancer">
+                    <option value="مهندس برمجيات">
+                    <option value="مطور واجهات أمامية">
+                    <option value="مطور خلفية">
+                    <option value="مطور Full Stack">
+                    <option value="مصمم UI/UX">
+                    <option value="مصمم جرافيك">
+                    <option value="مدير منتجات">
+                    <option value="مدير مشاريع">
+                    <option value="محلل بيانات">
+                    <option value="عالم بيانات">
+                    <option value="محلل أمن سيبراني">
+                    <option value="مدير تسويق">
+                    <option value="مدير تسويق رقمي">
+                    <option value="كاتب محتوى">
+                    <option value="مدير وسائل تواصل اجتماعي">
+                    <option value="مدير مبيعات">
+                    <option value="محلل أعمال">
+                    <option value="مدير الموارد البشرية">
+                    <option value="محاسب">
+                    <option value="ممثل خدمة عملاء">
+                    <option value="مهندس شبكات">
+                    <option value="مدير عمليات">
+                    <option value="مدير موارد بشرية">
+                    <option value="مهندس ميكانيكا">
+                    <option value="مهندس كهرباء">
+                    <option value="مهندس مدني">
+                    <option value="طبيب">
+                    <option value="صيدلي">
+                    <option value="ممرض">
+                    <option value="محامي">
+                    <option value="مدير فندق">
+                    <option value="مدير مطعم">
+                    <option value="مسؤول جودة">
+                    <option value="مدير سلسلة توريد">
+                    <option value="منسق لوجستيات">
+                    <option value="مستشار">
+                    <option value="مطور تطبيقات موبايل">
+                    <option value="مدير e-commerce">
+                    <option value="متخصص SEO">
+                    <option value="مدير علامة تجارية">
+                    <option value="منسق فعاليات">
+                    <option value="مدير العلاقات العامة">
+                    <option value="مدير غير ربحي">
+                    <option value="مهندس DevOps">
+                    <option value="مطور AI">
+                    <option value="مهندس Cloud">
+                    <option value="مدير إلكترونيات">
                 </datalist>
                 <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" oninput="renderCV()"
                         placeholder="john@example.com"></div>
@@ -6662,15 +6709,15 @@
         window.addExp = function (role = '', company = '', dur = '', desc = '') {
             const id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
             document.getElementById('expContainer').insertAdjacentHTML('beforeend', `
-                <div class="repeater-block" id="${id}">
+                <div class="repeater-block" id="${id}" style="border-left:3px solid var(--accent);padding-left:12px">
                     <div class="rb-header">
                         <span class="rb-title"><i class="fas fa-briefcase" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> خبرة جديدة</span>
                         <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
                     </div>
-                    <div class="field"><label>المسمى الوظيفي</label><input type="text" value="${role}" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
-                    <div class="field"><label>اسم الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Google, Meta, etc."></div>
-                    <div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="Jan 2020 - Present"></div>
-                    <div class="field"><label>الوصف والإنجازات</label><textarea oninput="renderCV()" placeholder="- Led a team of 5 engineers&#10;- Increased revenue by 25%&#10;- Built CI/CD pipeline from scratch">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة - لقائمة الإنجازات</div></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-building" style="font-size:0.7rem;margin-left:4px"></i>اسم الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Google, Meta, Vodafone, etc." style="font-weight:700;font-size:0.95rem"></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-user-tie" style="font-size:0.7rem;margin-left:4px"></i>المسمى الوظيفي</label><input type="text" value="${role}" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-calendar-alt" style="font-size:0.7rem;margin-left:4px"></i>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="Jan 2020 - Present / يناير 2020 - حتى الآن"></div>
+                    <div class="field" style="margin-bottom:0"><label><i class="fas fa-align-right" style="font-size:0.7rem;margin-left:4px"></i>الوصف والإنجازات</label><textarea oninput="renderCV()" placeholder="- قمت بقيادة فريق من 5 مهندسين&#10;- زدت الإيرادات بنسبة 25%&#10;- بنيت نظام CI/CD من الصفر" style="min-height:80px">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة <b>-</b> لقائمة الإنجازات. كل إنجاز في سطر مستقل.</div></div>
                 </div>`);
             renderCV();
             snapshotState();
@@ -8121,17 +8168,25 @@
         function startEditorTutorial() {
             const isAr = window.QCVLang && QCVLang.current === 'ar';
             const t = isAr ? [
-                { target: '.sidebar-nav', title: 'التنقل بين الأقسام', message: 'من هنا تتنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، وغيرها.', tip: 'اضغط على أي قسم عشان تعدّل فيه. التغييرات بتظهر فوراً في المعاينة!' },
-                { target: '.editor-forms', title: 'إدخال البيانات', message: 'اكتب معلوماتك في كل قسم. الذكاء الاصطناعي هيساعدك في كتابة الملخص الوظيفي واختيار المهارات.', tip: 'كل ما بياناتك كانت أكمل، كل ما السيرة الذاتية كانت أقوى.' },
-                { target: '.preview-zone', title: 'معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
-                { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "حفظ" عشان تحفظ شغلك، أو "تصدير PDF" عشان تحمل السيرة الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي شغال على طول. بياناتك آمنة في السحابة!' },
-                { target: '.portfolio-link-box', title: 'رابط المحفظة', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
+                { target: '.sidebar-nav', title: '📋 الأقسام', message: 'من هنا تتنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، اللغات.', tip: 'اضغط على أي قسم عشان تعدّل فيه. التغييرات بتظهر فوراً في المعاينة!' },
+                { target: '.editor-forms', title: '✏️ إدخال البيانات', message: 'اكتب معلوماتك في كل قسم. الاسم الوظيفي بيقترح لك أسماء مسميات شائعة. اكتب اسم الشركة في الأعلى عشان يظهر بوضوح.', tip: 'كل ما بياناتك كانت أكمل، كل ما السيرة الذاتية كانت أقوى.' },
+                { target: '#tab-personal', title: '👤 المعلومات الشخصية', message: 'ابدأ بالاسم الكامل والوظيفة. البريد والهاتف والموقع. الملخص الوظيفي مهم — استخدم زر AI عشان يكتبهولك.', tip: 'الاسم الوظيفي بيقترح لك أسماء وظائف عند الكتابة!' },
+                { target: '#tab-experience', title: '💼 الخبرة العملية', message: 'اسم الشركة في الأعلى، المسمى الوظيفي بعده، المدة، ثم الوصف. ابدأ كل إنجاز بعلامة - عشان يظهر كقائمة.', tip: 'كل خبرة في مستقل بالخط الأزرق.' },
+                { target: '#tab-skills', title: '🛠️ المهارات', message: 'اكتب مهارة واحدة في كل سطر. رتّبها من الأهم للأقل أهمية.', tip: 'استخدم زر AI لاقتراح مهارات مناسبة لتخصصك!' },
+                { target: '.topbar-center', title: '🎨 التصميم', message: 'اختار القالب والخط والحجم من هنا. 30+ قالب احترافي متاح. غيّر الألوان بسهولة.', tip: 'جرب قالب مختلف كل مرة عشان تشوف الأنسب لعملك!' },
+                { target: '.preview-zone', title: '👁️ معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
+                { target: '.topbar', title: '💾 حفظ وتصدير', message: 'حفظ تلقائي شغال على طول. اضغط "تصدير PDF" عشان تحمل السيرة الذاتية. تقدر تشوف رابط صفحتك الشخصية.', tip: 'بياناتك آمنة في السحابة自动!' },
+                { target: '.portfolio-link-box', title: '🔗 رابط المعرض', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
             ] : [
-                { target: '.sidebar-nav', title: 'التنقل بين الأقسام', message: 'تنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، وغيرها.', tip: 'اضغط على أي قسم للتعديل. التغييرات تظهر فوراً في المعاينة!' },
-                { target: '.editor-forms', title: 'إدخال البيانات', message: 'أدخل معلوماتك في كل قسم. يمكن للذكاء الاصطناعي مساعدتك في كتابة الملخص المهني واقتراح المهارات.', tip: 'كلما كانت بياناتك أكمل، كانت سيرتك الذاتية أقوى.' },
-                { target: '.preview-zone', title: 'معاينة مباشرة', message: 'تتحدث سيرتك الذاتية أثناء الكتابة. شاهد الشكل النهائي قبل التصدير.', tip: 'يمكنك التكبير والتصغير باستخدام الأزرار أعلاه المعاينة.' },
-                { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "حفظ" لحفظ عملك، أو "تصدير PDF" لتحميل سيرتك الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي مفعّل دائماً. بياناتك آمنة في السحابة!' },
-                { target: '.portfolio-link-box', title: 'رابط المعرض', message: 'انسخ رابط صفحتك الشخصية من هنا. شاركه مع أصحاب العمل لعرض سيرتك الذاتية عبر الإنترنت.', tip: 'الرابط يعمل على جميع الأجهزة بما في ذلك الجوال.' }
+                { target: '.sidebar-nav', title: '📋 Sections', message: 'Navigate between CV sections: Personal Info, Experience, Education, Skills, Languages.', tip: 'Click any section to edit. Changes appear instantly in the preview!' },
+                { target: '.editor-forms', title: '✏️ Data Entry', message: 'Enter your info in each section. Job title suggests popular titles. Company name appears prominently at the top.', tip: 'The more complete your data, the stronger your CV!' },
+                { target: '#tab-personal', title: '👤 Personal Info', message: 'Start with full name and job title. Email, phone, location. Professional summary is important — use AI to write it for you.', tip: 'Job title suggests options as you type!' },
+                { target: '#tab-experience', title: '💼 Work Experience', message: 'Company name at top, then job title, duration, and description. Start each achievement with - for a bullet list.', tip: 'Each experience is separated with a blue accent line.' },
+                { target: '#tab-skills', title: '🛠️ Skills', message: 'Write one skill per line. Sort from most to least important.', tip: 'Use AI to suggest skills matching your field!' },
+                { target: '.topbar-center', title: '🎨 Design', message: 'Choose template, font, and size here. 30+ professional templates available. Change colors easily.', tip: 'Try a different template each time to find the best fit!' },
+                { target: '.preview-zone', title: '👁️ Live Preview', message: 'Your CV updates as you type. See the final look before downloading.', tip: 'Zoom in/out with buttons above the preview.' },
+                { target: '.topbar', title: '💾 Save & Export', message: 'Auto-save is always on. Click "Export PDF" to download your CV. See your personal page link.', tip: 'Your data is safe in the cloud!' },
+                { target: '.portfolio-link-box', title: '🔗 Portfolio Link', message: 'Copy your personal page link from here. Share it with employers to view your CV online.', tip: 'The link works on any device including mobile.' }
             ];
             QCVTutorial.start(t);
             localStorage.setItem('qcv_editor_tutorial_done', '1');
