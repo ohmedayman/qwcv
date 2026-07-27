@@ -1177,12 +1177,11 @@
             var dbFailed = false;
 
             try {
-                var rootRef = _fb.dbRef(_fb.db);
-
                 // 1. Save subscription
                 try {
-                    var newSubRef = await _fb.dbPush(_fb.dbRef(rootRef, 'subscriptions'), subData);
+                    var newSubRef = await _fb.dbPush(_fb.dbRef(_fb.db, 'subscriptions'), subData);
                     subId = newSubRef.key;
+                    console.log('Subscription saved:', subId);
                 } catch(e1) {
                     console.error('Subscription save failed:', e1);
                     dbFailed = true;
@@ -1191,7 +1190,7 @@
 
                 // 2. Save to user's payment history
                 try {
-                    await _fb.dbSet(_fb.dbRef(rootRef, 'users/' + _fb.user.uid + '/payments/' + subId), {
+                    await _fb.dbSet(_fb.dbRef(_fb.db, 'users/' + _fb.user.uid + '/payments/' + subId), {
                         subscriptionId: subId,
                         plan: plan,
                         price: planPrices[plan],
@@ -1228,7 +1227,7 @@
 
                 // 4. Save admin notification in Firebase
                 try {
-                    await _fb.dbPush(_fb.dbRef(rootRef, 'adminNotifications'), {
+                    await _fb.dbPush(_fb.dbRef(_fb.db, 'adminNotifications'), {
                         type: 'subscription',
                         title: 'اشتراك جديد',
                         body: name + ' — ' + labels[plan] + ' — ' + pricesText[plan],
@@ -1245,16 +1244,31 @@
                         read: false,
                         createdAt: Date.now()
                     });
+                    console.log('Admin notification saved');
                 } catch(e4) { console.warn('Admin notification skipped:', e4); }
 
                 // 5. Update user's current plan status
                 try {
-                    await _fb.dbUpdate(_fb.dbRef(rootRef, 'users/' + _fb.user.uid), {
+                    await _fb.dbUpdate(_fb.dbRef(_fb.db, 'users/' + _fb.user.uid), {
                         lastPaymentAt: Date.now(),
                         lastPaymentRef: refId,
                         pendingPlan: plan
                     });
                 } catch(e5) { console.warn('User update skipped:', e5); }
+
+                // 6. Fallback: write via REST API if SDK writes failed
+                if (dbFailed) {
+                    try {
+                        await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/subscriptions.json', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(subData)
+                        });
+                        console.log('Fallback REST write succeeded');
+                        dbFailed = false;
+                        subId = null;
+                    } catch(restErr) { console.error('REST fallback also failed:', restErr); }
+                }
 
                 // Success!
                 updateProgress(3);

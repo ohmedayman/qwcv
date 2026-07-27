@@ -1233,6 +1233,11 @@ function switchPanel(panel) {
     if (panel === 'backup') renderBackupLog();
     if (panel === 'security') renderSecurityPanel();
     if (panel === 'newsletter') loadNewsletter();
+    if (panel === 'subscriptions') {
+        restGet('/subscriptions.json').then(function(data) {
+            if (data) { window.allSubs = data; renderAll(); }
+        });
+    }
 }
 
 // ===== LOGIN LOGIC =====
