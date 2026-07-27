@@ -1559,6 +1559,166 @@
             }
         }
 
+        /* ===== SCROLL REVEAL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.visible,
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Staggered children */
+        .stagger-children .reveal:nth-child(1) { transition-delay: 0s; }
+        .stagger-children .reveal:nth-child(2) { transition-delay: 0.08s; }
+        .stagger-children .reveal:nth-child(3) { transition-delay: 0.16s; }
+        .stagger-children .reveal:nth-child(4) { transition-delay: 0.24s; }
+        .stagger-children .reveal:nth-child(5) { transition-delay: 0.32s; }
+        .stagger-children .reveal:nth-child(6) { transition-delay: 0.40s; }
+        .stagger-children .reveal:nth-child(7) { transition-delay: 0.48s; }
+        .stagger-children .reveal:nth-child(8) { transition-delay: 0.56s; }
+
+        /* ===== HERO GRADIENT MESH ===== */
+        .hero {
+            background:
+                radial-gradient(ellipse 80% 60% at 70% 30%, rgba(0,3,201,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 20% 70%, rgba(39,255,237,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 90% 80%, rgba(139,92,246,0.04) 0%, transparent 50%),
+                var(--bg);
+        }
+
+        body.dark-mode .hero {
+            background:
+                radial-gradient(ellipse 80% 60% at 70% 30%, rgba(79,95,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 20% 70%, rgba(39,255,237,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 90% 80%, rgba(139,92,246,0.04) 0%, transparent 50%),
+                var(--bg);
+        }
+
+        /* ===== ENHANCED CARD HOVER GLOW ===== */
+        .feature-card:hover,
+        .price-card:hover,
+        .test-card-new:hover {
+            box-shadow: 0 20px 50px rgba(0,3,201,0.08),
+                        0 0 0 1px rgba(0,3,201,0.06);
+        }
+
+        body.dark-mode .feature-card:hover,
+        body.dark-mode .price-card:hover,
+        body.dark-mode .test-card-new:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3),
+                        0 0 0 1px rgba(39,255,237,0.1);
+        }
+
+        /* ===== SMOOTH SECTION TRANSITIONS ===== */
+        .section {
+            transition: background 0.3s;
+        }
+
+        /* ===== ANIMATED GRADIENT LINE ===== */
+        .hero-visual::before {
+            background: linear-gradient(90deg, var(--accent), #27ffed, var(--accent));
+            background-size: 200% 100%;
+            animation: gradientSlide 3s ease infinite;
+        }
+
+        @keyframes gradientSlide {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== FLOATING BADGE PULSE ===== */
+        .hero-badge {
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,3,201,0.1); }
+            50% { box-shadow: 0 0 0 8px rgba(0,3,201,0); }
+        }
+
+        /* ===== STEP CONNECTOR LINE ===== */
+        .steps-grid {
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), #27ffed);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        @media(max-width:768px) {
+            .steps-grid::before { display: none; }
+        }
+
+        /* ===== CTA BOX GLOW ===== */
+        .cta-box {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(39,255,237,0.12);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: ctaFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes ctaFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+        }
+
         /* ===== WHATSAPP BUTTON ===== */
         .whatsapp-btn {
             position: fixed;
@@ -1975,7 +2135,7 @@
     </nav>
 
     <!-- ===== HERO ===== -->
-    <section class="hero" id="welcome">
+    <section class="hero" id="welcome" style="opacity:1;transform:none">
         <div class="hero-right">
             <div class="hero-badge"><i class="fas fa-robot"></i> <span data-i18n="hero_badge">منصة احترافية
                     للوظائف</span></div>
@@ -2045,54 +2205,54 @@
     </section>
 
     <section class="section" style="padding-top:0">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>ابدأ الآن مع أدوات المنصة</h2>
             <p>كل ما تحتاجه لعرض سيرتك بشكل احترافي وتوسيع فرصك الوظيفية من مكان واحد.</p>
         </div>
-        <div class="features-grid">
-            <article class="feature-card">
+        <div class="features-grid stagger-children">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
                 <h3>إنشاء CV احترافي</h3>
                 <p>ابدأ سيرة ذاتية جاهزة بصياغة واضحة، تواصل احترافي، وتنسيق مميز.</p>
                 <a href="login.html" class="btn btn-ghost" style="margin-top:12px">ابدأ الآن</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-search"></i></div>
                 <h3>فحص ATS مجاناً</h3>
                 <p>تحقق من قوة سيرتك قبل الإرسال واطلع على أبرز نقاط التحسين.</p>
                 <a href="ats-checker.html" class="btn btn-ghost" style="margin-top:12px">افتح الأداة</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-bullseye"></i></div>
                 <h3>مطابقة الوظيفة</h3>
                 <p>قارن سيرتك مع وصف الوظيفة واشحنها بالكلمات المفتاحية المطلوبة.</p>
                 <a href="job-matcher.html" class="btn btn-ghost" style="margin-top:12px">جرّب المطابقة</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-globe"></i></div>
                 <h3>عرض بورتفوليو</h3>
                 <p>شارك ملفك الشخصي بصيغة احترافية مع أصحاب العمل أو العملاء بسهولة.</p>
                 <a href="portfolio.html" class="btn btn-ghost" style="margin-top:12px">اعرض البورتفوليو</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-briefcase"></i></div>
                 <h3>تتبع طلبات العمل</h3>
                 <p>تتبع حالة طلبات التوظيف وتابع تقدمك في كل وظيفة.</p>
                 <a href="tracker.html" class="btn btn-ghost" style="margin-top:12px">افتح التتبع</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-robot"></i></div>
                 <h3>أدوات AI مجانية</h3>
                 <p> خطاب التعريف, مسارات مهنية, تقدير رواتب, تدريب مقابلات — كلها بالذكاء الاصطناعي.</p>
                 <a href="ai-tools.html" class="btn btn-ghost" style="margin-top:12px">جرّب الأدوات</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-pen-nib"></i></div>
                 <h3>توقيع بريد إلكتروني</h3>
                 <p>أنشئ توقيع بريد احترافي بقالب جاهز وانسخه مباشرة لبريدك.</p>
                 <a href="email-signature.html" class="btn btn-ghost" style="margin-top:12px">أنشئ التوقيع</a>
             </article>
-            <article class="feature-card">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-envelope-open-text"></i></div>
                 <h3>خطاب تعريف بالـ AI</h3>
                 <p>ولّد خطاب تعريف احترافي بالذكاء الاصطناعي في ثوانٍ مع قوالب متنوعة.</p>
@@ -2103,13 +2263,13 @@
 
     <!-- ===== BEFORE / AFTER COMPARISON ===== -->
     <section class="section" id="compare">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>قبل QCV و بعده</h2>
             <p>شوف الفرق بنفسك — سيرة ذاتية عادية مقابل سيرة ذاتية احترافية</p>
         </div>
         <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px" id="compareGrid">
             <!-- Before -->
-            <div style="background:var(--card);border:2px solid var(--red);border-radius:18px;padding:24px;position:relative;overflow:hidden;transition:all 0.4s"
+            <div class="reveal-left" style="background:var(--card);border:2px solid var(--red);border-radius:18px;padding:24px;position:relative;overflow:hidden;transition:all 0.4s"
                 onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
                 <div
                     style="position:absolute;top:16px;left:16px;background:rgba(239,68,68,0.1);color:var(--red);padding:4px 14px;border-radius:20px;font-size:0.72rem;font-weight:800">
@@ -2139,7 +2299,7 @@
                 </div>
             </div>
             <!-- After -->
-            <div style="background:var(--card);border:2px solid var(--green);border-radius:18px;padding:24px;position:relative;overflow:hidden;transition:all 0.4s"
+            <div class="reveal-right" style="background:var(--card);border:2px solid var(--green);border-radius:18px;padding:24px;position:relative;overflow:hidden;transition:all 0.4s"
                 onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
                 <div
                     style="position:absolute;top:16px;left:16px;background:rgba(5,150,105,0.1);color:var(--green);padding:4px 14px;border-radius:20px;font-size:0.72rem;font-weight:800">
@@ -2254,12 +2414,12 @@
 
     <!-- ===== FEATURES ===== -->
     <section class="section" id="features">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2 data-i18n="features_title">ليه تختار QCV؟</h2>
             <p>أدوات احترافية لبناء سيرة ذاتية تتجاوز أنظمة الفرز الآلي</p>
         </div>
-        <div class="features-grid">
-            <article class="feature-card">
+        <div class="features-grid stagger-children">
+            <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-brain"></i></div>
                 <h3>مساعد الكتابة الذكي</h3>
                 <p>يساعدك في صياغة الملخص الوظيفي واختيار المهارات المطلوبة (متاح في الباقات المدفوعة)</p>

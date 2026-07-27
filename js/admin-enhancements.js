@@ -357,5 +357,201 @@
     // ===== OVERRIDE loadAllData alias =====
     window.loadAllData = window.checkAndLoad;
 
+    // ===== VIEW JOB =====
+    window.viewJob = function(id) {
+        var j = (window.allJobs || {})[id]; if(!j) return;
+        document.getElementById('modalTitle').textContent = j.title || 'وظيفة';
+        var applyBtn = j.applyLink ? '<a href="'+escHtml(j.applyLink)+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;margin-top:12px;transition:all .15s" onmouseover="this.style.opacity=\'.85\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.opacity=\'1\';this.style.transform=\'none\'"><i class="fas fa-external-link-alt"></i> قدّم الآن</a>' : '<div style="margin-top:12px;padding:10px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;font-size:.82rem;color:#f59e0b;font-weight:600"><i class="fas fa-exclamation-triangle" style="margin-left:4px"></i> لا يوجد رابط تقديم بعد — أضفه من تعديل الوظيفة</div>';
+        document.getElementById('modalBody').innerHTML =
+            '<div style="display:grid;gap:12px">' +
+            '<div class="profile-row"><div class="label">المسمى</div><div class="value" style="font-weight:800;font-size:1rem">' + escHtml(j.title || '-') + '</div></div>' +
+            '<div class="profile-row"><div class="label">الفئة</div><div class="value">' + escHtml(j.category || 'غير محدد') + '</div></div>' +
+            '<div class="profile-row"><div class="label">الموقع</div><div class="value">' + escHtml(j.location || 'غير محدد') + '</div></div>' +
+            '<div class="profile-row"><div class="label">الحالة</div><div class="value">' + (j.active !== false ? '<span class="badge badge-active">نشطة</span>' : '<span class="badge badge-inactive">معطلة</span>') + '</div></div>' +
+            '<div class="profile-row"><div class="label">التاريخ</div><div class="value">' + formatDate(j.createdAt) + '</div></div>' +
+            (j.description ? '<div style="background:var(--bg);border-radius:10px;padding:14px;border:1px solid var(--border)"><div style="font-weight:700;font-size:.82rem;margin-bottom:8px"><i class="fas fa-align-left" style="color:var(--accent);margin-left:4px"></i>الوصف</div><div style="font-size:.82rem;line-height:1.8;color:var(--text);white-space:pre-wrap">' + escHtml(j.description) + '</div></div>' : '') +
+            applyBtn +
+            '</div>';
+        document.getElementById('modalConfirm').style.display = 'none';
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== STAFF: FULL CRUD =====
+    window.showAddStaffEnhanced = function() {
+        document.getElementById('modalTitle').textContent = 'إضافة موظف جديد';
+        document.getElementById('modalBody').innerHTML =
+            '<div class="field" style="margin-bottom:12px"><label>الاسم الكامل <span style="color:var(--red)">*</span></label><input type="text" id="staffName" placeholder="الاسم الكامل للموظف"></div>' +
+            '<div class="field" style="margin-bottom:12px"><label>البريد الإلكتروني <span style="color:var(--red)">*</span></label><input type="email" id="staffEmail" placeholder="email@example.com"></div>' +
+            '<div class="field" style="margin-bottom:12px"><label>كلمة المرور <span style="color:var(--red)">*</span></label><input type="password" id="staffPass" placeholder="كلمة المرور"></div>' +
+            '<div class="field" style="margin-bottom:12px"><label>الدور</label><select id="staffRole">' +
+            '<option value="support">دعم فني</option>' +
+            '<option value="manager">مدير قسم</option>' +
+            '<option value="admin">مدير</option>' +
+            '<option value="super_admin">مدير عام</option>' +
+            '</select></div>' +
+            '<div class="settings-card" style="margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:14px">' +
+            '<h4 style="font-size:.82rem;font-weight:800;margin-bottom:10px"><i class="fas fa-key"></i> الصلاحيات</h4>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">' +
+            [
+                {k:'view_users',l:'عرض المستخدمين'},{k:'manage_users',l:'إدارة المستخدمين'},
+                {k:'manage_staff',l:'إدارة الموظفين'},{k:'manage_subscriptions',l:'إدارة الاشتراكات'},
+                {k:'manage_jobs',l:'إدارة الوظائف'},{k:'manage_settings',l:'إدارة الإعدادات'},
+                {k:'manage_affiliate',l:'إدارة التسويق'},{k:'send_messages',l:'إرسال الرسائل'},
+                {k:'manage_blog',l:'إدارة المدونة'},{k:'manage_support',l:'إدارة الدعم'},
+                {k:'manage_backup',l:'إدارة النسخ الاحتياطي'},{k:'manage_security',l:'إدارة الأمان'}
+            ].map(function(p){
+                return '<label style="display:flex;align-items:center;gap:6px;padding:5px 0;font-size:.8rem;cursor:pointer"><input type="checkbox" value="'+p.k+'" class="staff-perm-check" style="accent-color:var(--accent)"> '+p.l+'</label>';
+            }).join('') +
+            '</div></div>';
+        document.getElementById('modalConfirm').style.display = 'block';
+        document.getElementById('modalConfirm').textContent = 'إضافة موظف';
+        document.getElementById('modalConfirm').onclick = async function() {
+            var name = document.getElementById('staffName').value.trim();
+            var email = document.getElementById('staffEmail').value.trim();
+            var pass = document.getElementById('staffPass').value.trim();
+            if (!name) { showToast('أدخل اسم الموظف', 'error'); return; }
+            if (!email) { showToast('أدخل البريد الإلكتروني', 'error'); return; }
+            if (!pass) { showToast('أدخل كلمة المرور', 'error'); return; }
+            var perms = [];
+            document.querySelectorAll('.staff-perm-check:checked').forEach(function(cb) { perms.push(cb.value); });
+            await restPost('/staff', { name: name, email: email, password: pass, role: document.getElementById('staffRole').value, permissions: perms, active: true, createdAt: Date.now() });
+            logAudit('إضافة موظف', 'staff', name + ' — ' + document.getElementById('staffRole').value);
+            showToast('تمت إضافة الموظف بنجاح', 'success');
+            closeModal();
+            loadAllData();
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== DOMAINS: REAL DATA RENDERING =====
+    window.renderDomainsEnhanced = function() {
+        var dt = document.getElementById('domainsList');
+        if (!dt) return;
+        var doms = Object.entries(window.allDomains);
+        if (!doms.length) {
+            dt.innerHTML = '<tr><td colspan="6" class="empty-state"><div style="text-align:center;padding:30px"><i class="fas fa-globe" style="font-size:2rem;color:var(--muted);margin-bottom:10px;display:block"></i><p>لا توجد نطاقات معتمدة</p><p style="font-size:.78rem;color:var(--muted);margin-top:6px">أضف نطاقات لتخصيص باقات المستخدمين تلقائياً</p></div></td></tr>';
+            return;
+        }
+        var domainUserCount = {};
+        Object.values(window.allUsers || {}).forEach(function(u) {
+            if (u.email) {
+                var dom = u.email.split('@')[1];
+                if (dom) domainUserCount[dom] = (domainUserCount[dom] || 0) + 1;
+            }
+        });
+        dt.innerHTML = doms.map(function(e) {
+            var d = e[1];
+            var userCnt = domainUserCount[d.domain] || d.userCount || 0;
+            var statusBadge = d.active !== false ? '<span class="badge badge-active">نشطة</span>' : '<span class="badge badge-inactive">معطلة</span>';
+            var syncStatus = '';
+            restGet('/approvedDomains/' + (d.domain || '').replace(/\./g, '_') + '.json').then(function(approved) {
+                if (!approved && d.active !== false) syncStatus = ' <span style="font-size:.6rem;background:rgba(245,158,11,.1);color:#f59e0b;padding:2px 5px;border-radius:4px">غير متزامن</span>';
+            });
+            return '<tr><td><strong style="direction:ltr;display:inline-block">' + escHtml(d.domain) + '</strong></td><td><span class="badge ' + planBadgeClass(d.plan) + '">' + planText(d.plan) + '</span></td><td>' + (d.duration || 30) + ' يوم</td><td>' + userCnt + ' مستخدم</td><td>' + statusBadge + '</td><td><div class="actions"><button class="btn-action btn-edit" onclick="(window.editDomainEnhanced||editDomain)(\'' + e[0] + '\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-approve" onclick="syncSingleDomain(\'' + e[0] + '\')" title="مزامنة"><i class="fas fa-sync"></i></button><button class="btn-action btn-delete" onclick="deleteDomain(\'' + e[0] + '\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+        }).join('');
+    };
+
+    window.syncSingleDomain = async function(id) {
+        var d = window.allDomains[id];
+        if (!d || !d.domain) return;
+        try {
+            await (window.syncApprovedDomain || async function(){})();
+            await syncApprovedDomain(d);
+            showToast('تمت مزامنة النطاق: ' + d.domain, 'success');
+        } catch(e) { showToast('خطأ في المزامنة', 'error'); }
+    };
+
+    // ===== NOTIFICATION TEMPLATES: ENHANCED =====
+    window.renderTemplatesEnhanced = function() {
+        restGet('/notificationTemplates.json').then(function(data) {
+            window.allTemplates = data || {};
+            var el = document.getElementById('tplList');
+            if (!el) return;
+            var entries = Object.entries(data || {});
+            if (!entries.length) {
+                el.innerHTML = '<div style="text-align:center;padding:40px"><div style="width:60px;height:60px;border-radius:50%;background:rgba(0,3,201,.08);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 12px"><i class="fas fa-file-alt"></i></div><p style="font-weight:700;margin-bottom:6px">لا توجد قوالب بعد</p><p style="font-size:.82rem;color:var(--muted)">أنشئ قالبات لإرسال إشعارات جماعية مسبقة التخطيط</p></div>';
+                return;
+            }
+            var tplTypes = { welcome: 'ترحيب', promo: 'عرض خاص', expiry: 'تنبيه انتهاء', birthday: 'عيد ميلاد', custom: 'مخصص' };
+            var tplIcons = { welcome: 'fa-hand-wave', promo: 'fa-tag', expiry: 'fa-clock', birthday: 'fa-birthday-cake', custom: 'fa-file-alt' };
+            var tplColors = { welcome: 'var(--green)', promo: 'var(--purple)', expiry: 'var(--yellow)', birthday: 'var(--accent)', custom: 'var(--muted)' };
+            el.innerHTML = entries.map(function(e) {
+                var t = e[1];
+                var tc = tplColors[t.type] || 'var(--accent)';
+                var ti = tplIcons[t.type] || 'fa-file-alt';
+                return '<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;transition:all .15s" onmouseover="this.style.borderColor=\''+tc+'\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+                    '<div style="width:44px;height:44px;border-radius:11px;background:'+tc+'15;color:'+tc+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem"><i class="fas '+ti+'"></i></div>' +
+                    '<div style="flex:1;min-width:0"><h4 style="font-size:.88rem;font-weight:800;margin-bottom:2px">' + escHtml(t.name || 'قالب') + '</h4><p style="font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHtml(tplTypes[t.type] || t.type || 'مخصص') + ' — ' + escHtml((t.body || '').substring(0, 80)) + '</p></div>' +
+                    '<div style="display:flex;gap:6px;flex-shrink:0"><button class="btn-action btn-view" onclick="previewTemplate(\'' + e[0] + '\')" title="معاينة"><i class="fas fa-eye"></i></button><button class="btn-action btn-edit" onclick="editTemplate(\'' + e[0] + '\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteTemplate(\'' + e[0] + '\')"><i class="fas fa-trash"></i></button></div>' +
+                    '</div>';
+            }).join('');
+            var sel = document.getElementById('schedTemplate');
+            if (sel) { sel.innerHTML = '<option value="">اختر قالب</option>' + entries.map(function(e) { return '<option value="' + e[0] + '">' + escHtml(e[1].name || e[0]) + '</option>'; }).join(''); }
+        });
+    };
+
+    window.previewTemplate = function(id) {
+        var t = (window.allTemplates || {})[id];
+        if (!t) return;
+        document.getElementById('modalTitle').textContent = 'معاينة القالب — ' + (t.name || '');
+        var tplTypes = { welcome: 'ترحيب', promo: 'عرض خاص', expiry: 'تنبيه انتهاء', birthday: 'عيد ميلاد', custom: 'مخصص' };
+        document.getElementById('modalBody').innerHTML =
+            '<div style="display:grid;gap:12px">' +
+            '<div class="profile-row"><div class="label">النوع</div><div class="value"><span class="badge badge-pro">' + (tplTypes[t.type] || t.type || 'مخصص') + '</span></div></div>' +
+            '<div class="profile-row"><div class="label">الموضوع</div><div class="value" style="font-weight:700">' + escHtml(t.subject || '-') + '</div></div>' +
+            '<div style="background:var(--bg);border-radius:12px;padding:16px;border:1px solid var(--border);border-left:3px solid var(--accent)">' +
+            '<div style="font-size:.78rem;color:var(--muted);margin-bottom:8px;font-weight:600"><i class="fas fa-envelope" style="margin-left:4px"></i>معاينة الرسالة</div>' +
+            '<div style="font-size:.88rem;line-height:1.8;white-space:pre-wrap;color:var(--text)">' + escHtml(t.body || 'لا يوجد محتوى') + '</div>' +
+            '</div>' +
+            '<div style="font-size:.75rem;color:var(--muted)"><i class="fas fa-info-circle" style="margin-left:3px"></i>استخدم <code>{name}</code> لاسم المستخدم في النص</div>' +
+            '</div>';
+        document.getElementById('modalConfirm').style.display = 'none';
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== SEGMENTS: ACTIVATE =====
+    window.renderSegmentsEnhanced = function() {
+        var entries = Object.entries(window.allUsers);
+        var segs = [
+            { label: 'الكل', icon: 'fa-users', color: 'var(--accent)', count: entries.length, filter: function() { return true; } },
+            { label: 'نشط', icon: 'fa-user-check', color: 'var(--green)', count: entries.filter(function(e) { return !e[1].banned; }).length, filter: function(e) { return !e[1].banned; } },
+            { label: 'محظور', icon: 'fa-user-slash', color: 'var(--red)', count: entries.filter(function(e) { return e[1].banned; }).length, filter: function(e) { return e[1].banned; } },
+            { label: 'مجاني', icon: 'fa-user', color: '#6b7280', count: entries.filter(function(e) { return (e[1].plan||'free') === 'free'; }).length, filter: function(e) { return (e[1].plan||'free') === 'free'; } },
+            { label: 'محترف', icon: 'fa-crown', color: 'var(--accent)', count: entries.filter(function(e) { return e[1].plan === 'pro'; }).length, filter: function(e) { return e[1].plan === 'pro'; } },
+            { label: 'غير محدود', icon: 'fa-infinity', color: 'var(--purple)', count: entries.filter(function(e) { return e[1].plan === 'unlimited'; }).length, filter: function(e) { return e[1].plan === 'unlimited'; } },
+            { label: 'جديد (7 أيام)', icon: 'fa-sparkles', color: 'var(--yellow)', count: entries.filter(function(e) { return e[1].registeredAt && (Date.now() - e[1].registeredAt) < 7*86400000; }).length, filter: function(e) { return e[1].registeredAt && (Date.now() - e[1].registeredAt) < 7*86400000; } },
+            { label: 'مسوق', icon: 'fa-bullhorn', color: 'var(--green)', count: entries.filter(function(e) { return e[1].affiliateStatus === 'approved'; }).length, filter: function(e) { return e[1].affiliateStatus === 'approved'; } },
+            { label: 'اشتراكي منتهي', icon: 'fa-clock', color: 'var(--red)', count: entries.filter(function(e) { return e[1].plan !== 'free' && e[1].planExpiry && e[1].planExpiry < Date.now(); }).length, filter: function(e) { return e[1].plan !== 'free' && e[1].planExpiry && e[1].planExpiry < Date.now(); } }
+        ];
+        var cards = document.getElementById('segmentCards');
+        if (cards) cards.innerHTML = segs.map(function(s, i) {
+            return '<div class="segment-card" onclick="showSegmentUsers(' + i + ')" style="cursor:pointer;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:all .2s" onmouseover="this.style.borderColor=\''+s.color+'\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.transform=\'none\'">' +
+                '<div style="width:44px;height:44px;border-radius:12px;background:'+s.color+'15;color:'+s.color+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin:0 auto 10px"><i class="fas '+s.icon+'"></i></div>' +
+                '<div style="font-size:1.5rem;font-weight:900;color:'+s.color+'">' + s.count + '</div>' +
+                '<div style="font-size:.82rem;font-weight:600;color:var(--muted);margin-top:2px">' + s.label + '</div>' +
+                '</div>';
+        }).join('');
+        window._segFilters = segs;
+    };
+
+    // ===== REVENUE: USE APPROVED SUBSCRIPTIONS =====
+    var _origRenderRevenue = window.renderRevenueDashboard;
+    window.renderRevenueDashboard = function() {
+        if (_origRenderRevenue) _origRenderRevenue();
+        // Recalculate MRR from approved subscriptions
+        var pp = parseInt(window.allSettings.proPrice) || 99;
+        var up = parseInt(window.allSettings.unlimitedPrice) || 299;
+        var approvedSubs = Object.values(window.allSubs || {}).filter(function(s) { return s.status === 'approved'; });
+        var mrr = 0;
+        approvedSubs.forEach(function(s) {
+            if (s.plan === 'pro') mrr += pp;
+            else if (s.plan === 'unlimited') mrr += up;
+            else if (s.plan === 'quick48') mrr += 30;
+        });
+        var arr = mrr * 12;
+        var el = document.getElementById('revMRR'); if (el) el.textContent = mrr.toLocaleString() + ' ج.م';
+        el = document.getElementById('revARR'); if (el) el.textContent = arr.toLocaleString() + ' ج.م';
+    };
+
     console.log('[QCV Admin] Enhancements v2 loaded — no conflicts');
 })();

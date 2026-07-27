@@ -678,7 +678,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
             <!-- STAFF -->
             <div class="panel" id="panel-staff">
                 <div class="table-wrap">
-                    <div class="table-head"><h3>الموظفين</h3><div class="actions"><button class="btn-add" onclick="showAddStaff()"><i class="fas fa-plus"></i> إضافة موظف</button></div></div>
+                    <div class="table-head"><h3>الموظفين</h3><div class="actions"><button class="btn-add" onclick="(window.showAddStaffEnhanced||showAddStaff)()"><i class="fas fa-plus"></i> إضافة موظف</button></div></div>
                     <div class="table-scroll"><table><thead><tr><th>الموظف</th><th>الدور</th><th>الصلاحيات</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="staffList"><tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr></tbody></table></div>
                     <div class="pagination" id="staff-pagination"></div>
                 </div>
@@ -1227,9 +1227,9 @@ function switchPanel(panel) {
     if (panel === 'sendmsg') { populateSendMsgUsers(); renderSentMessages(); }
     if (panel === 'revenue') renderRevenueDashboard();
     if (panel === 'audit') renderAuditLog();
-    if (panel === 'segments') renderSegments();
+    if (panel === 'segments') (window.renderSegmentsEnhanced || renderSegments)();
     if (panel === 'blog') renderBlogPosts();
-    if (panel === 'templates') renderTemplates();
+    if (panel === 'templates') (window.renderTemplatesEnhanced || renderTemplates)();
     if (panel === 'backup') renderBackupLog();
     if (panel === 'security') renderSecurityPanel();
     if (panel === 'newsletter') loadNewsletter();
@@ -1354,7 +1354,7 @@ function checkAndLoad() {
         restGetTimeout('/messages.json'), restGetTimeout('/siteSettings/maintenance.json'),
         restGetTimeout('/affiliateRequests.json'), restGetTimeout('/pointsExchange.json'),
         restGetTimeout('/newsletter.json'),
-        fetch('https://identitytoolkit.googleapis.com/v1/accounts:batchGet?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I').then(function(r){return r.json()}).catch(function(){return {users:[]}})
+        fetch('https://identitytoolkit.googleapis.com/v1/accounts:batchGet?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I', { signal: AbortSignal.timeout(8000) }).then(function(r){return r.json()}).catch(function(){return {users:[]}})
     ]).then(function(r) {
         window.allUsers = r[0] || {};
         // Merge Firebase Auth users into allUsers
@@ -1431,7 +1431,12 @@ function checkAndLoad() {
         var pp = parseInt(window.allSettings.proPrice) || 99;
         var up = parseInt(window.allSettings.unlimitedPrice) || 299;
         var rev = 0;
-        entries.forEach(function(e) { if (e[1].plan === 'pro') rev += pp; else if (e[1].plan === 'unlimited') rev += up; });
+        var approvedSubs = Object.values(window.allSubs).filter(function(s) { return s.status === 'approved'; });
+        approvedSubs.forEach(function(s) {
+            if (s.plan === 'pro') rev += pp;
+            else if (s.plan === 'unlimited') rev += up;
+            else if (s.plan === 'quick48') rev += 30;
+        });
         el = document.getElementById('statRevenue'); if (el) el.textContent = rev;
 
         var pending = Object.values(window.allSubs).filter(function(s) { return s.status === 'pending'; }).length;
@@ -1530,7 +1535,8 @@ function checkAndLoad() {
             var jobs = Object.entries(window.allJobs);
             jt.innerHTML = jobs.length ? jobs.map(function(e) {
                 var j = e[1], jid = e[0];
-                return '<tr><td><strong>'+escHtml(j.title)+'</strong>'+(j.applyLink?'<div style="font-size:.65rem;color:var(--accent);margin-top:2px"><i class="fas fa-link" style="margin-left:2px"></i>'+escHtml(j.applyLink)+'</div>':'')+'</td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td><button class="btn-action" onclick="toggleJobMenu(\''+jid+'\',event)" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text)"><i class="fas fa-ellipsis-v"></i> إجراءات</button></td></tr>';
+                var applyBtn = j.applyLink ? '<a href="'+escHtml(j.applyLink)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border-radius:6px;font-size:.7rem;font-weight:700;text-decoration:none;margin-top:4px;transition:all .15s" onmouseover="this.style.opacity=\'.85\';this.style.transform=\'translateY(-1px)\'" onmouseout="this.style.opacity=\'1\';this.style.transform=\'none\'"><i class="fas fa-external-link-alt" style="font-size:.6rem"></i> قدّم الآن</a>' : '';
+                return '<tr><td><strong>'+escHtml(j.title)+'</strong>'+applyBtn+'</td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewJob(\''+jid+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-edit" onclick="editJob(\''+jid+'\')"><i class="fas fa-edit"></i></button>'+(j.applyLink?'<button class="btn-action btn-approve" onclick="window.open(\''+escHtml(j.applyLink)+'\',\'_blank\')" title="فتح رابط التقديم"><i class="fas fa-external-link-alt"></i></button>':'')+'<button class="btn-action btn-delete" onclick="deleteJob(\''+jid+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
             }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف</p></td></tr>';
         }
 
@@ -1585,6 +1591,7 @@ function checkAndLoad() {
         var dw = window.allSettings.domainWatermark || { enabled: true, domains: [] };
         el = document.getElementById('settingsDomainEnabled'); if (el) el.className = 'toggle-switch' + (dw.enabled !== false ? ' active' : '');
         renderDomains();
+        if (window.renderDomainsEnhanced) renderDomainsEnhanced();
 
         // Activity Feed
         var af = document.getElementById('activityFeed');
@@ -2053,13 +2060,13 @@ window.setSubFilter = function(filter, btn) {
 // ===== CRUD: JOBS =====
 window.addJob = function() {
     document.getElementById('modalTitle').textContent = 'إضافة وظيفة';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>المسمى الوظيفي</label><input type="text" id="jobTitle" placeholder="مثال: مطور ويب"></div><div class="field" style="margin-bottom:12px"><label>الفئة</label><input type="text" id="jobCategory" placeholder="مثال: تقنية"></div><div class="field" style="margin-bottom:12px"><label>الموقع</label><input type="text" id="jobLocation" placeholder="مثال: القاهرة"></div><div class="field"><label>الوصف</label><textarea id="jobDesc" style="min-height:80px;width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif"></textarea></div>';
+    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>المسمى الوظيفي</label><input type="text" id="jobTitle" placeholder="مثال: مطور ويب"></div><div class="field" style="margin-bottom:12px"><label>الفئة</label><input type="text" id="jobCategory" placeholder="مثال: تقنية"></div><div class="field" style="margin-bottom:12px"><label>الموقع</label><input type="text" id="jobLocation" placeholder="مثال: القاهرة"></div><div class="field" style="margin-bottom:12px"><label>الوصف</label><textarea id="jobDesc" style="min-height:80px;width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif"></textarea></div><div class="field"><label>رابط التقديم</label><input type="text" id="jobApplyLink" placeholder="https://forms.google.com/..." style="direction:ltr;text-align:left"></div>';
     document.getElementById('modalConfirm').style.display = 'block';
     document.getElementById('modalConfirm').textContent = 'إضافة';
     document.getElementById('modalConfirm').onclick = async function() {
         var title = document.getElementById('jobTitle').value.trim();
         if (!title) { showToast('أدخل المسمى الوظيفي', 'error'); return; }
-        await restPost('/jobs', { title: title, category: document.getElementById('jobCategory').value, location: document.getElementById('jobLocation').value, description: document.getElementById('jobDesc').value, active: true, createdAt: Date.now() });
+        await restPost('/jobs', { title: title, category: document.getElementById('jobCategory').value, location: document.getElementById('jobLocation').value, description: document.getElementById('jobDesc').value, applyLink: document.getElementById('jobApplyLink') ? document.getElementById('jobApplyLink').value.trim() : '', active: true, createdAt: Date.now() });
         showToast('تمت إضافة الوظيفة', 'success');
         closeModal();
         loadAllData();
@@ -2728,6 +2735,14 @@ window.sendUserMessage = async function() {
         renderSentMessages();
     } catch (e) {
         showToast('خطأ في الإرسال', 'error');
+    }
+};
+
+window.showSendMessage = function(targetUid) {
+    switchPanel('sendmsg');
+    if (targetUid) {
+        var sel = document.getElementById('sendMsgTarget');
+        if (sel) sel.value = targetUid;
     }
 };
 

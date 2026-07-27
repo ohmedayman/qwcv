@@ -48,7 +48,6 @@
         .plan-feats li.off{opacity:0.4}.plan-feats li.off span{text-decoration:line-through}
         .plan-sel{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:0.6rem;transition:all 0.2s}
         .plan.sel .plan-sel{background:var(--accent);border-color:var(--accent);color:#fff}
-
         .quick-box{max-width:500px;margin:0 auto 24px;text-align:center;padding:20px;background:linear-gradient(135deg,rgba(139,92,246,0.06),rgba(56,189,248,0.06));border:1px solid rgba(139,92,246,0.15);border-radius:14px}
         .quick-box h3{font-size:0.95rem;font-weight:800;margin-bottom:4px}
         .quick-box p{font-size:0.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6}
@@ -62,7 +61,6 @@
         .btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
         .btn-next:not(:disabled){cursor:pointer;transition:all 0.3s}
         .btn-next:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(0,3,201,0.3)}
-
         .pay-section{display:none;animation:fadeUp 0.3s ease}
         .pay-section.show{display:block}
         @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -70,7 +68,6 @@
         .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.03)}
         .card h3{font-size:0.95rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:6px}
         .card h3 i{color:var(--accent)}
-
         .method{display:flex;align-items:center;gap:10px;padding:12px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;margin-bottom:8px;background:var(--bg)}
         .method:hover{border-color:rgba(0,3,201,0.2)}
         .method.sel{border-color:var(--green);background:rgba(5,150,105,0.04)}
@@ -81,7 +78,6 @@
         .method-desc{font-size:0.68rem;color:var(--muted)}
         .method-ok{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.55rem;flex-shrink:0;transition:all 0.2s}
         .method.sel .method-ok{background:var(--green);border-color:var(--green);color:#fff}
-
         .wallet{background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(5,150,105,0.04));border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;margin-top:12px}
         .wallet .label{font-size:0.78rem;color:var(--muted);margin-bottom:8px}
         .wallet .number{font-size:1.5rem;font-weight:900;color:var(--accent);font-family:'Courier New',monospace;letter-spacing:1px;margin-bottom:4px}
@@ -89,10 +85,8 @@
         .btn-copy{padding:8px 20px;background:rgba(0,3,201,0.06);border:1px solid rgba(0,3,201,0.15);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
         .btn-copy:hover{background:var(--accent);color:#fff}
         .btn-copy.ok{background:var(--green);color:#fff;border-color:var(--green)}
-
         .btn-wa{width:100%;padding:10px;background:#25d366;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px}
         .btn-wa:hover{background:#1da851;transform:translateY(-1px)}
-
         .fg{margin-bottom:12px}
         .fg label{display:block;font-size:0.72rem;color:var(--muted);margin-bottom:4px;font-weight:600}
         .fg label .req{color:var(--red)}
@@ -100,44 +94,43 @@
         .fg input:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,3,201,0.06)}
         .fg input.err{border-color:var(--red)}
         .fg textarea{resize:vertical;min-height:50px;line-height:1.5}
-
         .btn-submit{width:100%;padding:12px;background:linear-gradient(135deg,var(--green),#047857);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;box-shadow:0 4px 16px rgba(5,150,105,0.2);display:flex;align-items:center;justify-content:center;gap:6px}
         .btn-submit:hover{transform:translateY(-1px)}
         .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
         .spinner{display:none;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
         .btn-submit.loading .spinner{display:block}.btn-submit.loading .txt{display:none}
         @keyframes spin{to{transform:rotate(360deg)}}
-
         .success{text-align:center;padding:40px 20px;display:none}
         .success.show{display:block}
         .success-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--green),#2563eb);display:flex;align-items:center;justify-content:center;font-size:2.2rem;color:#fff;margin:0 auto 16px;animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1)}
         @keyframes popIn{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
         .success h2{font-size:1.3rem;font-weight:900;margin-bottom:6px}
         .success p{color:var(--muted);font-size:0.85rem;line-height:1.7;max-width:400px;margin:0 auto 20px}
-        .receipt{background:var(--card);border:1px solid var(--border);border-radius:14px;max-width:400px;margin:0 auto 20px;overflow:hidden}
-        .receipt-hdr{background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;padding:16px;text-align:center}
-        .receipt-hdr .logo{font-size:1.3rem;font-weight:900;margin-bottom:2px}.receipt-hdr .logo span{color:#fff}
+        .receipt{background:var(--card);border:1px solid var(--border);border-radius:14px;max-width:420px;margin:0 auto 20px;overflow:hidden}
+        .receipt-hdr{background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;padding:20px 16px;text-align:center}
+        .receipt-hdr .logo{font-size:1.5rem;font-weight:900;margin-bottom:2px}.receipt-hdr .logo span{color:#fff}
         .receipt-hdr p{font-size:0.72rem;opacity:0.85}
         .receipt-body{padding:16px}
         .receipt-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.82rem}.receipt-row:last-child{border:none}
         .receipt-row .lbl{color:var(--muted)}.receipt-row .val{font-weight:700}
         .receipt-row .val.price{color:var(--accent);font-size:1rem}
         .receipt-row .val.pending{color:var(--orange)}
-        .success-actions{display:flex;gap:8px;justify-content:center;max-width:400px;margin:0 auto}
+        .receipt-barcode{text-align:center;padding:12px 16px;border-top:1px dashed var(--border);font-family:'Courier New',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:2px}
+        .success-actions{display:flex;gap:8px;justify-content:center;max-width:420px;margin:0 auto}
         .success-actions .btn{flex:1;padding:10px;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;border:none;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:all 0.2s}
         .btn-dl{background:var(--green);color:#fff}.btn-wa2{background:#25d366;color:#fff}
         .btn-dl:hover,.btn-wa2:hover{transform:translateY(-1px)}
         .btn-back{margin-top:16px;max-width:260px;margin-left:auto;margin-right:auto}
         .btn-back a{display:block;text-align:center;padding:10px;background:var(--accent);color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.82rem;font-family:'Cairo',sans-serif;transition:all 0.2s}
         .btn-back a:hover{background:#0002a3}
-
         .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);padding:10px 22px;border-radius:10px;font-weight:700;font-size:0.82rem;z-index:9999;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1)}
         .toast.show{transform:translateX(-50%) translateY(0)}
         .toast-ok{background:var(--green);color:#fff}
         .toast-err{background:var(--red);color:#fff}
         .toast-info{background:var(--accent);color:#fff}
         .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;overflow:hidden}
-
+        @keyframes confFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
         @media(max-width:900px){.plans{grid-template-columns:1fr}.pay-grid{grid-template-columns:1fr}.nav-links{display:none!important}}
         @media(max-width:600px){.container{padding:12px 12px 50px}.header h1{font-size:1.3rem}.plan{padding:18px 12px}.plan-price{font-size:1.4rem}}
         body.dark-mode{background:#0f172a;color:#e2e8f0}.dark-mode .nav{background:rgba(15,23,42,0.95);border-color:#1e293b}.dark-mode .card{background:#1e293b;border-color:#334155}.dark-mode .plan{background:#1e293b;border-color:#334155}.dark-mode .plan.sel{border-color:#27ffed;background:rgba(39,255,237,0.04)}.dark-mode .method{background:#1e293b;border-color:#334155}.dark-mode .method.sel{border-color:#27ffed}.dark-mode .fg input,.dark-mode .fg textarea{background:#0f172a;border-color:#334155;color:#e2e8f0}
@@ -235,48 +228,6 @@
             <button class="btn-next" id="btnNext" onclick="goPay()" disabled>التالي — بيانات الدفع ←</button>
         </div>
 
-        <!-- Inline plan selector — works with or without main script -->
-        <script>
-        (function(){
-            var sel = null, planVar = null;
-            var planMap = { 'مجاني':'free', 'pro':'pro', 'unlimited':'unlimited' };
-            document.querySelectorAll('.plan').forEach(function(card) {
-                card.onclick = function(e) {
-                    e.preventDefault();
-                    var name = (card.querySelector('.plan-name')||{}).textContent||'';
-                    var p = planMap[name.trim()] || 'pro';
-                    if (p === 'free') { window.location.href = 'editor.html'; return; }
-                    document.querySelectorAll('.plan').forEach(function(c){c.classList.remove('sel')});
-                    card.classList.add('sel');
-                    planVar = p;
-                    var lbl = document.getElementById('selectedPlanLabel');
-                    var nm = document.getElementById('selectedPlanName');
-                    if (lbl) lbl.style.display = 'block';
-                    if (nm) nm.textContent = p === 'pro' ? 'Pro' : p === 'unlimited' ? 'Unlimited' : p;
-                    var btn = document.getElementById('btnNext');
-                    if (btn) { btn.disabled = false; btn.style.animation='pulse 0.3s ease'; setTimeout(function(){btn.style.animation=''},300); btn.scrollIntoView({behavior:'smooth',block:'center'}); }
-                };
-            });
-            var qb = document.querySelector('.btn-quick');
-            if (qb) qb.onclick = function(){ planVar = 'quick48'; var lbl = document.getElementById('selectedPlanLabel'); var nm = document.getElementById('selectedPlanName'); if(lbl)lbl.style.display='block'; if(nm)nm.textContent='48 ساعة'; var btn = document.getElementById('btnNext'); if(btn){btn.disabled=false;btn.scrollIntoView({behavior:'smooth',block:'center'});} };
-            var bn = document.getElementById('btnNext');
-            if (bn) bn.onclick = function(){
-                if (!planVar) return;
-                if (typeof window.goPay === 'function') { window.goPay(); return; }
-                document.getElementById('step1').style.display = 'none';
-                document.getElementById('step2').classList.add('show');
-                var pf = document.getElementById('planField');
-                var pl = document.getElementById('planLabel');
-                var labels = { pro:'Pro — 99 ج.م/شهر', unlimited:'Unlimited — 299 ج.م/شهر', quick48:'Quick 48h — 30 ج.م' };
-                if (pf) pf.value = labels[planVar]||'';
-                if (pl) pl.textContent = 'الباقة: ' + (labels[planVar]||'');
-                window.scrollTo({top:0,behavior:'smooth'});
-            };
-            console.log('[QCV Pay Inline] OK - plans=' + document.querySelectorAll('.plan').length);
-        })();
-        </script>
-        <style>@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}</style>
-
         <!-- STEP 2: PAYMENT -->
         <div class="pay-section" id="step2">
             <div class="header">
@@ -348,35 +299,40 @@
             <h2>تم إرسال طلبك!</h2>
             <p>شكراً لك! تم استلام طلب الاشتراك بنجاح. سيتم التفعيل خلال ساعات قليلة.</p>
             <div class="waiting" style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,0.08);color:var(--orange);border:1px solid rgba(245,158,11,0.2);padding:8px 20px;border-radius:30px;font-size:0.82rem;font-weight:700;margin-bottom:20px;animation:pulse 2s ease-in-out infinite">⏳ بانتظار التفعيل</div>
-            <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}</style>
 
             <div class="receipt" id="receipt">
-                <div class="receipt-hdr"><div class="logo">Q<span>CV</span></div><p>إيصال الدفع</p></div>
+                <div class="receipt-hdr">
+                    <div class="logo">Q<span>CV</span></div>
+                    <p>إيصال الدفع</p>
+                </div>
                 <div class="receipt-body">
                     <div class="receipt-row"><span class="lbl">الاسم</span><span class="val" id="rName">-</span></div>
                     <div class="receipt-row"><span class="lbl">الباقة</span><span class="val" id="rPlan">-</span></div>
                     <div class="receipt-row"><span class="lbl">المبلغ</span><span class="val price" id="rPrice">-</span></div>
-                    <div class="receipt-row"><span class="lbl">الطريقة</span><span class="val" id="rMethod">-</span></div>
+                    <div class="receipt-row"><span class="lbl">طريقة الدفع</span><span class="val" id="rMethod">-</span></div>
                     <div class="receipt-row"><span class="lbl">التاريخ</span><span class="val" id="rDate">-</span></div>
-                    <div class="receipt-row"><span class="lbl">المرجع</span><span class="val" id="rRef">-</span></div>
-                    <div class="receipt-row"><span class="lbl">الحالة</span><span class="val pending">⏳ بانتظار التفعيل</span></div>
+                    <div class="receipt-row"><span class="lbl">رقم المرجع</span><span class="val" id="rRef" style="font-family:monospace;font-size:.78rem;color:var(--accent)">-</span></div>
+                    <div class="receipt-row"><span class="lbl">الحالة</span><span class="val pending" id="rStatus">⏳ بانتظار التفعيل</span></div>
                 </div>
+                <div class="receipt-barcode" id="rBarcode">||||||||||||||||||||||</div>
             </div>
 
             <div class="success-actions">
                 <button class="btn btn-dl" onclick="dlReceipt()"><i class="fas fa-download"></i> تحميل الإيصال</button>
                 <button class="btn btn-wa2" onclick="shareWA()"><i class="fab fa-whatsapp"></i> مشاركة واتساب</button>
             </div>
-            <div class="btn-back"><a href="editor.html">العودة للمحرر ←</a></div>
+            <div style="margin-top:12px;max-width:420px;margin-left:auto;margin-right:auto">
+                <button class="btn-back" style="width:100%;margin:0" onclick="window.location.href='editor.html'"><a href="editor.html" style="display:block;text-align:center;padding:10px;background:var(--accent);color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.82rem;font-family:'Cairo',sans-serif">العودة للمحرر ←</a></button>
+            </div>
         </div>
     </div>
 
-    <!-- UI logic (no module — works even if Firebase fails) -->
     <script id="payScript">
         var _fb = { user: null, userData: null, db: null, auth: null };
         var plan = null, method = 'vodafone';
-        var labels = { free: 'مجاني', pro: 'Pro — 99 ج.م/شهر', unlimited: 'Unlimited — 299 ج.م/شهر', quick48: 'Quick 48h — 30 ج.م' };
+        var labels = { free: 'مجاني', pro: 'Pro — 99 ج.م/شهر', unlimited: 'Unlimited — 299 ج.م/شهر', quick48: '48 ساعة — 30 ج.م' };
         var pricesText = { free: 'مجاني', pro: '99 ج.م', unlimited: '299 ج.م', quick48: '30 ج.م' };
+        var planPrices = { free: 0, pro: 99, unlimited: 299, quick48: 30 };
 
         function toast(msg, type) {
             var t = document.getElementById('toast');
@@ -387,21 +343,20 @@
 
         function launchConfetti() {
             var box = document.getElementById('confettiBox');
-            var colors = ['#38bdf8', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6'];
-            for (var i = 0; i < 40; i++) {
+            var colors = ['#38bdf8', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#10b981'];
+            for (var i = 0; i < 50; i++) {
                 (function(idx) {
                     setTimeout(function() {
                         var el = document.createElement('div');
-                        el.style.cssText = 'position:absolute;width:8px;height:8px;top:-10px;left:' + Math.random()*100 + '%;background:' + colors[Math.floor(Math.random()*colors.length)] + ';border-radius:' + (Math.random()>0.5?'50%':'2px') + ';animation:confFall ' + (Math.random()*2+2) + 's ease-in forwards';
+                        el.style.cssText = 'position:absolute;width:'+(Math.random()*6+4)+'px;height:'+(Math.random()*6+4)+'px;top:-10px;left:' + Math.random()*100 + '%;background:' + colors[Math.floor(Math.random()*colors.length)] + ';border-radius:' + (Math.random()>0.5?'50%':'2px') + ';animation:confFall ' + (Math.random()*2+2) + 's ease-in forwards';
                         box.appendChild(el);
                         setTimeout(function() { el.remove(); }, 4000);
-                    }, idx * 30);
+                    }, idx * 25);
                 })(i);
             }
         }
 
         window.pickPlan = function(el, p) {
-            if (window.QCVNotify) QCVNotify.click();
             document.querySelectorAll('.plan').forEach(function(c) { c.classList.remove('sel'); });
             if (el) el.classList.add('sel');
             plan = p;
@@ -412,14 +367,12 @@
             var planNames = { pro: 'Pro', unlimited: 'Unlimited', quick48: '48 ساعة' };
             document.getElementById('selectedPlanName').textContent = planNames[p] || p;
             document.getElementById('selectedPlanLabel').style.display = 'block';
-            document.getElementById('btnNext').disabled = false;
-            document.getElementById('btnNext').style.transform = 'scale(1.03)';
-            document.getElementById('btnNext').style.boxShadow = '0 6px 25px rgba(0,3,201,0.35)';
-            setTimeout(function() {
-                document.getElementById('btnNext').style.transform = '';
-                document.getElementById('btnNext').style.boxShadow = '';
-            }, 400);
-            document.getElementById('btnNext').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            var btn = document.getElementById('btnNext');
+            btn.disabled = false;
+            btn.style.transform = 'scale(1.03)';
+            btn.style.boxShadow = '0 6px 25px rgba(0,3,201,0.35)';
+            setTimeout(function() { btn.style.transform = ''; btn.style.boxShadow = ''; }, 400);
+            btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
         };
 
         window.goPay = function() {
@@ -444,67 +397,131 @@
         };
 
         window.copyNum = function() {
-            navigator.clipboard.writeText('01028707543').then(function() {
+            var num = '01028707543';
+            navigator.clipboard.writeText(num).then(function() {
                 var btn = document.querySelector('.btn-copy');
-                btn.innerHTML = '✓ تم النسخ';
+                btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
                 btn.classList.add('ok');
                 toast('تم نسخ الرقم', 'ok');
                 setTimeout(function() { btn.innerHTML = '<i class="fas fa-copy"></i> نسخ الرقم'; btn.classList.remove('ok'); }, 2000);
-            }).catch(function() { toast('01028707543', 'info'); });
+            }).catch(function() {
+                var ta = document.createElement('textarea');
+                ta.value = num;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                toast('تم نسخ الرقم', 'ok');
+            });
         };
 
         window.sendProof = function() {
+            var name = (document.getElementById('userName').value || 'عميل').trim();
+            var phone = (document.getElementById('userPhone').value || '').trim();
+            var planLabel = labels[plan] || plan;
+            var methodLabel = {vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method] || method;
             var msg = encodeURIComponent(
-                'مرحباً، أريد تفعيل اشتراك QCV\n\n' +
-                'الباقة: ' + (labels[plan] || '-') + '\n' +
-                'الاسم: ' + (document.getElementById('userName').value || '-') + '\n' +
-                'الهاتف: ' + (document.getElementById('userPhone').value || '-') + '\n' +
-                'طريقة الدفع: ' + ({vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method] || method)
+                'مرحباً QCV 👋\n\n' +
+                'أريد تفعيل اشتراك جديد:\n\n' +
+                '📦 الباقة: ' + planLabel + '\n' +
+                '💰 المبلغ: ' + (pricesText[plan] || '-') + '\n' +
+                '💳 الطريقة: ' + methodLabel + '\n' +
+                '👤 الاسم: ' + name + '\n' +
+                '📱 الهاتف: ' + (phone || '-') + '\n\n' +
+                '⏳ بانتظار التفعيل'
             );
             window.open('https://wa.me/201028707543?text=' + msg, '_blank');
         };
 
+        function generateReceiptBarcode(ref) {
+            var chars = '0123456789ABCDEF';
+            var code = ref.replace(/[^A-Za-z0-9]/g, '').substring(0, 20);
+            while (code.length < 20) code += chars[Math.floor(Math.random() * chars.length)];
+            return code.split('').map(function(c) { return c === '0' || c === '1' || c === '2' ? '│' : '█'; }).join('');
+        }
+
         window.dlReceipt = function() {
             var r = window._receipt;
             if (!r) return;
-            var txt = [
-                '═══════════════════════════',
-                '      QCV — إيصال الدفع',
-                '═══════════════════════════',
-                'الاسم:      ' + r.name,
-                'الباقة:     ' + r.plan,
-                'المبلغ:     ' + r.price,
-                'الطريقة:    ' + r.method,
-                'التاريخ:    ' + r.date,
-                'المرجع:     ' + r.ref,
-                'الحالة:     بانتظار التفعيل',
-                '═══════════════════════════',
-                '   QCV © 2026',
-                '═══════════════════════════'
-            ].join('\n');
-            var blob = new Blob(['\uFEFF' + txt], { type: 'text/plain;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url; a.download = 'QCV-Receipt-' + r.ref + '.txt';
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            toast('تم تحميل الإيصال', 'ok');
+            var html = '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>إيصال QCV - ' + r.ref + '</title><style>' +
+                '*{box-sizing:border-box;margin:0;padding:0}body{font-family:Cairo,sans-serif;color:#1a1a2e;background:#f8fafc;padding:40px;display:flex;justify-content:center}' +
+                '.receipt{background:#fff;border:2px solid #e5e7eb;border-radius:16px;max-width:480px;width:100%;overflow:hidden}' +
+                '.hdr{background:linear-gradient(135deg,#0003c9,#2563eb);color:#fff;padding:24px;text-align:center}' +
+                '.hdr h1{font-size:1.8rem;font-weight:900;margin-bottom:4px}.hdr h1 span{color:#fff}.hdr p{font-size:.85rem;opacity:.85}' +
+                '.body{padding:24px}.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:.9rem}' +
+                '.row:last-child{border:none}.lbl{color:#6b7280}.val{font-weight:700}.val.price{color:#0003c9;font-size:1.1rem}' +
+                '.status{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,.1);color:#f59e0b;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:700;margin-top:12px}' +
+                '.footer{text-align:center;padding:16px;border-top:2px dashed #e5e7eb;font-size:.78rem;color:#9ca3af}' +
+                '@media print{body{padding:0}.receipt{border:none;box-shadow:none}}' +
+                '</style></head><body><div class="receipt">' +
+                '<div class="hdr"><h1>Q<span>CV</span></h1><p>إيصال الدفع — نسخة للعميل</p></div>' +
+                '<div class="body">' +
+                '<div class="row"><span class="lbl">الاسم</span><span class="val">' + r.name + '</span></div>' +
+                '<div class="row"><span class="lbl">الباقة</span><span class="val">' + r.plan + '</span></div>' +
+                '<div class="row"><span class="lbl">المبلغ</span><span class="val price">' + r.price + '</span></div>' +
+                '<div class="row"><span class="lbl">طريقة الدفع</span><span class="val">' + r.method + '</span></div>' +
+                '<div class="row"><span class="lbl">التاريخ</span><span class="val">' + r.date + '</span></div>' +
+                '<div class="row"><span class="lbl">رقم المرجع</span><span class="val" style="font-family:monospace;font-size:.85rem;color:#0003c9">' + r.ref + '</span></div>' +
+                '<div class="row"><span class="lbl">الحالة</span><span class="val" style="color:#f59e0b">⏳ بانتظار التفعيل</span></div>' +
+                '<div style="text-align:center;margin-top:12px"><div class="status">⏳ بانتظار التفعيل من الإدارة</div></div>' +
+                '</div>' +
+                '<div class="footer">QCV — منصة سير ذاتية احترافية<br> qlcv.vexonet.online<br> للدعم: 01028707543</div>' +
+                '</div></body></html>';
+            var win = window.open('', '_blank');
+            if (win) {
+                win.document.write(html);
+                win.document.close();
+                setTimeout(function() { win.print(); }, 500);
+            }
+            toast('تم فتح الإيصال — يمكنك طباعته أو حفظه كـ PDF', 'ok');
         };
 
         window.shareWA = function() {
             var r = window._receipt;
             if (!r) return;
-            var msg = encodeURIComponent('🧾 *QCV — إيصال الدفع*\n\nالاسم: ' + r.name + '\nالباقة: ' + r.plan + '\nالمبلغ: ' + r.price + '\nالطريقة: ' + r.method + '\nالتاريخ: ' + r.date + '\nالمرجع: ' + r.ref + '\nالحالة: بانتظار التفعيل');
-            window.open('https://wa.me/201028707543?text=' + msg, '_blank');
+            var msg = encodeURIComponent(
+                '🧾 *QCV — إيصال الدفع*\n\n' +
+                '👤 الاسم: ' + r.name + '\n' +
+                '📦 الباقة: ' + r.plan + '\n' +
+                '💰 المبلغ: ' + r.price + '\n' +
+                '💳 الطريقة: ' + r.method + '\n' +
+                '📅 التاريخ: ' + r.date + '\n' +
+                '🔑 المرجع: ' + r.ref + '\n\n' +
+                '⏳ الحالة: بانتظار التفعيل\n\n' +
+                '🌐 qlcv.vexonet.online'
+            );
+            window.open('https://wa.me/?text=' + msg, '_blank');
         };
 
         window.submitPay = async function() {
             var name = document.getElementById('userName').value.trim();
             var phone = document.getElementById('userPhone').value.trim();
-            if (!name) { document.getElementById('userName').classList.add('err'); toast('أدخل اسمك', 'err'); return; }
-            if (phone.length < 11) { document.getElementById('userPhone').classList.add('err'); toast('أدخل رقم هاتف صحيح', 'err'); return; }
-            if (!_fb.user) { toast('سجل دخولك أولاً', 'err'); return; }
-            if (!_fb.db) { toast('جاري تحميل النظام...', 'info'); return; }
+
+            if (!name) {
+                document.getElementById('userName').classList.add('err');
+                toast('أدخل اسمك الكامل', 'err');
+                document.getElementById('userName').focus();
+                return;
+            }
+            document.getElementById('userName').classList.remove('err');
+
+            if (!phone || phone.length < 11) {
+                document.getElementById('userPhone').classList.add('err');
+                toast('أدخل رقم هاتف صحيح (11 رقم)', 'err');
+                document.getElementById('userPhone').focus();
+                return;
+            }
+            document.getElementById('userPhone').classList.remove('err');
+
+            if (!_fb.user) {
+                toast('يجب تسجيل الدخول أولاً', 'err');
+                setTimeout(function() { window.location.href = 'login.html?redirect=pay'; }, 1500);
+                return;
+            }
+            if (!_fb.db) {
+                toast('جاري تحميل النظام...', 'info');
+                return;
+            }
 
             var btn = document.getElementById('btnSubmit');
             btn.disabled = true;
@@ -512,25 +529,98 @@
 
             var refId = 'QCV-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 5).toUpperCase();
             var now = new Date();
-            var dateStr = now.toLocaleDateString('ar-EG') + ' ' + now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            var dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) + ' — ' + now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            var methodLabel = {vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method] || method;
+
+            var subData = {
+                userId: _fb.user.uid,
+                userName: name,
+                userEmail: _fb.userData?.email || _fb.user.email || '',
+                userPhone: phone,
+                plan: plan,
+                planPrice: planPrices[plan] || 0,
+                paymentMethod: method,
+                paymentMethodLabel: methodLabel,
+                walletNumber: document.getElementById('walletIn').value || '',
+                notes: document.getElementById('userNotes').value || '',
+                refId: refId,
+                status: 'pending',
+                createdAt: Date.now(),
+                userAgent: navigator.userAgent,
+                deviceType: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+            };
 
             try {
                 var mod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js");
-                await mod.push(mod.ref(_fb.db, 'subscriptions'), {
-                    userId: _fb.user.uid,
-                    userName: name,
-                    userEmail: _fb.userData?.email || _fb.user.email,
-                    userPhone: phone,
+                var dbRef = mod.ref(_fb.db);
+
+                // 1. Save subscription
+                var newSubRef = await mod.push(mod.ref(dbRef, 'subscriptions'), subData);
+                var subId = newSubRef.key;
+
+                // 2. Save to user's payment history
+                await mod.set(mod.ref(dbRef, 'users/' + _fb.user.uid + '/payments/' + subId), {
+                    subscriptionId: subId,
                     plan: plan,
-                    paymentMethod: method,
-                    walletNumber: document.getElementById('walletIn').value || '',
-                    notes: document.getElementById('userNotes').value || '',
+                    price: planPrices[plan],
+                    method: method,
                     refId: refId,
                     status: 'pending',
                     createdAt: Date.now()
                 });
 
-                if (window.QCVNotify) QCVNotify.success();
+                // 3. Send admin notification (WhatsApp auto-message)
+                var adminMsg = encodeURIComponent(
+                    '🔔 *اشتراك جديد في QCV!*\n\n' +
+                    '👤 العميل: ' + name + '\n' +
+                    '📧 البريد: ' + (subData.userEmail || '-') + '\n' +
+                    '📱 الهاتف: ' + phone + '\n' +
+                    '📦 الباقة: ' + labels[plan] + '\n' +
+                    '💰 المبلغ: ' + pricesText[plan] + '\n' +
+                    '💳 الطريقة: ' + methodLabel + '\n' +
+                    '🔑 المرجع: ' + refId + '\n' +
+                    '📅 التاريخ: ' + dateStr + '\n' +
+                    (subData.walletNumber ? '💸 رقم المحفظة المرسل منه: ' + subData.walletNumber + '\n' : '') +
+                    (subData.notes ? '📝 ملاحظات: ' + subData.notes + '\n' : '') +
+                    '\n⏳ *_بانتظار التفعيل_*\n\n' +
+                    'لتفعيل: qlcv.vexonet.online/admin.html'
+                );
+                // Open WhatsApp to admin in background (non-blocking)
+                try {
+                    var waFrame = document.createElement('iframe');
+                    waFrame.style.cssText = 'display:none;width:1px;height:1px';
+                    waFrame.src = 'https://wa.me/201028707543?text=' + adminMsg;
+                    document.body.appendChild(waFrame);
+                    setTimeout(function() { waFrame.remove(); }, 5000);
+                } catch(waErr) { console.log('WA notify skipped:', waErr); }
+
+                // 4. Save admin notification in Firebase
+                await mod.push(mod.ref(dbRef, 'adminNotifications'), {
+                    type: 'subscription',
+                    title: 'اشتراك جديد',
+                    body: name + ' — ' + labels[plan] + ' — ' + pricesText[plan],
+                    userId: _fb.user.uid,
+                    userName: name,
+                    userEmail: subData.userEmail,
+                    userPhone: phone,
+                    plan: plan,
+                    price: planPrices[plan],
+                    refId: refId,
+                    paymentMethod: methodLabel,
+                    subId: subId,
+                    status: 'pending',
+                    read: false,
+                    createdAt: Date.now()
+                });
+
+                // 5. Update user's current plan status
+                await mod.update(mod.ref(dbRef, 'users/' + _fb.user.uid), {
+                    lastPaymentAt: Date.now(),
+                    lastPaymentRef: refId,
+                    pendingPlan: plan
+                });
+
+                // Success!
                 launchConfetti();
 
                 document.getElementById('step2').classList.remove('show');
@@ -538,15 +628,26 @@
                 document.getElementById('rName').textContent = name;
                 document.getElementById('rPlan').textContent = labels[plan] || plan;
                 document.getElementById('rPrice').textContent = pricesText[plan] || '-';
-                document.getElementById('rMethod').textContent = {vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method] || method;
+                document.getElementById('rMethod').textContent = methodLabel;
                 document.getElementById('rDate').textContent = dateStr;
                 document.getElementById('rRef').textContent = refId;
+                document.getElementById('rBarcode').textContent = generateReceiptBarcode(refId);
 
-                window._receipt = { name: name, plan: labels[plan], price: pricesText[plan], method: {vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method], date: dateStr, ref: refId };
+                window._receipt = {
+                    name: name,
+                    plan: labels[plan],
+                    price: pricesText[plan],
+                    method: methodLabel,
+                    date: dateStr,
+                    ref: refId,
+                    subId: subId
+                };
 
                 toast('تم إرسال طلبك بنجاح!', 'ok');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+
             } catch (e) {
+                console.error('Payment error:', e);
                 toast('حدث خطأ: ' + e.message, 'err');
                 btn.disabled = false;
                 btn.classList.remove('loading');
@@ -554,7 +655,7 @@
         };
     </script>
 
-    <!-- Firebase (load async — if it fails, UI still works) -->
+    <!-- Firebase init -->
     <script type="module">
         try {
             var appMod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
@@ -573,70 +674,27 @@
             var auth = authMod.getAuth(app);
             var db = dbMod.getDatabase(app);
             _fb.db = db;
+            _fb.auth = auth;
 
             authMod.onAuthStateChanged(auth, function(u) {
-                if (!u) { location.replace("login.html?redirect=pay"); return; }
+                if (!u) {
+                    // Not logged in — redirect to login
+                    return;
+                }
                 _fb.user = u;
                 dbMod.get(dbMod.ref(db, 'users/' + u.uid)).then(function(snap) {
                     _fb.userData = snap.val() || {};
-                    document.getElementById('userName').value = _fb.userData.name || '';
-                    document.getElementById('userPhone').value = _fb.userData.phone || '';
+                    // Pre-fill user data
+                    var nameEl = document.getElementById('userName');
+                    var phoneEl = document.getElementById('userPhone');
+                    if (nameEl && !nameEl.value) nameEl.value = _fb.userData.name || '';
+                    if (phoneEl && !phoneEl.value) phoneEl.value = _fb.userData.phone || '';
                 });
             });
         } catch(e) {
             console.error('Firebase init failed:', e);
-            toast('خطأ في الاتصال بالخادم', 'err');
+            toast('خطأ في الاتصال بالخادم — يرجى المحاولة لاحقاً', 'err');
         }
-    </script>
-    <style>@keyframes confFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}</style>
-
-    <!-- Fallback: ensure click handlers work even if inline onclick fails -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Plan cards — detect plan from name text
-        var planEls = document.querySelectorAll('.plan');
-        planEls.forEach(function(el) {
-            el.style.cursor = 'pointer';
-            el.addEventListener('click', function(e) {
-                var name = el.querySelector('.plan-name');
-                if (!name) return;
-                var n = name.textContent.trim().toLowerCase();
-                var p = 'pro';
-                if (n.indexOf('مجاني') > -1 || n.indexOf('free') > -1) p = 'free';
-                else if (n.indexOf('unlimited') > -1 || n.indexOf('غير محدود') > -1) p = 'unlimited';
-                if (typeof window.pickPlan === 'function') {
-                    window.pickPlan(el, p);
-                } else {
-                    // Ultra fallback — define pickPlan inline
-                    document.querySelectorAll('.plan').forEach(function(c) { c.classList.remove('sel'); });
-                    el.classList.add('sel');
-                    window._selectedPlan = p;
-                    if (p === 'free') { window.location.href = 'editor.html'; return; }
-                    var btn = document.getElementById('btnNext');
-                    if (btn) { btn.disabled = false; btn.scrollIntoView({behavior:'smooth',block:'center'}); }
-                    var lbl = document.getElementById('selectedPlanLabel');
-                    if (lbl) lbl.style.display = 'block';
-                    var nm = document.getElementById('selectedPlanName');
-                    if (nm) nm.textContent = p === 'pro' ? 'Pro' : p === 'unlimited' ? 'Unlimited' : p;
-                }
-            });
-        });
-
-        // Quick 48h button
-        var qb = document.querySelector('.btn-quick');
-        if (qb) qb.addEventListener('click', function() {
-            if (typeof window.pickPlan === 'function') window.pickPlan(null, 'quick48');
-            else { window.location.href = 'pay.html?plan=quick48'; }
-        });
-
-        // Next button
-        var bn = document.getElementById('btnNext');
-        if (bn) bn.addEventListener('click', function() {
-            if (typeof window.goPay === 'function') window.goPay();
-        });
-
-        console.log('[QCV Pay] pickPlan=' + typeof window.pickPlan + ' goPay=' + typeof window.goPay);
-    });
     </script>
 </body>
 </html>
