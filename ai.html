@@ -94,6 +94,30 @@
         .sidebar-nav::-webkit-scrollbar { width: 3px; }
         .sidebar-nav::-webkit-scrollbar-thumb { background: #1e2545; border-radius: 10px; }
 
+        .chat-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 12px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .chat-search:focus-within { border-color: rgba(79,95,255,0.4); background: rgba(255,255,255,0.08); }
+        .chat-search i { color: #5a6380; font-size: 0.75rem; }
+        .chat-search input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #c0c8e0;
+            font-size: 0.78rem;
+            font-family: inherit;
+            outline: none;
+        }
+        .chat-search input::placeholder { color: #5a6380; }
+
         .nav-section { margin-bottom: 14px; }
         .nav-label {
             padding: 6px 12px;
@@ -192,7 +216,21 @@
             cursor: pointer;
             padding: 6px;
         }
-        .topbar-title { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+        .topbar-title { font-weight: 700; font-size: 0.9rem; color: var(--text); cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: all 0.2s; }
+        .topbar-title:hover { background: var(--border); }
+        .topbar-title.editing { background: var(--input-bg); border: 2px solid var(--accent); outline: none; cursor: text; }
+        .title-edit-input {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+            background: var(--input-bg);
+            border: 2px solid var(--accent);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-family: inherit;
+            outline: none;
+            min-width: 150px;
+        }
         .topbar-actions { display: flex; align-items: center; gap: 6px; }
         .tb-btn {
             background: transparent;
@@ -276,7 +314,8 @@
         .msg.user .msg-avatar { background: linear-gradient(135deg, #4f5fff, #0003c9); color: #fff; }
         .msg.ai .msg-avatar { background: linear-gradient(135deg, #059669, #047857); color: #fff; }
         .msg-content { min-width: 0; }
-        .msg-name { font-size: 0.74rem; font-weight: 700; margin-bottom: 5px; }
+        .msg-name { font-size: 0.74rem; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+        .msg-time { font-size: 0.65rem; color: var(--light); font-weight: 400; }
         .msg.user .msg-name { text-align: right; color: #4f5fff; }
         .msg.ai .msg-name { color: #059669; }
         .msg-bubble {
@@ -348,6 +387,7 @@
             transition: all 0.15s;
         }
         .msg-action-btn:hover { background: var(--border); color: var(--text); }
+        .msg-edit-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,3,201,0.1); }
 
         /* Typing */
         .typing-indicator {
@@ -522,6 +562,8 @@
             font-size: 1rem; transition: all 0.2s; font-family: inherit;
         }
         .mic-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+        #uploadBtn { border-color: var(--green); color: var(--green); }
+        #uploadBtn:hover { border-color: var(--green); color: #fff; background: var(--green); }
 
         /* Typewriter cursor */
         .typewriter-cursor {
@@ -559,6 +601,80 @@
         .voice-wave span:nth-child(5) { animation-delay: 0.4s; }
         @keyframes waveBar { 0%,100%{height:4px} 50%{height:20px} }
 
+        /* Confirm Dialog */
+        .confirm-dialog-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(6px);
+        }
+        .confirm-dialog-overlay.show { display: flex; }
+        .confirm-dialog {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+            animation: dialogIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes dialogIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
+        .confirm-dialog-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(239,68,68,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 1.3rem;
+            color: #ef4444;
+        }
+        .confirm-dialog h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .confirm-dialog p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .confirm-dialog-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .confirm-btn {
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+            transition: all 0.2s;
+        }
+        .confirm-btn.cancel {
+            background: var(--bg);
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+        .confirm-btn.cancel:hover { border-color: var(--light); color: var(--text); }
+        .confirm-btn.delete {
+            background: #ef4444;
+            color: #fff;
+        }
+        .confirm-btn.delete:hover { background: #dc2626; }
+
         /* Dark Mode */
         body.dark-mode {
             --bg: #0a0e1a;
@@ -578,6 +694,15 @@
         body.dark-mode .topbar { background: #111827; border-color: #1f2937; }
         body.dark-mode .voice-popup { background: #111827; }
         body.dark-mode .voice-transcript { background: #1f2937; border-color: #374151; }
+        body.dark-mode .confirm-dialog { background: #111827; }
+        body.dark-mode .confirm-dialog h3 { color: #f1f5f9; }
+        body.dark-mode .confirm-dialog p { color: #94a3b8; }
+        body.dark-mode .confirm-btn.cancel { background: #1f2937; border-color: #374151; color: #94a3b8; }
+        body.dark-mode .chat-search { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); }
+        body.dark-mode .chat-search:focus-within { background: rgba(255,255,255,0.06); border-color: rgba(79,95,255,0.3); }
+        body.dark-mode .msg-edit-input { background: #1f2937; border-color: #4f5fff; color: #f1f5f9; }
+        body.dark-mode #uploadBtn { border-color: #059669; color: #059669; }
+        body.dark-mode #uploadBtn:hover { background: #059669; color: #fff; }
 
         /* Mobile */
         @media(max-width:768px) {
@@ -617,6 +742,7 @@
             .msg.user .msg-bubble { max-width: 88%; border-radius: 14px 14px 4px 14px; padding: 10px 14px; }
             .msg.ai .msg-bubble { max-width: 94%; border-radius: 14px 14px 14px 4px; padding: 10px 14px; }
             .msg-name { font-size: 0.68rem; margin-bottom: 3px; }
+            .msg-time { font-size: 0.6rem; }
             .msg-actions { gap: 4px; }
             .msg-action-btn { font-size: 0.68rem; padding: 2px 5px; }
 
@@ -688,6 +814,20 @@
             /* Safe area for notched phones */
             .topbar { padding-top: max(8px, env(safe-area-inset-top)); }
             .input-area { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+
+            /* Mobile search */
+            .chat-search { margin: 6px 8px; padding: 6px 10px; }
+            .chat-search input { font-size: 0.75rem; }
+
+            /* Mobile confirm dialog */
+            .confirm-dialog { padding: 24px 20px; border-radius: 16px; }
+            .confirm-dialog-icon { width: 48px; height: 48px; font-size: 1.1rem; }
+            .confirm-dialog h3 { font-size: 1rem; }
+            .confirm-dialog p { font-size: 0.82rem; margin-bottom: 20px; }
+            .confirm-btn { padding: 9px 20px; font-size: 0.82rem; }
+
+            /* Mobile title edit */
+            .title-edit-input { min-width: 120px; font-size: 0.82rem; }
         }
 
         @media(max-width:380px) {
@@ -730,6 +870,10 @@
             </div>
             <div class="nav-section">
                 <div class="nav-label">المحادثات</div>
+                <div class="chat-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="chatSearch" placeholder="بحث في المحادثات..." oninput="filterChats(this.value)">
+                </div>
                 <div id="chatHistoryList"></div>
             </div>
         </nav>
@@ -749,7 +893,7 @@
         <div class="topbar">
             <div class="topbar-right">
                 <button class="mobile-menu" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
-                <span class="topbar-title" id="topbarTitle">محادثة جديدة</span>
+                <span class="topbar-title" id="topbarTitle" ondblclick="editChatTitle()">محادثة جديدة</span>
             </div>
             <div class="topbar-actions">
                 <button class="tb-btn" onclick="toggleDark()" title="الوضع الليلي"><i class="fas fa-moon"></i></button>
@@ -772,35 +916,35 @@
                         <div class="welcome-stat"><div class="num">مجاني</div><div class="lbl">بدون حدود</div></div>
                     </div>
                     <div class="quick-grid" style="margin-top:24px">
-                        <div class="quick-card" onclick="quickAsk('اكتب لي سيرة ذاتية احترافية باسمي ومعلوماتي')">
+                        <div class="quick-card" onclick="quickAsk('أنا عايز أكتب سيرة ذاتية احترافية. هبدأ ببياناتي: اسمي هو...')">
                             <div class="qi"><i class="fas fa-pen-fancy"></i></div>
                             <h3>اكتب سيرة ذاتية</h3>
-                            <p>من بياناتك مباشرة</p>
+                            <p>ابدأ ببياناتك مباشرة</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('حسّن سيرتي الذاتية هذه وأعطني ملاحظات التحسين')">
+                        <div class="quick-card" onclick="quickAsk('عايز أحسّن سيرتي الذاتية. هبعتلك النص وأنت وصّلي الملاحظات')">
                             <div class="qi"><i class="fas fa-wand-magic-sparkles"></i></div>
                             <h3>حسّن سيرتي</h3>
-                            <p>ملاحظات وتوصيات</p>
+                            <p>ابعت النص واصنعي التحسينات</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('اعطيني 5 أسئلة مقابلة شائعة لـ Software Engineer مع نصائح للإجابة')">
+                        <div class="quick-card" onclick="quickAsk('أنا شغال/ة في مجال تقني وعايز أسأل عن أسئلة مقابلات شائعة في مجالي مع نصائح للإجابة')">
                             <div class="qi"><i class="fas fa-comments"></i></div>
                             <h3>أسئلة مقابلة</h3>
-                            <p>5 أسئلة مع نصائح</p>
+                            <p>اسألني عن مجالك</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('اكتب لي Cover Letter مختصر واحترافي لوظيفة مطور واجهات أمامية')">
+                        <div class="quick-card" onclick="quickAsk('عايز أكتب Cover Letter لوظيفة معينة. هبعتلك وصف الوظيفة وبياناتي')">
                             <div class="qi"><i class="fas fa-envelope-open-text"></i></div>
                             <h3>خطاب تعريف</h3>
-                            <p>Cover Letter مختصر</p>
+                            <p>ابعت الوظيفة وبياناتك</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('اقترح علي 3 وظائف مناسبة لمهاراتي وخبراتي')">
+                        <div class="quick-card" onclick="quickAsk('عايز أعرف الوظائف المناسبة لمهاراتي. هبعتلك مهاراتي وخبراتي')">
                             <div class="qi"><i class="fas fa-briefcase"></i></div>
                             <h3>وظائف مناسبة</h3>
-                            <p>توصيات وظائف</p>
+                            <p>اسألني عن مهاراتك</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('كيف أضيف إنجازات بأرقام في السيرة الذاتية؟ أعطني مثال عملي')">
+                        <div class="quick-card" onclick="quickAsk('عايز نصيحة عملية لتحسين السيرة الذاتية. اقتراحات سريعة ومحددة')">
                             <div class="qi"><i class="fas fa-lightbulb"></i></div>
-                            <h3>نصيحة ذهبية</h3>
-                            <p>مع مثال عملي</p>
+                            <h3>نصائح ذهبية</h3>
+                            <p>اقتراحات عملية فورية</p>
                         </div>
                     </div>
                 </div>
@@ -814,9 +958,12 @@
         </div>
 
         <!-- Input -->
+        <div class="input-area">
             <div class="input-wrap">
                 <textarea id="userInput" rows="1" placeholder="اكتب رسالتك هنا..." oninput="autoResize(this)"></textarea>
                 <button class="mic-btn" id="micBtn" onclick="openVoice()" title="إدخال صوتي"><i class="fas fa-microphone"></i></button>
+                <button class="mic-btn" id="uploadBtn" onclick="document.getElementById('fileUpload').click()" title="رفع ملف CV"><i class="fas fa-paperclip"></i></button>
+                <input type="file" id="fileUpload" accept=".txt,.pdf,.doc,.docx" style="display:none" onchange="handleFileUpload(event)">
                 <button class="send-btn" id="sendBtn" onclick="onSendClick()"><i class="fas fa-paper-plane" id="sendIcon"></i><i class="fas fa-stop" id="stopIcon" style="display:none"></i></button>
             </div>
             <div class="input-hint">Enter للإرسال • Shift+Enter لسطر جديد • <i class="fas fa-microphone" style="color:var(--accent)"></i> اضغط للتحدث</div>
@@ -831,6 +978,19 @@
             <p style="color:#6b7280;font-size:.9rem;margin:0 0 24px;line-height:1.6">سجّل دخولك للوصول إلى مساعد QCV الذكي<br>مجاني بالكامل — بدون بطاقة ائتمان</p>
             <a href="login.html?redirect=ai.html" style="display:inline-block;padding:12px 32px;background:#0003c9;color:#fff;border-radius:12px;font-weight:700;font-size:.95rem;text-decoration:none">تسجيل الدخول</a>
             <p style="margin-top:16px;font-size:.8rem;color:#9ca3af">ليس لديك حساب؟ <a href="login.html?tab=register&redirect=ai.html" style="color:#0003c9;font-weight:600;text-decoration:none">سجّل الآن مجاناً</a></p>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Dialog -->
+    <div class="confirm-dialog-overlay" id="confirmDialog">
+        <div class="confirm-dialog">
+            <div class="confirm-dialog-icon"><i class="fas fa-trash"></i></div>
+            <h3>حذف المحادثة</h3>
+            <p>هل أنت متأكد من حذف هذه المحادثة؟ لا يمكن التراجع عن هذا الإجراء.</p>
+            <div class="confirm-dialog-actions">
+                <button class="confirm-btn cancel" onclick="closeConfirmDialog()">إلغاء</button>
+                <button class="confirm-btn delete" onclick="executeDeleteChat()">حذف</button>
+            </div>
         </div>
     </div>
 
@@ -943,10 +1103,11 @@
             // Render all saved messages
             const container = document.getElementById('chatMessages');
             container.innerHTML = '';
-            chatHistory.forEach(m => {
+            chatHistory.forEach((m, index) => {
                 const role = m.role === 'user' ? 'user' : 'ai';
                 const text = m.parts?.[0]?.text || m.content || '';
-                if (text) renderMsg(role, text);
+                const timestamp = m.timestamp || null;
+                if (text) renderMsg(role, text, index, timestamp);
             });
 
             // Check if last message has CV data
@@ -1028,6 +1189,30 @@
             else renderChatHistory();
         }
 
+        let chatToDelete = null;
+
+        function confirmDeleteChat(chatId, e) {
+            e.stopPropagation();
+            chatToDelete = chatId;
+            document.getElementById('confirmDialog').classList.add('show');
+        }
+
+        function closeConfirmDialog() {
+            document.getElementById('confirmDialog').classList.remove('show');
+            chatToDelete = null;
+        }
+
+        function executeDeleteChat() {
+            if (chatToDelete) {
+                const chats = getChats();
+                delete chats[chatToDelete];
+                saveChats(chats);
+                if (currentChatId === chatToDelete) newChat();
+                else renderChatHistory();
+            }
+            closeConfirmDialog();
+        }
+
         function renderChatHistory() {
             const list = document.getElementById('chatHistoryList');
             const chatList = getChatList();
@@ -1035,24 +1220,63 @@
                 <div class="chat-history-item ${id === currentChatId ? 'active' : ''}" onclick="switchChat('${id}')">
                     <i class="fas fa-message" style="font-size:0.75rem;flex-shrink:0"></i>
                     <span>${escHtml(chat.title || 'محادثة')}</span>
-                    <button class="del-chat" onclick="deleteChat('${id}',event)" title="حذف"><i class="fas fa-xmark"></i></button>
+                    <button class="del-chat" onclick="confirmDeleteChat('${id}',event)" title="حذف"><i class="fas fa-xmark"></i></button>
                 </div>
             `).join('');
         }
 
+        function filterChats(query) {
+            const items = document.querySelectorAll('.chat-history-item');
+            const lowerQuery = query.toLowerCase();
+            items.forEach(item => {
+                const title = item.querySelector('span').textContent.toLowerCase();
+                item.style.display = title.includes(lowerQuery) ? '' : 'none';
+            });
+        }
+
+        function editChatTitle() {
+            if (!currentChatId) return;
+            const titleEl = document.getElementById('topbarTitle');
+            const currentTitle = titleEl.textContent;
+            
+            titleEl.innerHTML = `<input type="text" class="title-edit-input" value="${escHtml(currentTitle)}" onblur="saveChatTitle(this)" onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape'){this.value='${escHtml(currentTitle)}';this.blur();}">`;
+            
+            const input = titleEl.querySelector('input');
+            input.focus();
+            input.select();
+        }
+
+        function saveChatTitle(input) {
+            const newTitle = input.value.trim() || 'محادثة';
+            const titleEl = document.getElementById('topbarTitle');
+            titleEl.textContent = newTitle;
+            
+            if (currentChatId) {
+                const chats = getChats();
+                if (chats[currentChatId]) {
+                    chats[currentChatId].title = newTitle;
+                    saveChats(chats);
+                    renderChatHistory();
+                }
+            }
+        }
+
         /* ===== Messaging ===== */
-        function renderMsg(role, text) {
+        function renderMsg(role, text, msgIndex, timestamp) {
             const isUser = role === 'user';
             const initial = isUser ? 'أ' : 'AI';
             const name = isUser ? 'أنت' : 'مساعد QCV';
+            const time = timestamp ? new Date(timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }) : '';
             const html = `
-                <div class="msg ${role}">
+                <div class="msg ${role}" data-index="${msgIndex || ''}">
                     <div class="msg-avatar">${initial}</div>
                     <div class="msg-content">
-                        <div class="msg-name">${name}</div>
+                        <div class="msg-name">${name} ${time ? '<span class="msg-time">' + time + '</span>' : ''}</div>
                         <div class="msg-bubble">${formatMd(text)}</div>
                         <div class="msg-actions">
                             ${!isUser ? '<button class="msg-action-btn" onclick="speakText(this)" data-text="' + escAttr(text) + '" title="استمع"><i class="fas fa-volume-high"></i></button>' : ''}
+                            ${!isUser ? '<button class="msg-action-btn" onclick="regenerateMsg(this)" title="إعادة توليد"><i class="fas fa-rotate"></i> إعادة</button>' : ''}
+                            ${isUser ? '<button class="msg-action-btn" onclick="editMsg(this)" title="تعديل"><i class="fas fa-pen"></i> تعديل</button>' : ''}
                             <button class="msg-action-btn" onclick="copyText(this)" data-text="${escAttr(text)}"><i class="fas fa-copy"></i> نسخ</button>
                         </div>
                     </div>
@@ -1198,6 +1422,74 @@
             });
         }
 
+        function regenerateMsg(btn) {
+            if (isTyping) return;
+            const msgEl = btn.closest('.msg');
+            const bubble = msgEl.querySelector('.msg-bubble');
+            const fullText = bubble.textContent || bubble.innerText;
+            
+            // Remove the last AI message from history
+            if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === 'model') {
+                chatHistory.pop();
+            }
+            
+            // Remove the message from DOM
+            msgEl.remove();
+            
+            // Resend the last user message
+            const lastUserMsg = chatHistory.filter(m => m.role === 'user').pop();
+            if (lastUserMsg) {
+                document.getElementById('userInput').value = lastUserMsg.parts[0].text;
+                sendMessage();
+            }
+        }
+
+        function editMsg(btn) {
+            if (isTyping) return;
+            const msgEl = btn.closest('.msg');
+            const bubble = msgEl.querySelector('.msg-bubble');
+            const currentText = btn.getAttribute('data-text');
+            
+            // Replace bubble with editable textarea
+            const originalHtml = bubble.innerHTML;
+            bubble.innerHTML = `
+                <textarea class="msg-edit-input" style="width:100%;min-height:80px;padding:10px;border:2px solid var(--accent);border-radius:8px;font-family:inherit;font-size:0.88rem;resize:vertical;direction:rtl;background:var(--input-bg);color:var(--text)">${escHtml(currentText)}</textarea>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                    <button class="msg-action-btn" onclick="saveEditMsg(this, true)" style="background:var(--accent);color:#fff;padding:6px 14px;border-radius:6px;font-weight:700"><i class="fas fa-check"></i> حفظ وإعادة إرسال</button>
+                    <button class="msg-action-btn" onclick="saveEditMsg(this, false)" style="background:var(--bg);color:var(--muted);padding:6px 14px;border-radius:6px;border:1px solid var(--border)"><i class="fas fa-xmark"></i> إلغاء</button>
+                </div>
+            `;
+        }
+
+        function saveEditMsg(btn, resend) {
+            const msgEl = btn.closest('.msg');
+            const bubble = msgEl.querySelector('.msg-bubble');
+            const textarea = bubble.querySelector('.msg-edit-input');
+            const newText = textarea.value.trim();
+            
+            if (!newText) return;
+            
+            if (resend) {
+                // Remove all messages after this user message
+                const msgIndex = parseInt(msgEl.getAttribute('data-index'));
+                chatHistory = chatHistory.slice(0, msgIndex);
+                
+                // Remove all messages from DOM after this one
+                const allMsgs = document.querySelectorAll('.msg');
+                allMsgs.forEach(m => {
+                    const idx = parseInt(m.getAttribute('data-index'));
+                    if (idx >= msgIndex) m.remove();
+                });
+                
+                // Send the edited message
+                document.getElementById('userInput').value = newText;
+                sendMessage();
+            } else {
+                // Just restore the original text
+                bubble.innerHTML = formatMd(newText);
+            }
+        }
+
         /* ===== Text to Speech ===== */
         let currentUtterance = null;
         
@@ -1333,7 +1625,7 @@
                 { role: 'user', content: text }
             ];
 
-            chatHistory.push({ role: 'user', parts: [{ text }] });
+            chatHistory.push({ role: 'user', parts: [{ text }], timestamp: Date.now() });
 
             if (!currentChatId) currentChatId = genChatId();
             saveCurrentChat(text);
@@ -1395,7 +1687,7 @@
 
             if (fullText.trim()) {
                 typewriterRender(streamId, fullText);
-                chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
+                chatHistory.push({ role: 'model', parts: [{ text: fullText }], timestamp: Date.now() });
                 saveCurrentChat(text);
                 detectCvData(text, fullText);
             } else {
@@ -1625,6 +1917,22 @@
             sendMessage();
         }
 
+        /* ===== FILE UPLOAD ===== */
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const prompt = `قم بتحليل محتوى هذا الملف (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
+                document.getElementById('userInput').value = prompt;
+                sendMessage();
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
         /* ===== TYPEWRITER EFFECT ===== */
         let typewriterQueue = [];
         let typewriterRunning = false;
@@ -1644,8 +1952,8 @@
             bubble.classList.add('tw-bubble');
             bubble.innerHTML = '<span class="typewriter-cursor"></span>';
             let i = 0;
-            const chunkSize = 1;
-            const delay = 35;
+            const chunkSize = 3;
+            const delay = 20;
 
             function typeChunk() {
                 if (i >= fullText.length) {
@@ -1658,7 +1966,8 @@
                 }
                 i = Math.min(i + chunkSize, fullText.length);
                 const shown = fullText.substring(0, i);
-                bubble.innerHTML = formatMd(shown) + '<span class="typewriter-cursor"></span>';
+                // Use simple text rendering during typing for better performance
+                bubble.innerHTML = '<pre style="white-space:pre-wrap;font-family:inherit;font-size:0.9rem;line-height:1.8;margin:0;background:transparent;color:inherit;padding:0;border:none">' + escHtml(shown) + '</pre><span class="typewriter-cursor"></span>';
                 scrollDown();
                 setTimeout(typeChunk, delay);
             }
@@ -1692,6 +2001,29 @@
 
         document.getElementById('userInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+        });
+
+        /* ===== Keyboard Shortcuts ===== */
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+N: New chat
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                newChat();
+            }
+            // Ctrl+K: Focus search
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.getElementById('chatSearch');
+                if (searchInput) {
+                    searchInput.focus();
+                    openSidebar();
+                }
+            }
+            // Escape: Close dialogs
+            if (e.key === 'Escape') {
+                closeConfirmDialog();
+                closeVoice();
+            }
         });
         }
     </script>
