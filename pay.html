@@ -551,15 +551,14 @@
             };
 
             try {
-                var mod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js");
-                var dbRef = mod.ref(_fb.db);
+                var rootRef = _fb.dbRef(_fb.db);
 
                 // 1. Save subscription
-                var newSubRef = await mod.push(mod.ref(dbRef, 'subscriptions'), subData);
+                var newSubRef = await _fb.dbPush(_fb.dbRef(rootRef, 'subscriptions'), subData);
                 var subId = newSubRef.key;
 
                 // 2. Save to user's payment history
-                await mod.set(mod.ref(dbRef, 'users/' + _fb.user.uid + '/payments/' + subId), {
+                await _fb.dbSet(_fb.dbRef(rootRef, 'users/' + _fb.user.uid + '/payments/' + subId), {
                     subscriptionId: subId,
                     plan: plan,
                     price: planPrices[plan],
@@ -595,7 +594,7 @@
                 } catch(waErr) { console.log('WA notify skipped:', waErr); }
 
                 // 4. Save admin notification in Firebase
-                await mod.push(mod.ref(dbRef, 'adminNotifications'), {
+                await _fb.dbPush(_fb.dbRef(rootRef, 'adminNotifications'), {
                     type: 'subscription',
                     title: 'اشتراك جديد',
                     body: name + ' — ' + labels[plan] + ' — ' + pricesText[plan],
@@ -614,7 +613,7 @@
                 });
 
                 // 5. Update user's current plan status
-                await mod.update(mod.ref(dbRef, 'users/' + _fb.user.uid), {
+                await _fb.dbUpdate(_fb.dbRef(rootRef, 'users/' + _fb.user.uid), {
                     lastPaymentAt: Date.now(),
                     lastPaymentRef: refId,
                     pendingPlan: plan
@@ -648,7 +647,7 @@
 
             } catch (e) {
                 console.error('Payment error:', e);
-                toast('حدث خطأ: ' + e.message, 'err');
+                toast('حدث خطأ أثناء إرسال الطلب — يرجى المحاولة مرة أخرى', 'err');
                 btn.disabled = false;
                 btn.classList.remove('loading');
             }
@@ -675,6 +674,11 @@
             var db = dbMod.getDatabase(app);
             _fb.db = db;
             _fb.auth = auth;
+            _fb.dbRef = dbMod.ref;
+            _fb.dbPush = dbMod.push;
+            _fb.dbSet = dbMod.set;
+            _fb.dbUpdate = dbMod.update;
+            _fb.dbGet = dbMod.get;
 
             authMod.onAuthStateChanged(auth, function(u) {
                 if (!u) {
