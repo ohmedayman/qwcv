@@ -967,7 +967,7 @@
                 '<div style="text-align:center;margin-top:14px"><div class="status">&#9203; بانتظار التفعيل من الإدارة</div></div>' +
                 '</div>' +
                 '<div class="barcode">' + generateReceiptBarcode(r.ref) + '</div>' +
-                '<div class="footer">QCV — منصة سير ذاتية احترافية بالذكاء الاصطناعي<br>qlcv.vexonet.online<br>للدعم: 01028707543</div>' +
+                '<div class="footer">QCV — منصة سير ذاتية احترافية بالذكاء الاصطناعي<br>qcv.vexonet.online<br>للدعم: 01028707543</div>' +
                 '</div></body></html>';
             var win = window.open('', '_blank');
             if (win) { win.document.write(html); win.document.close(); setTimeout(function() { win.print(); }, 500); }
@@ -986,7 +986,7 @@
                 '📅 التاريخ: ' + r.date + '\n' +
                 '🔑 المرجع: ' + r.ref + '\n\n' +
                 '⏳ الحالة: بانتظار التفعيل\n\n' +
-                '🌐 qlcv.vexonet.online'
+                '🌐 qcv.vexonet.online'
             );
             window.open('https://wa.me/?text=' + msg, '_blank');
         };
@@ -1095,7 +1095,7 @@
                     (subData.walletNumber ? '💸 رقم المحفظة المرسل منه: ' + subData.walletNumber + '\n' : '') +
                     (subData.notes ? '📝 ملاحظات: ' + subData.notes + '\n' : '') +
                     '\n⏳ *_بانتظار التفعيل_*\n\n' +
-                    'لتفعيل: qlcv.vexonet.online/admin.html'
+                    'لتفعيل: qcv.vexonet.online/admin.html'
                 );
                 try {
                     var waFrame = document.createElement('iframe');

@@ -3897,6 +3897,32 @@ function renderNotifications() {
     }).join('');
 }
 function clearNotifications() { notifications = []; renderNotifications(); }
+
+// ===== LOAD NOTIFICATIONS FROM FIREBASE =====
+function loadFirebaseNotifications() {
+    if (!DB) return;
+    fetch(DB + '/adminNotifications.json').then(function(r) { return r.json(); }).then(function(data) {
+        if (!data) return;
+        var entries = Object.entries(data).sort(function(a, b) { return (b[1].createdAt || 0) - (a[1].createdAt || 0); });
+        var newCount = 0;
+        entries.forEach(function(e) {
+            var n = e[1];
+            var key = e[0];
+            if (window._seenNotifKeys && window._seenNotifKeys.indexOf(key) !== -1) return;
+            if (!window._seenNotifKeys) window._seenNotifKeys = [];
+            window._seenNotifKeys.push(key);
+            if (!n.read) {
+                newCount++;
+                addNotification(n.type || 'subscription', n.title || 'إشعار جديد', n.body || '');
+            }
+        });
+        if (newCount > 0) {
+            showToast(newCount + ' إشعار جديد', 'info');
+        }
+    }).catch(function(e) { console.warn('Failed to load admin notifications:', e); });
+}
+
+// ===== POLLING FOR NEW SUBSCRIPTIONS & NOTIFICATIONS =====
 setInterval(function() {
     if (!window.allUsers) return;
     var count = Object.keys(window.allUsers).length;
@@ -3904,7 +3930,31 @@ setInterval(function() {
         addNotification('user', 'مستخدم جديد سجل', 'إجمالي المستخدمين: ' + count);
     }
     window._prevUserCount = count;
-}, 60000);
+
+    // Poll for new subscriptions
+    restGet('/subscriptions.json').then(function(data) {
+        if (data) {
+            var newSubs = Object.entries(data);
+            var oldCount = Object.keys(window.allSubs || {}).length;
+            window.allSubs = data;
+            if (newSubs.length > oldCount && oldCount > 0) {
+                var newest = newSubs.sort(function(a, b) { return (b[1].createdAt || 0) - (a[1].createdAt || 0); })[0];
+                var s = newest[1];
+                addNotification('subscription', 'اشتراك جديد!', (s.userName || 'مستخدم') + ' — ' + (s.plan || '') + ' — ' + (s.paymentMethod || ''));
+                var pb = document.getElementById('pendingBadge');
+                var pending = Object.values(window.allSubs).filter(function(x) { return x.status === 'pending'; }).length;
+                if (pb) { if (pending > 0) { pb.textContent = pending; pb.style.display = 'inline'; } else { pb.style.display = 'none'; } }
+                renderAll();
+            }
+        }
+    }).catch(function() {});
+
+    loadFirebaseNotifications();
+}, 30000);
+
+// Load notifications on init
+setTimeout(loadFirebaseNotifications, 3000);
+setTimeout(loadFirebaseNotifications, 8000);
 </script>
 <script src="js/notify-sounds.js"></script>
 <script src="js/admin-enhancements.js"></script>

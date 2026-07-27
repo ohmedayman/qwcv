@@ -1388,7 +1388,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signOut, updateProfile, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+        import { getDatabase, ref, set, get, child, push } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
         const firebaseConfig = { apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I", authDomain: "qwcv-1cfad.firebaseapp.com", projectId: "qwcv-1cfad", storageBucket: "qwcv-1cfad.firebasestorage.app", messagingSenderId: "792471802122", appId: "1:792471802122:web:808e04099afc90315aaaf3", databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com" };
         const app = initializeApp(firebaseConfig);

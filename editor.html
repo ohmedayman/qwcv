@@ -5521,7 +5521,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
-        window._db = db; window._ref = ref; window._get = get; window._set = set; window._push = push;
+        window._db = db; window._ref = ref; window._get = get; window._set = set; window._push = push; window._update = update; window._remove = remove;
         let userData = null;
         let currentCvId = 'default';
         window.currentCvId = currentCvId;
