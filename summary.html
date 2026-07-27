@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QCV - ملخص المشروع</title>
+    <title>QCV - التقرير الشامل للمشروع</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -11,7 +11,6 @@
         :root{--p:#0003c9;--pl:#0005a0;--a:#27ffed;--g:#059669;--r:#ef4444;--y:#f59e0b;--b:#0ea5e9;--pu:#8b5cf6;--pk:#ec4899;--bg:#f8fafc;--c:#fff;--bd:#e2e8f0;--t:#0f172a;--m:#64748b}
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.6}
-
         .hero{background:linear-gradient(135deg,var(--p),var(--pl),#1a0533);color:#fff;padding:50px 24px 40px;text-align:center;position:relative;overflow:hidden}
         .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(39,255,237,0.08) 0%,transparent 50%)}
         .hero-logo{font-size:2.8rem;font-weight:900;letter-spacing:-2px;position:relative}
@@ -20,48 +19,39 @@
         .hero-url{font-size:0.82rem;opacity:0.5;position:relative;margin-top:8px;font-family:monospace}
         .hero-badges{display:flex;gap:10px;justify-content:center;margin-top:16px;position:relative;flex-wrap:wrap}
         .h-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600}
-
         .nav{background:var(--c);border-bottom:1px solid var(--bd);padding:0 24px;position:sticky;top:0;z-index:100}
         .nav-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;overflow-x:auto}
         .nav a{padding:14px 16px;font-size:0.82rem;font-weight:600;color:var(--m);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
         .nav a:hover,.nav a.active{color:var(--p);border-bottom-color:var(--p)}
-
         .container{max-width:1100px;margin:0 auto;padding:28px 20px}
         .section{margin-bottom:36px}
         .section-title{font-size:1.3rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:10px}
         .section-title i{color:var(--p)}
-
-        .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:30px}
+        .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:30px}
         .stat{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:18px;text-align:center}
         .stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.1rem}
         .stat-num{font-size:1.8rem;font-weight:900}
         .stat-label{font-size:0.72rem;color:var(--m);margin-top:2px}
-
         .card{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:14px}
         .card h3{font-size:0.95rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-
         .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
         .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
         .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-
         .feat{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:16px}
         .feat-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;margin-bottom:10px}
         .feat h4{font-size:0.88rem;font-weight:700;margin-bottom:3px}
         .feat p{font-size:0.75rem;color:var(--m)}
-
         table{width:100%;border-collapse:collapse;font-size:0.82rem}
         th{background:var(--bg);padding:10px 14px;text-align:left;font-weight:700;font-size:0.72rem;color:var(--m);text-transform:uppercase;border-bottom:2px solid var(--bd)}
         td{padding:10px 14px;border-bottom:1px solid var(--bd)}
         tr:hover td{background:rgba(0,3,201,0.02)}
-
         .badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:0.65rem;font-weight:600}
         .bg{background:rgba(5,150,105,0.1);color:var(--g)}
         .bb{background:rgba(14,165,233,0.1);color:var(--b)}
         .bp{background:rgba(139,92,246,0.1);color:var(--pu)}
         .br{background:rgba(239,68,68,0.1);color:var(--r)}
         .by{background:rgba(245,158,11,0.1);color:#d97706}
-
-        .price{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+        .price{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
         .price-card{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:20px;text-align:center}
         .price-card.pop{border-color:var(--p);position:relative}
         .price-card .pop-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;padding:2px 12px;border-radius:10px;font-size:0.62rem;font-weight:700}
@@ -70,13 +60,11 @@
         .price-val span{font-size:0.85rem;color:var(--m);font-weight:400}
         .price-list{text-align:left;font-size:0.78rem;margin-top:12px}
         .price-list div{padding:5px 0;border-bottom:1px solid var(--bd)}
-
         .tech{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
         .tech-item{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:14px;text-align:center}
         .tech-item i{font-size:1.5rem;margin-bottom:6px;display:block}
         .tech-item .name{font-weight:700;font-size:0.82rem}
         .tech-item .desc{font-size:0.68rem;color:var(--m)}
-
         .tl{position:relative;padding-left:28px}
         .tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--bd)}
         .tl-item{position:relative;margin-bottom:20px}
@@ -84,183 +72,258 @@
         .tl-date{font-size:0.68rem;color:var(--m);font-weight:600}
         .tl-title{font-size:0.88rem;font-weight:700}
         .tl-desc{font-size:0.78rem;color:var(--m)}
-
         .footer{text-align:center;padding:24px;color:var(--m);font-size:0.78rem;border-top:1px solid var(--bd);margin-top:30px}
-
-        @media(max-width:768px){.stats,.grid-3,.grid-4,.tech,.price{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
-        @media(max-width:480px){.stats,.tech,.price{grid-template-columns:1fr}}
+        .tpl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+        .tpl-item{background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center;font-size:0.78rem;font-weight:600;transition:all 0.2s}
+        .tpl-item:hover{border-color:var(--p);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+        .tpl-item .tpl-icon{font-size:1.2rem;margin-bottom:4px;display:block}
+        .code-block{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:16px;font-family:'Courier New',monospace;font-size:0.78rem;line-height:1.8;overflow-x:auto;margin-top:10px}
+        .code-block .key{color:#38bdf8}.code-block .str{color:#86efac}.code-block .num{color:#fbbf24}.code-block .cmt{color:#64748b}
+        @media(max-width:768px){.stats,.grid-3,.grid-4,.tech,.price,.tpl-grid{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+        @media(max-width:480px){.stats,.tech,.price,.tpl-grid{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
 
 <div class="hero">
     <div class="hero-logo">Q<span>CV</span></div>
-    <div class="hero-sub">منصة احترافية لبناء السيرة الذاتية بالذكاء الاصطناعي</div>
+    <div class="hero-sub">التقرير الشامل — منصة بناء السيرة الذاتية بالذكاء الاصطناعي</div>
     <div class="hero-url">qcv.vexonet.online</div>
     <div class="hero-badges">
         <span class="h-badge"><i class="fas fa-check-circle"></i> مباشر في الإنتاج</span>
-        <span class="h-badge"><i class="fas fa-code-branch"></i> 52+ عملية حفظ</span>
+        <span class="h-badge"><i class="fas fa-code-branch"></i> GitHub + Firebase</span>
         <span class="h-badge"><i class="fas fa-calendar"></i> يوليو 2026</span>
-        <span class="h-badge"><i class="fas fa-users"></i> جاهز للمستخدمين</span>
+        <span class="h-badge"><i class="fas fa-globe"></i> Cloudflare DNS</span>
     </div>
 </div>
 
 <div class="nav">
     <div class="nav-inner">
         <a href="#overview" class="active">نظرة عامة</a>
-        <a href="#features">المميزات</a>
         <a href="#pages">الصفحات</a>
-        <a href="#tech">التقنيات</a>
+        <a href="#templates">القوالب</a>
         <a href="#ai">الذكاء الاصطناعي</a>
-        <a href="#pricing">التسعير</a>
-        <a href="#team">الفريق</a>
+        <a href="#admin">لوحة الإدارة</a>
+        <a href="#payment">التسعير والدفع</a>
+        <a href="#firestore">Firebase</a>
+        <a href="#tech">التقنيات</a>
+        <a href="#tools">أدوات خارجية</a>
         <a href="#timeline">الجدول الزمني</a>
     </div>
 </div>
 
 <div class="container">
 
-<!-- OVERVIEW -->
+<!-- ========== OVERVIEW ========== -->
 <div class="section" id="overview">
     <div class="section-title"><i class="fas fa-chart-pie"></i> نظرة عامة</div>
     <div class="stats">
-        <div class="stat"><div class="stat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-file-alt"></i></div><div class="stat-num" style="color:var(--p)">35</div><div class="stat-label">صفحات HTML</div></div>
-        <div class="stat"><div class="stat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-palette"></i></div><div class="stat-num" style="color:var(--pu)">15</div><div class="stat-label">قوالب السيرة الذاتية</div></div>
-        <div class="stat"><div class="stat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-robot"></i></div><div class="stat-num" style="color:var(--b)">14</div><div class="stat-label">مميزات الذكاء الاصطناعي</div></div>
-        <div class="stat"><div class="stat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-code"></i></div><div class="stat-num" style="color:var(--g)">~79K</div><div class="stat-label">أسطر الكود</div></div>
-        <div class="stat"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#d97706"><i class="fas fa-blog"></i></div><div class="stat-num" style="color:#d97706">12</div><div class="stat-label">مقالات المدونة</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-file-alt"></i></div><div class="stat-num" style="color:var(--p)">40+</div><div class="stat-label">صفحة HTML</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-palette"></i></div><div class="stat-num" style="color:var(--pu)">30</div><div class="stat-label">قالب سيرة ذاتية</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-robot"></i></div><div class="stat-num" style="color:var(--b)">14+</div><div class="stat-label">ميزة ذكاء اصطناعي</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-code"></i></div><div class="stat-num" style="color:var(--g)">~90K</div><div class="stat-label">سطر كود</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#d97706"><i class="fas fa-blog"></i></div><div class="stat-num" style="color:#d97706">12</div><div class="stat-label">مقالات مدونة</div></div>
+        <div class="stat"><div class="stat-icon" style="background:rgba(236,72,153,0.1);color:var(--pk)"><i class="fas fa-users"></i></div><div class="stat-num" style="color:var(--pk)">19</div><div class="stat-label">تبويب إدارة</div></div>
     </div>
+
     <div class="card">
         <h3><i class="fas fa-info-circle" style="color:var(--p)"></i> ما هو QCV؟</h3>
-        <p style="color:var(--m);font-size:0.88rem">QCV هو منصة احترافية مدعومة بالذكاء الاصطناعي لبناء السيرة الذاتية تنافس tadween.me. يوفر أكثر من 15 قالباً مهنياً متوافقاً مع أنظمة ATS، وتصنيف بالذكاء الاصطناعي، ومطابقة الوظائف، وصفحات محفظة عامة، ولوحة تحكم كاملة. مستضاف على GitHub Pages مع Firebase للخلفية ونطاق مخصص عبر Cloudflare.</p>
-    </div>
-</div>
-
-<!-- FEATURES -->
-<div class="section" id="features">
-    <div class="section-title"><i class="fas fa-star"></i> المميزات الرئيسية</div>
-    <div class="grid-3">
-        <div class="feat"><div class="feat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-robot"></i></div><h4>14 ميزة ذكاء اصطناعي</h4><p>Summary, proofread, improve, skills, تحسين لل ATS, translate, خطاب تعريف, tailor, skill gap, تحضير المقابلة, استيراد LinkedIn, template recommend, CV analysis, career advisor</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-palette"></i></div><h4>15 قالب سيرة ذاتية</h4><p>Classic, Modern, Minimal, ATS-Safe, Creative, Executive, Elegant, Bold, Professional, Timeline, Infographic, Photo, Two-Column, Monochrome, and more</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-file-pdf"></i></div><h4>تصدير PDF</h4><p>High-quality PDF with html2pdf.js. Free: 1 download with علامة مائية. Pro: 5 clean exports. Unlimited: unlimited</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-linkedin"></i></div><h4>استيراد LinkedIn</h4><p>Paste LinkedIn URL, AI extracts and auto-fills name, title, experience, skills, education</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(245,158,11,0.1);color:#d97706"><i class="fas fa-chart-line"></i></div><h4>تقييم السيرة & ATS</h4><p>Real-time scoring: Contact, Content, ATS, Skills, Impact. Detailed recommendations</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(236,72,153,0.1);color:var(--pk)"><i class="fas fa-globe"></i></div><h4>Portfolio & QR</h4><p>Public portfolio links, My Page, QR code for easy sharing, PDF download for employers</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-history"></i></div><h4>سجل الإصدارات</h4><p>Auto-saves versions on every save. Restore any previous version with one click</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-briefcase"></i></div><h4>Job Tracker</h4><p>Track applications: company, position, status (Applied/Interview/Offer/Rejected), notes</p></div>
-        <div class="feat"><div class="feat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-code-compare"></i></div><h4>CV Comparison</h4><p>Compare two CV versions side by side with AI deep analysis and improvement scoring</p></div>
-    </div>
-</div>
-
-<!-- PAGES -->
-<div class="section" id="pages">
-    <div class="section-title"><i class="fas fa-sitemap"></i> جميع الصفحات (35)</div>
-    <div style="overflow-x:auto">
-    <table>
-        <thead><tr><th>Page</th><th>URL</th><th>Auth</th><th>Description</th></tr></thead>
-        <tbody>
-            <tr><td><strong>Homepage</strong></td><td><code>/</code></td><td><span class="badge bg">Public</span></td><td>Landing, features, pricing, testimonials, FAQ, blog</td></tr>
-            <tr><td><strong>Editor</strong></td><td><code>/editor</code></td><td><span class="badge bb">Login</span></td><td>Full CV editor, AI, templates, live preview, undo/redo, سجل الإصدارات</td></tr>
-            <tr><td><strong>AI Wizard</strong></td><td><code>/ai.html</code></td><td><span class="badge bg">Public</span></td><td>Step-by-step builder, استيراد LinkedIn, توصية قالب بالذكاء الاصطناعيommender</td></tr>
-            <tr><td><strong>AI Tools</strong></td><td><code>/ai-tools</code></td><td><span class="badge bg">Public</span></td><td>خطاب تعريف, Career Path, مُقدّر الرواتب, مدرب المقابلات</td></tr>
-            <tr><td><strong>Login</strong></td><td><code>/login</code></td><td><span class="badge bg">Public</span></td><td>Email/password + Google OAuth</td></tr>
-            <tr><td><strong>Sign Up</strong></td><td><code>/signup</code></td><td><span class="badge bg">Public</span></td><td>New account registration</td></tr>
-            <tr><td><strong>Dashboard</strong></td><td><code>/dashboard</code></td><td><span class="badge bb">Login</span></td><td>CV list, stats, quick actions</td></tr>
-            <tr><td><strong>ATS Checker</strong></td><td><code>/ats-checker</code></td><td><span class="badge bg">Public</span></td><td>Free ATS compatibility analysis</td></tr>
-            <tr><td><strong>Job Matcher</strong></td><td><code>/job-matcher</code></td><td><span class="badge bg">Public</span></td><td>CV vs Job Description matching</td></tr>
-            <tr><td><strong>CV Comparison</strong></td><td><code>/compare</code></td><td><span class="badge bg">Public</span></td><td>Compare two CVs side by side</td></tr>
-            <tr><td><strong>Job Tracker</strong></td><td><code>/tracker</code></td><td><span class="badge bb">Login</span></td><td>Track job applications</td></tr>
-            <tr><td><strong>Portfolio</strong></td><td><code>/portfolio</code></td><td><span class="badge bg">Public</span></td><td>Portfolio showcase</td></tr>
-            <tr><td><strong>Portfolio View</strong></td><td><code>/portfolio-view</code></td><td><span class="badge bg">Public</span></td><td>Public CV view + PDF download</td></tr>
-            <tr><td><strong>My Page</strong></td><td><code>/my-page</code></td><td><span class="badge bb">Login</span></td><td>User's public profile</td></tr>
-            <tr><td><strong>Verify CV</strong></td><td><code>/verify</code></td><td><span class="badge bg">Public</span></td><td>CV authenticity verification</td></tr>
-            <tr><td><strong>Pricing</strong></td><td><code>/pay</code></td><td><span class="badge bg">Public</span></td><td>Plans + Vodafone Cash, Fawry, InstaPay</td></tr>
-            <tr><td><strong>Support</strong></td><td><code>/support</code></td><td><span class="badge bb">Login</span></td><td>Ticket system with chat</td></tr>
-            <tr><td><strong>Admin</strong></td><td><code>/admin</code></td><td><span class="badge br">Admin</span></td><td>19 tabs: users, revenue, blog, staff, security</td></tr>
-            <tr><td><strong>Staff Panel</strong></td><td><code>/staff-panel</code></td><td><span class="badge by">Staff</span></td><td>Staff management</td></tr>
-            <tr><td><strong>Blog</strong></td><td><code>/blog</code></td><td><span class="badge bg">Public</span></td><td>12 Arabic SEO posts</td></tr>
-            <tr><td><strong>Report</strong></td><td><code>/report</code></td><td><span class="badge bg">Public</span></td><td>Full project report</td></tr>
-            <tr><td><strong>About / Terms / Careers / Contact / Help</strong></td><td><code>/about, /terms, /careers, /contact, /help</code></td><td><span class="badge bg">Public</span></td><td>Static pages</td></tr>
-        </tbody>
-    </table>
-    </div>
-</div>
-
-<!-- TECH -->
-<div class="section" id="tech">
-    <div class="section-title"><i class="fas fa-layer-group"></i> المستخدم التقني</div>
-    <div class="tech">
-        <div class="tech-item"><i class="fab fa-html5" style="color:#e34f26"></i><div class="name">HTML5</div><div class="desc">35 صفحة</div></div>
-        <div class="tech-item"><i class="fab fa-css3-alt" style="color:#1572b6"></i><div class="name">CSS3</div><div class="desc">متجاوب، داكن/فاتح</div></div>
-        <div class="tech-item"><i class="fab fa-js" style="color:#f7df1e"></i><div class="name">JavaScript</div><div class="desc">18 وحدة</div></div>
-        <div class="tech-item"><i class="fab fa-google" style="color:#4285f4"></i><div class="name">Firebase</div><div class="desc">مصادقة + قاعدة بيانات</div></div>
-        <div class="tech-item"><i class="fab fa-github" style="color:#333"></i><div class="name">GitHub Pages</div><div class="desc">استضافة + CI/CD</div></div>
-        <div class="tech-item"><i class="fas fa-cloud" style="color:var(--b)"></i><div class="name">Cloudflare</div><div class="desc">DNS</div></div>
-        <div class="tech-item"><i class="fas fa-robot" style="color:var(--pu)"></i><div class="name">Pollinations AI</div><div class="desc">ذكاء اصطناعي مجاني</div></div>
-        <div class="tech-item"><i class="fas fa-paper-plane" style="color:#25D366"></i><div class="name">JotForm AI</div><div class="desc">شات بوت</div></div>
+        <p style="color:var(--m);font-size:0.88rem">QCV هو منصة احترافية مدعومة بالذكاء الاصطناعي لبناء السيرة الذاتية. يوفر <strong>30 قالباً مهنياً</strong> متوافقاً مع أنظمة ATS، و<strong>14+ ميزة ذكاء اصطناعي</strong>، وتصدير PDF، وصفحات محفظة عامة، ولوحة تحكم كاملة مع 19 تبويب، ونظام دعم وتذاكر، ونظام موظفين، ومدونة عربية SEO، وأدوات وظائف خارجية.</p>
     </div>
 
-    <div class="card" style="margin-top:14px">
-        <h3><i class="fas fa-code-branch" style="color:var(--p)"></i> وحدات JavaScript</h3>
-        <div style="overflow-x:auto">
-        <table>
-            <thead><tr><th>Module</th><th>Purpose</th></tr></thead>
-            <tbody>
-                <tr><td><code>ai-service.js</code></td><td>Unified QCVAI - Pollinations GET + keyed fallback, 12s timeout</td></tr>
-                <tr><td><code>template-engine.js</code></td><td>15 CV template rendering engine</td></tr>
-                <tr><td><code>lang.js</code></td><td>Bilingual Arabic/English</td></tr>
-                <tr><td><code>theme.js</code></td><td>وضع داكن/فاتح</td></tr>
-                <tr><td><code>cv-analyzer.js</code></td><td>تقييم السيرة الذاتية (5 فئات)</td></tr>
-                <tr><td><code>job-matcher.js</code></td><td>مطابقة السيرة مع الوظيفة</td></tr>
-                <tr><td><code>tutorial.js</code></td><td>جولات إرشادية</td></tr>
-                <tr><td><code>maintenance.js</code></td><td>وضع الصيانة</td></tr>
-                <tr><td><code>auto-reload.js</code></td><td>استطلاع كل 120 ثانية</td></tr>
-                <tr><td><code>site-settings.js</code></td><td>إعدادات Firebase</td></tr>
-                <tr><td><code>analytics.js</code></td><td>تتبع</td></tr>
-                <tr><td><code>notify-sounds.js</code></td><td>إشعارات صوتية</td></tr>
-                <tr><td><code>admin-enhancements.js</code></td><td>مميزات لوحة الإدارة</td></tr>
-            </tbody>
-        </table>
+    <div class="card">
+        <h3><i class="fas fa-cog" style="color:var(--pu)"></i> الإعدادات الأساسية</h3>
+        <div class="code-block">
+<span class="cmt">// Brand</span>
+<span class="key">Brand:</span> <span class="str">QCV</span>
+<span class="key">Colors:</span> <span class="str">Deep Indigo #0003c9</span> + <span class="str">Cyan #27ffed</span>
+<span class="key">Domain:</span> <span class="str">qcv.vexonet.online</span>
+<span class="key">Hosting:</span> <span class="str">GitHub Pages + Cloudflare DNS</span>
+
+<span class="cmt">// Firebase</span>
+<span class="key">apiKey:</span> <span class="str">AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I</span>
+<span class="key">authDomain:</span> <span class="str">qwcv-1cfad.firebaseapp.com</span>
+<span class="key">databaseURL:</span> <span class="str">https://qwcv-1cfad-default-rtdb.firebaseio.com</span>
+
+<span class="cmt">// Admin</span>
+<span class="key">Admin Login:</span> <span class="str">admin / Qcv@admin1</span>
+
+<span class="cmt">// Payment</span>
+<span class="key">Free:</span> <span class="num">0 EGP</span> | <span class="key">Pro:</span> <span class="num">99 EGP/mo</span> | <span class="key">Unlimited:</span> <span class="num">299 EGP/mo</span> | <span class="key">Quick 48h:</span> <span class="num">30 EGP</span>
+<span class="key">Vodafone Cash:</span> <span class="str">01028707543</span> (Mohamed Ayman)
+
+<span class="cmt">// AI</span>
+<span class="key">Provider:</span> <span class="str">Pollinations AI</span> (free, no API key for base)
+<span class="key">Models:</span> <span class="str">openai-fast, openai, gemini-flash-lite-3.5, openai-large</span>
         </div>
     </div>
 </div>
 
-<!-- AI -->
-<div class="section" id="ai">
-    <div class="section-title"><i class="fas fa-robot"></i> نظام الذكاء الاصطناعي</div>
-    <div class="card">
-        <h3><i class="fas fa-bolt" style="color:var(--y)"></i> البنية</h3>
-        <p style="font-size:0.85rem;color:var(--m)"><strong>window.QCVAI</strong> - Pollinations GET (free, no key) with Pollinations keyed fallback. Timeout: 12s. All paid providers (Groq, DeepSeek, xAI, OpenAI, OpenRouter) are expired/dead.</p>
-    </div>
+<!-- ========== ALL PAGES ========== -->
+<div class="section" id="pages">
+    <div class="section-title"><i class="fas fa-sitemap"></i> جميع الصفحات (40+)</div>
     <div style="overflow-x:auto">
     <table>
-        <thead><tr><th>Feature</th><th>Location</th><th>Type</th></tr></thead>
+        <thead><tr><th>الصفحة</th><th>الرابط</th><th>الدخول</th><th>الوصف</th></tr></thead>
         <tbody>
-            <tr><td>ملخص مهني</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>تدقيق النص</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>تحسين المحتوى</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>اقتراح مهارات</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>تحسين لل ATS</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>ترجمة السيرة الذاتية</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>خطاب تعريف</td><td>editor.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>تخصيص السيرة للوظيفة</td><td>editor.html</td><td><span class="badge bp">Pro</span></td></tr>
-            <tr><td>تحليل فجوات المهارات</td><td>editor.html</td><td><span class="badge bp">Pro</span></td></tr>
-            <tr><td>تحضير المقابلة</td><td>editor.html</td><td><span class="badge bp">Pro</span></td></tr>
-            <tr><td>تقييم السيرة</td><td>ats-checker.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>استيراد LinkedIn</td><td>ai.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>توصية قالب بالذكاء الاصطناعي</td><td>ai.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>خطاب تعريف (standalone)</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>مستشار المسار المهني</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>مُقدّر الرواتب</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
-            <tr><td>مدرب المقابلات</td><td>ai-tools.html</td><td><span class="badge bg">Free</span></td></tr>
+            <tr><td><strong>الرئيسية</strong></td><td><code>/</code></td><td><span class="badge bg">عام</span></td><td>Landing page — مميزات، تسعير، شهادات، FAQ، مدونة</td></tr>
+            <tr><td><strong>المحرر</strong></td><td><code>/editor</code></td><td><span class="badge bb">دخول</span></td><td>محرر سيرة ذاتية كامل — AI، 30 قالب، تصدير PDF، سجل إصدارات، Undo/Redo</td></tr>
+            <tr><td><strong>شات AI</strong></td><td><code>/ai.html</code></td><td><span class="badge bb">دخول</span></td><td>شات ذكاء اصطناعي مع Firebase Auth، streaming، صوت، سجل محادثات</td></tr>
+            <tr><td><strong>أدوات AI</strong></td><td><code>/ai-tools</code></td><td><span class="badge bg">عام</span></td><td>خطاب تعريف، مسار مهني، تقدير رواتب، تدريب مقابلات</td></tr>
+            <tr><td><strong>فحص ATS</strong></td><td><code>/ats-checker</code></td><td><span class="badge bg">عام</span></td><td>تقييم سيرة ذاتية مع 5 فئات + نصائح مواقع وظائف خارجية</td></tr>
+            <tr><td><strong>مقارنة CV</strong></td><td><code>/compare</code></td><td><span class="badge bg">عام</span></td><td>مقارنة سيرتين ذاتيتين جنباً إلى جنب مع تحليل AI</td></tr>
+            <tr><td><strong>متتبع الوظائف</strong></td><td><code>/tracker</code></td><td><span class="badge bb">دخول</span></td><td>تتبع طلبات العمل — شركة، وظيفة، حالة، ملاحظات</td></tr>
+            <tr><td><strong>المعرض</strong></td><td><code>/templates</code></td><td><span class="badge bg">عام</span></td><td>عرض 30 قالب مع معاينة فورية وتصنيفات</td></tr>
+            <tr><td><strong>محفظة</strong></td><td><code>/portfolio</code></td><td><span class="badge bb">دخول</span></td><td>إدارة المحافظ — إنشاء، مشاركة، تتبع</td></tr>
+            <tr><td><strong>عرض المحفظة</strong></td><td><code>/portfolio-view</code></td><td><span class="badge bg">عام</span></td><td>رابط عام لعرض السيرة الذاتية + تحميل PDF</td></tr>
+            <tr><td><strong>توقيع البريد</strong></td><td><code>/email-signature</code></td><td><span class="badge bg">عام</span></td><td>6 قوالب توقيع بريد — نسخ HTML/نص، عرض فوري، RTL</td></tr>
+            <tr><td><strong>خطاب تعريف</strong></td><td><code>/cover-letter</code></td><td><span class="badge bg">عام</span></td><td>5 قوالب خطاب تعريف — توليد AI + يدوي + تحميل TXT</td></tr>
+            <tr><td><strong>تحقق</strong></td><td><code>/verify</code></td><td><span class="badge bg">عام</span></td><td>التحقق من صحة السيرة الذاتية</td></tr>
+            <tr><td><strong>الاشتراك</strong></td><td><code>/pay</code></td><td><span class="badge bb">دخول</span></td><td>خطوتين: اختيار الباقة → الدفع. واتساب + إيصال + confetti</td></tr>
+            <tr><td><strong>الدخول</strong></td><td><code>/login</code></td><td><span class="badge bg">عام</span></td><td>Email/Password + Google OAuth + redirect support</td></tr>
+            <tr><td><strong>لوحة الإدارة</strong></td><td><code>/admin</code></td><td><span class="badge br">admin</span></td><td>19 تبويب — مستخدمين، إيرادات، domains، مدونة، موظفين، أمان</td></tr>
+            <tr><td><strong>إعداد Admin</strong></td><td><code>/admin-setup</code></td><td><span class="badge br">admin</span></td><td>إعدادات الموقع — ألوان، بانر، hero، تسعير، إشعارات، footer، SEO</td></tr>
+            <tr><td><strong>المدونة</strong></td><td><code>/blog</code></td><td><span class="badge bg">عام</span></td><td>12 مقال عربي SEO — CV writing, ATS, interviews</td></tr>
+            <tr><td><strong>التقرير</strong></td><td><code>/summary</code></td><td><span class="badge bg">عام</span></td><td>هذا التقرير الشامل</td></tr>
+            <tr><td><strong>من نحن / الشروط / تواصل / مساعدة / وظائف</strong></td><td><code>/about, /terms, /contact, /help, /careers</code></td><td><span class="badge bg">عام</span></td><td>صفحات ثابتة</td></tr>
+            <tr><td><strong>الخصوصية</strong></td><td><code>/privacy</code></td><td><span class="badge bg">عام</span></td><td>سياسة الخصوصية</td></tr>
+            <tr><td><strong>404</strong></td><td><code>/404</code></td><td><span class="badge bg">عام</span></td><td>صفحة خطأ مخصصة</td></tr>
         </tbody>
     </table>
     </div>
 </div>
 
-<!-- PRICING -->
-<div class="section" id="pricing">
-    <div class="section-title"><i class="fas fa-tags"></i> Pricing</div>
+<!-- ========== TEMPLATES ========== -->
+<div class="section" id="templates">
+    <div class="section-title"><i class="fas fa-palette"></i> 30 قالب سيرة ذاتية</div>
+
+    <div class="card" style="margin-bottom:16px">
+        <h3><i class="fas fa-layer-group" style="color:var(--p)"></i> التصنيفات</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="badge" style="background:rgba(56,189,248,0.15);color:#38bdf8;padding:4px 12px">ATS (15 قالب)</span>
+            <span class="badge" style="background:rgba(139,92,246,0.15);color:#8b5cf6;padding:4px 12px">إبداعي (15 قالب)</span>
+            <span class="badge" style="background:rgba(245,158,11,0.15);color:#f59e0b;padding:4px 12px">كلاسيكي</span>
+            <span class="badge" style="background:rgba(37,99,235,0.15);color:#2563eb;padding:4px 12px">عصري</span>
+            <span class="badge" style="background:rgba(99,102,241,0.15);color:#6366f1;padding:4px 12px">صور شخصية</span>
+            <span class="badge" style="background:rgba(8,145,178,0.15);color:#0891b2;padding:4px 12px">خط زمني</span>
+            <span class="badge" style="background:rgba(51,65,85,0.15);color:#334155;padding:4px 12px">داكن</span>
+        </div>
+    </div>
+
+    <div class="tpl-grid">
+        <div class="tpl-item"><span class="tpl-icon">📄</span>كلاسيك<br><span style="color:var(--m);font-size:0.68rem">classic</span></div>
+        <div class="tpl-item"><span class="tpl-icon">✨</span>عصري<br><span style="color:var(--m);font-size:0.68rem">modern</span></div>
+        <div class="tpl-item"><span class="tpl-icon">💼</span>محترف<br><span style="color:var(--m);font-size:0.68rem">professional</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🎨</span>إبداعي<br><span style="color:var(--m);font-size:0.68rem">creative</span></div>
+        <div class="tpl-item"><span class="tpl-icon">👔</span>تنفيذي<br><span style="color:var(--m);font-size:0.68rem">executive</span></div>
+        <div class="tpl-item"><span class="tpl-icon">⚙️</span>تقني<br><span style="color:var(--m);font-size:0.68rem">technical</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📝</span>بسيط<br><span style="color:var(--m);font-size:0.68rem">minimalist</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📊</span>شريط جانبي<br><span style="color:var(--m);font-size:0.68rem">sidebar</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📐</span>عمودين<br><span style="color:var(--m);font-size:0.68rem">two-column</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🔥</span>جريء<br><span style="color:var(--m);font-size:0.68rem">bold</span></div>
+        <div class="tpl-item"><span class="tpl-icon">💎</span>أنيق<br><span style="color:var(--m);font-size:0.68rem">elegant</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🛡️</span>آمن لل ATS<br><span style="color:var(--m);font-size:0.68rem">ats-safe</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🎓</span>أكاديمي<br><span style="color:var(--m);font-size:0.68rem">academic</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🚀</span>ناشئ<br><span style="color:var(--m);font-size:0.68rem">startup</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🌍</span>دولي<br><span style="color:var(--m);font-size:0.68rem">international</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📸</span>صور شخصية<br><span style="color:var(--m);font-size:0.68rem">photo</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📅</span>خط زمني<br><span style="color:var(--m);font-size:0.68rem">timeline</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📊</span>إنفوغرافيك<br><span style="color:var(--m);font-size:0.68rem">infographic</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📰</span>مجلة<br><span style="color:var(--m);font-size:0.68rem">magazine</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📦</span>مضغوط<br><span style="color:var(--m);font-size:0.68rem">compact</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🌙</span>داكن<br><span style="color:var(--m);font-size:0.68rem">dark</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🌈</span>تدرج لوني<br><span style="color:var(--m);font-size:0.68rem">gradient</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🃏</span>بطاقات<br><span style="color:var(--m);font-size:0.68rem">card</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🔪</span>مقسم<br><span style="color:var(--m);font-size:0.68rem">split</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🔤</span>أحرف كبيرة<br><span style="color:var(--m);font-size:0.68rem">mono</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🖼️</span>بانر<br><span style="color:var(--m);font-size:0.68rem">banner</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📅</span>خط زمني جانبي<br><span style="color:var(--m);font-size:0.68rem">timeline-sidebar</span></div>
+        <div class="tpl-item"><span class="tpl-icon">📷</span>بسيط بالصورة<br><span style="color:var(--m);font-size:0.68rem">minimal-photo</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🖤</span>تنفيذي داكن<br><span style="color:var(--m);font-size:0.68rem">executive-dark</span></div>
+        <div class="tpl-item"><span class="tpl-icon">🔲</span>شبكة إبداعية<br><span style="color:var(--m);font-size:0.68rem">creative-grid</span></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+        <h3><i class="fas fa-lock" style="color:var(--y)"></i> القفل حسب الباقة</h3>
+        <p style="font-size:0.82rem;color:var(--m)"><strong>مجاني:</strong> قالب كلاسيك فقط (1 قوالب) | <strong>Pro/Unlimited:</strong> جميع الـ 30 قالب مفتوحة</p>
+        <p style="font-size:0.82rem;color:var(--m);margin-top:6px"><strong>ملف:</strong> <code>js/template-engine.js</code> — تسجيل جميع القوالب عبر <code>QCVTemplates.register()</code></p>
+    </div>
+</div>
+
+<!-- ========== AI FEATURES ========== -->
+<div class="section" id="ai">
+    <div class="section-title"><i class="fas fa-robot"></i> نظام الذكاء الاصطناعي</div>
+
+    <div class="card">
+        <h3><i class="fas fa-bolt" style="color:var(--y)"></i> البنية التقنية</h3>
+        <div class="code-block">
+<span class="cmt">// ai-service.js — window.QCVAI</span>
+<span class="key">Provider:</span> <span class="str">Pollinations AI</span>
+<span class="key">GET endpoint:</span> <span class="str">gen.pollinations.ai/text/{prompt}</span>
+<span class="key">POST endpoint:</span> <span class="str">gen.pollinations.ai/v1/chat/completions</span>
+<span class="key">API Key:</span> <span class="str">uKxg3L4c6fOoMfM8J0nJ</span> (keyed fallback)
+<span class="key">Models (priority):</span> <span class="str">openai-fast → openai → gemini-flash-lite-3.5 → openai-large</span>
+<span class="key">Cache:</span> <span class="num">5 min TTL</span>, <span class="num">100 max entries</span>
+<span class="key">Retry:</span> <span class="num">2 retries</span> per model, exponential backoff
+<span class="key">Timeout:</span> <span class="num">12s</span> default, <span class="num">20s</span> for complex analysis
+
+<span class="cmt">// Methods</span>
+QCVAI.<span class="key">call</span>(prompt, systemPrompt, opts)      <span class="cmt">// Main call — cached</span>
+QCVAI.<span class="key">callJSON</span>(prompt, systemPrompt, opts)    <span class="cmt">// Returns parsed JSON</span>
+QCVAI.<span class="key">callStream</span>(messages, model, signal)    <span class="cmt">// Streaming for chat</span>
+QCVAI.<span class="key">analyzeCV</span>(cvText)                       <span class="cmt">// CV analysis</span>
+QCVAI.<span class="key">matchJob</span>(cvText, jobDesc)               <span class="cmt">// Job matching</span>
+        </div>
+    </div>
+
+    <div style="overflow-x:auto">
+    <table>
+        <thead><th>الميزة</th><th>الموقع</th><th>الباقة</th><th>النوع</th></thead>
+        <tbody>
+            <tr><td>ملخص مهني</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI Generate</td></tr>
+            <tr><td>تدقيق لغوي</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI Proofread</td></tr>
+            <tr><td>تحسين المحتوى</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI Improve</td></tr>
+            <tr><td>اقتراح مهارات</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI Skills</td></tr>
+            <tr><td>تحسين لل ATS</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI ATS Optimize</td></tr>
+            <tr><td>ترجمة السيرة الذاتية</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI Translate</td></tr>
+            <tr><td>خطاب تعريف (في المحرر)</td><td>editor.html</td><td><span class="badge bg">مجاني</span></td><td>AI Cover Letter</td></tr>
+            <tr><td>تخصيص السيرة للوظيفة</td><td>editor.html</td><td><span class="badge bp">Pro</span></td><td>AI Tailor</td></tr>
+            <tr><td>تحليل فجوات المهارات</td><td>editor.html</td><td><span class="badge bp">Pro</span></td><td>AI Skill Gap</td></tr>
+            <tr><td>تحضير المقابلة</td><td>editor.html</td><td><span class="badge bp">Pro</span></td><td>AI Interview Prep</td></tr>
+            <tr><td>تقييم السيرة الذاتية</td><td>ats-checker.html</td><td><span class="badge bg">مجاني</span></td><td>AI CV Scoring</td></tr>
+            <tr><td>شات AI مخصص</td><td>ai.html</td><td><span class="badge bb">دخول</span></td><td>Chat + Voice + History</td></tr>
+            <tr><td>استيراد LinkedIn</td><td>ai.html</td><td><span class="badge bg">مجاني</span></td><td>AI LinkedIn Import</td></tr>
+            <tr><td>توصية قالب بالذكاء الاصطناعي</td><td>ai.html</td><td><span class="badge bg">مجاني</span></td><td>AI Template Recommender</td></tr>
+            <tr><td>خطاب تعريف (standalone)</td><td>cover-letter.html</td><td><span class="badge bg">مجاني</span></td><td>AI + Manual</td></tr>
+            <tr><td>مستشار المسار المهني</td><td>ai-tools.html</td><td><span class="badge bg">مجاني</span></td><td>AI Career Path</td></tr>
+            <tr><td>مُقدّر الرواتب</td><td>ai-tools.html</td><td><span class="badge bg">مجاني</span></td><td>AI Salary Estimator</td></tr>
+            <tr><td>مدرب المقابلات</td><td>ai-tools.html</td><td><span class="badge bg">مجاني</span></td><td>AI Interview Coach</td></tr>
+            <tr><td>مقارنة سيرتين</td><td>compare.html</td><td><span class="badge bg">مجاني</span></td><td>AI CV Comparison</td></tr>
+            <tr><td>مطابقة وظيفة</td><td>job-matcher</td><td><span class="badge bg">مجاني</span></td><td>AI Job Match</td></tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<!-- ========== ADMIN ========== -->
+<div class="section" id="admin">
+    <div class="section-title"><i class="fas fa-shield-alt"></i> لوحة الإدارة (19 تبويب)</div>
+    <div class="grid-3">
+        <div class="feat"><div class="feat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-users"></i></div><h4>المستخدمين</h4><p>قائمة بـ 20 مستخدم/صفحة مع بحث، تعديل، حذف، تتبع تسجيل الدخول (IP, city, device, browser)</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-dollar-sign"></i></div><h4>الإيرادات</h4><p>إجمالي الإيرادات، الاشتراكات النشطة، Pending، اشتراكات منتهية مع تأكيد يدوي قبل التخفيض</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(14,165,233,0.1);color:var(--b)"><i class="fas fa-globe"></i></div><h4>النطاقات (Domains)</h4><p>إدارة Domains — اسم، مدة (أيام/شهر)، خطة، استخدام فعلي من Firebase، حفظ في /domains/ و /approvedDomains/</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(139,92,246,0.1);color:var(--pu)"><i class="fas fa-newspaper"></i></div><h4>المدونة</h4><p>إدارة 12+ مقال — إنشاء، تعديل، حذف، نشر/إلغاء النشر</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(245,158,11,0.1);color:#d97706"><i class="fas fa-headset"></i></div><h4>التذاكر</h4><p>نظام دعم — استطلاع كل 30 ثانية، AbortController 8s timeout، فلتر بالحالة</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(236,72,153,0.1);color:var(--pk)"><i class="fas fa-user-tie"></i></div><h4>الموظفين</h4><p>إضافة/تعديل/حذف موظفين مع صلاحيات كاملة (Full Access, Read Only, Support Only)</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(239,68,68,0.1);color:var(--r)"><i class="fas fa-shield-alt"></i></div><h4>الأمان</h4><p>تتبع IP، city, device, browser مع كل تسجيل دخول</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(0,3,201,0.08);color:var(--p)"><i class="fas fa-chart-bar"></i></div><h4>الإحصائيات</h4><p>Charts.js — إيرادات شهرية، مستخدمين نشطين، نمو</p></div>
+        <div class="feat"><div class="feat-icon" style="background:rgba(5,150,105,0.1);color:var(--g)"><i class="fas fa-ad"></i></div><h4>الحملات</h4><p>إنشاء وتعديل حملات تسويقية مع تتبع الأداء</p></div>
+    </div>
+</div>
+
+<!-- ========== PAYMENT ========== -->
+<div class="section" id="payment">
+    <div class="section-title"><i class="fas fa-credit-card"></i> التسعير وطرق الدفع</div>
     <div class="price">
         <div class="price-card">
             <div class="price-name">مجاني</div>
@@ -269,7 +332,6 @@
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>1 سيرة ذاتية</div>
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>1 قالب (كلاسيك)</div>
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>1 تحميل PDF</div>
-                <div style="color:var(--m)"><i class="fas fa-times" style="color:var(--r);margin-right:6px"></i>بدون ذكاء اصطناعي</div>
                 <div style="color:var(--m)"><i class="fas fa-times" style="color:var(--r);margin-right:6px"></i>علامة مائية</div>
             </div>
         </div>
@@ -279,72 +341,257 @@
             <div class="price-val">99 <span>ج.م/شهر</span></div>
             <div class="price-list">
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>5 سير ذاتية</div>
-                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>جميع الـ 15 قالب</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>30 قالب</div>
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>5 تحميلات PDF</div>
-                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>جميع مميزات الذكاء الاصطناعي</div>
-                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>بدون علامة مائية</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>جميع مميزات AI</div>
             </div>
         </div>
         <div class="price-card">
             <div class="price-name">غير محدود</div>
             <div class="price-val">299 <span>ج.م/شهر</span></div>
             <div class="price-list">
-                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>سير ذاتية غير محدودة</div>
-                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>جميع الـ 15 قالب</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>سير غير محدودة</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>30 قالب</div>
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>تحميلات غير محدودة</div>
                 <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>دعم أولوي</div>
-                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>نطاق مخصص</div>
+            </div>
+        </div>
+        <div class="price-card">
+            <div class="price-name">48 ساعة</div>
+            <div class="price-val">30 <span>ج.م</span></div>
+            <div class="price-list">
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>48 ساعة وصول كامل</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>30 قالب + AI</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>بدون اشتراك شهري</div>
+                <div><i class="fas fa-check" style="color:var(--g);margin-right:6px"></i>مثالي للaucoup</div>
             </div>
         </div>
     </div>
+
     <div class="card" style="margin-top:14px">
-        <h3><i class="fas fa-credit-card" style="color:var(--p)"></i> طرق الدفع</h3>
-        <p style="font-size:0.85rem;color:var(--m)"><strong>Vodafone Cash:</strong> 01028707543 (Mohamed Ayman) | <strong>Fawry:</strong> Available | <strong>InstaPay:</strong> Available | <strong>48h Trial:</strong> 30 ج.م</p>
+        <h3><i class="fas fa-wallet" style="color:var(--p)"></i> طرق الدفع</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px">
+            <div style="padding:14px;border:1.5px solid #e11d48;border-radius:12px;text-align:center">
+                <div style="font-size:1.3rem;margin-bottom:4px;color:#e11d48"><i class="fas fa-mobile-alt"></i></div>
+                <div style="font-size:0.82rem;font-weight:700">Vodafone Cash</div>
+                <div style="font-size:0.72rem;color:var(--m)">01028707543</div>
+                <div style="font-size:0.68rem;color:var(--m)">Mohamed Ayman</div>
+            </div>
+            <div style="padding:14px;border:1.5px solid #ff6600;border-radius:12px;text-align:center">
+                <div style="font-size:1.3rem;margin-bottom:4px;color:#ff6600"><i class="fas fa-store"></i></div>
+                <div style="font-size:0.82rem;font-weight:700">Fawry</div>
+                <div style="font-size:0.72rem;color:var(--m)">متاح عبر فوري</div>
+            </div>
+            <div style="padding:14px;border:1.5px solid #00b2a9;border-radius:12px;text-align:center">
+                <div style="font-size:1.3rem;margin-bottom:4px;color:#00b2a9"><i class="fas fa-exchange-alt"></i></div>
+                <div style="font-size:0.82rem;font-weight:700">InstaPay</div>
+                <div style="font-size:0.72rem;color:var(--m)">تحويل مباشر</div>
+            </div>
+        </div>
+        <p style="font-size:0.78rem;color:var(--m);margin-top:12px;text-align:center">
+            <i class="fas fa-whatsapp" style="color:#25d366;margin-left:4px"></i>
+            إثبات الدفع عبر واتساب تلقائي مع ملء بيانات الباقة والاسم والهاتف
+        </p>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-flow-chart" style="color:var(--pu)"></i> تدفق الدفع (pay.html)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px">
+            <div style="padding:10px 16px;background:rgba(0,3,201,0.06);border-radius:8px;font-size:0.78rem;font-weight:600">1. اختيار الباقة</div>
+            <i class="fas fa-arrow-left" style="color:var(--m)"></i>
+            <div style="padding:10px 16px;background:rgba(5,150,105,0.06);border-radius:8px;font-size:0.78rem;font-weight:600">2. طريقة الدفع + البيانات</div>
+            <i class="fas fa-arrow-left" style="color:var(--m)"></i>
+            <div style="padding:10px 16px;background:rgba(139,92,246,0.06);border-radius:8px;font-size:0.78rem;font-weight:600">3. النجاح + إيصال + confetti</div>
+        </div>
+        <p style="font-size:0.75rem;color:var(--m);margin-top:8px">مجاني → يذهب مباشرة للمحرر | Firebase في module script منفصل عن UI logic</p>
     </div>
 </div>
 
-<!-- TEAM -->
-<div class="section" id="team">
-    <div class="section-title"><i class="fas fa-users"></i> هيكل الفريق المقترح</div>
-    <div class="grid-3">
-        <div class="card">
-            <h3><i class="fas fa-paint-brush" style="color:var(--b)"></i> مطور واجهات أمامية</h3>
-            <p style="font-size:0.82rem;color:var(--m)">HTML/CSS, Responsive, Templates, UI/UX, Animations, وضع داكن/فاتح</p>
+<!-- ========== FIREBASE ========== -->
+<div class="section" id="firestore">
+    <div class="section-title"><i class="fas fa-database"></i> Firebase — هيكل البيانات</div>
+    <div class="card">
+        <div class="code-block">
+<span class="cmt">// Realtime Database Structure</span>
+{
+  <span class="key">"users"</span>: {
+    <span class="key">"uid"</span>: {
+      <span class="key">"name"</span>: <span class="str">"string"</span>,
+      <span class="key">"email"</span>: <span class="str">"string"</span>,
+      <span class="key">"phone"</span>: <span class="str">"string"</span>,
+      <span class="key">"plan"</span>: <span class="str">"free|pro|unlimited"</span>,
+      <span class="key">"planExpiry"</span>: <span class="num">timestamp</span>,
+      <span class="key">"createdAt"</span>: <span class="num">timestamp</span>,
+      <span class="key">"loginIP"</span>: <span class="str">"string"</span>,
+      <span class="key">"loginCity"</span>: <span class="str">"string"</span>,
+      <span class="key">"loginDevice"</span>: <span class="str">"string"</span>,
+      <span class="key">"loginBrowser"</span>: <span class="str">"string"</span>
+    }
+  },
+  <span class="key">"staff"</span>: { <span class="cmt">// staff login credentials</span> },
+  <span class="key">"domains"</span>: {
+    <span class="key">"domainId"</span>: {
+      <span class="key">"name"</span>: <span class="str">"company.com"</span>,
+      <span class="key">"duration"</span>: <span class="num">30</span>,  <span class="cmt">// &lt;=24 = months, &gt;24 = days</span>
+      <span class="key">"plan"</span>: <span class="str">"pro"</span>,
+      <span class="key">"emails"</span>: [<span class="str">"list"</span>],
+      <span class="key">"active"</span>: <span class="num">true</span>
+    }
+  },
+  <span class="key">"approvedDomains"</span>: { <span class="cmt">// synced copy for login.html</span> },
+  <span class="key">"subscriptions"</span>: { <span class="cmt">// payment requests</span> },
+  <span class="key">"tickets"</span>: { <span class="cmt">// support tickets</span> },
+  <span class="key">"blogPosts"</span>: { <span class="cmt">// blog articles</span> },
+  <span class="key">"campaigns"</span>: { <span class="cmt">// marketing campaigns</span> },
+  <span class="key">"siteSettings"</span>: { <span class="cmt">// admin panel settings</span> }
+}
         </div>
-        <div class="card">
-            <h3><i class="fas fa-server" style="color:var(--g)"></i> مطور خلفية</h3>
-            <p style="font-size:0.82rem;color:var(--m)">Firebase Auth, Database CRUD, Security Rules, Admin Panel, Staff system</p>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-sync" style="color:var(--b)"></i> نظام النطاقات (Domain System)</h3>
+        <p style="font-size:0.82rem;color:var(--m);line-height:1.8">
+            <strong>1.</strong> Admin يحفظ في <code>/domains/</code> + يزامن إلى <code>/approvedDomains/</code><br>
+            <strong>2.</strong> login.html يقرأ من <code>/approvedDomains/</code> للتحقق<br>
+            <strong>3.</strong> المدة: <code>&lt;=24</code> = أشهر (legacy) | <code>&gt;24</code> = أيام (جديد) — login يكشف تلقائياً<br>
+            <strong>4.</strong> USAGE يحسب من عدد الإيميلات في <code>allUsers</code> الفعلي<br>
+            <strong>5.</strong> الحذف يزامن من كلا المسارين<br>
+            <strong>6.</strong> <code>applyDomainPlanToUsers()</code> — تحديث خطة المستخدمين الحاليين تلقائياً
+        </p>
+    </div>
+</div>
+
+<!-- ========== TECH ========== -->
+<div class="section" id="tech">
+    <div class="section-title"><i class="fas fa-layer-group"></i> التقنيات المستخدمة</div>
+    <div class="tech">
+        <div class="tech-item"><i class="fab fa-html5" style="color:#e34f26"></i><div class="name">HTML5</div><div class="desc">40+ صفحة</div></div>
+        <div class="tech-item"><i class="fab fa-css3-alt" style="color:#1572b6"></i><div class="name">CSS3</div><div class="desc">متجاوب، داكن/فاتح</div></div>
+        <div class="tech-item"><i class="fab fa-js" style="color:#f7df1e"></i><div class="name">JavaScript</div><div class="desc">20+ وحدة</div></div>
+        <div class="tech-item"><i class="fab fa-google" style="color:#4285f4"></i><div class="name">Firebase</div><div class="desc">Auth + RTDB</div></div>
+        <div class="tech-item"><i class="fab fa-github" style="color:#333"></i><div class="name">GitHub Pages</div><div class="desc">استضافة + CI/CD</div></div>
+        <div class="tech-item"><i class="fas fa-cloud" style="color:var(--b)"></i><div class="name">Cloudflare</div><div class="desc">DNS + SSL</div></div>
+        <div class="tech-item"><i class="fas fa-robot" style="color:var(--pu)"></i><div class="name">Pollinations AI</div><div class="desc">ذكاء اصطناعي مجاني</div></div>
+        <div class="tech-item"><i class="fas fa-file-pdf" style="color:#ef4444"></i><div class="name">html2pdf.js</div><div class="desc">تصدير PDF</div></div>
+        <div class="tech-item"><i class="fas fa-chart-bar" style="color:#38bdf8"></i><div class="name">Chart.js</div><div class="desc">إحصائيات الإدارة</div></div>
+        <div class="tech-item"><i class="fas fa-mobile-alt" style="color:var(--g)"></i><div class="name">Mobile CSS</div><div class="desc">20+ صفحة متجاوبة</div></div>
+        <div class="tech-item"><i class="fas fa-cogs" style="color:var(--y)"></i><div class="name">Service Worker</div><div class="desc">qcv-v3 Cache</div></div>
+        <div class="tech-item"><i class="fas fa-search" style="color:var(--pk)"></i><div class="name">SEO</div><div class="desc">Schema.org + Sitemap</div></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+        <h3><i class="fas fa-code-branch" style="color:var(--p)"></i> وحدات JavaScript</h3>
+        <div style="overflow-x:auto">
+        <table>
+            <thead><tr><th>الوحدة</th><th>الوظيفة</th></tr></thead>
+            <tbody>
+                <tr><td><code>ai-service.js</code></td><td>Unified QCVAI — Pollinations GET + POST + keyed fallback, cache, retry</td></tr>
+                <tr><td><code>template-engine.js</code></td><td>30 قالب CV — تسجيل وعرض عبر QCVTemplates.register()</td></tr>
+                <tr><td><code>lang.js</code></td><td>ثنائي اللغة — عربي/إنجليزي</td></tr>
+                <tr><td><code>theme.js</code></td><td>وضع داكن/فاتح</td></tr>
+                <tr><td><code>cv-analyzer.js</code></td><td>تقييم السيرة الذاتية (5 فئات)</td></tr>
+                <tr><td><code>job-matcher.js</code></td><td>مطابقة السيرة مع الوظيفة</td></tr>
+                <tr><td><code>tutorial.js</code></td><td>جولات إرشادية</td></tr>
+                <tr><td><code>maintenance.js</code></td><td>وضع الصيانة</td></tr>
+                <tr><td><code>auto-reload.js</code></td><td>استطلاع كل 120 ثانية</td></tr>
+                <tr><td><code>site-settings.js</code></td><td>إعدادات Firebase</td></tr>
+                <tr><td><code>analytics.js</code></td><td>تتبع</td></tr>
+                <tr><td><code>notify-sounds.js</code></td><td>إشعارات صوتية</td></tr>
+                <tr><td><code>admin-enhancements.js</code></td><td>mميزات لوحة الإدارة (v2)</td></tr>
+                <tr><td><code>animations.js</code></td><td>تأثيرات حركية</td></tr>
+            </tbody>
+        </table>
         </div>
-        <div class="card">
-            <h3><i class="fas fa-robot" style="color:var(--pu)"></i> مطور ذكاء اصطناعي</h3>
-            <p style="font-size:0.82rem;color:var(--m)">ai-service.js, AI Prompts, استيراد LinkedIn, خطاب تعريف, ATS, CV Scoring</p>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-file" style="color:var(--b)"></i> ملفات CSS</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+            <div style="padding:10px;background:var(--bg);border-radius:8px;text-align:center;font-size:0.78rem;font-weight:600">components.css<br><span style="color:var(--m);font-size:0.68rem">مكونات مشتركة</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;text-align:center;font-size:0.78rem;font-weight:600">mobile.css<br><span style="color:var(--m);font-size:0.68rem">20+ صفحة متجاوبة</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;text-align:center;font-size:0.78rem;font-weight:600">templates.css<br><span style="color:var(--m);font-size:0.68rem">30 قالب CV</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;text-align:center;font-size:0.78rem;font-weight:600">style.css<br><span style="color:var(--m);font-size:0.68rem">الرئيسية</span></div>
         </div>
     </div>
 </div>
 
-<!-- TIMELINE -->
+<!-- ========== EXTERNAL TOOLS ========== -->
+<div class="section" id="tools">
+    <div class="section-title"><i class="fas fa-link"></i> أدوات ومواقع خارجية</div>
+
+    <div class="card">
+        <h3><i class="fas fa-briefcase" style="color:var(--b)"></i> مواقع وظائف مدمجة في ATS Checker</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px">
+            <a href="https://www.linkedin.com/jobs/" target="_blank" style="padding:12px;border:1.5px solid #0a66c2;border-radius:10px;text-decoration:none;text-align:center">
+                <div style="font-size:1.2rem;color:#0a66c2"><i class="fab fa-linkedin"></i></div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1a1a2e">LinkedIn Jobs</div>
+                <div style="font-size:0.65rem;color:var(--m)">+900M مستخدم</div>
+            </a>
+            <a href="https://wuzzuf.net/" target="_blank" style="padding:12px;border:1.5px solid #00b2a9;border-radius:10px;text-decoration:none;text-align:center">
+                <div style="font-size:1.2rem;color:#00b2a9"><i class="fas fa-briefcase"></i></div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1a1a2e">Wuzzuf</div>
+                <div style="font-size:0.65rem;color:var(--m)">الوظائف الأولى في مصر</div>
+            </a>
+            <a href="https://www.forasna.com/" target="_blank" style="padding:12px;border:1.5px solid #ff6600;border-radius:10px;text-decoration:none;text-align:center">
+                <div style="font-size:1.2rem;color:#ff6600"><i class="fas fa-building"></i></div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1a1a2e">Forasna</div>
+                <div style="font-size:0.65rem;color:var(--m)">فرص في الوطن العربي</div>
+            </a>
+            <a href="https://www.glassdoor.com/Job/" target="_blank" style="padding:12px;border:1.5px solid #0caa41;border-radius:10px;text-decoration:none;text-align:center">
+                <div style="font-size:1.2rem;color:#0caa41"><i class="fas fa-star"></i></div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1a1a2e">Glassdoor</div>
+                <div style="font-size:0.65rem;color:var(--m)">وظائف + تقييم شركات</div>
+            </a>
+            <a href="https://www.indeed.com/" target="_blank" style="padding:12px;border:1.5px solid #2164f3;border-radius:10px;text-decoration:none;text-align:center">
+                <div style="font-size:1.2rem;color:#2164f3"><i class="fas fa-search-dollar"></i></div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1a1a2e">Indeed</div>
+                <div style="font-size:0.65rem;color:var(--m)">أكبر موقع وظائف عالمياً</div>
+            </a>
+            <a href="https://bayt.com/" target="_blank" style="padding:12px;border:1.5px solid #0054aa;border-radius:10px;text-decoration:none;text-align:center">
+                <div style="font-size:1.2rem;color:#0054aa"><i class="fas fa-globe-americas"></i></div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1a1a2e">Bayt.com</div>
+                <div style="font-size:0.65rem;color:var(--m)">وظائف الشرق الأوسط</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-toolbox" style="color:var(--y)"></i> أدوات externes</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px">
+            <div style="padding:10px;background:var(--bg);border-radius:8px;font-size:0.78rem"><strong>Pollinations AI</strong><br><span style="color:var(--m);font-size:0.68rem">ذكاء اصطناعي مجاني — GET/POST</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;font-size:0.78rem"><strong>html2pdf.js</strong><br><span style="color:var(--m);font-size:0.68rem">تصدير PDF من HTML</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;font-size:0.78rem"><strong>Chart.js v4</strong><br><span style="color:var(--m);font-size:0.68rem">رسوم بيانية للإدارة</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;font-size:0.78rem"><strong>Font Awesome 6</strong><br><span style="color:var(--m);font-size:0.68rem">أيقونات</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;font-size:0.78rem"><strong>Google Fonts</strong><br><span style="color:var(--m);font-size:0.68rem">Cairo + Inter</span></div>
+            <div style="padding:10px;background:var(--bg);border-radius:8px;font-size:0.78rem"><strong>ipapi.co</strong><br><span style="color:var(--m);font-size:0.68rem">Geolocation IP</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== TIMELINE ========== -->
 <div class="section" id="timeline">
     <div class="section-title"><i class="fas fa-clock"></i> الجدول الزمني للتطوير</div>
     <div class="tl">
-        <div class="tl-item"><div class="tl-date">Phase 1 - July 2026</div><div class="tl-title">الأساس</div><div class="tl-desc">Project setup, Firebase, homepage, login, editor, 6 templates, تصدير PDF</div></div>
-        <div class="tl-item"><div class="tl-date">Phase 2 - July 2026</div><div class="tl-title">Templates & Features</div><div class="tl-desc">15 قالباً، تقييم السيرة الذاتية، فحص ATS، مطابقة الوظائف، المعرض، لوحة الإدارة</div></div>
-        <div class="tl-item"><div class="tl-date">Phase 3 - July 2026</div><div class="tl-title">Admin & Support</div><div class="tl-desc">إدارة كاملة (19 تبويب)، تذاكر دعم، موظفين، إشعارات، مدونة</div></div>
-        <div class="tl-item"><div class="tl-date">Phase 4 - July 2026</div><div class="tl-title">دمج الذكاء الاصطناعي</div><div class="tl-desc">Unified AI service, 14 ميزة ذكاء اصطناعي, استيراد LinkedIn, خطاب تعريف, Template Rec</div></div>
-        <div class="tl-item"><div class="tl-date">Phase 5 - July 2026</div><div class="tl-title">Speed & UX</div><div class="tl-desc">AI 60% faster, سجل الإصدارات, QR Codes, Job Tracker, CV Comparison, AI Tools page</div></div>
+        <div class="tl-item"><div class="tl-date">المرحلة 1 — يوليو 2026</div><div class="tl-title">الأساس</div><div class="tl-desc">Project setup, Firebase Auth, homepage, login, editor, 6 templates, تصدير PDF</div></div>
+        <div class="tl-item"><div class="tl-date">المرحلة 2 — يوليو 2026</div><div class="tl-title">القوالب والمميزات</div><div class="tl-desc">15 قالباً، تقييم السيرة الذاتية، فحص ATS، مطابقة الوظائف، المعرض، لوحة الإدارة</div></div>
+        <div class="tl-item"><div class="tl-date">المرحلة 3 — يوليو 2026</div><div class="tl-title">الإدارة والدعم</div><div class="tl-desc">إدارة كاملة (19 تبويب)، تذاكر دعم، موظفين، إشعارات، مدونة 12 مقال</div></div>
+        <div class="tl-item"><div class="tl-date">المرحلة 4 — يوليو 2026</div><div class="tl-title">دمج الذكاء الاصطناعي</div><div class="tl-desc">Unified AI service, 14+ ميزة AI, استيراد LinkedIn, خطاب تعريف, توصية قالب</div></div>
+        <div class="tl-item"><div class="tl-date">المرحلة 5 — يوليو 2026</div><div class="tl-title">السرعة وتجربة المستخدم</div><div class="tl-desc">AI 60% أسرع, سجل إصدارات, QR Codes, Job Tracker, CV Comparison, AI Tools</div></div>
+        <div class="tl-item"><div class="tl-date">المرحلة 6 — يوليو 2026</div><div class="tl-title">القوالب الجديدة والأدوات</div><div class="tl-desc">30 قالباً (15 ATS + 15 إبداعي)، توقيع البريد، خطاب تعريف، نظام نطاقات، تسجيل دخول مُحسّن</div></div>
     </div>
 </div>
 
 </div>
 
 <div class="footer">
-    ملخص مشروع QCV - تم الإنشاء في 11 يوليو 2026 - qcv.vexonet.online
+    التقرير الشامل لمشروع QCV — تم الإنشاء في 11 يوليو 2026 | qcv.vexonet.online<br>
+    <span style="font-size:0.72rem;opacity:0.6">منتج من Vexonet — <a href="https://vexonet.online" target="_blank" style="color:var(--p)">vexonet.online</a></span>
 </div>
 
 <script>
 document.querySelectorAll('.nav a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav a').forEach(n=>n.classList.remove('active'));a.classList.add('active')})});
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.style.opacity=1})},{threshold:0.1});
-document.querySelectorAll('.stat,.feat,.card,.tech-item').forEach(el=>{el.style.opacity=0;el.style.transition='opacity 0.5s';obs.observe(el)});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity=1;x.target.style.transform='translateY(0)'}})},{threshold:0.1});
+document.querySelectorAll('.stat,.feat,.card,.tech-item,.tpl-item').forEach(el=>{el.style.opacity=0;el.style.transform='translateY(10px)';el.style.transition='all 0.5s ease';obs.observe(el)});
 </script>
 </body>
 </html>
-

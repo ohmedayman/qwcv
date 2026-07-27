@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qcv-v2';
+const CACHE_NAME = 'qcv-v5';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
@@ -16,6 +16,8 @@ const STATIC_ASSETS = [
     '/portfolio.html',
     '/contact.html',
     '/blog.html',
+    '/email-signature.html',
+    '/cover-letter.html',
     '/404.html',
     '/components.css',
     '/mobile.css',

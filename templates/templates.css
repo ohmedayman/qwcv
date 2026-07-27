@@ -1,6 +1,5 @@
 /* ============================================================
-   QCV TEMPLATE STYLES — 15 ATS-Friendly CV Templates (B&W)
-   All templates use only black, white, and grays
+   QCV TEMPLATE STYLES — 30 CV Templates (15 ATS + 15 Creative)
    ============================================================ */
 
 /* ============ SHARED BASE ============ */
@@ -187,6 +186,230 @@
 .ti-main { flex: 1; padding: 24px 36px; }
 .ti-side { width: 200px; background: #f5f5f5; padding: 24px 20px; border-right: 1px solid #e0e0e0; }
 .ti-stitle { font-size: 11px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+
+/* ============ 16. PHOTO CV ============ */
+.tpl-photo { padding: 0; }
+.tp-photo-header { display: flex; align-items: center; gap: 24px; padding: 32px 40px; background: #f8f9fa; border-bottom: 3px solid #111; }
+.tp-photo-avatar { width: 90px; height: 90px; border-radius: 50%; background: #e5e7eb; border: 3px solid #111; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 800; color: #555; flex-shrink: 0; }
+.tp-photo-name { font-size: 22px; font-weight: 800; color: #111; }
+.tp-photo-title { font-size: 12px; color: #555; margin-top: 2px; }
+.tp-photo-contact { font-size: 10px; color: #666; margin-top: 6px; }
+.tp-photo-body { display: flex; }
+.tp-photo-main { flex: 1; padding: 24px 36px; }
+.tp-photo-side { width: 200px; background: #f8f9fa; padding: 24px 20px; border-left: 1px solid #e5e7eb; }
+.tp-photo-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #111; padding-bottom: 4px; margin-bottom: 8px; }
+.tp-photo-sidetitle { font-size: 11px; font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.tp-photo-skills { display: flex; flex-wrap: wrap; gap: 4px; }
+.tp-photo-skills span { background: #e5e7eb; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; font-weight: 600; }
+.tp-photo-lang { font-size: 10px; color: #555; margin-bottom: 4px; }
+
+/* ============ 17. TIMELINE ============ */
+.tpl-timeline { padding: 36px 44px; }
+.ttml-header { margin-bottom: 20px; }
+.ttml-name { font-size: 24px; font-weight: 800; color: #111; }
+.ttml-title { font-size: 12px; color: #555; margin-top: 2px; }
+.ttml-contact { font-size: 10px; color: #666; margin-top: 6px; }
+.ttml-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111; padding-bottom: 4px; margin-bottom: 10px; }
+.ttml-timeline { position: relative; padding-left: 24px; }
+.ttml-entry { position: relative; margin-bottom: 18px; padding-left: 8px; }
+.ttml-dot { position: absolute; left: -24px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #111; border: 2px solid #fff; box-shadow: 0 0 0 2px #111; }
+.ttml-line { position: absolute; left: -20px; top: 16px; bottom: -18px; width: 2px; background: #ddd; }
+.ttml-entry:last-child .ttml-line { display: none; }
+.ttml-role { font-weight: 700; font-size: 11px; color: #111; }
+.ttml-company { font-size: 10px; color: #555; font-style: italic; }
+.ttml-date { font-size: 9px; color: #888; margin-top: 2px; }
+.ttml-desc { font-size: 10px; color: #333; margin-top: 4px; line-height: 1.6; }
+.ttml-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.ttml-skill-tags span { background: #f3f4f6; border: 1px solid #ddd; padding: 3px 10px; border-radius: 20px; font-size: 9.5px; font-weight: 600; }
+
+/* ============ 18. INFOGRAPHIC ============ */
+.tpl-infographic { padding: 0; }
+.tinf-header { background: #111; color: #fff; padding: 32px 40px; }
+.tinf-name { font-size: 24px; font-weight: 800; }
+.tinf-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.tinf-contact { font-size: 10px; opacity: 0.75; margin-top: 6px; }
+.tinf-body { display: flex; }
+.tinf-left { flex: 1; padding: 24px 36px; }
+.tinf-right { width: 220px; background: #f8f9fa; padding: 24px 20px; border-left: 1px solid #e5e7eb; }
+.tinf-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1.5px solid #111; padding-bottom: 4px; }
+.tinf-skill { margin-bottom: 10px; }
+.tinf-skill-name { font-size: 10px; font-weight: 600; color: #333; margin-bottom: 3px; }
+.tinf-bar-track { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+.tinf-bar-fill { height: 100%; background: #111; border-radius: 4px; transition: width 0.5s; }
+.tinf-lang { font-size: 10px; color: #555; margin-bottom: 4px; }
+
+/* ============ 19. MAGAZINE ============ */
+.tpl-magazine { padding: 32px 40px; }
+.tmg-header { text-align: center; margin-bottom: 20px; }
+.tmg-topline { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.tmg-name { font-size: 28px; font-weight: 900; color: #111; text-transform: uppercase; letter-spacing: 3px; }
+.tmg-rule { width: 80px; height: 3px; background: #111; margin: 8px auto; }
+.tmg-title { font-size: 13px; color: #555; font-style: italic; }
+.tmg-cols { display: flex; gap: 24px; }
+.tmg-col-main { flex: 1; }
+.tmg-col-side { width: 220px; border-left: 2px solid #111; padding-left: 20px; }
+.tmg-stitle { font-size: 11px; font-weight: 800; color: #111; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-bottom: 8px; }
+.tmg-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tmg-skill-tags span { background: #111; color: #fff; padding: 3px 10px; border-radius: 3px; font-size: 9px; font-weight: 600; }
+
+/* ============ 20. COMPACT ============ */
+.tpl-compact { padding: 24px 32px; }
+.tcmp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #111; }
+.tcmp-name { font-size: 20px; font-weight: 800; color: #111; }
+.tcmp-title { font-size: 11px; color: #555; }
+.tcmp-contact { font-size: 9px; color: #666; text-align: right; }
+.tcmp-grid { display: flex; gap: 20px; }
+.tcmp-col-main { flex: 1; }
+.tcmp-col-side { width: 200px; }
+.tcmp-stitle { font-size: 10px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ddd; padding-bottom: 3px; margin-bottom: 6px; }
+
+/* ============ 21. DARK ============ */
+.tpl-dark { background: #1e1e2e; color: #cdd6f4; padding: 0; }
+.tdk-header { background: #11111b; padding: 32px 40px; }
+.tdk-name { font-size: 24px; font-weight: 800; color: #cdd6f4; }
+.tdk-title { font-size: 12px; color: #a6adc8; margin-top: 4px; }
+.tdk-contact { font-size: 10px; color: #7f849c; margin-top: 6px; }
+.tdk-body { padding: 24px 40px; }
+.tdk-stitle { font-size: 12px; font-weight: 700; color: #cdd6f4; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #45475a; padding-bottom: 4px; margin-bottom: 8px; }
+.tdk-text { font-size: 10.5px; color: #bac2de; line-height: 1.65; }
+.tdk-item { margin-bottom: 14px; }
+.tdk-item-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
+.tdk-item-left { font-weight: 700; font-size: 11px; color: #cdd6f4; }
+.tdk-item-date { font-size: 9.5px; color: #7f849c; font-style: italic; }
+.tdk-item-sub { font-size: 10px; color: #a6adc8; font-style: italic; }
+.tdk-item-desc { font-size: 10px; color: #bac2de; margin-top: 4px; line-height: 1.6; }
+.tdk-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tdk-skill-tags span { background: #313244; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; color: #cdd6f4; }
+
+/* ============ 22. GRADIENT ============ */
+.tpl-gradient { padding: 0; }
+.tgr-header { background: linear-gradient(135deg, #111 0%, #333 50%, #555 100%); color: #fff; padding: 36px 40px; }
+.tgr-name { font-size: 24px; font-weight: 800; }
+.tgr-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.tgr-contact { font-size: 10px; opacity: 0.75; margin-top: 6px; }
+.tgr-body { padding: 24px 40px; }
+.tgr-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111; padding-bottom: 4px; margin-bottom: 8px; }
+.tgr-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tgr-skill-tags span { background: #f3f4f6; border: 1px solid #ddd; padding: 3px 10px; border-radius: 20px; font-size: 9.5px; font-weight: 600; }
+
+/* ============ 23. CARD ============ */
+.tpl-card { padding: 0; }
+.tcd-header { background: #111; color: #fff; padding: 28px 36px; }
+.tcd-name { font-size: 22px; font-weight: 800; }
+.tcd-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.tcd-contact { font-size: 10px; opacity: 0.75; margin-top: 6px; }
+.tcd-body { padding: 20px 36px; }
+.tcd-card { background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
+.tcd-stitle { font-size: 11px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.tcd-row { display: flex; gap: 12px; }
+.tcd-half { flex: 1; }
+.tcd-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tcd-skill-tags span { background: #fff; border: 1px solid #ddd; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; font-weight: 600; }
+
+/* ============ 24. SPLIT ============ */
+.tpl-split { padding: 0; }
+.tsplit-header { display: flex; }
+.tsplit-left { flex: 1; background: #111; color: #fff; padding: 28px 36px; }
+.tsplit-right { width: 200px; background: #f3f4f6; padding: 28px 20px; font-size: 10px; color: #555; }
+.tsplit-right div { margin-bottom: 4px; }
+.tsplit-name { font-size: 22px; font-weight: 800; }
+.tsplit-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.tsplit-body { padding: 24px 36px; }
+.tsplit-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111; padding-bottom: 4px; margin-bottom: 8px; }
+
+/* ============ 25. MONOGRAM ============ */
+.tpl-mono { display: flex; padding: 0; }
+.tmo-left { width: 200px; background: #111; color: #fff; padding: 36px 20px; text-align: center; }
+.tmo-initial { font-size: 80px; font-weight: 900; opacity: 0.15; line-height: 1; margin-bottom: 20px; }
+.tmo-contact { font-size: 9.5px; opacity: 0.75; margin-bottom: 20px; }
+.tmo-contact div { margin-bottom: 4px; }
+.tmo-sidetitle { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; opacity: 0.9; }
+.tmo-skills { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.tmo-skills span { background: rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 4px; font-size: 9px; }
+.tmo-lang { font-size: 9.5px; opacity: 0.8; margin-bottom: 4px; }
+.tmo-right { flex: 1; padding: 28px 32px; }
+.tmo-name { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 2px; }
+.tmo-title { font-size: 12px; color: #555; margin-bottom: 12px; }
+.tmo-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111; padding-bottom: 4px; margin-bottom: 8px; }
+
+/* ============ 26. BANNER ============ */
+.tpl-banner { padding: 0; }
+.tbn-banner { background: #111; color: #fff; text-align: center; padding: 36px 40px; }
+.tbn-name { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+.tbn-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.tbn-contact { font-size: 10px; opacity: 0.75; margin-top: 8px; }
+.tbn-body { padding: 24px 40px; }
+.tbn-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111; padding-bottom: 4px; margin-bottom: 8px; }
+.tbn-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tbn-skill-tags span { background: #f3f4f6; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; font-weight: 600; }
+
+/* ============ 27. TIMELINE-SIDEBAR ============ */
+.tpl-tlsidebar { display: flex; flex-direction: column; min-height: 297mm; }
+.ttls-header { background: #111; color: #fff; padding: 28px 36px; }
+.ttls-name { font-size: 22px; font-weight: 800; }
+.ttls-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.ttls-body { display: flex; flex: 1; }
+.ttls-main { flex: 1; padding: 24px 36px; }
+.ttls-side { width: 200px; background: #f8f9fa; padding: 24px 20px; border-left: 1px solid #e5e7eb; }
+.ttls-stitle { font-size: 12px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111; padding-bottom: 4px; margin-bottom: 8px; }
+.ttls-contact-panel { margin-bottom: 16px; font-size: 10px; color: #555; }
+.ttls-contact-panel div { margin-bottom: 4px; }
+.ttls-sidetitle { font-size: 10px; font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.ttls-skills { display: flex; flex-wrap: wrap; gap: 4px; }
+.ttls-skills span { background: #e5e7eb; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; font-weight: 600; }
+.ttls-lang { font-size: 10px; color: #555; margin-bottom: 4px; }
+.ttls-timeline { position: relative; padding-left: 20px; }
+.ttls-entry { position: relative; margin-bottom: 16px; padding-left: 8px; }
+.ttls-dot { position: absolute; left: -20px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: #111; border: 2px solid #fff; box-shadow: 0 0 0 2px #111; }
+.ttls-content { font-size: 10px; }
+.ttls-date { font-size: 9px; color: #888; margin-top: 2px; }
+.ttls-desc { font-size: 10px; color: #333; margin-top: 4px; line-height: 1.6; }
+
+/* ============ 28. MINIMAL-PHOTO ============ */
+.tpl-mlphoto { padding: 36px 44px; }
+.tmlp-top { display: flex; align-items: center; gap: 20px; margin-bottom: 16px; }
+.tmlp-avatar { width: 72px; height: 72px; border-radius: 50%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; color: #888; flex-shrink: 0; }
+.tmlp-name { font-size: 22px; font-weight: 800; color: #111; }
+.tmlp-title { font-size: 12px; color: #555; }
+.tmlp-contact { font-size: 10px; color: #666; margin-top: 4px; }
+.tmlp-divider { height: 1px; background: #e5e7eb; margin-bottom: 16px; }
+.tmlp-body { display: flex; gap: 24px; }
+.tmlp-main { flex: 1; }
+.tmlp-side { width: 180px; }
+.tmlp-stitle { font-size: 11px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-bottom: 8px; }
+.tmlp-sidetitle { font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+
+/* ============ 29. EXECUTIVE-DARK ============ */
+.tpl-exdark { background: #1c1917; color: #d6d3d1; padding: 0; }
+.ted-header { display: flex; justify-content: space-between; padding: 28px 36px; border-bottom: 2px solid #44403c; }
+.ted-name { font-size: 24px; font-weight: 800; color: #d6d3d1; letter-spacing: 1px; }
+.ted-title { font-size: 12px; color: #a8a29e; margin-top: 4px; }
+.ted-right { font-size: 10px; color: #78716c; text-align: right; }
+.ted-right div { margin-bottom: 4px; }
+.ted-body { padding: 24px 36px; }
+.ted-stitle { font-size: 12px; font-weight: 700; color: #d6d3d1; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #44403c; padding-bottom: 4px; margin-bottom: 8px; }
+.ted-text { font-size: 10.5px; color: #a8a29e; line-height: 1.65; }
+.ted-item { margin-bottom: 14px; }
+.ted-item-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
+.ted-item-left { font-weight: 700; font-size: 11px; color: #d6d3d1; }
+.ted-item-date { font-size: 9.5px; color: #78716c; font-style: italic; }
+.ted-item-sub { font-size: 10px; color: #a8a29e; font-style: italic; }
+.ted-item-desc { font-size: 10px; color: #a8a29e; margin-top: 4px; line-height: 1.6; }
+.ted-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.ted-skill-tags span { background: #292524; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; color: #d6d3d1; }
+
+/* ============ 30. CREATIVE-GRID ============ */
+.tpl-cgrid { padding: 0; }
+.tcg-header { background: #111; color: #fff; padding: 32px 40px; text-align: center; }
+.tcg-name { font-size: 24px; font-weight: 800; }
+.tcg-title { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+.tcg-contact { font-size: 10px; opacity: 0.75; margin-top: 6px; }
+.tcg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 40px; }
+.tcg-item { background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; }
+.tcg-wide { grid-column: span 2; }
+.tcg-stitle { font-size: 11px; font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+.tcg-skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tcg-skill-tags span { background: #fff; border: 1px solid #ddd; padding: 3px 10px; border-radius: 4px; font-size: 9.5px; font-weight: 600; }
 
 /* ============ PRINT STYLES ============ */
 @media print {

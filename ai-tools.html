@@ -104,6 +104,18 @@
         <p>يحاكي الذكاء الاصطناعي مقابلة توظيف. تدرّب على الأسئلة الصعبة مع تقييم.</p>
         <span class="tool-badge">مجاني وغير محدود</span>
     </div>
+    <div class="tool-card" onclick="openTool('cv-analyzer')">
+        <div class="tool-icon" style="background:rgba(236,72,153,0.1);color:var(--pink)"><i class="fas fa-file-alt"></i></div>
+        <h3>محلل السيرة الذاتية</h3>
+        <p>الصق سيرتك الذاتية واحصل على تقييم شامل مع توصيات محددة للتحسين.</p>
+        <span class="tool-badge">مجاني وغير محدود</span>
+    </div>
+    <div class="tool-card" onclick="openTool('job-matcher')">
+        <div class="tool-icon" style="background:rgba(245,158,11,0.1);color:var(--yellow)"><i class="fas fa-bullseye"></i></div>
+        <h3>مطابقة الوظائف</h3>
+        <p>قارن سيرتك الذاتية مع وصف الوظيفة واحصل على نسبة التطابق والتحسينات.</p>
+        <span class="tool-badge">مجاني وغير محدود</span>
+    </div>
 </div>
 
 <div class="modal-overlay" id="modal-coverletter">
@@ -174,6 +186,30 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="modal-cv-analyzer">
+    <div class="modal">
+        <div class="modal-header"><h2><i class="fas fa-file-alt" style="color:var(--pink);margin-right:8px"></i>محلل السيرة الذاتية</h2><button class="modal-close" onclick="closeModal('cv-analyzer')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>الصق السيرة الذاتية *</label><textarea id="analyzer_cv" rows="8" placeholder="الصق نص السيرة الذاتية هنا..."></textarea></div>
+            <div class="form-group"><label>الوظيفة المستهدفة (اختياري)</label><input id="analyzer_job" placeholder="مهندس برمجيات، مدير مشاريع..."></div>
+            <button class="btn btn-ai" onclick="analyzeCV()" id="analyzer_btn"><i class="fas fa-wand-magic-sparkles"></i> تحليل السيرة الذاتية</button>
+            <div id="analyzer_result"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-job-matcher">
+    <div class="modal">
+        <div class="modal-header"><h2><i class="fas fa-bullseye" style="color:var(--yellow);margin-right:8px"></i>مطابقة الوظائف</h2><button class="modal-close" onclick="closeModal('job-matcher')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>السيرة الذاتية *</label><textarea id="matcher_cv" rows="6" placeholder="الصق نص السيرة الذاتية..."></textarea></div>
+            <div class="form-group"><label>وصف الوظيفة *</label><textarea id="matcher_job" rows="6" placeholder="الصق وصف الوظيفة..."></textarea></div>
+            <button class="btn btn-ai" onclick="matchJob()" id="matcher_btn"><i class="fas fa-wand-magic-sparkles"></i> تحليل التطابق</button>
+            <div id="matcher_result"></div>
+        </div>
+    </div>
+</div>
+
 <script src="js/ai-service.js"></script>
 <script>
 function openTool(name){document.getElementById('modal-'+name).classList.add('show')}
@@ -238,6 +274,85 @@ async function generateInterview(){
     const result=await askAI(prompt);
     showResult('iv_result','Interview Questions & Tips',result);
     document.getElementById('iv_btn').disabled=false;
+}
+
+async function analyzeCV(){
+    const cv=document.getElementById('analyzer_cv').value.trim();
+    if(!cv||cv.length<50){alert('Please paste your CV text (at least 50 characters)');return}
+    document.getElementById('analyzer_btn').disabled=true;
+    showLoading('analyzer_result');
+    const job=document.getElementById('analyzer_job').value.trim();
+    
+    const prompt=`حلل هذه السيرة الذاتية بشكل شامل وقدم تقرير مفصل:
+
+== تقييم عام ==
+- تقييم من 10 مع تبرير
+- هل هي مناسبة لـ ATS؟ (نعم/لا مع السبب)
+
+== نقاط القوة ==
+- اذكر 3-5 نقاط قوية
+
+== نقاط الضعف ==
+- اذكر 3-5 نقاط ضعف مع تفسير
+
+== تحسينات مقترحة ==
+- اكتب 7 تحسينات محددة وعملية
+- كل تحسين يجب أن يكون عملياً وقابل للتنفيذ
+
+== نصائح إضافية ==
+- نصيحة واحدة ذهبية لتحسين السيرة الذاتية
+
+${job ? '== الوظيفة المستهدفة ==\n'+job+'\n\nقيّم مدى ملاءمة السيرة الذاتية لهذه الوظيفة' : ''}
+
+السيرة الذاتية:
+${cv}
+
+اكتب التقرير بالعربية وبصورة منظمة.`;
+    
+    const result=await askAI(prompt);
+    showResult('analyzer_result','تقرير تحليل السيرة الذاتية',result);
+    document.getElementById('analyzer_btn').disabled=false;
+}
+
+async function matchJob(){
+    const cv=document.getElementById('matcher_cv').value.trim();
+    const job=document.getElementById('matcher_job').value.trim();
+    if(!cv||cv.length<50){alert('Please paste your CV text');return}
+    if(!job||job.length<20){alert('Please paste the job description');return}
+    document.getElementById('matcher_btn').disabled=true;
+    showLoading('matcher_result');
+    
+    const prompt=`قارن بين السيرة الذاتية ووصف الوظيفة وقدم تحليل مفصل:
+
+== نسبة التطابق ==
+- حدد نسبة التطابق من 0-100%
+- قارنها بمتوسط التطابق في السوق
+
+== المهارات المطابقة ==
+- اذكر المهارات الموجودة في السيرة الذاتية ومناسبة للوظيفة
+
+== المهارات الناقصة ==
+- اذكر المهارات المطلوبة في الوظيفة لكنها غير موجودة في السيرة الذاتية
+
+== التوصيات ==
+- اكتب 5 توصيات لتحسين التطابق
+- كل توصية يجب أن تكون عملية ومحددة
+
+== تقييم عام ==
+- هل السيرة الذاتية مناسبة لهذه الوظيفة؟
+- ما هي الخطوة التالية المقترحة؟
+
+السيرة الذاتية:
+${cv}
+
+وصف الوظيفة:
+${job}
+
+اكتب التحليل بالعربية.`;
+    
+    const result=await askAI(prompt);
+    showResult('matcher_result','تحليل التطابق مع الوظيفة',result);
+    document.getElementById('matcher_btn').disabled=false;
 }
 </script>
 </body>

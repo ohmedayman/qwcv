@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/email-signature.html">
+    <meta property="og:title" content="منشئ توقيع البريد الإلكتروني - QCV">
+    <meta property="og:description" content="أنشئ توقيع بريد إلكتروني احترافي مجاناً. 6+ قوالب جاهزة مع دعم RTL وعرض مسبق فوري.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <title>منشئ توقيع البريد الإلكتروني - QCV | مجاني</title>
+    <meta name="description" content="أنشئ توقيع بريد إلكتروني احترافي مجاناً. قوالب متنوعة مع دعم اللغة العربية وعرض مسبق فوري.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/email-signature.html">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+        :root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--primary:#0003c9;--green:#059669;--red:#ef4444;--yellow:#f59e0b;--blue:#0ea5e9;--purple:#8b5cf6;--pink:#ec4899;--text:#0f172a;--muted:#64748b;--input:#f1f5f9}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo','Inter',sans-serif;min-height:100vh}
+        .nav{background:var(--card);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+        .logo{font-size:1.5rem;font-weight:900;text-decoration:none;color:var(--text)}
+        .logo span{color:var(--primary)}
+        .nav-links{display:flex;gap:20px;align-items:center}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem}
+        .nav-links a:hover{color:var(--primary)}
+        .btn{padding:10px 20px;border:none;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+        .btn-primary{background:var(--primary);color:#fff}
+        .btn-primary:hover{background:#0002a0;transform:translateY(-1px)}
+        .btn-green{background:var(--green);color:#fff}
+        .btn-green:hover{opacity:0.9;transform:translateY(-1px)}
+
+        .hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(39,255,237,0.04))}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,3,201,0.06);border:1px solid rgba(0,3,201,0.12);border-radius:50px;padding:6px 18px;margin-bottom:16px;font-size:0.78rem;font-weight:600;color:var(--primary)}
+        .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:10px}
+        .hero h1 span{color:var(--primary)}
+        .hero p{color:var(--muted);font-size:1.05rem;max-width:600px;margin:0 auto}
+
+        .container{max-width:1200px;margin:0 auto;padding:20px}
+        .layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+        .panel{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:28px;position:sticky;top:80px}
+        .panel h2{font-size:1.15rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+        .panel h2 i{color:var(--primary)}
+
+        .form-group{margin-bottom:14px}
+        .form-group label{display:block;font-size:0.82rem;font-weight:700;margin-bottom:5px;color:var(--text)}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.88rem;font-family:inherit;background:var(--input);transition:border-color 0.2s}
+        .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,3,201,0.08)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+        .template-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+        .tpl-option{border:2px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s;font-size:0.78rem;font-weight:600}
+        .tpl-option:hover{border-color:var(--primary);background:rgba(0,3,201,0.03)}
+        .tpl-option.active{border-color:var(--primary);background:rgba(0,3,201,0.06);color:var(--primary)}
+        .tpl-option i{display:block;font-size:1.3rem;margin-bottom:4px;color:var(--primary)}
+
+        .preview-area{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:28px}
+        .preview-area h2{font-size:1.15rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+        .preview-area h2 i{color:var(--green)}
+
+        .sig-preview{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;min-height:200px;margin-bottom:18px}
+        .sig-preview.dark-bg{background:#1a1a2e}
+        .sig-preview.dark-bg *{color:#e2e8f0!important}
+
+        .action-bar{display:flex;gap:10px;flex-wrap:wrap}
+        .action-bar .btn{flex:1;min-width:120px;justify-content:center}
+
+        .copy-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:12px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;z-index:9999;display:none;box-shadow:0 8px 24px rgba(5,150,105,0.3)}
+        .copy-toast.show{display:block;animation:fadeDown 0.3s ease}
+        @keyframes fadeDown{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+        .footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem;margin-top:40px}
+        .footer a{color:var(--primary);text-decoration:none}
+
+        @media(max-width:900px){
+            .layout{grid-template-columns:1fr}
+            .panel{position:static}
+            .template-selector{grid-template-columns:repeat(2,1fr)}
+            .hero h1{font-size:1.8rem}
+        }
+        @media(max-width:600px){
+            .form-row{grid-template-columns:1fr}
+            .action-bar{flex-direction:column}
+            .nav-links a:not(.btn){display:none}
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html" class="logo">Q<span>CV</span></a>
+    <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="editor.html">المحرر</a>
+        <a href="ai-tools.html">أدوات AI</a>
+        <a href="login.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.82rem">ابدأ الآن</a>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="hero-badge"><i class="fas fa-pen-nib"></i> مجاني بالكامل</div>
+    <h1>منشئ <span>توقيع البريد</span> الإلكتروني</h1>
+    <p>أنشئ توقيع بريد إلكتروني احترافي في ثوانٍ. اختر قالباً، أضف معلوماتك، وانسخه مباشرة لبريدك.</p>
+</div>
+
+<div class="container">
+    <div class="layout">
+        <div class="panel">
+            <h2><i class="fas fa-edit"></i> معلومات التوقيع</h2>
+
+            <div class="form-group">
+                <label>اختر القالب</label>
+                <div class="template-selector" id="tplSelector">
+                    <div class="tpl-option active" data-tpl="classic" onclick="selectTemplate('classic',this)"><i class="fas fa-building"></i> كلاسيكي</div>
+                    <div class="tpl-option" data-tpl="modern" onclick="selectTemplate('modern',this)"><i class="fas fa-bolt"></i> عصري</div>
+                    <div class="tpl-option" data-tpl="minimal" onclick="selectTemplate('minimal',this)"><i class="fas fa-minus"></i> بسيط</div>
+                    <div class="tpl-option" data-tpl="bold" onclick="selectTemplate('bold',this)"><i class="fas fa-bold"></i> جريء</div>
+                    <div class="tpl-option" data-tpl="colorful" onclick="selectTemplate('colorful',this)"><i class="fas fa-palette"></i> ملون</div>
+                    <div class="tpl-option" data-tpl="dark" onclick="selectTemplate('dark',this)"><i class="fas fa-moon"></i> داكن</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="sigName" placeholder="محمد أحمد" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label>المسمى الوظيفي</label>
+                    <input type="text" id="sigTitle" placeholder="مطور ويب" oninput="updatePreview()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="sigEmail" placeholder="ahmed@example.com" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="text" id="sigPhone" placeholder="+20 123 456 789" oninput="updatePreview()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الموقع الإلكتروني</label>
+                    <input type="text" id="sigWebsite" placeholder="example.com" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label>الشركة</label>
+                    <input type="text" id="sigCompany" placeholder="شركتي" oninput="updatePreview()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>لينكدإن</label>
+                    <input type="text" id="sigLinkedin" placeholder="linkedin.com/in/username" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label>تويتر / X</label>
+                    <input type="text" id="sigTwitter" placeholder="@username" oninput="updatePreview()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>رابط الشعار (اختياري)</label>
+                <input type="url" id="sigLogo" placeholder="https://example.com/logo.png" oninput="updatePreview()">
+            </div>
+        </div>
+
+        <div>
+            <div class="preview-area">
+                <h2><i class="fas fa-eye"></i> عرض مسبق</h2>
+                <div class="sig-preview" id="sigPreview"></div>
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="copyHTML()"><i class="fas fa-code"></i> نسخ HTML</button>
+                    <button class="btn btn-green" onclick="copyText()"><i class="fas fa-copy"></i> نسخ النص</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="copy-toast" id="copyToast"><i class="fas fa-check"></i> تم النسخ!</div>
+
+<footer class="footer">
+    © 2026 QCV - جميع الحقوق محفوظة | منتج من <a href="https://vexonet.online" target="_blank" rel="noopener">Vexonet</a>
+</footer>
+
+<script>
+let currentTpl = 'classic';
+
+function selectTemplate(tpl, el) {
+    currentTpl = tpl;
+    document.querySelectorAll('.tpl-option').forEach(o => o.classList.remove('active'));
+    el.classList.add('active');
+    updatePreview();
+}
+
+function getFormData() {
+    return {
+        name: document.getElementById('sigName').value || 'الاسم',
+        title: document.getElementById('sigTitle').value || 'المسمى الوظيفي',
+        email: document.getElementById('sigEmail').value || '',
+        phone: document.getElementById('sigPhone').value || '',
+        website: document.getElementById('sigWebsite').value || '',
+        company: document.getElementById('sigCompany').value || '',
+        linkedin: document.getElementById('sigLinkedin').value || '',
+        twitter: document.getElementById('sigTwitter').value || '',
+        logo: document.getElementById('sigLogo').value || ''
+    };
+}
+
+function generateHTML(d) {
+    const logoImg = d.logo ? `<img src="${d.logo}" alt="${d.company}" style="height:40px;margin-bottom:8px">` : '';
+    const socialLinks = [];
+    if (d.linkedin) socialLinks.push(`<a href="https://${d.linkedin}" style="color:#0077b5;text-decoration:none;font-size:12px;margin-left:8px">LinkedIn</a>`);
+    if (d.twitter) socialLinks.push(`<a href="https://twitter.com/${d.twitter.replace('@','')}" style="color:#1da1f2;text-decoration:none;font-size:12px;margin-left:8px">Twitter</a>`);
+    if (d.website) socialLinks.push(`<a href="https://${d.website}" style="color:#0003c9;text-decoration:none;font-size:12px;margin-left:8px">${d.website}</a>`);
+    const socialHtml = socialLinks.length ? `<div style="margin-top:6px">${socialLinks.join('')}</div>` : '';
+
+    const contactItems = [];
+    if (d.email) contactItems.push(`<span style="color:#64748b;font-size:12px">${d.email}</span>`);
+    if (d.phone) contactItems.push(`<span style="color:#64748b;font-size:12px">${d.phone}</span>`);
+    const contactHtml = contactItems.length ? `<div style="margin-top:4px">${contactItems.join(' &nbsp;|&nbsp; ')}</div>` : '';
+
+    const templates = {
+        classic: `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;max-width:500px">
+            <tr>
+                <td style="padding:0 16px 0 0;vertical-align:top;border-right:3px solid #0003c9">
+                    ${logoImg ? `<div style="margin-bottom:8px">${logoImg}</div>` : ''}
+                    <div style="font-size:16px;font-weight:bold;color:#0003c9">${d.name}</div>
+                    <div style="font-size:12px;color:#64748b;margin-top:2px">${d.title}</div>
+                    ${d.company ? `<div style="font-size:11px;color:#94a3b8;margin-top:2px">${d.company}</div>` : ''}
+                </td>
+                <td style="padding:0 0 0 16px;vertical-align:top">
+                    ${contactHtml}
+                    ${socialHtml}
+                </td>
+            </tr>
+        </table>`,
+
+        modern: `<table cellpadding="0" cellspacing="0" border="0" style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:500px;background:#f8fafc;border-radius:8px;padding:16px">
+            <tr>
+                <td style="padding:0">
+                    ${logoImg ? `<div style="margin-bottom:10px">${logoImg}</div>` : ''}
+                    <div style="font-size:18px;font-weight:800;color:#0f172a;letter-spacing:-0.3px">${d.name}</div>
+                    <div style="font-size:12px;color:#0ea5e9;font-weight:600;margin-top:3px">${d.title}</div>
+                    ${d.company ? `<div style="font-size:11px;color:#94a3b8;margin-top:2px">${d.company}</div>` : ''}
+                    <div style="margin-top:10px;padding-top:10px;border-top:2px solid #0ea5e9">
+                        ${contactHtml}
+                        ${socialHtml}
+                    </div>
+                </td>
+            </tr>
+        </table>`,
+
+        minimal: `<div style="font-family:Georgia,serif;max-width:400px;padding:12px 0">
+            <div style="font-size:20px;font-weight:700;color:#0f172a">${d.name}</div>
+            <div style="font-size:12px;color:#64748b;margin-top:2px;font-style:italic">${d.title}</div>
+            <div style="margin-top:10px;width:40px;height:1px;background:#e2e8f0"></div>
+            ${d.company ? `<div style="font-size:11px;color:#94a3b8;margin-top:8px">${d.company}</div>` : ''}
+            ${contactHtml}
+            ${socialHtml}
+        </div>`,
+
+        bold: `<table cellpadding="0" cellspacing="0" border="0" style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:500px">
+            <tr>
+                <td style="background:#0003c9;padding:16px 20px;border-radius:8px 8px 0 0">
+                    ${logoImg ? `<div style="margin-bottom:8px">${logoImg.replace(/src="/g, 'style="filter:brightness(0) invert(1);height:30px" src="')}</div>` : ''}
+                    <div style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.5px">${d.name}</div>
+                    <div style="font-size:12px;color:#27ffed;font-weight:600;margin-top:3px">${d.title}</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:12px 20px;background:#f1f5f9;border-radius:0 0 8px 8px">
+                    ${d.company ? `<div style="font-size:11px;color:#475569;font-weight:600;margin-bottom:6px">${d.company}</div>` : ''}
+                    ${contactHtml}
+                    ${socialHtml}
+                </td>
+            </tr>
+        </table>`,
+
+        colorful: `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;max-width:500px">
+            <tr>
+                <td style="padding:0">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tr>
+                            <td style="background:linear-gradient(135deg,#0003c9,#8b5cf6);padding:16px 20px;border-radius:8px 8px 0 0">
+                                ${logoImg ? `<div style="margin-bottom:8px">${logoImg.replace(/src="/g, 'style="filter:brightness(0) invert(1);height:30px" src="')}</div>` : ''}
+                                <div style="font-size:18px;font-weight:800;color:#fff">${d.name}</div>
+                                <div style="font-size:12px;color:rgba(255,255,255,0.85);margin-top:2px">${d.title}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;background:#faf5ff;border-left:3px solid #8b5cf6">
+                                ${d.company ? `<div style="font-size:11px;color:#7c3aed;font-weight:600;margin-bottom:4px">${d.company}</div>` : ''}
+                                ${contactHtml}
+                                ${socialHtml}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>`,
+
+        dark: `<table cellpadding="0" cellspacing="0" border="0" style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:500px;background:#1a1a2e;border-radius:8px;padding:16px 20px">
+            <tr>
+                <td style="padding:0">
+                    ${logoImg ? `<div style="margin-bottom:10px">${logoImg.replace(/src="/g, 'style="height:30px" src="')}</div>` : ''}
+                    <div style="font-size:18px;font-weight:800;color:#e2e8f0">${d.name}</div>
+                    <div style="font-size:12px;color:#27ffed;margin-top:2px;font-weight:500">${d.title}</div>
+                    ${d.company ? `<div style="font-size:11px;color:#94a3b8;margin-top:2px">${d.company}</div>` : ''}
+                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid #334155">
+                        ${contactHtml}
+                        ${socialHtml}
+                    </div>
+                </td>
+            </tr>
+        </table>`
+    };
+
+    return templates[currentTpl] || templates.classic;
+}
+
+function updatePreview() {
+    const d = getFormData();
+    const html = generateHTML(d);
+    const preview = document.getElementById('sigPreview');
+    preview.innerHTML = html;
+    if (currentTpl === 'dark') {
+        preview.classList.add('dark-bg');
+    } else {
+        preview.classList.remove('dark-bg');
+    }
+}
+
+function copyHTML() {
+    const d = getFormData();
+    const html = generateHTML(d);
+    navigator.clipboard.writeText(html).then(() => showToast());
+}
+
+function copyText() {
+    const d = getFormData();
+    let text = d.name + '\n' + d.title;
+    if (d.company) text += '\n' + d.company;
+    if (d.email) text += '\n' + d.email;
+    if (d.phone) text += '\n' + d.phone;
+    if (d.website) text += '\n' + d.website;
+    if (d.linkedin) text += '\n' + d.linkedin;
+    if (d.twitter) text += '\n' + d.twitter;
+    navigator.clipboard.writeText(text).then(() => showToast());
+}
+
+function showToast() {
+    const toast = document.getElementById('copyToast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+updatePreview();
+</script>
+</body>
+</html>

@@ -60,13 +60,13 @@
 
         /* ===== TOP BAR ===== */
         .topbar {
-            height: 56px;
+            height: 48px;
             background: var(--sidebar);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            padding: 0 12px;
-            gap: 6px;
+            padding: 0 10px;
+            gap: 5px;
             z-index: 100;
             position: relative;
             direction: ltr;
@@ -74,12 +74,12 @@
         }
 
         .topbar-logo {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: var(--text);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             flex-shrink: 0
         }
 
@@ -668,9 +668,9 @@
             right: 20px;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 0;
-            min-width: 260px;
+            min-width: 220px;
             max-height: 80vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
@@ -696,24 +696,24 @@
         }
 
         .dd-header {
-            padding: 20px 18px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(37, 99, 235, 0.06));
-            border-radius: 16px 16px 0 0
+            border-radius: 14px 14px 0 0
         }
 
         .dd-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             background: linear-gradient(135deg, var(--accent), var(--sky));
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.82rem;
             color: #fff;
             flex-shrink: 0
         }
@@ -725,8 +725,8 @@
 
         .dd-info .d-name {
             font-weight: 800;
-            font-size: 0.88rem;
-            margin-bottom: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 1px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis
@@ -734,49 +734,49 @@
 
         .dd-info .d-email {
             color: var(--muted);
-            font-size: 0.72rem;
+            font-size: 0.65rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis
         }
 
         .dd-plan {
-            margin: 10px 14px;
-            padding: 10px 14px;
+            margin: 6px 10px;
+            padding: 7px 10px;
             background: rgba(56, 189, 248, 0.06);
             border: 1px solid rgba(56, 189, 248, 0.15);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center
         }
 
         .dd-plan .pl {
-            font-size: 0.72rem;
+            font-size: 0.65rem;
             color: var(--muted);
             font-weight: 500
         }
 
         .dd-plan .pn {
             font-weight: 800;
-            font-size: 0.82rem;
+            font-size: 0.72rem;
             color: var(--accent);
             background: rgba(56, 189, 248, 0.12);
-            padding: 3px 10px;
-            border-radius: 6px
+            padding: 2px 8px;
+            border-radius: 5px
         }
 
         .dd-section {
-            padding: 6px 8px
+            padding: 4px 6px
         }
 
         .dd-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            font-size: 0.82rem;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--light);
             cursor: pointer;
@@ -789,14 +789,14 @@
         }
 
         .dd-item .dd-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             background: rgba(0, 0, 0, 0.04);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             flex-shrink: 0
         }
 
@@ -1120,14 +1120,14 @@
 
         .dd-upgrade-btn {
             width: 100%;
-            margin-top: 10px;
-            padding: 10px;
+            margin-top: 6px;
+            padding: 7px;
             background: linear-gradient(135deg, var(--accent), var(--sky));
             border: none;
             color: #000;
-            border-radius: 8px;
+            border-radius: 7px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             transition: all 0.2s
@@ -3757,6 +3757,91 @@
                 font-size: 0.7rem;
                 min-width: 36px
             }
+
+            .ai-result-panel {
+                right: 8px;
+                bottom: 60px;
+                width: calc(100vw - 16px);
+                max-width: none;
+                max-height: 60vh
+            }
+
+            .ai-menu {
+                right: 8px;
+                bottom: 60px;
+                width: calc(100vw - 16px);
+                max-width: 320px
+            }
+
+            .template-panel .tpl-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+                padding: 8px
+            }
+
+            .tpl-panel-header {
+                padding: 12px 16px
+            }
+
+            .tpl-panel-header h2 {
+                font-size: 0.95rem
+            }
+
+            .section-modal {
+                width: 95%;
+                max-height: 80vh;
+                margin: 10px
+            }
+
+            .section-modal-body {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px
+            }
+
+            .profile-dropdown {
+                position: fixed;
+                top: 44px;
+                right: 8px;
+                left: auto;
+                width: auto;
+                max-width: 260px
+            }
+
+            .upgrade-overlay > div {
+                width: 92%;
+                max-width: none;
+                margin: 12px;
+                padding: 20px;
+                max-height: 85vh;
+                overflow-y: auto
+            }
+
+            .notif-panel {
+                width: calc(100vw - 16px);
+                right: 8px;
+                max-height: 50vh
+            }
+
+            .ai-assist-btn {
+                width: 48px;
+                height: 48px;
+                bottom: 60px;
+                right: 12px;
+                font-size: 0.85rem
+            }
+
+            .zoom-controls {
+                bottom: 60px;
+                right: 8px;
+                padding: 4px 8px;
+                gap: 4px
+            }
+
+            .zoom-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem
+            }
         }
 
         @media(max-width:400px) {
@@ -3821,16 +3906,21 @@
             }
 
             .ai-menu {
-                right: 12px;
+                right: 8px;
                 bottom: 112px;
-                width: 180px
+                width: calc(100vw - 16px);
+                max-width: 300px
             }
 
             .ai-result-panel {
                 right: 8px;
                 bottom: 60px;
                 width: calc(100vw - 16px);
-                max-width: 360px
+                max-width: none
+            }
+
+            .section-modal-body {
+                grid-template-columns: 1fr
             }
         }
 
@@ -4400,10 +4490,348 @@
             background: #0003c9;
             color: #fff
         }
+
+        /* ===== PHONE-LIKE MOBILE LAYOUT ===== */
+        @media(max-width:768px) {
+            html, body { height: 100% !important; overflow: hidden !important; }
+
+            .topbar { display: none !important; }
+
+            .editor-layout {
+                flex-direction: column !important;
+                height: 100vh !important;
+                height: 100dvh !important;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .sidebar-nav {
+                display: none !important;
+            }
+
+            .editor-forms {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 56px;
+                width: 100% !important;
+                min-width: auto !important;
+                max-width: none !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                padding: 12px !important;
+                padding-bottom: 20px !important;
+                background: var(--bg, #f9fafb);
+                z-index: 2;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .editor-forms.panel-hidden {
+                transform: translateX(-100%);
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .preview-zone {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 56px;
+                width: 100% !important;
+                background: #1a1a2e !important;
+                z-index: 1;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                transform: translateX(100%);
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .preview-zone.panel-active {
+                transform: translateX(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .preview-container {
+                padding: 8px !important;
+                padding-top: 12px !important;
+                align-items: flex-start;
+            }
+
+            .cv-page {
+                transform: scale(0.55) !important;
+                transform-origin: top center !important;
+                border-radius: 4px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            }
+
+            .zoom-controls { display: none !important; }
+
+            /* Bottom Navigation Bar */
+            .phone-bottom-nav {
+                display: flex !important;
+                position: fixed;
+                bottom: 0; left: 0; right: 0;
+                height: 56px;
+                background: var(--sidebar, #fff);
+                border-top: 1px solid var(--border, #e5e7eb);
+                z-index: 1000;
+                align-items: center;
+                justify-content: space-around;
+                padding: 0 4px;
+                padding-bottom: env(safe-area-inset-bottom, 0);
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+            }
+
+            .phone-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+                padding: 6px 10px;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+                color: var(--muted, #6b7280);
+                font-size: 0.6rem;
+                font-weight: 600;
+                min-width: 56px;
+                position: relative;
+                border: none;
+                background: none;
+                font-family: inherit;
+            }
+
+            .phone-nav-item i {
+                font-size: 1.1rem;
+                transition: all 0.2s;
+            }
+
+            .phone-nav-item.active {
+                color: var(--accent, #0003c9);
+            }
+
+            .phone-nav-item.active i {
+                transform: scale(1.15);
+            }
+
+            .phone-nav-item.active::before {
+                content: '';
+                position: absolute;
+                top: 2px;
+                width: 16px;
+                height: 3px;
+                background: var(--accent, #0003c9);
+                border-radius: 2px;
+            }
+
+            .phone-nav-badge {
+                position: absolute;
+                top: 4px;
+                right: 12px;
+                width: 8px;
+                height: 8px;
+                background: #ef4444;
+                border-radius: 50%;
+                border: 1.5px solid var(--sidebar, #fff);
+            }
+
+            /* Phone Notch */
+            .phone-notch {
+                display: block !important;
+                position: fixed;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 150px;
+                height: 24px;
+                background: #000;
+                border-radius: 0 0 18px 18px;
+                z-index: 1001;
+            }
+
+            .phone-status-bar {
+                display: flex !important;
+                position: fixed;
+                top: 0;
+                left: 0; right: 0;
+                height: 24px;
+                background: var(--sidebar, #fff);
+                z-index: 1000;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+                font-size: 0.65rem;
+                font-weight: 700;
+                color: var(--text, #1a1a2e);
+                border-bottom: 1px solid var(--border, #e5e7eb);
+            }
+
+            .phone-status-bar .status-time { font-size: 0.7rem; font-weight: 800; }
+            .phone-status-bar .status-icons { display: flex; gap: 5px; align-items: center; font-size: 0.6rem; }
+
+            /* Adjust editor layout for status bar + bottom nav */
+            .editor-layout {
+                padding-top: 24px !important;
+            }
+
+            /* Form cards phone style */
+            .form-card {
+                border-radius: 12px !important;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+                margin-bottom: 10px !important;
+            }
+
+            .form-card-header h3 {
+                font-size: 0.9rem !important;
+            }
+
+            .field label {
+                font-size: 0.75rem !important;
+                font-weight: 700 !important;
+            }
+
+            .field input, .field textarea, .field select {
+                font-size: 16px !important;
+                padding: 12px !important;
+                border-radius: 10px !important;
+                min-height: 48px !important;
+            }
+
+            .btn-add {
+                width: 100% !important;
+                padding: 12px !important;
+                border-radius: 10px !important;
+                font-size: 0.82rem !important;
+            }
+
+            .btn-generate-summary {
+                width: 100% !important;
+                padding: 10px !important;
+                border-radius: 10px !important;
+            }
+
+            /* Template panel phone style */
+            .templates-overlay {
+                border-radius: 16px 16px 0 0 !important;
+                max-height: 85vh !important;
+                bottom: 56px !important;
+                top: auto !important;
+            }
+
+            /* AI Menu phone style */
+            .ai-menu-popup {
+                bottom: 64px !important;
+                left: 8px !important;
+                right: 8px !important;
+                width: auto !important;
+                max-width: none !important;
+                border-radius: 14px !important;
+            }
+
+            .ai-result-panel {
+                bottom: 64px !important;
+                left: 8px !important;
+                right: 8px !important;
+                width: auto !important;
+                max-width: none !important;
+                border-radius: 14px !important;
+                max-height: 50vh !important;
+            }
+
+            /* Section Modal phone style */
+            .section-modal-content {
+                border-radius: 16px 16px 0 0 !important;
+                max-height: 80vh !important;
+                bottom: 56px !important;
+            }
+
+            /* Upgrade modal phone style */
+            .upgrade-overlay .upgrade-box {
+                border-radius: 16px !important;
+                width: 95% !important;
+                max-height: 80vh !important;
+                bottom: 56px !important;
+                top: auto !important;
+            }
+
+            /* Notification panel phone style */
+            .notif-panel {
+                border-radius: 14px 14px 0 0 !important;
+                max-height: 60vh !important;
+                bottom: 56px !important;
+                top: auto !important;
+                width: 100% !important;
+            }
+
+            /* Profile dropdown phone style */
+            .profile-dropdown {
+                border-radius: 14px 14px 0 0 !important;
+                max-height: 70vh !important;
+                bottom: 56px !important;
+                top: auto !important;
+                width: 100% !important;
+                right: 0 !important;
+            }
+
+            /* Hide desktop-only elements */
+            .sidebar-feature, .pro-upsell, .sidebar-bottom,
+            .portfolio-link-wrap, #portfolioLinkWrap,
+            .add-section-btn, .sidebar-bottom { display: none !important; }
+
+            /* Tab menu styles */
+            .nav-tab-menu {
+                position: fixed !important;
+                bottom: 56px !important;
+                left: 8px !important;
+                right: 8px !important;
+                width: auto !important;
+                border-radius: 14px !important;
+            }
+
+            /* AI assist button */
+            .ai-assist-btn {
+                width: 52px !important;
+                height: 52px !important;
+                bottom: 70px !important;
+                left: 12px !important;
+                border-radius: 16px !important;
+                font-size: 1.2rem !important;
+            }
+
+            /* Template panel */
+            .template-panel {
+                border-radius: 16px 16px 0 0 !important;
+                max-height: 80vh !important;
+                bottom: 56px !important;
+            }
+
+            /* Dark mode adjustments */
+            body.dark-mode .phone-bottom-nav {
+                background: #0f172a;
+                border-color: #1e293b;
+            }
+            body.dark-mode .phone-status-bar {
+                background: #0f172a;
+                border-color: #1e293b;
+                color: #f1f5f9;
+            }
+            body.dark-mode .phone-notch { background: #000; }
+        }
+
+        /* Elements hidden by default, shown only on mobile */
+        .phone-bottom-nav,
+        .phone-notch,
+        .phone-status-bar { display: none; }
     </style>
 </head>
 
 <body>
+
+    <!-- Phone UI Elements -->
+    <div class="phone-notch"></div>
+    <div class="phone-status-bar">
+        <span class="status-time" id="phoneTime">9:41</span>
+        <span class="status-icons"><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+    </div>
 
     <!-- ===== TOP BAR ===== -->
     <div class="topbar">
@@ -4414,25 +4842,48 @@
         </div>
         <div class="topbar-divider"></div>
         <div class="topbar-center">
+            <!-- Template Quick Picker -->
             <div class="ctrl-group">
-                <select id="templateSelect" onchange="changeTemplate(this.value)" title="القالب">
-                    <option value="classic">كلاسيك</option>
-                    <option value="modern">عصري</option>
-                    <option value="professional">محترف</option>
-                    <option value="creative">إبداعي</option>
-                    <option value="executive">تنفيذي</option>
-                    <option value="technical">تقني</option>
-                    <option value="minimalist">بسيط</option>
-                    <option value="sidebar">شريط جانبي</option>
-                    <option value="two-column">عمودين</option>
-                    <option value="bold">جريء</option>
-                    <option value="elegant">أنيق</option>
-                    <option value="ats-safe">آمن لل ATS</option>
-                    <option value="academic">أكاديمي</option>
-                    <option value="startup">ناشئ</option>
-                    <option value="international">دولي</option>
+                <select id="templateSelect" onchange="changeTemplate(this.value)" title="القالب" class="tpl-quick-select">
+                    <optgroup label="ATS">
+                        <option value="classic">كلاسيك</option>
+                        <option value="modern">عصري</option>
+                        <option value="professional">محترف</option>
+                        <option value="minimalist">بسيط</option>
+                        <option value="ats-safe">آمن لل ATS</option>
+                        <option value="academic">أكاديمي</option>
+                        <option value="international">دولي</option>
+                    </optgroup>
+                    <optgroup label="إبداعي">
+                        <option value="creative">إبداعي</option>
+                        <option value="executive">تنفيذي</option>
+                        <option value="creative-grid">شبكة إبداعية</option>
+                        <option value="gradient">تدرج لوني</option>
+                        <option value="magazine">مجلة</option>
+                        <option value="banner">بانر</option>
+                        <option value="bold">جريء</option>
+                        <option value="elegant">أنيق</option>
+                    </optgroup>
+                    <optgroup label="خاص">
+                        <option value="photo">صور شخصية</option>
+                        <option value="timeline">خط زمني</option>
+                        <option value="infographic">إنفوغرافيك</option>
+                        <option value="card">بطاقات</option>
+                        <option value="split">مقسم</option>
+                        <option value="mono">أحرف كبيرة</option>
+                        <option value="sidebar">شريط جانبي</option>
+                        <option value="two-column">عمودين</option>
+                        <option value="dark">داكن</option>
+                        <option value="compact">مضغوط</option>
+                        <option value="startup">ناشئ</option>
+                        <option value="technical">تقني</option>
+                        <option value="timeline-sidebar">خط زمني جانبي</option>
+                        <option value="minimal-photo">بسيط بالصورة</option>
+                        <option value="executive-dark">تنفيذي داكن</option>
+                    </optgroup>
                 </select>
             </div>
+            <!-- Font Picker -->
             <div class="ctrl-group">
                 <select id="fontFamily" onchange="setFontFamily(this.value)" title="الخط">
                     <option value="Inter">Inter</option>
@@ -4444,27 +4895,25 @@
                     <option value="Verdana">Verdana</option>
                 </select>
             </div>
+            <!-- Font Size -->
             <div class="ctrl-group slider-group">
                 <label>Aa</label>
                 <input type="range" id="fontSize" min="9" max="16" value="11" oninput="setFontSize(this.value)">
                 <span id="fontSizeVal" class="slider-val">11</span>
             </div>
-            <div class="ctrl-group slider-group">
-                <label><i class="fas fa-arrows-alt-h" style="font-size:0.6rem"></i></label>
-                <input type="range" id="pageMargin" min="10" max="50" value="30" oninput="setPageMargin(this.value)">
-                <span id="pageMarginVal" class="slider-val">30</span>
-            </div>
+            <!-- Line Spacing -->
             <div class="ctrl-group slider-group">
                 <label><i class="fas fa-text-height" style="font-size:0.6rem"></i></label>
                 <input type="range" id="lineSpacing" min="10" max="25" value="15" oninput="setLineSpacing(this.value)">
                 <span id="lineSpacingVal" class="slider-val">1.5</span>
             </div>
+            <!-- Color Picker -->
             <div class="ctrl-group">
-                <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)"
-                    title="لون النص">
+                <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)" title="لون النص">
             </div>
         </div>
         <div class="topbar-left">
+            <!-- Notifications -->
             <div class="notif-bell" onclick="toggleNotifPanel()" title="الإشعارات">
                 <i class="fas fa-bell"></i>
                 <span class="notif-badge" id="notifBadge" data-count="0"></span>
@@ -4478,29 +4927,27 @@
                     </div>
                 </div>
             </div>
+            <!-- Theme Toggle -->
             <button class="theme-toggle" onclick="QCVTheme.toggle()" title="تبديل المظهر">
                 <i class="fas fa-sun icon-sun" style="color:#f59e0b"></i>
                 <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
             </button>
+            <!-- Undo/Redo -->
             <div class="undo-redo">
-                <button id="undoBtn" onclick="undoAction()" disabled title="تراجع (Ctrl+Z)"><i
-                        class="fas fa-undo"></i></button>
-                <button id="redoBtn" onclick="redoAction()" disabled title="إعادة (Ctrl+Y)"><i
-                        class="fas fa-undo redo-arrow"></i></button>
+                <button id="undoBtn" onclick="undoAction()" disabled title="تراجع (Ctrl+Z)"><i class="fas fa-undo"></i></button>
+                <button id="redoBtn" onclick="redoAction()" disabled title="إعادة (Ctrl+Y)"><i class="fas fa-undo redo-arrow"></i></button>
             </div>
-            <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="رفع سيرة ذاتية"><i
-                    class="fas fa-cloud-upload-alt"></i> <span class="btn-label">رفع سيرة ذاتية</span></button>
-            <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> <span
-                    class="btn-label">حفظ</span></button>
+            <!-- New CV Button -->
+            <button class="btn-new-cv" onclick="createNewCV()" title="سيرة ذاتية جديدة" style="background:rgba(0,3,201,0.06);color:var(--accent);border:1px solid rgba(0,3,201,0.15);border-radius:8px;padding:5px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:4px"><i class="fas fa-plus"></i> <span class="btn-label">جديد</span></button>
+            <!-- Upload -->
+            <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="رفع سيرة ذاتية"><i class="fas fa-cloud-upload-alt"></i> <span class="btn-label">رفع</span></button>
+            <!-- Save -->
+            <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> <span class="btn-label">حفظ</span></button>
+            <!-- Version History -->
             <button class="btn-save" onclick="showVersionHistory()" title="سجل الإصدارات" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">السجل</span></button>
-
-            <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i
-                    class="fas fa-robot"></i> <span class="btn-label">الذكاء الاصطناعي</span></button>
-            <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i
-                        class="fas fa-file-pdf"></i> تصدير PDF</span>
-                <div class="spinner"></div>
-            </button>
-
+            <!-- Export PDF -->
+            <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> تصدير PDF</span><div class="spinner"></div></button>
+            <!-- Profile -->
             <div class="profile-area">
                 <div class="profile-trigger" onclick="toggleProfile()">
                     <div class="profile-avatar" id="userAvatar">U</div>
@@ -4528,20 +4975,17 @@
                     </div>
                     <div class="dd-divider"></div>
                     <div class="dd-section">
-                        <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i
-                                    class="fas fa-user"></i></span> الملف الشخصي</div>
-                        <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i
-                                    class="fas fa-file-alt"></i></span> سيري الذاتية</div>
-                        <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i
-                                    class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge"
-                                style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span>
-                        </div>
-                        <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i
-                                    class="fas fa-cog"></i></span> الإعدادات</div>
+                        <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> الملف الشخصي</div>
+                        <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> سيري الذاتية</div>
+                        <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
+                        <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> الإعدادات</div>
+                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-book-open"></i></span> الدليل الإرشادي</div>
                     </div>
                     <div class="dd-divider"></div>
-                    <!-- Affiliate Section -->
-                    <div class="dd-affiliate" id="ddAffiliateSection">
+                    <div class="dd-section">
+                        <div class="dd-item danger" onclick="deleteAccount()" style="color:#ef4444"><span class="dd-icon" style="color:#ef4444"><i class="fas fa-user-times"></i></span> إلغاء الحساب</div>
+                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
+                    </div>
                         <div id="affApplyView">
                             <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i>
                                 <span>حساب الشراكة</span>
@@ -4782,8 +5226,86 @@
                 </div>
                 <div class="field"><label>الاسم الكامل</label><input type="text" id="inputName" oninput="renderCV()"
                         placeholder="John Doe"></div>
-                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" oninput="renderCV()"
-                        placeholder="UI/UX Designer"></div>
+                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" oninput="renderCV()" list="jobTitlesList" placeholder="UI/UX Designer"></div>
+                <datalist id="jobTitlesList">
+                    <option value="Software Engineer">
+                    <option value="Frontend Developer">
+                    <option value="Backend Developer">
+                    <option value="Full Stack Developer">
+                    <option value="UI/UX Designer">
+                    <option value="Graphic Designer">
+                    <option value="Product Manager">
+                    <option value="Project Manager">
+                    <option value="Data Analyst">
+                    <option value="Data Scientist">
+                    <option value="DevOps Engineer">
+                    <option value="QA Engineer">
+                    <option value="Marketing Manager">
+                    <option value="Digital Marketing Specialist">
+                    <option value="Content Writer">
+                    <option value="Social Media Manager">
+                    <option value="Sales Manager">
+                    <option value="Business Analyst">
+                    <option value="HR Manager">
+                    <option value="Financial Analyst">
+                    <option value="Accountant">
+                    <option value="Customer Service Representative">
+                    <option value="Technical Support Engineer">
+                    <option value="System Administrator">
+                    <option value="Network Engineer">
+                    <option value="Mobile Developer">
+                    <option value="iOS Developer">
+                    <option value="Android Developer">
+                    <option value="Flutter Developer">
+                    <option value="React Developer">
+                    <option value="Vue.js Developer">
+                    <option value="Python Developer">
+                    <option value="Java Developer">
+                    <option value="PHP Developer">
+                    <option value="Laravel Developer">
+                    <option value="Node.js Developer">
+                    <option value="WordPress Developer">
+                    <option value="Cybersecurity Analyst">
+                    <option value="Cloud Architect">
+                    <option value="AI Engineer">
+                    <option value="Machine Learning Engineer">
+                    <option value="Video Editor">
+                    <option value="Motion Designer">
+                    <option value="3D Artist">
+                    <option value="Architect">
+                    <option value="Civil Engineer">
+                    <option value="Mechanical Engineer">
+                    <option value="Electrical Engineer">
+                    <option value="Pharmacist">
+                    <option value="Nurse">
+                    <option value="Doctor">
+                    <option value="Lawyer">
+                    <option value="Teacher">
+                    <option value="University Professor">
+                    <option value="Chef">
+                    <option value="Restaurant Manager">
+                    <option value="Hotel Manager">
+                    <option value="Tour Guide">
+                    <option value="Real Estate Agent">
+                    <option value="Supply Chain Manager">
+                    <option value="Logistics Coordinator">
+                    <option value="Procurement Specialist">
+                    <option value="Quality Assurance Manager">
+                    <option value="Operations Manager">
+                    <option value="Executive Assistant">
+                    <option value="Office Manager">
+                    <option value="Retail Manager">
+                    <option value="E-commerce Specialist">
+                    <option value="SEO Specialist">
+                    <option value="PPC Specialist">
+                    <option value="Brand Manager">
+                    <option value="Public Relations Specialist">
+                    <option value="Event Coordinator">
+                    <option value="Fundraising Manager">
+                    <option value="Non-Profit Director">
+                    <option value="Consultant">
+                    <option value="Freelancer">
+                </datalist>
                 <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" oninput="renderCV()"
                         placeholder="john@example.com"></div>
                 <div class="field"><label>الهاتف</label><input type="text" id="inputPhone" oninput="renderCV()"
@@ -4825,10 +5347,10 @@
                 <div class="form-card-header"><span class="icon"><i class="fas fa-tools"></i></span>
                     <h3>المهارات</h3>
                 </div>
-                <div class="field"><label>المهارات <span class="char-count">(واحدة لكل سطر)</span></label><textarea
+                <div class="field"><label>المهارات <span class="char-count">(كل مهارة في سطر)</span></label><textarea
                         id="inputSkills" oninput="renderCV()"
-                        placeholder="UI Design, Figma, Prototyping&#10;User Research, Wireframing&#10;Design Systems, CSS"
-                        style="min-height:150px"></textarea></div>
+                        placeholder="JavaScript&#10;React.js&#10;Node.js&#10;Python&#10;Git&#10;Docker&#10;AWS&#10;SQL"
+                        style="min-height:150px"></textarea><div class="field-hint">اكتب مهارة واحدة في كل سطر. رتّبها من الأهم للأقل أهمية.</div></div>
             </div>
 
             <!-- Languages -->
@@ -4894,6 +5416,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Phone Bottom Navigation -->
+    <nav class="phone-bottom-nav" id="phoneNav">
+        <button class="phone-nav-item active" onclick="phoneNav('edit')" id="phoneNavEdit">
+            <i class="fas fa-pen-to-square"></i>
+            <span>تحرير</span>
+        </button>
+        <button class="phone-nav-item" onclick="phoneNav('preview')" id="phoneNavPreview">
+            <i class="fas fa-eye"></i>
+            <span>معاينة</span>
+        </button>
+        <button class="phone-nav-item" onclick="phoneNav('templates')" id="phoneNavTemplates">
+            <i class="fas fa-palette"></i>
+            <span>قوالب</span>
+        </button>
+        <button class="phone-nav-item" onclick="phoneNav('ai')" id="phoneNavAi">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <span>AI</span>
+            <div class="phone-nav-badge" id="aiBadge" style="display:none"></div>
+        </button>
+        <button class="phone-nav-item" onclick="phoneNav('more')" id="phoneNavMore">
+            <i class="fas fa-ellipsis-vertical"></i>
+            <span>المزيد</span>
+        </button>
+    </nav>
 
     <!-- Template Gallery Panel -->
     <div class="template-panel" id="templatePanel">
@@ -5089,6 +5636,7 @@
                 if (upgBtn) upgBtn.style.display = isFree ? '' : 'none';
             }
             window.currentUid = user.uid;
+            window.currentUser = user;
 
             // ===== NOTIFICATIONS =====
             let allNotifications = [];
@@ -5234,6 +5782,32 @@
         });
 
         window.logout = async () => { await signOut(auth); location.replace("login.html") };
+
+        // ===== NEW CV =====
+        window.createNewCV = function() {
+            if (!confirm('إنشاء سيرة ذاتية جديدة؟ البيانات الحالية ستُحفظ تلقائياً.')) return;
+            saveToFirebase();
+            localStorage.removeItem('qcv_editor_data');
+            location.reload();
+        };
+
+        // ===== DELETE ACCOUNT =====
+        window.deleteAccount = async function() {
+            if (!confirm('هل أنت متأكد من حذف حسابك نهائياً؟ لن تتمكن من التراجع عن هذا الإجراء.')) return;
+            if (!confirm('تأكيد أخير: حذف الحساب وجميع بياناتك بشكل دائم؟')) return;
+            try {
+                const user = auth.currentUser;
+                if (!user) return;
+                const uid = user.uid;
+                await remove(ref(db, 'users/' + uid));
+                await user.delete();
+                showToast('تم حذف الحساب بنجاح', 'success');
+                setTimeout(() => location.replace('login.html'), 1500);
+            } catch (e) {
+                console.error('Delete account error:', e);
+                showToast('حدث خطأ أثناء حذف الحساب: ' + e.message, 'error');
+            }
+        };
 
         window.openUpgradeModal = () => document.getElementById('upgradeOverlay').classList.add('show');
         window.closeUpgradeModal = (e) => { if (e && e.target !== e.currentTarget) return; document.getElementById('upgradeOverlay').classList.remove('show') };
@@ -5784,7 +6358,17 @@
             appendEditorAiMessage('user', txt);
             const cv = await getEditorCvForAi();
             const cvText = cv ? (['Name: ' + (cv.name || ''), 'Title: ' + (cv.title || ''), 'Summary: ' + (cv.summary || ''), 'Skills: ' + (Array.isArray(cv.skills) ? cv.skills.join(', ') : cv.skills)].join('\n\n')) : '';
-            const prompt = txt + '\n\n' + cvText;
+            var systemPrompt = 'You are QCV AI, an expert CV/resume writing assistant. ' +
+                'RULES:\n' +
+                '- Always respond in ENGLISH regardless of what language the user writes in.\n' +
+                '- Be concise (under 200 words unless asked for more).\n' +
+                '- Focus ONLY on CV/resume advice: writing, formatting, ATS optimization, job hunting.\n' +
+                '- Be professional but friendly.\n' +
+                '- Reference the user\'s CV data when relevant.\n' +
+                '- Never greet with "مرحبا" or respond in Arabic.\n\n' +
+                'USER CV DATA:\n' + cvText + '\n\n' +
+                'USER QUESTION: ' + txt;
+            const prompt = systemPrompt;
             appendEditorAiMessage('assistant', 'جاري التفكير...');
             // Use existing callAI pipeline defined earlier
             callAI(prompt, function (result) {
@@ -5793,11 +6377,6 @@
                 appendEditorAiMessage('assistant', result);
             }, function (err) { try { const c = document.getElementById('aiModalMessages'); const last = c.lastElementChild; if (last && last.textContent.includes('جاري التفكير')) last.remove(); } catch (e) { }; appendEditorAiMessage('assistant', 'خطأ في الذكاء الاصطناعي: ' + (err || '')); });
         });
-
-        // Add a floating AI button to open modal
-        (function () {
-            const btn = document.createElement('button'); btn.className = 'btn-ai-gen'; btn.style.position = 'fixed'; btn.style.bottom = '28px'; btn.style.right = '28px'; btn.style.zIndex = 9998; btn.innerHTML = '<i class="fas fa-robot"></i> AI'; btn.onclick = openAiModal; document.body.appendChild(btn);
-        })();
     </script>
 
     <!-- ===== CV LOGIC ===== -->
@@ -6082,14 +6661,34 @@
 
         window.addExp = function (role = '', company = '', dur = '', desc = '') {
             const id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-            document.getElementById('expContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">خبرة</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">حذف</button></div><div class="field"><label>المسمى</label><input type="text" value="${role}" oninput="renderCV()" placeholder="UI/UX Designer"></div><div class="field"><label>الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Company Name"></div><div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2020 - Present"></div><div class="field"><label>الوصف</label><textarea oninput="renderCV()" placeholder="- Redesigned the main interface\n- Reduced load time by 30%">${desc}</textarea></div></div>`);
+            document.getElementById('expContainer').insertAdjacentHTML('beforeend', `
+                <div class="repeater-block" id="${id}">
+                    <div class="rb-header">
+                        <span class="rb-title"><i class="fas fa-briefcase" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> خبرة جديدة</span>
+                        <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
+                    </div>
+                    <div class="field"><label>المسمى الوظيفي</label><input type="text" value="${role}" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
+                    <div class="field"><label>اسم الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Google, Meta, etc."></div>
+                    <div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="Jan 2020 - Present"></div>
+                    <div class="field"><label>الوصف والإنجازات</label><textarea oninput="renderCV()" placeholder="- Led a team of 5 engineers&#10;- Increased revenue by 25%&#10;- Built CI/CD pipeline from scratch">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة - لقائمة الإنجازات</div></div>
+                </div>`);
             renderCV();
             snapshotState();
         };
 
         window.addEdu = function (deg = '', sch = '', dur = '', desc = '') {
             const id = 'edu_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-            document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">تعليم</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">حذف</button></div><div class="field"><label>الدرجة</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div><div class="field"><label>المؤسسة</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="University Name"></div><div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div><div class="field"><label>التفاصيل</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8\n- Computer Science Club member">${desc}</textarea></div></div>`);
+            document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `
+                <div class="repeater-block" id="${id}">
+                    <div class="rb-header">
+                        <span class="rb-title"><i class="fas fa-graduation-cap" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> تعليم جديد</span>
+                        <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
+                    </div>
+                    <div class="field"><label>الدرجة العلمية</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div>
+                    <div class="field"><label>المؤسسة التعليمية</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="Cairo University"></div>
+                    <div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div>
+                    <div class="field"><label>التفاصيل</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8/4.0&#10;- Dean's List&#10;- Computer Science Club">${desc}</textarea></div>
+                </div>`);
             renderCV();
             snapshotState();
         };
@@ -6623,7 +7222,7 @@
                 if (!grid) { console.error('templateGrid not found'); return; }
                 const templates = QCVTemplates.getAll();
                 const paid = isPaidPlan();
-                const catColors = { ats: '#38bdf8', modern: '#2563eb', creative: '#8b5cf6', classic: '#f59e0b', executive: '#1e293b' };
+                const catColors = { ats: '#38bdf8', modern: '#2563eb', creative: '#8b5cf6', classic: '#f59e0b', executive: '#1e293b', photo: '#6366f1', timeline: '#0891b2', dark: '#334155', compact: '#475569', infographic: '#7c3aed', magazine: '#dc2626' };
                 const sampleData = { name: 'Ahmad Mostafa', title: 'Senior UI/UX Designer', email: 'ahmad@example.com', phone: '+20 123 456 789', location: 'Cairo, Egypt', linkedin: 'linkedin.com/in/ahmadmostafa', summary: 'Product designer with 6+ years of experience.', skills: ['UI Design', 'Figma', 'Prototyping', 'User Research', 'CSS', 'Design Systems'], experience: [{ role: 'Senior Product Designer', company: 'TechCorp Inc.', duration: '2022 - Present', description: '- Redesigned application flows' }, { role: 'UX Designer', company: 'StartupX', duration: '2019 - 2022', description: '- Built recruiter dashboards' }], education: [{ degree: 'B.Sc. Computer Science', school: 'Cairo University', duration: '2015 - 2019', description: '- GPA: 3.7/4.0' }], languages: [{ name: 'Arabic', level: 'Native' }, { name: 'English', level: 'Fluent' }] };
                 grid.innerHTML = templates.map(t => {
                     const locked = isTemplateLocked(t.id);
@@ -6743,6 +7342,7 @@
         // ---- Delete Section ----
         window.deleteSection = function (secId) {
             document.querySelectorAll('.nav-tab-menu.show').forEach(m => m.classList.remove('show'));
+            if (secId === 'personal') { showToast('لا يمكن حذف المعلومات الشخصية', 'error'); return; }
             if (!confirm('حذف هذا القسم؟')) return;
 
             // Remove from sidebar nav
@@ -7770,23 +8370,24 @@
 
             document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
             setAiLoading(true);
+            var jobDesc = (document.getElementById('aiJobInput') || {}).value || (document.getElementById('jobDescInput') || {}).value || '';
 
             const prompts = {
-                summarize: 'Write a 3-sentence professional summary for this CV. Include: title, years of experience, 2 quantifiable achievements, key skills. ATS-friendly, no pronouns, power verbs only. Output ONLY the summary.\n\nCV:\n' + cvText,
+                summarize: 'Write a 3-sentence professional summary for this CV. Always respond in ENGLISH. Include: title, years of experience, 2 quantifiable achievements, key skills. ATS-friendly, no pronouns, power verbs only. Output ONLY the summary.\n\nCV:\n' + cvText,
 
-                proofread: 'Proofread this text. Fix grammar, replace weak verbs with power verbs, make active voice, add metrics. Output ONLY corrected text.\n\n' + (data.summary || 'No summary'),
+                proofread: 'Proofread this text. Always respond in ENGLISH. Fix grammar, replace weak verbs with power verbs, make active voice, add metrics. Output ONLY corrected text.\n\n' + (data.summary || 'No summary'),
 
-                improve: 'Rewrite this summary to be ATS-optimized and impactful. Start with [Title] + experience. Include 2 quantified achievements. Max 4 sentences. Return ONLY the improved summary.\n\nCurrent: ' + (data.summary || 'No summary') + '\nExperience: ' + (data.experience || []).map(function(e) { return e.role + ' at ' + e.company + ': ' + e.description; }).join('; '),
+                improve: 'Rewrite this summary to be ATS-optimized and impactful. Always respond in ENGLISH. Start with [Title] + experience. Include 2 quantified achievements. Max 4 sentences. Return ONLY the improved summary.\n\nCurrent: ' + (data.summary || 'No summary') + '\nExperience: ' + (data.experience || []).map(function(e) { return e.role + ' at ' + e.company + ': ' + e.description; }).join('; '),
 
-                skills: 'Suggest 12 skills for this role: ' + (data.title || 'Professional') + '. 60% technical, 40% soft. Comma-separated list only.\n\nExperience: ' + (data.experience || []).map(function(e) { return e.role + ': ' + e.description; }).join('; '),
+                skills: 'Suggest 12 skills for this role. Always respond in ENGLISH. 60% technical, 40% soft. Comma-separated list only.\n\nRole: ' + (data.title || 'Professional') + '. Experience: ' + (data.experience || []).map(function(e) { return e.role + ': ' + e.description; }).join('; '),
 
-                ats: 'Rewrite this summary for ATS optimization. Include exact job title keywords, standard headers, no abbreviations. Max 100 words. Return ONLY the optimized text.\n\nSummary: ' + (data.summary || 'No summary') + '\nRole: ' + (data.title || 'General'),
+                ats: 'Rewrite this summary for ATS optimization. Always respond in ENGLISH. Include exact job title keywords, standard headers, no abbreviations. Max 100 words. Return ONLY the optimized text.\n\nSummary: ' + (data.summary || 'No summary') + '\nRole: ' + (data.title || 'General'),
 
-                translate: 'Translate this CV content. Arabic→English or English→Arabian professional business. Preserve numbers and dates. Return ONLY the translated text.\n\n' + cvText,
+                translate: 'Translate this CV content. Always respond in ENGLISH. Arabic→English or English→Arabic professional business language. Preserve numbers and dates. Return ONLY the translated text.\n\n' + cvText,
 
-                coverletter: 'Write a professional cover letter (3-4 paragraphs) for this job application.\n\nMy CV:\n' + cvText + '\n\nJob Description:\n' + jobDesc + '\n\nFormat:\n- Paragraph 1: Opening - mention the specific role and why you\'re excited\n- Paragraph 2: Key qualifications - match your experience to their requirements\n- Paragraph 3: Value proposition - what unique contribution you bring\n- Paragraph 4: Closing - call to action\n\nRules:\n- Professional but personable tone\n- Reference specific details from both CV and job description\n- No generic phrases like "I am writing to express my interest"\n- Max 300 words\n- Return ONLY the cover letter text',
+                coverletter: 'Write a professional cover letter (3-4 paragraphs) for this job application. Always respond in ENGLISH.\n\nMy CV:\n' + cvText + '\n\nJob Description:\n' + jobDesc + '\n\nFormat:\n- Paragraph 1: Opening - mention the specific role and why you\'re excited\n- Paragraph 2: Key qualifications - match your experience to their requirements\n- Paragraph 3: Value proposition - what unique contribution you bring\n- Paragraph 4: Closing - call to action\n\nRules:\n- Professional but personable tone\n- Reference specific details from both CV and job description\n- No generic phrases like "I am writing to express my interest"\n- Max 300 words\n- Return ONLY the cover letter text',
 
-                custom: 'You are a CV expert. Answer briefly (under 150 words) with specific actionable advice referencing this CV.\n\nCV:\n' + cvText
+                custom: 'You are a CV expert. Always respond in ENGLISH. Answer briefly (under 150 words) with specific actionable advice referencing this CV.\n\nCV:\n' + cvText
             };
 
             callAI(prompts[action] || prompts.custom, function (result) {
@@ -8040,7 +8641,7 @@
         // Unified AI service — uses QCVAI from js/ai-service.js
         function callAI(prompt, onSuccess, onError) {
             if (window.QCVAI) {
-                QCVAI.call(prompt, null, { maxRetries: 1, timeout: 12000 }).then(function (res) {
+                QCVAI.call(prompt, null, { maxRetries: 1, timeout: 15000 }).then(function (res) {
                     if (res.ok && res.text) onSuccess(res.text);
                     else if (onError) onError(res.error || 'AI unavailable');
                 }).catch(function (e) {
@@ -8048,12 +8649,11 @@
                     if (onError) onError('AI request failed');
                 });
             } else {
-                var ctrl = new AbortController();
-                var timer = setTimeout(function () { ctrl.abort(); }, 12000);
-                fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET', signal: ctrl.signal })
-                    .then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('fail'); return r.text(); })
-                    .then(function (t) { if (t && t.length > 5) onSuccess(t.trim()); else if (onError) onError('Empty response'); })
-                    .catch(function () { clearTimeout(timer); if (onError) onError('AI unavailable'); });
+                fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+                    body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
+                }).then(function(r){return r.json()}).then(function(d){var t=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'';if(t.length>5)onSuccess(t.trim());else onError('Empty response')}).catch(function(){onError('AI unavailable')});
             }
         }
 
@@ -8075,7 +8675,7 @@
             };
 
             try {
-                var newRef = await push(ref(db, 'applications'), entry);
+                var newRef = await window._push(window._ref(window._db, 'applications'), entry);
                 entry.id = newRef.key;
 
                 // Add default reminders
@@ -8085,7 +8685,7 @@
                     { title: 'متابعة أخيرة', days: 30 }
                 ];
                 for (var i = 0; i < reminders.length; i++) {
-                    await push(ref(db, 'applications/' + newRef.key + '/reminders'), {
+                    await window._push(window._ref(window._db, 'applications/' + newRef.key + '/reminders'), {
                         title: reminders[i].title,
                         dueDate: Date.now() + reminders[i].days * 86400000,
                         done: false
@@ -8113,7 +8713,7 @@
         async function loadApplications() {
             if (!currentUser) return;
             try {
-                var snap = await get(ref(db, 'applications'));
+                var snap = await window._get(window._ref(window._db, 'applications'));
                 var apps = [];
                 snap.forEach(function (child) {
                     var val = child.val();
@@ -8210,14 +8810,14 @@
 
         window.updateAppStatus = async function (appId, newStatus) {
             try {
-                await update(ref(db, 'applications/' + appId), { status: newStatus });
+                await window._update(window._ref(window._db, 'applications/' + appId), { status: newStatus });
                 loadApplications();
             } catch (e) { console.error(e); }
         };
 
         window.completeReminder = async function (appId, reminderId) {
             try {
-                await update(ref(db, 'applications/' + appId + '/reminders/' + reminderId), { done: true });
+                await window._update(window._ref(window._db, 'applications/' + appId + '/reminders/' + reminderId), { done: true });
                 loadApplications();
             } catch (e) { console.error(e); }
         };
@@ -8225,7 +8825,7 @@
         window.deleteApplication = async function (appId) {
             if (!confirm('حذف هذا الطلب؟')) return;
             try {
-                await remove(ref(db, 'applications/' + appId));
+                await window._remove(window._ref(window._db, 'applications/' + appId));
                 loadApplications();
             } catch (e) { console.error(e); }
         };
@@ -8240,13 +8840,52 @@
             if (location.hash === '#followups') setTimeout(loadApplications, 500);
         })();
 
+        // ===== PHONE NAVIGATION =====
+        function phoneNav(section) {
+            var forms = document.querySelector('.editor-forms');
+            var preview = document.querySelector('.preview-zone');
+            var items = document.querySelectorAll('.phone-nav-item');
+
+            items.forEach(function(i) { i.classList.remove('active'); });
+
+            if (section === 'edit') {
+                document.getElementById('phoneNavEdit').classList.add('active');
+                forms.classList.remove('panel-hidden');
+                preview.classList.remove('panel-active');
+            } else if (section === 'preview') {
+                document.getElementById('phoneNavPreview').classList.add('active');
+                forms.classList.add('panel-hidden');
+                preview.classList.add('panel-active');
+            } else if (section === 'templates') {
+                document.getElementById('phoneNavTemplates').classList.add('active');
+                showTemplates();
+                return;
+            } else if (section === 'ai') {
+                document.getElementById('phoneNavAi').classList.add('active');
+                toggleAiMenu();
+                return;
+            } else if (section === 'more') {
+                document.getElementById('phoneNavMore').classList.add('active');
+                var dd = document.querySelector('.profile-dropdown');
+                if (dd) dd.classList.toggle('show');
+                setTimeout(function() {
+                    document.getElementById('phoneNavMore').classList.remove('active');
+                }, 2000);
+                return;
+            }
+        }
+
+        function updatePhoneTime() {
+            var now = new Date();
+            var h = now.getHours();
+            var m = now.getMinutes().toString().padStart(2, '0');
+            var el = document.getElementById('phoneTime');
+            if (el) el.textContent = h + ':' + m;
+        }
+        updatePhoneTime();
+        setInterval(updatePhoneTime, 30000);
+
     </script>
-    <a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"
-        aria-label="WhatsApp"
-        style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s"
-        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
-    </a>
 </body>
 
 </html>

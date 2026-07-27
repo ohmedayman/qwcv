@@ -169,6 +169,14 @@
       {
         "source": "/admin-setup",
         "destination": "/admin-setup.html"
+      },
+      {
+        "source": "/email-signature",
+        "destination": "/email-signature.html"
+      },
+      {
+        "source": "/cover-letter",
+        "destination": "/cover-letter.html"
       }
     ]
   },

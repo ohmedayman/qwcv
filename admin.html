@@ -1306,7 +1306,13 @@ function initAdmin() {
         document.getElementById('adminRoleDisplay').textContent = 'مدير عام';
     }
     checkAndLoad().catch(function(e) { console.error('[QCV Admin] Load failed:', e); document.getElementById('blockScreen').classList.add('hidden'); });
-    setInterval(function() { checkAndLoad(); }, 30000);
+}
+
+// Auto-refresh every 60s with debounce
+var _adminRefreshTimer = null;
+function scheduleAdminRefresh() {
+    clearTimeout(_adminRefreshTimer);
+    _adminRefreshTimer = setTimeout(function() { if (!window._adminLoading) checkAndLoad(); }, 60000);
 }
 
 // Logout
@@ -1337,6 +1343,8 @@ function restGetTimeout(path, timeout) {
     return fetch(DB + path, { signal: controller.signal }).then(function(r) { clearTimeout(tid); return r.json(); }).catch(function(e) { clearTimeout(tid); console.error('[QCV Admin] GET failed:', path, e.message); return null; });
 }
 function checkAndLoad() {
+    if (window._adminLoading) return Promise.resolve();
+    window._adminLoading = true;
     console.log('[QCV Admin] Loading data...');
     return Promise.all([
         restGetTimeout('/users.json', 15000), restGetTimeout('/subscriptions.json'), restGetTimeout('/jobs.json'),
@@ -1390,6 +1398,15 @@ function checkAndLoad() {
         window.allAffRequests = r[12] || {};
         window.allPointsExchange = r[13] || {};
         nlData = r[14] || {};
+
+        // Auto-sync old domains to approvedDomains (one-time migration)
+        Object.entries(window.allDomains).forEach(function(entry) {
+            var d = entry[1];
+            if (d && d.domain && d.active !== false) {
+                window.syncApprovedDomain({ domain: d.domain, plan: d.plan, duration: d.duration, active: d.active !== false });
+            }
+        });
+
         // Load audit logs
         restGet('/auditLogs.json').then(function(data) { allAuditLogs = Object.values(data || {}).sort(function(a, b) { return (b.timestamp || 0) - (a.timestamp || 0); }).slice(0, 500); });
         // Load tags
@@ -1446,7 +1463,7 @@ function checkAndLoad() {
             var camps = Object.entries(window.allCampaigns);
             cmpT.innerHTML = camps.length ? camps.map(function(e) {
                 var c = e[1];
-                return '<tr><td><strong>'+escHtml(c.name||'')+'</strong></td><td style="direction:ltr;text-align:left">'+escHtml(c.code||'')+'</td><td>'+(c.clicks||0)+'</td><td>'+(c.conversions||0)+'</td><td><div class="actions"><button class="btn-action btn-delete" onclick="deleteCampaign(\''+e[0]+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+                return '<tr><td><strong>'+escHtml(c.name||'')+'</strong></td><td style="direction:ltr;text-align:left">'+escHtml(c.code||'')+'</td><td>'+(c.clicks||0)+'</td><td>'+(c.conversions||0)+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="(window.editCampaignEnhanced||function(){})('+'\''+e[0]+'\''+')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteCampaign(\''+e[0]+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
             }).join('') : '<tr><td colspan="5" class="empty-state"><p>لا توجد حملات</p></td></tr>';
         }
 
@@ -1456,7 +1473,8 @@ function checkAndLoad() {
             var comms = Object.entries(window.allCommissions);
             cmmT.innerHTML = comms.length ? comms.map(function(e) {
                 var c = e[1], st = c.status==='paid'?'badge-approved':'badge-pending', st2 = c.status==='paid'?'مدفوع':'معلق';
-                return '<tr><td>'+escHtml(c.userName||c.uid||'-')+'</td><td>'+(c.amount||0)+' ج.م</td><td><span class="badge '+st+'">'+st2+'</span></td><td>'+formatDateTime(c.createdAt)+'</td><td><div class="actions"></div></td></tr>';
+                var toggleBtn = c.status==='paid' ? '<button class="btn-action btn-reject" onclick="markCommissionUnpaid(\''+e[0]+'\')" title="إلغاء الدفع"><i class="fas fa-undo"></i></button>' : '<button class="btn-action btn-approve" onclick="markCommissionPaid(\''+e[0]+'\')" title="تحديد كمدفوع"><i class="fas fa-check"></i></button>';
+                return '<tr><td>'+escHtml(c.userName||c.uid||'-')+'</td><td>'+(c.amount||0)+' ج.م</td><td><span class="badge '+st+'">'+st2+'</span></td><td>'+formatDateTime(c.createdAt)+'</td><td><div class="actions">'+toggleBtn+'</div></td></tr>';
             }).join('') : '<tr><td colspan="5" class="empty-state"><p>لا توجد عمولات</p></td></tr>';
         }
 
@@ -1479,9 +1497,9 @@ function checkAndLoad() {
             }).join('') : '<tr><td colspan="4" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
         }
 
-        // All Users Table
+        // All Users Table — skip if enhancements handle pagination
         var ut = document.getElementById('allUsers');
-        if (ut) {
+        if (ut && !window._usersGoPage) {
             window.selectedUsers = {};
             window.updateUserStats(entries);
             ut.innerHTML = entries.length ? entries.map(function(e) {
@@ -1490,6 +1508,8 @@ function checkAndLoad() {
                 var authBadge = u.authOnly ? '<span style="font-size:.6rem;background:rgba(245,158,11,.1);color:#f59e0b;padding:2px 6px;border-radius:4px;margin-right:4px;font-weight:600">جديد</span>' : '';
                 return '<tr><td style="text-align:center"><input type="checkbox" class="user-row-cb" data-uid="'+escHtml(uid)+'" onchange="toggleUserSelect(\''+escHtml(uid)+'\',this.checked)" style="accent-color:var(--accent);cursor:pointer"></td><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+authBadge+escHtml(u.name||'مستخدم')+'</div><div class="email">'+provider+escHtml(u.email||'-')+'</div><div style="font-size:.65rem;color:var(--muted);direction:ltr;display:inline-block">'+escHtml(uid.substring(0,10))+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
             }).join('') : '<tr><td colspan="7" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+        } else if (ut && window._usersGoPage) {
+            window.selectedUsers = {};
         }
 
         // Subscriptions
@@ -1518,9 +1538,18 @@ function checkAndLoad() {
         var dt = document.getElementById('domainsList');
         if (dt) {
             var doms = Object.entries(window.allDomains);
+            // Calculate user count per domain from allUsers
+            var domainUserCount = {};
+            Object.values(window.allUsers || {}).forEach(function(u) {
+                if (u.email) {
+                    var dom = u.email.split('@')[1];
+                    if (dom) domainUserCount[dom] = (domainUserCount[dom] || 0) + 1;
+                }
+            });
             dt.innerHTML = doms.length ? doms.map(function(e) {
                 var d = e[1];
-                return '<tr><td><strong style="direction:ltr;display:inline-block">'+escHtml(d.domain)+'</strong></td><td><span class="badge '+planBadgeClass(d.plan)+'">'+planText(d.plan)+'</span></td><td>'+(d.duration||1)+'</td><td>0</td><td>'+(d.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td><div class="actions"><button class="btn-action btn-delete" onclick="deleteDomain(\''+e[0]+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+                var userCnt = domainUserCount[d.domain] || d.userCount || 0;
+                return '<tr><td><strong style="direction:ltr;display:inline-block">'+escHtml(d.domain)+'</strong></td><td><span class="badge '+planBadgeClass(d.plan)+'">'+planText(d.plan)+'</span></td><td>'+(d.duration||1)+'</td><td>'+userCnt+'</td><td>'+(d.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="(window.editDomainEnhanced||editDomain)(\''+e[0]+'\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteDomain(\''+e[0]+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
             }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات</p></td></tr>';
         }
 
@@ -1530,7 +1559,7 @@ function checkAndLoad() {
             var staff = Object.entries(window.allStaff);
             sft.innerHTML = staff.length ? staff.map(function(e) {
                 var id = e[0], s = e[1], c = getAvatarColor(id);
-                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((s.name||'M')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(s.name)+'</div><div class="email">'+escHtml(s.email)+'</div></div></div></td><td><span class="badge '+roleBadgeClass(s.role)+'">'+roleText(s.role)+'</span></td><td>'+(s.permissions||[]).length+' صلاحية</td><td>'+(s.active!==false?'<span class="badge badge-active">نشط</span>':'<span class="badge badge-inactive">غير نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="editStaffPermissions(\''+id+'\')"><i class="fas fa-user-lock"></i></button><button class="btn-action btn-delete" onclick="deleteStaff(\''+id+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((s.name||'M')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(s.name)+'</div><div class="email">'+escHtml(s.email)+'</div></div></div></td><td><span class="badge '+roleBadgeClass(s.role)+'">'+roleText(s.role)+'</span></td><td>'+(s.permissions||[]).length+' صلاحية</td><td>'+(s.active!==false?'<span class="badge badge-active">نشط</span>':'<span class="badge badge-inactive">غير نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="(window.editStaffEnhanced||editStaffPermissions)(\''+id+'\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteStaff(\''+id+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
             }).join('') : '<tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr>';
         }
 
@@ -1573,7 +1602,9 @@ function checkAndLoad() {
         }
 
         console.log('[QCV Admin] Data loaded');
-    }).catch(function(e) { console.error('[QCV Admin] Load error:', e); });
+        window._adminLoading = false;
+        scheduleAdminRefresh();
+    }).catch(function(e) { console.error('[QCV Admin] Load error:', e); window._adminLoading = false; scheduleAdminRefresh(); });
 }
 var loadAllData = checkAndLoad;
 
@@ -1608,8 +1639,10 @@ window.viewUser = function(uid) {
         '<div id="userLoginHistory" style="margin-top:16px"><div style="text-align:center;color:var(--muted);padding:12px"><i class="fas fa-spinner fa-spin"></i> جاري تحميل سجل الدخول...</div></div>';
     document.getElementById('modalConfirm').style.display = 'none';
     document.getElementById('modal').classList.add('show');
-    // Load login history
-    fetch(DB + '/users/' + uid + '/notifications.json').then(function(r){return r.json()}).then(function(data){
+    // Load login history with timeout
+    var notifCtrl = new AbortController();
+    var notifTimer = setTimeout(function() { notifCtrl.abort(); }, 8000);
+    fetch(DB + '/users/' + uid + '/notifications.json', { signal: notifCtrl.signal }).then(function(r){clearTimeout(notifTimer);return r.json()}).then(function(data){
         var el = document.getElementById('userLoginHistory');
         if (!el) return;
         if (!data) { el.innerHTML = '<div class="profile-section"><h4><i class="fas fa-history"></i> سجل الدخول</h4><p style="color:var(--muted);font-size:.82rem;text-align:center;padding:12px">لا يوجد سجل دخول</p></div>'; return; }
@@ -1630,8 +1663,9 @@ window.viewUser = function(uid) {
                     '</div></div>';
             }).join('') + '</div>';
     }).catch(function(){
+        clearTimeout(notifTimer);
         var el = document.getElementById('userLoginHistory');
-        if (el) el.innerHTML = '';
+        if (el) el.innerHTML = '<div class="profile-section"><h4><i class="fas fa-history"></i> سجل الدخول</h4><p style="color:var(--muted);font-size:.82rem;text-align:center;padding:12px">تعذر تحميل السجل</p></div>';
     });
 };
 
@@ -2078,9 +2112,6 @@ window.toggleJobMenu = function(id, e) {
 window.hideAllJobMenus = function() {
     var dd = document.getElementById('globalJobDropdown');
     if (dd) dd.style.display = 'none';
-};
-
-window.hideAllJobMenus = function() {
     document.querySelectorAll('.job-dropdown').forEach(function(m) { m.style.display = 'none'; });
 };
 
@@ -2176,15 +2207,42 @@ window.deleteStaff = function(id) {
 };
 
 // ===== CRUD: DOMAINS =====
+// Helper: sync domain to approvedDomains path (used by login.html)
+window.syncApprovedDomain = async function(domainData) {
+    try {
+        var dk = (domainData.domain || '').toLowerCase().replace(/\./g, '_');
+        if (!dk) return;
+        if (domainData.active === false || domainData._delete) {
+            // Remove from approvedDomains
+            await restDelete('/approvedDomains/' + dk);
+        } else {
+            // Write to approvedDomains so login.html can read it
+            await restPatch('/approvedDomains/' + dk, {
+                domain: domainData.domain,
+                plan: domainData.plan || 'free',
+                duration: domainData.duration || 30,
+                active: domainData.active !== false,
+                userCount: domainData.userCount || 0
+            });
+        }
+    } catch (e) { console.error('syncApprovedDomain error:', e); }
+}
+
 window.showAddDomain = function() {
     document.getElementById('modalTitle').textContent = 'إضافة نطاق';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>النطاق</label><input type="text" id="domainName" placeholder="مثال: example.com" style="direction:ltr;text-align:left"></div><div class="field" style="margin-bottom:12px"><label>الباقة المطلوبة</label><select id="domainPlan"><option value="free">مجانية</option><option value="pro">احترافية</option><option value="unlimited">غير محدودة</option></select></div><div class="field"><label>المدة (أيام)</label><input type="number" id="domainDuration" value="30"></div>';
+    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>النطاق</label><input type="text" id="domainName" placeholder="مثال: company.com" style="direction:ltr;text-align:left"></div><div class="field" style="margin-bottom:12px"><label>الباقة المطلوبة</label><select id="domainPlan"><option value="free">مجانية</option><option value="pro">احترافية</option><option value="unlimited">غير محدودة</option></select></div><div class="field"><label>المدة (أيام)</label><input type="number" id="domainDuration" value="30"></div>';
     document.getElementById('modalConfirm').style.display = 'block';
     document.getElementById('modalConfirm').textContent = 'إضافة';
     document.getElementById('modalConfirm').onclick = async function() {
-        var domain = document.getElementById('domainName').value.trim();
+        var domain = document.getElementById('domainName').value.trim().toLowerCase();
         if (!domain) { showToast('أدخل النطاق', 'error'); return; }
-        await restPost('/domains', { domain: domain, plan: document.getElementById('domainPlan').value, duration: parseInt(document.getElementById('domainDuration').value) || 30, active: true, createdAt: Date.now() });
+        var domainPlan = document.getElementById('domainPlan').value;
+        var domainDuration = parseInt(document.getElementById('domainDuration').value) || 30;
+        var res = await restPost('/domains', { domain: domain, plan: domainPlan, duration: domainDuration, active: true, createdAt: Date.now() });
+        // Sync to approvedDomains so login.html can read it
+        await syncApprovedDomain({ domain: domain, plan: domainPlan, duration: domainDuration, active: true });
+        // Also sync existing users with this domain
+        await applyDomainPlanToUsers(domain, domainPlan, domainDuration);
         showToast('تمت إضافة النطاق', 'success');
         closeModal();
         loadAllData();
@@ -2192,9 +2250,47 @@ window.showAddDomain = function() {
     document.getElementById('modal').classList.add('show');
 };
 
-window.deleteDomain = function(id) {
+// Apply domain plan to all existing users with matching email domain
+window.applyDomainPlanToUsers = async function(domain, plan, duration) {
+    try {
+        var usersSnap = await restGet('/users.json');
+        if (!usersSnap) return;
+        var updates = {};
+        var count = 0;
+        Object.entries(usersSnap).forEach(function(entry) {
+            var uid = entry[0];
+            var u = entry[1];
+            if (u.email && u.email.toLowerCase().endsWith('@' + domain)) {
+                updates['/users/' + uid + '/plan'] = plan;
+                updates['/users/' + uid + '/approvedDomain'] = domain;
+                if (duration) updates['/users/' + uid + '/planExpiry'] = Date.now() + duration * 24 * 60 * 60 * 1000;
+                count++;
+            }
+        });
+        if (count > 0) {
+            // Batch update via REST
+            await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/.json', {
+                method: 'PATCH',
+                body: JSON.stringify(updates)
+            });
+            console.log('[Domains] Applied plan to ' + count + ' users for ' + domain);
+        }
+        // Update userCount on approvedDomains
+        var dk = domain.replace(/\./g, '_');
+        await restPatch('/approvedDomains/' + dk + '/userCount', count);
+    } catch (e) { console.error('applyDomainPlanToUsers error:', e); }
+}
+
+window.deleteDomain = async function(id) {
     if (!confirm('هل أنت متأكد من حذف هذا النطاق؟')) return;
-    restDelete('/domains/' + id).then(function() { showToast('تم حذف النطاق', 'success'); loadAllData(); });
+    var d = window.allDomains[id];
+    await restDelete('/domains/' + id);
+    // Also remove from approvedDomains
+    if (d && d.domain) {
+        await syncApprovedDomain({ domain: d.domain, _delete: true });
+    }
+    showToast('تم حذف النطاق', 'success');
+    loadAllData();
 };
 
 // ===== CRUD: AFFILIATE =====
@@ -2555,7 +2651,12 @@ function showNewTicketPopup(ticket) {
     setTimeout(function() { if (popup.parentNode) popup.remove(); }, 8000);
 }
 function pollSupportTickets() {
-    restGet('/support.json').then(function(data) {
+    // Only poll if messages panel is active or not yet loaded
+    var msgPanel = document.getElementById('panel-messages');
+    if (msgPanel && !msgPanel.classList.contains('active') && _firstLoadSupport === false) return;
+    var ctrl = new AbortController();
+    var tid = setTimeout(function() { ctrl.abort(); }, 8000);
+    fetch(DB + '/support.json', { signal: ctrl.signal }).then(function(r) { clearTimeout(tid); return r.json(); }).then(function(data) {
         allSupportTickets = data || {};
         if (document.getElementById('supportList')) renderSupportTickets();
         var currentCount = Object.keys(allSupportTickets).length;
@@ -2575,9 +2676,9 @@ function pollSupportTickets() {
         }
         _prevTicketCount = currentCount;
         _firstLoadSupport = false;
-    });
+    }).catch(function() { clearTimeout(tid); });
 }
-setInterval(pollSupportTickets, 10000);
+setInterval(pollSupportTickets, 30000);
 pollSupportTickets();
 
 // ===== SEND MESSAGE TO USER =====

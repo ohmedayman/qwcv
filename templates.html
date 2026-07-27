@@ -6,12 +6,12 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qcv.vexonet.online/templates.html">
     <meta property="og:title" content="قوالب السير الذاتية الاحترافية - QCV">
-    <meta property="og:description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS. جميع القوالب مجانية للمعاينة.">
+    <meta property="og:description" content="اختر من بين أكثر من 30 قالب سيرة ذاتية احترافي. قوالب ATS وإبداعية وصور شخصية وتصاميم داكنة.">
     <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <meta property="og:site_name" content="QCV">
     <meta property="og:locale" content="ar_AR">
-    <title>قوالب سيرة ذاتية - QCV | 15+ قالب احترافي ATS مجاني</title>
-    <meta name="description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS.">
+    <title>قوالب سيرة ذاتية - QCV | 30+ قالب احترافي</title>
+    <meta name="description" content="اختر من بين أكثر من 30 قالب سيرة ذاتية احترافي. قوالب ATS وإبداعية وصور شخصية وتصاميم داكنة.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://qcv.vexonet.online/templates.html">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
@@ -187,12 +187,12 @@
     </div>
 
     <div class="hero">
-        <div class="hero-badge"><i class="fas fa-sparkles"></i> أكثر من 15 قالب ATS مجاني</div>
+        <div class="hero-badge"><i class="fas fa-sparkles"></i> أكثر من 30 قالب مجاني</div>
         <h1>اختر <span>قالب سيرتك الذاتية</span> المثالي</h1>
-        <p>قوالب احترافية متوافقة مع أنظمة ATS، مصممة للحصول على وظيفة أحلامك. جرّب مجاناً وصدّر بصيغة PDF.</p>
+        <p>قوالب احترافية متنوعة: ATS، إبداعية، صور شخصية، تصاميم داكنة، إنفوغرافيك، والمزيد. جرّب مجاناً وصدّر بصيغة PDF.</p>
         <div class="hero-stats">
-            <div class="hero-stat"><span class="num">15+</span><span class="lbl">قالب احترافي</span></div>
-            <div class="hero-stat"><span class="num">100%</span><span class="lbl">متوافق مع ATS</span></div>
+            <div class="hero-stat"><span class="num">30+</span><span class="lbl">قالب احترافي</span></div>
+            <div class="hero-stat"><span class="num">10+</span><span class="lbl">فئة متنوعة</span></div>
             <div class="hero-stat"><span class="num">4.9</span><span class="lbl">تقييم المستخدمين</span></div>
         </div>
     </div>
@@ -285,43 +285,72 @@
 
         const filterCategories = [
             { id: 'all', label: 'الكل', labelEn: 'All', icon: 'fa-th-large' },
-            { id: 'professional', label: 'احترافي', labelEn: 'Professional', icon: 'fa-briefcase' },
+            { id: 'ats', label: 'ATS', labelEn: 'ATS', icon: 'fa-shield-alt' },
+            { id: 'modern', label: 'عصري', labelEn: 'Modern', icon: 'fa-bolt' },
+            { id: 'classic', label: 'كلاسيكي', labelEn: 'Classic', icon: 'fa-book' },
             { id: 'creative', label: 'إبداعي', labelEn: 'Creative', icon: 'fa-palette' },
-            { id: 'minimal', label: 'بسيط', labelEn: 'Minimal', icon: 'fa-minus' },
-            { id: 'executive', label: 'تنفيذي', labelEn: 'Executive', icon: 'fa-crown' }
+            { id: 'photo', label: 'صور', labelEn: 'Photo', icon: 'fa-camera' },
+            { id: 'timeline', label: 'خط زمني', labelEn: 'Timeline', icon: 'fa-clock' },
+            { id: 'dark', label: 'داكن', labelEn: 'Dark', icon: 'fa-moon' },
+            { id: 'compact', label: 'مضغوط', labelEn: 'Compact', icon: 'fa-compress' }
         ];
 
         const categoryLabels = {
-            professional: 'احترافي', creative: 'إبداعي', minimal: 'بسيط', executive: 'تنفيذي'
+            ats: 'ATS', modern: 'عصري', classic: 'كلاسيكي', creative: 'إبداعي',
+            photo: 'صور', timeline: 'خط زمني', dark: 'داكن', compact: 'مضغوط',
+            infographic: 'إنفوغرافيك', magazine: 'مجلة'
         };
 
         const categoryColors = {
-            professional: { bg: 'rgba(5,150,105,0.12)', text: '#059669', border: 'rgba(5,150,105,0.25)', gradient: 'linear-gradient(135deg,#065f46,#10b981)' },
+            ats: { bg: 'rgba(5,150,105,0.12)', text: '#059669', border: 'rgba(5,150,105,0.25)', gradient: 'linear-gradient(135deg,#065f46,#10b981)' },
+            modern: { bg: 'rgba(14,165,233,0.12)', text: '#0ea5e9', border: 'rgba(14,165,233,0.25)', gradient: 'linear-gradient(135deg,#0369a1,#38bdf8)' },
+            classic: { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.25)', gradient: 'linear-gradient(135deg,#334155,#94a3b8)' },
             creative: { bg: 'rgba(139,92,246,0.12)', text: '#8b5cf6', border: 'rgba(139,92,246,0.25)', gradient: 'linear-gradient(135deg,#5b21b6,#a78bfa)' },
-            minimal: { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.25)', gradient: 'linear-gradient(135deg,#334155,#94a3b8)' },
-            executive: { bg: 'rgba(30,41,59,0.12)', text: '#1e293b', border: 'rgba(30,41,59,0.25)', gradient: 'linear-gradient(135deg,#0f172a,#475569)' }
+            photo: { bg: 'rgba(99,102,241,0.12)', text: '#6366f1', border: 'rgba(99,102,241,0.25)', gradient: 'linear-gradient(135deg,#4338ca,#818cf8)' },
+            timeline: { bg: 'rgba(8,145,178,0.12)', text: '#0891b2', border: 'rgba(8,145,178,0.25)', gradient: 'linear-gradient(135deg,#155e75,#22d3ee)' },
+            dark: { bg: 'rgba(30,30,46,0.12)', text: '#1e1e2e', border: 'rgba(30,30,46,0.25)', gradient: 'linear-gradient(135deg,#11111b,#313244)' },
+            compact: { bg: 'rgba(71,85,105,0.12)', text: '#475569', border: 'rgba(71,85,105,0.25)', gradient: 'linear-gradient(135deg,#1e293b,#64748b)' },
+            infographic: { bg: 'rgba(124,58,237,0.12)', text: '#7c3aed', border: 'rgba(124,58,237,0.25)', gradient: 'linear-gradient(135deg,#5b21b6,#a78bfa)' },
+            magazine: { bg: 'rgba(220,38,38,0.12)', text: '#dc2626', border: 'rgba(220,38,38,0.25)', gradient: 'linear-gradient(135deg,#991b1b,#f87171)' }
         };
 
         const categoryIcons = {
-            professional: 'fa-briefcase', creative: 'fa-palette', minimal: 'fa-minus', executive: 'fa-crown'
+            ats: 'fa-shield-alt', modern: 'fa-bolt', classic: 'fa-book', creative: 'fa-palette',
+            photo: 'fa-camera', timeline: 'fa-clock', dark: 'fa-moon', compact: 'fa-compress',
+            infographic: 'fa-chart-bar', magazine: 'fa-newspaper'
         };
 
         const templateMeta = {
-            'classic':     { filter: 'professional', features: ['ATS Safe', 'PDF Export'] },
-            'modern':      { filter: 'minimal', features: ['Clean Design', 'PDF Export'] },
-            'professional':{ filter: 'professional', features: ['ATS Optimized', 'PDF Export'] },
-            'creative':    { filter: 'creative', features: ['Colorful', 'PDF Export'] },
-            'executive':   { filter: 'executive', features: ['Elegant', 'PDF Export'] },
-            'technical':   { filter: 'minimal', features: ['Sidebar', 'PDF Export'] },
-            'minimalist':  { filter: 'minimal', features: ['Ultra Clean', 'PDF Export'] },
-            'sidebar':     { filter: 'creative', features: ['Two Column', 'PDF Export'] },
-            'two-column':  { filter: 'minimal', features: ['Balanced', 'PDF Export'] },
-            'bold':        { filter: 'creative', features: ['Bold Type', 'PDF Export'] },
-            'elegant':     { filter: 'executive', features: ['Serif Font', 'PDF Export'] },
-            'ats-safe':    { filter: 'professional', features: ['Max ATS', 'PDF Export'] },
-            'academic':    { filter: 'executive', features: ['Research Focus', 'PDF Export'] },
-            'startup':     { filter: 'creative', features: ['Dynamic', 'PDF Export'] },
-            'international':{ filter: 'minimal', features: ['Multilingual', 'PDF Export'] }
+            'classic':      { filter: 'ats', features: ['ATS Safe', 'PDF Export'] },
+            'modern':       { filter: 'modern', features: ['Clean Design', 'PDF Export'] },
+            'professional': { filter: 'ats', features: ['ATS Optimized', 'PDF Export'] },
+            'creative':     { filter: 'creative', features: ['Gradient Header', 'PDF Export'] },
+            'executive':    { filter: 'classic', features: ['Serif Font', 'PDF Export'] },
+            'technical':    { filter: 'modern', features: ['Dark Header', 'Sidebar'] },
+            'minimalist':   { filter: 'classic', features: ['Ultra Clean', 'PDF Export'] },
+            'sidebar':      { filter: 'modern', features: ['Two Column', 'Sidebar'] },
+            'two-column':   { filter: 'modern', features: ['Balanced Layout', 'PDF Export'] },
+            'bold':         { filter: 'modern', features: ['Bold Type', 'PDF Export'] },
+            'elegant':      { filter: 'classic', features: ['Serif Font', 'PDF Export'] },
+            'ats-safe':     { filter: 'ats', features: ['Max ATS', 'PDF Export'] },
+            'academic':     { filter: 'classic', features: ['Research Focus', 'PDF Export'] },
+            'startup':      { filter: 'modern', features: ['Dynamic Style', 'PDF Export'] },
+            'international':{ filter: 'modern', features: ['Multilingual', 'PDF Export'] },
+            'photo':        { filter: 'photo', features: ['Photo Area', 'PDF Export'] },
+            'timeline':     { filter: 'timeline', features: ['Visual Timeline', 'PDF Export'] },
+            'infographic':  { filter: 'creative', features: ['Skill Bars', 'PDF Export'] },
+            'magazine':     { filter: 'creative', features: ['Editorial Style', 'PDF Export'] },
+            'compact':      { filter: 'compact', features: ['Dense Layout', 'PDF Export'] },
+            'dark':         { filter: 'dark', features: ['Dark Theme', 'PDF Export'] },
+            'gradient':     { filter: 'creative', features: ['Gradient Header', 'PDF Export'] },
+            'card':         { filter: 'modern', features: ['Card Layout', 'PDF Export'] },
+            'split':        { filter: 'modern', features: ['Split Header', 'PDF Export'] },
+            'mono':         { filter: 'classic', features: ['Monogram', 'PDF Export'] },
+            'banner':       { filter: 'modern', features: ['Full Banner', 'PDF Export'] },
+            'timeline-sidebar': { filter: 'timeline', features: ['Timeline + Sidebar', 'PDF Export'] },
+            'minimal-photo': { filter: 'photo', features: ['Minimal + Photo', 'PDF Export'] },
+            'executive-dark': { filter: 'dark', features: ['Dark Executive', 'PDF Export'] },
+            'creative-grid': { filter: 'creative', features: ['Grid Layout', 'PDF Export'] }
         };
 
         let currentFilter = 'all';

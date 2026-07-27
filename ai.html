@@ -11,25 +11,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="mobile.css">
     <style>
         :root {
-            --sidebar-bg: #111827;
-            --sidebar-text: #d1d5db;
-            --sidebar-hover: #1f2937;
-            --sidebar-active: #374151;
-            --bg: #f9fafb;
+            --sidebar-bg: #0b0f1e;
+            --sidebar-text: #8892b0;
+            --sidebar-hover: #151a30;
+            --sidebar-active: #1e2545;
+            --bg: #f0f4ff;
             --card: #ffffff;
-            --border: #e5e7eb;
+            --border: #e0e7f7;
             --accent: #0003c9;
             --accent-light: #eef2ff;
             --green: #059669;
-            --text: #111827;
-            --muted: #6b7280;
-            --light: #9ca3af;
+            --text: #0f172a;
+            --muted: #64748b;
+            --light: #94a3b8;
             --input-bg: #ffffff;
             --user-bubble: #0003c9;
             --ai-bubble: #ffffff;
-            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow: 0 2px 12px rgba(0,3,201,0.06);
+            --radius: 16px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -43,86 +45,87 @@
 
         /* ===== SIDEBAR ===== */
         .sidebar {
-            width: 260px;
+            width: 280px;
             background: var(--sidebar-bg);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            border-left: 1px solid #1f2937;
+            border-left: 1px solid #1a2040;
         }
         .sidebar-header {
-            padding: 16px;
-            border-bottom: 1px solid #1f2937;
+            padding: 18px;
+            border-bottom: 1px solid #1a2040;
         }
-        .sidebar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .sidebar-logo .logo-icon {
-            width: 36px; height: 36px; border-radius: 10px;
-            background: linear-gradient(135deg, var(--accent), #27ffed);
+            width: 40px; height: 40px; border-radius: 12px;
+            background: linear-gradient(135deg, #4f5fff, #27ffed);
             display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 800; font-size: 0.9rem; font-family: 'Inter';
+            color: #fff; font-weight: 800; font-size: 0.95rem; font-family: 'Inter';
+            box-shadow: 0 4px 16px rgba(79,95,255,0.3);
         }
-        .sidebar-logo .logo-text { color: #f1f5f9; font-weight: 700; font-size: 1rem; }
-        .sidebar-logo .logo-sub { color: #6b7280; font-size: 0.7rem; }
+        .sidebar-logo .logo-text { color: #f1f5f9; font-weight: 700; font-size: 1.05rem; }
+        .sidebar-logo .logo-sub { color: #5a6380; font-size: 0.72rem; }
 
         .new-chat-btn {
-            margin: 12px 16px;
-            padding: 10px 14px;
-            background: transparent;
-            border: 1px solid #374151;
-            border-radius: 10px;
-            color: #e5e7eb;
+            margin: 14px 18px;
+            padding: 11px 16px;
+            background: rgba(79,95,255,0.1);
+            border: 1px solid rgba(79,95,255,0.2);
+            border-radius: 12px;
+            color: #c0c8e0;
             font-weight: 600;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             cursor: pointer;
             font-family: inherit;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.2s;
         }
-        .new-chat-btn:hover { background: var(--sidebar-hover); border-color: #4b5563; }
+        .new-chat-btn:hover { background: rgba(79,95,255,0.18); border-color: rgba(79,95,255,0.35); color: #fff; }
         .new-chat-btn i { font-size: 0.9rem; }
 
         .sidebar-nav {
             flex: 1;
             overflow-y: auto;
-            padding: 8px;
+            padding: 8px 10px;
         }
         .sidebar-nav::-webkit-scrollbar { width: 3px; }
-        .sidebar-nav::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: #1e2545; border-radius: 10px; }
 
-        .nav-section { margin-bottom: 12px; }
+        .nav-section { margin-bottom: 14px; }
         .nav-label {
-            padding: 6px 10px;
+            padding: 6px 12px;
             font-size: 0.68rem;
             font-weight: 700;
-            color: #6b7280;
+            color: #5a6380;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            border-radius: 8px;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 10px;
             color: var(--sidebar-text);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.15s;
         }
         .nav-item:hover { background: var(--sidebar-hover); color: #f1f5f9; }
         .nav-item.active { background: var(--sidebar-active); color: #fff; }
-        .nav-item i { width: 18px; text-align: center; font-size: 0.85rem; }
+        .nav-item i { width: 18px; text-align: center; font-size: 0.88rem; }
         .chat-history-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            border-radius: 8px;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 10px;
             color: var(--sidebar-text);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.15s;
             overflow: hidden;
@@ -149,30 +152,31 @@
         .chat-history-item .del-chat:hover { color: #ef4444; }
 
         .sidebar-footer {
-            padding: 12px 16px;
-            border-top: 1px solid #1f2937;
+            padding: 14px 18px;
+            border-top: 1px solid #1a2040;
         }
         .sidebar-footer .footer-links {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .sidebar-footer a {
-            font-size: 0.7rem;
-            color: #6b7280;
+            font-size: 0.72rem;
+            color: #5a6380;
             text-decoration: none;
             transition: color 0.15s;
         }
-        .sidebar-footer a:hover { color: #d1d5db; }
+        .sidebar-footer a:hover { color: #c0c8e0; }
 
         /* ===== MAIN ===== */
         .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
         /* Topbar */
         .topbar {
-            background: var(--card);
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 10px 20px;
+            padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -214,85 +218,88 @@
             flex: 1;
             overflow-y: auto;
             padding: 0;
+            background: linear-gradient(180deg, #f0f4ff 0%, #e8edf9 100%);
         }
         .chat-area::-webkit-scrollbar { width: 5px; }
-        .chat-area::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .chat-area::-webkit-scrollbar-thumb { background: #c0c8e0; border-radius: 10px; }
 
-        .chat-messages { max-width: 780px; margin: 0 auto; padding: 24px 20px; }
+        .chat-messages { max-width: 800px; margin: 0 auto; padding: 28px 24px; }
 
         /* Welcome */
-        .welcome { text-align: center; padding: 60px 20px 30px; }
+        .welcome { text-align: center; padding: 64px 20px 30px; }
         .welcome-icon {
-            width: 64px; height: 64px; border-radius: 16px;
-            background: linear-gradient(135deg, var(--accent), #0005a0);
+            width: 72px; height: 72px; border-radius: 20px;
+            background: linear-gradient(135deg, #4f5fff, #00d4aa);
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px; font-size: 1.6rem; color: #fff;
-            box-shadow: 0 8px 32px rgba(0,3,201,0.2);
+            margin: 0 auto 24px; font-size: 1.8rem; color: #fff;
+            box-shadow: 0 12px 40px rgba(79,95,255,0.25);
         }
-        .welcome h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
-        .welcome p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; max-width: 480px; margin: 0 auto 28px; }
+        .welcome h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+        .welcome p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; max-width: 500px; margin: 0 auto 32px; }
 
         .quick-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            max-width: 600px;
+            gap: 12px;
+            max-width: 640px;
             margin: 0 auto;
         }
         .quick-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 12px;
+            border-radius: 14px;
+            padding: 18px 14px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s;
+            box-shadow: 0 2px 8px rgba(0,3,201,0.04);
         }
-        .quick-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .quick-card:hover { border-color: #4f5fff; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(79,95,255,0.12); }
         .quick-card .qi {
-            width: 40px; height: 40px; border-radius: 10px;
+            width: 44px; height: 44px; border-radius: 12px;
             background: var(--accent-light);
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 10px; font-size: 1rem; color: var(--accent);
+            margin: 0 auto 12px; font-size: 1.05rem; color: var(--accent);
         }
-        .quick-card h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 2px; }
-        .quick-card p { font-size: 0.7rem; color: var(--muted); line-height: 1.4; }
+        .quick-card h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 3px; }
+        .quick-card p { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
 
         /* Messages */
-        .msg { display: flex; gap: 12px; margin-bottom: 20px; animation: msgIn 0.3s ease; }
+        .msg { display: flex; gap: 14px; margin-bottom: 24px; animation: msgIn 0.3s ease; }
         @keyframes msgIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
         .msg.user { flex-direction: row-reverse; }
         .msg-avatar {
-            width: 34px; height: 34px; border-radius: 10px;
+            width: 36px; height: 36px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.8rem; flex-shrink: 0; font-weight: 700;
+            font-size: 0.85rem; flex-shrink: 0; font-weight: 700;
         }
-        .msg.user .msg-avatar { background: var(--accent); color: #fff; }
+        .msg.user .msg-avatar { background: linear-gradient(135deg, #4f5fff, #0003c9); color: #fff; }
         .msg.ai .msg-avatar { background: linear-gradient(135deg, #059669, #047857); color: #fff; }
         .msg-content { min-width: 0; }
-        .msg-name { font-size: 0.72rem; font-weight: 700; margin-bottom: 4px; }
-        .msg.user .msg-name { text-align: right; color: var(--accent); }
-        .msg.ai .msg-name { color: var(--green); }
+        .msg-name { font-size: 0.74rem; font-weight: 700; margin-bottom: 5px; }
+        .msg.user .msg-name { text-align: right; color: #4f5fff; }
+        .msg.ai .msg-name { color: #059669; }
         .msg-bubble {
-            font-size: 0.88rem;
-            line-height: 1.75;
+            font-size: 0.9rem;
+            line-height: 1.8;
             word-wrap: break-word;
         }
         .msg.user .msg-bubble {
-            background: var(--user-bubble);
+            background: linear-gradient(135deg, #0003c9, #1a0aff);
             color: #fff;
-            padding: 12px 16px;
-            border-radius: 16px 16px 4px 16px;
-            max-width: 75%;
+            padding: 14px 18px;
+            border-radius: 18px 18px 6px 18px;
+            max-width: 72%;
             margin-left: auto;
+            box-shadow: 0 4px 16px rgba(0,3,201,0.15);
         }
         .msg.ai .msg-bubble {
-            background: var(--ai-bubble);
+            background: var(--card);
             color: var(--text);
-            padding: 12px 16px;
-            border-radius: 16px 16px 16px 4px;
+            padding: 14px 18px;
+            border-radius: 18px 18px 18px 6px;
             border: 1px solid var(--border);
-            box-shadow: var(--shadow);
+            box-shadow: 0 2px 12px rgba(0,3,201,0.05);
             max-width: 85%;
         }
         .msg-bubble p { margin-bottom: 8px; }
@@ -383,63 +390,64 @@
         /* Input Area */
         .input-area {
             background: var(--bg);
-            padding: 0 20px 20px;
+            padding: 0 24px 24px;
             flex-shrink: 0;
         }
         .input-wrap {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
             background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 8px;
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            padding: 10px;
             display: flex;
             align-items: flex-end;
-            gap: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0,3,201,0.06);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,3,201,0.08); }
+        .input-wrap:focus-within { border-color: #4f5fff; box-shadow: 0 0 0 4px rgba(79,95,255,0.10); }
         .input-wrap textarea {
             flex: 1;
             border: none;
             background: transparent;
             font-family: inherit;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             color: var(--text);
             resize: none;
             outline: none;
-            padding: 8px 8px;
+            padding: 10px 10px;
             max-height: 140px;
             line-height: 1.5;
             direction: rtl;
         }
         .input-wrap textarea::placeholder { color: var(--light); }
         .send-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--accent);
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #0003c9, #1a0aff);
             color: #fff;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 1rem;
             flex-shrink: 0;
             transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(0,3,201,0.2);
         }
-        .send-btn:hover { background: #0002a3; }
-        .send-btn:disabled { background: #d1d5db; cursor: not-allowed; }
-        .send-btn.stop { background: #ef4444; animation: stopPulse 1.2s ease-in-out infinite; }
-        .send-btn.stop:hover { background: #dc2626; }
+        .send-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,3,201,0.3); }
+        .send-btn:disabled { background: #c0c8e0; cursor: not-allowed; box-shadow: none; transform: none; }
+        .send-btn.stop { background: linear-gradient(135deg, #ef4444, #dc2626); animation: stopPulse 1.2s ease-in-out infinite; box-shadow: 0 4px 16px rgba(239,68,68,0.2); }
+        .send-btn.stop:hover { transform: scale(1.05); }
         @keyframes stopPulse { 0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)} 50%{box-shadow:0 0 0 8px rgba(239,68,68,0)} }
         .input-hint {
-            max-width: 780px;
-            margin: 8px auto 0;
+            max-width: 800px;
+            margin: 10px auto 0;
             text-align: center;
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             color: var(--light);
         }
 
@@ -627,6 +635,30 @@
             .quick-card h3 { font-size: 0.75rem; margin-bottom: 1px; }
             .quick-card p { font-size: 0.62rem; }
 
+            /* Loading spinner */
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+            .spinner {
+                width: 20px;
+                height: 20px;
+                border: 2px solid var(--border);
+                border-top-color: var(--accent);
+                border-radius: 50%;
+                animation: spin 0.8s linear infinite;
+            }
+
+            /* Voice button speaking state */
+            .msg-action-btn.speaking {
+                background: var(--accent);
+                color: white;
+                animation: pulse 1.5s infinite;
+            }
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
+            }
+
             /* Gen CV bar mobile */
             .gen-cv-bar { padding: 0 12px 8px; }
             .gen-cv-btn { padding: 11px; font-size: 0.82rem; border-radius: 10px; }
@@ -731,7 +763,7 @@
                 <!-- Welcome -->
                 <div class="welcome" id="welcomeScreen">
                     <div class="welcome-icon"><i class="fas fa-robot"></i></div>
-                    <div class="welcome-badge"><i class="fas fa-bolt" style="color:#27ffed"></i> مجاني بالكامل — بدون تسجيل دخول</div>
+                    <div class="welcome-badge"><i class="fas fa-bolt" style="color:#27ffed"></i> مجاني بالكامل — سجّل دخولك للبدء</div>
                     <h1>مرحباً! أنا مساعد QCV الذكي</h1>
                     <p>أساعدك في كتابة سيرة ذاتية، تحسينها، التحضير للمقابلات، وتحديد مسارك المهني.</p>
                     <div class="welcome-stats">
@@ -791,6 +823,17 @@
         </div>
     </div>
 
+    <!-- Auth Gate Overlay -->
+    <div id="authGate" style="display:none !important;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
+        <div style="background:#fff;border-radius:20px;padding:40px 35px;text-align:center;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.15)">
+            <div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#0003c9,#27ffed);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.5rem;color:#fff"><i class="fas fa-robot"></i></div>
+            <h2 style="margin:0 0 8px;font-size:1.3rem;color:#111827">تسجيل الدخول مطلوب</h2>
+            <p style="color:#6b7280;font-size:.9rem;margin:0 0 24px;line-height:1.6">سجّل دخولك للوصول إلى مساعد QCV الذكي<br>مجاني بالكامل — بدون بطاقة ائتمان</p>
+            <a href="login.html?redirect=ai.html" style="display:inline-block;padding:12px 32px;background:#0003c9;color:#fff;border-radius:12px;font-weight:700;font-size:.95rem;text-decoration:none">تسجيل الدخول</a>
+            <p style="margin-top:16px;font-size:.8rem;color:#9ca3af">ليس لديك حساب؟ <a href="login.html?tab=register&redirect=ai.html" style="color:#0003c9;font-weight:600;text-decoration:none">سجّل الآن مجاناً</a></p>
+        </div>
+    </div>
+
     <!-- Voice Popup -->
     <div class="voice-popup-overlay" id="voiceOverlay">
         <div class="voice-popup">
@@ -811,7 +854,12 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script>
+        firebase.initializeApp({apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"});
+        const auth = firebase.auth();
+
         let chatHistory = [];
         let isTyping = false;
         let cvDataExtracted = null;
@@ -820,31 +868,50 @@
 
         const SYSTEM_PROMPT = `أنت مساعد ذكي متخصص في السيرة الذاتية والوظائف لمنصة QCV. تتحدث العربية بشكل مختصر ومفيد.
 
+== شخصيتك ==
+-اسمك: مساعد QCV الذكي
+- خبرة +10 سنوات في التوظيف وكتابة السير الذاتية
+- واقعي وعملي — لا تقدم نصائح نظرية
+- تتحدث بلغة المستخدم (عامية مصرية أو فصحى بسيطة)
+
 == قواعد مهمة جداً ==
 - **رد قصير ومباشر** — لا تكتب أكثر من 3-4 فقرات إلا إذا طلب التفصيل
 - **لا تكرر نفس المعلومات** — كل نقطة مرة واحدة فقط
 - **لا تستخدم كلمات مبتدئ** مثل "بالتأكيد" أو "بكل سرور" أو "يسعدني" — كن مباشر
 - **الإجابة المثالية 5-8 سطور** ما لم يطلب المستخدم تفصيل
 - **لا تشرح أشياء مفروض أن المستخدم يعرفها** — ركز على اللي محتاجه فعلاً
+- **إذا المستخدم قال "حسّن" أو " verbessere" أو "improve"** — اسأله يبعتلك السيرة الذاتية أولاً
+- **إذا المستخدم سأل سؤال عام** — أجب عليه بشكل مختصر ثم اقترحله يجرب أداة مناسبة
 
 == معلومات المنصة ==
 - QCV (qcv.vexonet.online) — منصة مصرية لإنشاء السير الذاتية الاحترافية
-- 15+ قالب CV، محرر ذكي، أدوات AI مجانية، بورتفوليو
+- 15+ قالب CV احترافي (ATS-friendly)
+- محرر ذكي مع AI suggestions
+- أدوات AI مجانية: فحص ATS، خطابات التعريف، المسار المهني
 - باقات: مجانية / Pro 99ج / Unlimited 299ج
 - الدفع: فودافون كاش، فوري، انستاباي
+- روابط مفيدة: editor.html, templates.html, ats-checker.html, ai-tools.html
 
 == المهام ==
-1. كتابة سيرة ذاتية — اجمع البيانات بسؤال واحد، ثم اكتبها
-2. تحسين سيرة ذاتية — ملاحظات محددة وcompact
-3. أسئلة مقابلة — 5-7 أسئلة كافية مع نصيحة لكل سؤال
-4. Cover Letter — خطاب واحد مختصر ومخصص
-5. مسار مهني — 3-4 توصيات عملية
+1. **كتابة سيرة ذاتية** — اجمع البيانات بسؤال واحد واضح، ثم اكتبها كاملة
+   - اسأل عن: الاسم، المسمى الوظيفي، البريد، الهاتف، المدينة، الملخص، الخبرات، التعليم، المهارات
+   - اكتب JSON block في النهاية
+2. **تحسين سيرة ذاتية** — اقرأ النص وأعطني ملاحظات محددة
+   - ركز على: التWORDS، الإنجازات بالأرقام، التنسيق، ATS optimization
+3. **أسئلة مقابلة** — 5-7 أسئلة شائعة مع نصيحة عملية لكل سؤال
+4. **Cover Letter** — خطاب واحد مختصر ومخصص للوظيفة
+5. **مسار مهني** — 3-4 توصيات عملية بناءً على المهارات
+6. **نصائح عامة** — إجابات مباشرة ومفيدة
 
 == التنسيق ==
 - markdown: **عريض**، - قوائم، ## عناوين
 - JSON block في النهاية إذا كتب سيرة ذاتية
 - لا جداول markdown — قوائم بدلاً منها
-- رد بالعربية دائماً`;
+- رد بالعربية دائماً
+- استخدم emoji بسيطة للتنظيم فقط`;
+
+        /* ===== Conversation Context ===== */
+        let conversationContext = { topics: [], userIntent: '', cvData: null };
 
         /* ===== Chat Management ===== */
         function genChatId() { return 'chat_' + Date.now(); }
@@ -904,7 +971,7 @@
             container.innerHTML = `
                 <div class="welcome" id="welcomeScreen">
                     <div class="welcome-icon"><i class="fas fa-robot"></i></div>
-                    <div class="welcome-badge"><i class="fas fa-bolt" style="color:#27ffed"></i> مجاني بالكامل — بدون تسجيل دخول</div>
+                    <div class="welcome-badge"><i class="fas fa-bolt" style="color:#27ffed"></i> مجاني بالكامل — سجّل دخولك للبدء</div>
                     <h1>مرحباً! أنا مساعد QCV الذكي</h1>
                     <p>أساعدك في كتابة سيرة ذاتية، تحسينها، التحضير للمقابلات، وتحديد مسارك المهني.</p>
                     <div class="welcome-stats">
@@ -913,35 +980,35 @@
                         <div class="welcome-stat"><div class="num">مجاني</div><div class="lbl">بدون حدود</div></div>
                     </div>
                     <div class="quick-grid" style="margin-top:24px">
-                        <div class="quick-card" onclick="quickAsk('اكتب لي سيرة ذاتية احترافية باسمي ومعلوماتي')">
+                        <div class="quick-card" onclick="quickAsk('أنا عايز أكتب سيرة ذاتية احترافية. هبدأ ببياناتي: اسمي هو...')">
                             <div class="qi"><i class="fas fa-pen-fancy"></i></div>
                             <h3>اكتب سيرة ذاتية</h3>
-                            <p>من بياناتك مباشرة</p>
+                            <p>ابدأ ببياناتك مباشرة</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('حسّن سيرتي الذاتية هذه وأعطني ملاحظات التحسين')">
+                        <div class="quick-card" onclick="quickAsk('عايز أحسّن سيرتي الذاتية. هبعتلك النص وأنت وصّلي الملاحظات')">
                             <div class="qi"><i class="fas fa-wand-magic-sparkles"></i></div>
                             <h3>حسّن سيرتي</h3>
-                            <p>ملاحظات وتوصيات</p>
+                            <p>ابعت النص واصنعي التحسينات</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('اعطيني 5 أسئلة مقابلة شائعة لـ Software Engineer مع نصائح للإجابة')">
+                        <div class="quick-card" onclick="quickAsk('أنا شغال/ة في مجال تقني وعايز أسأل عن أسئلة مقابلات شائعة في مجالي مع نصائح للإجابة')">
                             <div class="qi"><i class="fas fa-comments"></i></div>
                             <h3>أسئلة مقابلة</h3>
-                            <p>5 أسئلة مع نصائح</p>
+                            <p>اسألني عن مجالك</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('اكتب لي Cover Letter مختصر واحترافي لوظيفة مطور واجهات أمامية')">
+                        <div class="quick-card" onclick="quickAsk('عايز أكتب Cover Letter لوظيفة معينة. هبعتلك وصف الوظيفة وبياناتي')">
                             <div class="qi"><i class="fas fa-envelope-open-text"></i></div>
                             <h3>خطاب تعريف</h3>
-                            <p>Cover Letter مختصر</p>
+                            <p>ابعت الوظيفة وبياناتك</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('اقترح علي 3 وظائف مناسبة لمهاراتي وخبراتي')">
+                        <div class="quick-card" onclick="quickAsk('عايز أعرف الوظائف المناسبة لمهاراتي. هبعتلك مهاراتي وخبراتي')">
                             <div class="qi"><i class="fas fa-briefcase"></i></div>
                             <h3>وظائف مناسبة</h3>
-                            <p>توصيات وظائف</p>
+                            <p>اسألني عن مهاراتك</p>
                         </div>
-                        <div class="quick-card" onclick="quickAsk('كيف أضيف إنجازات بأرقام في السيرة الذاتية؟ أعطني مثال عملي')">
+                        <div class="quick-card" onclick="quickAsk('عايز نصيحة عملية لتحسين السيرة الذاتية. اقتراحات سريعة ومحددة')">
                             <div class="qi"><i class="fas fa-lightbulb"></i></div>
-                            <h3>نصيحة ذهبية</h3>
-                            <p>مع مثال عملي</p>
+                            <h3>نصائح ذهبية</h3>
+                            <p>اقتراحات عملية فورية</p>
                         </div>
                     </div>
                 </div>`;
@@ -984,6 +1051,7 @@
                         <div class="msg-name">${name}</div>
                         <div class="msg-bubble">${formatMd(text)}</div>
                         <div class="msg-actions">
+                            ${!isUser ? '<button class="msg-action-btn" onclick="speakText(this)" data-text="' + escAttr(text) + '" title="استمع"><i class="fas fa-volume-high"></i></button>' : ''}
                             <button class="msg-action-btn" onclick="copyText(this)" data-text="${escAttr(text)}"><i class="fas fa-copy"></i> نسخ</button>
                         </div>
                     </div>
@@ -1129,9 +1197,58 @@
             });
         }
 
-        /* ===== Send / Receive via Pollinations AI ===== */
-        const POLLINATIONS_URL = 'https://text.pollinations.ai/openai/chat/completions';
-        const AI_MODELS = ['openai', 'openai-large'];
+        /* ===== Text to Speech ===== */
+        let currentUtterance = null;
+        
+        function speakText(btn) {
+            const text = btn.getAttribute('data-text');
+            if (!text) return;
+            
+            // If already speaking, stop
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                btn.innerHTML = '<i class="fas fa-volume-high"></i>';
+                btn.classList.remove('speaking');
+                return;
+            }
+            
+            // Clean text for speech (remove markdown, emojis, etc.)
+            const cleanText = text
+                .replace(/```[\s\S]*?```/g, ' كود ')
+                .replace(/[*#_`]/g, '')
+                .replace(/\n{2,}/g, '. ')
+                .replace(/\n/g, ' ')
+                .trim();
+            
+            if (!cleanText) return;
+            
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'ar-SA';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            
+            utterance.onstart = () => {
+                btn.innerHTML = '<i class="fas fa-volume-high" style="color:var(--accent)"></i>';
+                btn.classList.add('speaking');
+            };
+            
+            utterance.onend = () => {
+                btn.innerHTML = '<i class="fas fa-volume-high"></i>';
+                btn.classList.remove('speaking');
+            };
+            
+            utterance.onerror = () => {
+                btn.innerHTML = '<i class="fas fa-volume-high"></i>';
+                btn.classList.remove('speaking');
+            };
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /* ===== Send / Receive via OpenRouter AI ===== */
+        const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+        const OPENROUTER_KEY = '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';
+        const AI_MODELS = ['google/gemini-2.5-flash', 'openai/gpt-4o-mini', 'openai/gpt-4.1-nano'];
         let currentModelIndex = 0;
 
         function onSendClick() {
@@ -1172,9 +1289,14 @@
 
         async function callPollinations(apiMessages, signal) {
             const model = AI_MODELS[currentModelIndex % AI_MODELS.length];
-            const response = await fetch(POLLINATIONS_URL, {
+            const response = await fetch(OPENROUTER_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + OPENROUTER_KEY,
+                    'HTTP-Referer': 'https://qcv.vexonet.online',
+                    'X-Title': 'QCV AI'
+                },
                 body: JSON.stringify({
                     model: model,
                     messages: apiMessages,
@@ -1198,6 +1320,9 @@
 
             renderMsg('user', text);
 
+            // Track conversation context
+            trackConversationContext(text);
+
             const apiMessages = [
                 { role: 'system', content: SYSTEM_PROMPT },
                 ...chatHistory.map(m => ({
@@ -1220,8 +1345,12 @@
             currentAbortController = new AbortController();
 
             let lastError = null;
-            for (let attempt = 0; attempt < 2; attempt++) {
+            let modelIndex = 0;
+            const maxAttempts = AI_MODELS.length;
+
+            for (let attempt = 0; attempt < maxAttempts; attempt++) {
                 try {
+                    const model = AI_MODELS[modelIndex % AI_MODELS.length];
                     const response = await callPollinations(apiMessages, currentAbortController.signal);
                     const reader = response.body.getReader();
                     const decoder = new TextDecoder();
@@ -1258,8 +1387,8 @@
                 } catch (err) {
                     if (err.name === 'AbortError') break;
                     lastError = err;
-                    currentModelIndex++; // Try next model
-                    if (attempt < 1) await new Promise(r => setTimeout(r, 1000));
+                    modelIndex++; // Try next model
+                    if (attempt < maxAttempts - 1) await new Promise(r => setTimeout(r, 1000));
                 }
             }
 
@@ -1301,6 +1430,60 @@
         function quickAsk(text) {
             document.getElementById('userInput').value = text;
             sendMessage();
+        }
+
+        /* ===== Conversation Context Tracking ===== */
+        function trackConversationContext(text) {
+            const lower = text.toLowerCase();
+            
+            // Detect user intent
+            if (lower.includes('سيرة ذاتية') || lower.includes('cv') || lower.includes('resume')) {
+                conversationContext.userIntent = 'cv';
+            } else if (lower.includes('مقابلة') || lower.includes('interview')) {
+                conversationContext.userIntent = 'interview';
+            } else if (lower.includes('خطاب') || lower.includes('cover letter')) {
+                conversationContext.userIntent = 'coverletter';
+            } else if (lower.includes('وظيفة') || lower.includes('job')) {
+                conversationContext.userIntent = 'job';
+            } else if (lower.includes('حسّن') || lower.includes(' improve') || lower.includes('ملاحظات')) {
+                conversationContext.userIntent = 'improve';
+            }
+            
+            // Track topics mentioned
+            const topics = ['experience', 'skills', 'education', 'contact', 'summary'];
+            topics.forEach(topic => {
+                if (lower.includes(topic) || (topic === 'experience' && (lower.includes('خبرة') || lower.includes('شغل'))) ||
+                    (topic === 'skills' && (lower.includes('مهارة') || lower.includes('تقنيات'))) ||
+                    (topic === 'education' && (lower.includes('تعليم') || lower.includes('جامعة'))) ||
+                    (topic === 'contact' && (lower.includes('بريد') || lower.includes('هاتف'))) ||
+                    (topic === 'summary' && (lower.includes('ملخص') || lower.includes('نبذة')))) {
+                    if (!conversationContext.topics.includes(topic)) {
+                        conversationContext.topics.push(topic);
+                    }
+                }
+            });
+            
+            // Detect CV data in user messages
+            if (text.includes('@') || text.match(/\d{10,}/)) {
+                conversationContext.hasContactInfo = true;
+            }
+        }
+
+        /* ===== Loading Indicator ===== */
+        function showLoading(msg) {
+            const el = document.getElementById('chatMessages');
+            el.insertAdjacentHTML('beforeend', `
+                <div class="loading-indicator" id="loadingEl" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--accent-light);border-radius:12px;margin:8px 0">
+                    <div class="spinner" style="width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite"></div>
+                    <span style="font-size:0.85rem;color:var(--accent);font-weight:600">${msg || 'جاري التفكير...'}</span>
+                </div>
+            `);
+            scrollDown();
+        }
+        
+        function hideLoading() {
+            const el = document.getElementById('loadingEl');
+            if (el) el.remove();
         }
 
         function generateCvFromChat() {
@@ -1481,6 +1664,22 @@
             typeChunk();
         }
 
+        /* ===== Firebase Auth Gate ===== */
+        auth.onAuthStateChanged(function(user) {
+            if (!user) {
+                var gate = document.getElementById('authGate');
+                gate.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)';
+                document.querySelector('.sidebar').style.display = 'none';
+                document.querySelector('.chat-area').style.display = 'none';
+                return;
+            }
+            document.getElementById('authGate').style.display = 'none';
+            document.querySelector('.sidebar').style.display = '';
+            document.querySelector('.chat-area').style.display = '';
+            initChat();
+        });
+
+        function initChat() {
         /* ===== Init ===== */
         if (localStorage.getItem('qcv_dark') === 'true') document.body.classList.add('dark-mode');
 
@@ -1493,6 +1692,7 @@
         document.getElementById('userInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
         });
+        }
     </script>
 </body>
 </html>

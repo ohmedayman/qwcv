@@ -1454,7 +1454,12 @@
             checkApprovedDomain(user.email).then(domainInfo => {
                 if (domainInfo) {
                     userData.plan = domainInfo.plan || 'free';
-                    if (domainInfo.duration) userData.planExpiry = Date.now() + domainInfo.duration * 30 * 24 * 60 * 60 * 1000;
+                    if (domainInfo.duration) {
+                        // Smart detection: if duration <= 24, it's likely months (legacy), otherwise days
+                        var dur = domainInfo.duration;
+                        var ms = (dur <= 24) ? dur * 30 * 24 * 60 * 60 * 1000 : dur * 24 * 60 * 60 * 1000;
+                        userData.planExpiry = Date.now() + ms;
+                    }
                     userData.approvedDomain = user.email.split('@')[1];
                 }
                 set(ref(db, 'users/' + user.uid), userData).catch(e => {
@@ -1528,10 +1533,17 @@
             } catch(e) { console.error('trackLoginDetails error:', e); }
         }
 
+        function getRedirectPage() {
+            const p = new URLSearchParams(window.location.search);
+            const r = p.get('redirect');
+            if (r && /^[a-z0-9_-]+\.html$/i.test(r)) return r;
+            return 'editor.html';
+        }
+
         onAuthStateChanged(auth, (user) => {
             if (user && !isSignUpMode && !isResetting) {
                 showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
-                setTimeout(() => location.replace("editor.html"), 400);
+                setTimeout(() => location.replace(getRedirectPage()), 400);
             }
         });
 
@@ -1690,7 +1702,7 @@
                         try { sessionStorage.removeItem('affiliate_ref'); } catch (e) { }
                     }
                     if (window.QCVNotify) QCVNotify.success();
-                    location.replace("editor.html");
+                    location.replace(getRedirectPage());
                 } else {
                     const res = await signInWithEmailAndPassword(auth, email, pass);
                     setPersistence(auth, browserLocalPersistence).catch(() => { });
@@ -1698,7 +1710,7 @@
                     trackLoginDetails(auth.currentUser.uid);
                     if (window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('مرحباً بك!', 'جاري التحويل...');
-                    setTimeout(() => location.replace("editor.html"), 400);
+                    setTimeout(() => location.replace(getRedirectPage()), 400);
                 }
             } catch (err) {
                 setLoading(btn, false);
@@ -1717,7 +1729,7 @@
                 const res = await signInWithPopup(auth, new GoogleAuthProvider());
                 saveUserData(res.user, { name: res.user.displayName || res.user.email.split('@')[0] });
                 if (window.QCVNotify) QCVNotify.success();
-                location.replace("editor.html");
+                location.replace(getRedirectPage());
             } catch (err) { showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ: ' + err.message, 'error'); }
         });
 

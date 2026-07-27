@@ -1,2037 +1,642 @@
 ﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://qcv.vexonet.online/pay.html">
-    <meta property="og:title" content="اشترك في QCV - السير الذاتية الاحترافية">
-    <meta property="og:description"
-        content="اختر الباقة المناسبة: مجاناً، Pro 99 ج.م/شهر، أو غير محدود 299 ج.م/شهر. ابدأ الآن!">
-    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
-    <meta property="og:site_name" content="QCV">
-    <meta property="og:locale" content="ar_AR">
-    <title>QCV - اشترك ودفع</title>
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="description"
-        content="اشترك في QCV لبناء سير ذاتية احترافية. اختر بين الباقة المجانية، Pro ب 99 ج.م/شهر، أو غير محدود ب 299 ج.م/شهر.">
+    <title>QCV - اشترك الآن</title>
+    <meta name="description" content="اشترك في QCV: Pro بـ99 ج.م/شهر أو غير محدود بـ299 ج.م/شهر. باقة 48 ساعة بـ30 ج.م.">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
-    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="mobile.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #ffffff;
-            --bg2: #f9fafb;
-            --card: #ffffff;
-            --border: #e5e7eb;
-            --accent: #0003c9;
-            --accent2: #27ffed;
-            --green: #059669;
-            --green-bg: rgba(5, 150, 105, 0.08);
-            --red: #ef4444;
-            --red-bg: rgba(239, 68, 68, 0.06);
-            --orange: #f59e0b;
-            --purple: #8b5cf6;
-            --text: #1a1a2e;
-            --muted: #6b7280;
-            --light: #9ca3af;
-            --input: #f9fafb;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image: radial-gradient(ellipse at top, rgba(0, 3, 201, 0.03), transparent 60%)
-        }
-
-        /* ===== LAYOUT ===== */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 25px 20px 60px
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 28px;
-            transition: all 0.2s
-        }
-
-        .back-link:hover {
-            color: var(--accent)
-        }
-
-        /* ===== PAGE HEADER ===== */
-        .page-header {
-            text-align: center;
-            margin-bottom: 35px
-        }
-
-        .page-header h1 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 8px
-        }
-
-        .page-header h1 span {
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text
-        }
-
-        .page-header p {
-            color: var(--muted);
-            font-size: 0.9rem
-        }
-
-        /* ===== STEPS ===== */
-        .steps {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 35px
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--muted);
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            transition: all 0.3s
-        }
-
-        .step.active {
-            color: var(--accent);
-            background: rgba(0, 3, 201, 0.05);
-            border-color: rgba(0, 3, 201, 0.2)
-        }
-
-        .step.done {
-            color: var(--green);
-            background: rgba(5, 150, 105, 0.06);
-            border-color: rgba(5, 150, 105, 0.2)
-        }
-
-        .step-num {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.72rem;
-            font-weight: 800;
-            background: var(--border);
-            flex-shrink: 0
-        }
-
-        .step.active .step-num {
-            background: var(--accent);
-            color: #fff
-        }
-
-        .step.done .step-num {
-            background: var(--green);
-            color: #fff
-        }
-
-        .step-connector {
-            width: 30px;
-            height: 2px;
-            background: var(--border);
-            flex-shrink: 0
-        }
-
-        /* ===== STEP CONTENT ===== */
-        .step-content {
-            display: none;
-            animation: fadeIn 0.35s ease
-        }
-
-        .step-content.active {
-            display: block
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-
-        /* ===== PLAN CARDS (Step 1) ===== */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 28px
-        }
-
-        .plan-card {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 26px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            text-align: center
-        }
-
-        .plan-card:hover {
-            border-color: rgba(0, 3, 201, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06)
-        }
-
-        .plan-card.selected {
-            border-color: var(--accent);
-            background: rgba(0, 3, 201, 0.03);
-            box-shadow: 0 0 40px rgba(0, 3, 201, 0.08)
-        }
-
-        .plan-card.popular {
-            border-color: var(--accent);
-            background: rgba(0, 3, 201, 0.03)
-        }
-
-        .plan-popular {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--accent);
-            color: #fff;
-            font-size: 0.58rem;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-weight: 800
-        }
-
-        .plan-icon {
-            font-size: 2rem;
-            margin-bottom: 12px
-        }
-
-        .plan-subtitle {
-            font-size: 0.72rem;
-            color: var(--muted);
-            margin-bottom: 4px;
-            font-weight: 500
-        }
-
-        .plan-name {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 4px
-        }
-
-        .plan-price {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent);
-            margin-bottom: 3px
-        }
-
-        .plan-price .curr {
-            font-size: 0.8rem;
-            font-weight: 600
-        }
-
-        .plan-price.free-p {
-            color: var(--green)
-        }
-
-        .plan-period {
-            font-size: 0.7rem;
-            color: var(--muted);
-            margin-bottom: 16px
-        }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 16px;
-            text-align: right
-        }
-
-        .plan-features li {
-            font-size: 0.8rem;
-            color: var(--text);
-            padding: 6px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid var(--border);
-            border-bottom-color: rgba(0, 0, 0, 0.04)
-        }
-
-        .plan-features li:last-child {
-            border-bottom: none
-        }
-
-        .plan-features li i {
-            width: 16px;
-            font-size: 0.65rem
-        }
-
-        .plan-features li .fa-check {
-            color: var(--green)
-        }
-
-        .plan-features li .fa-times {
-            color: var(--red)
-        }
-
-        .plan-features li.dis {
-            opacity: 0.4
-        }
-
-        .plan-features li.dis span {
-            text-decoration: line-through
-        }
-
-        .plan-check {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px auto 0;
-            font-size: 0.7rem;
-            transition: all 0.2s
-        }
-
-        .plan-card.selected .plan-check {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            padding: 13px 28px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            border: none;
-            transition: all 0.25s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #2563eb);
-            color: #fff;
-            width: 100%;
-            box-shadow: 0 4px 20px rgba(0, 3, 201, 0.2)
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 3, 201, 0.3)
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none
-        }
-
-        .btn-secondary {
-            background: var(--bg2);
-            color: var(--muted);
-            border: 1px solid var(--border)
-        }
-
-        .btn-secondary:hover {
-            background: var(--border)
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 22px
-        }
-
-        .btn-group .btn {
-            flex: 1
-        }
-
-        .btn .spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2.5px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite
-        }
-
-        .btn.loading .btn-text {
-            display: none
-        }
-
-        .btn.loading .spinner {
-            display: block
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        /* ===== STEP 2: TWO COLUMN LAYOUT ===== */
-        .pay-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            align-items: start
-        }
-
-        /* ===== RIGHT: PAYMENT METHODS ===== */
-        .methods-col {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04)
-        }
-
-        .methods-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 8px
-        }
-
-        .method-card {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px;
-            border: 2px solid var(--border);
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.25s;
-            margin-bottom: 10px;
-            position: relative;
-            background: var(--bg2)
-        }
-
-        .method-card:hover {
-            border-color: rgba(0, 3, 201, 0.2);
-            background: rgba(0, 3, 201, 0.02)
-        }
-
-        .method-card.selected {
-            border-color: var(--green);
-            background: var(--green-bg)
-        }
-
-        .method-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 900;
-            flex-shrink: 0;
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15)
-        }
-
-        .method-info {
-            flex: 1
-        }
-
-        .method-name {
-            font-size: 0.95rem;
-            font-weight: 800;
-            margin-bottom: 2px
-        }
-
-        .method-desc {
-            font-size: 0.75rem;
-            color: var(--muted)
-        }
-
-        .method-check {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            transition: all 0.2s;
-            flex-shrink: 0
-        }
-
-        .method-card.selected .method-check {
-            background: var(--green);
-            border-color: var(--green);
-            color: #fff
-        }
-
-        /* ===== WALLET BOX ===== */
-        .wallet-box {
-            background: linear-gradient(135deg, rgba(0, 3, 201, 0.04), rgba(5, 150, 105, 0.04));
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 16px;
-            text-align: center
-        }
-
-        .wallet-box .wb-label {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-bottom: 12px
-        }
-
-        .wallet-box .wb-number {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent);
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-            margin-bottom: 6px
-        }
-
-        .wallet-box .wb-name {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-bottom: 16px
-        }
-
-        .btn-copy {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 24px;
-            background: rgba(0, 3, 201, 0.06);
-            border: 1px solid rgba(0, 3, 201, 0.15);
-            color: var(--accent);
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.2s
-        }
-
-        .btn-copy:hover {
-            background: var(--accent);
-            color: #fff
-        }
-
-        .btn-copy.copied {
-            background: var(--green);
-            color: #fff;
-            border-color: var(--green)
-        }
-
-        /* ===== LEFT: PAYMENT FORM ===== */
-        .form-col {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04)
-        }
-
-        .form-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px
-        }
-
-        /* ===== FORM INPUTS ===== */
-        .fg {
-            margin-bottom: 16px
-        }
-
-        .fg label {
-            display: block;
-            font-size: 0.78rem;
-            color: var(--muted);
-            margin-bottom: 6px;
-            font-weight: 600
-        }
-
-        .fg label .req {
-            color: var(--red)
-        }
-
-        .fg input,
-        .fg textarea,
-        .fg select {
-            width: 100%;
-            padding: 13px 15px;
-            background: var(--input);
-            border: 1.5px solid var(--border);
-            color: var(--text);
-            border-radius: 10px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.88rem;
-            outline: none;
-            transition: all 0.25s
-        }
-
-        .fg input:focus,
-        .fg textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 3, 201, 0.08)
-        }
-
-        .fg input::placeholder,
-        .fg textarea::placeholder {
-            color: var(--light)
-        }
-
-        .fg textarea {
-            resize: vertical;
-            min-height: 70px;
-            line-height: 1.5
-        }
-
-        .fg select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 14px center
-        }
-
-        .fg select option {
-            background: var(--card)
-        }
-
-        .fg .err-msg {
-            font-size: 0.72rem;
-            color: var(--red);
-            margin-top: 5px;
-            display: none
-        }
-
-        .fg input.err {
-            border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.06)
-        }
-
-        .fg input.err~.err-msg {
-            display: block
-        }
-
-        /* ===== SUCCESS ===== */
-        .success-box {
-            text-align: center;
-            padding: 50px 24px
-        }
-
-        .success-icon {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--green), #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 20px;
-            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            color: #fff
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: scale(0)
-            }
-
-            60% {
-                transform: scale(1.15)
-            }
-
-            100% {
-                transform: scale(1)
-            }
-        }
-
-        .success-box h2 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            margin-bottom: 8px
-        }
-
-        .success-box p {
-            color: var(--muted);
-            font-size: 0.88rem;
-            line-height: 1.7;
-            max-width: 420px;
-            margin: 0 auto 28px
-        }
-
-        .plan-recap {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 20px;
-            max-width: 350px;
-            margin: 0 auto 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center
-        }
-
-        .waiting-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(245, 158, 11, 0.08);
-            color: var(--orange);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            animation: pulse 2s ease-in-out infinite
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1
-            }
-
-            50% {
-                opacity: 0.6
-            }
-        }
-
-        /* ===== RECEIPT ===== */
-        .receipt {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            max-width: 480px;
-            margin: 0 auto 30px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05)
-        }
-
-        .receipt-header {
-            background: linear-gradient(135deg, var(--accent), #2563eb);
-            color: #fff;
-            padding: 24px;
-            text-align: center
-        }
-
-        .receipt-header .logo {
-            font-size: 1.6rem;
-            font-weight: 900;
-            margin-bottom: 4px
-        }
-
-        .receipt-header .logo span {
-            color: #fff
-        }
-
-        .receipt-header p {
-            font-size: 0.82rem;
-            opacity: 0.85
-        }
-
-        .receipt-body {
-            padding: 24px
-        }
-
-        .receipt-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border)
-        }
-
-        .receipt-row:last-child {
-            border-bottom: none
-        }
-
-        .receipt-row .label {
-            color: var(--muted);
-            font-size: 0.85rem
-        }
-
-        .receipt-row .value {
-            font-weight: 800;
-            font-size: 0.9rem;
-            color: var(--text)
-        }
-
-        .receipt-row .value.price {
-            font-size: 1.2rem;
-            color: var(--accent)
-        }
-
-        .receipt-row .value.status {
-            color: var(--orange);
-            display: flex;
-            align-items: center;
-            gap: 6px
-        }
-
-        .receipt-footer {
-            padding: 16px 24px;
-            background: var(--bg2);
-            text-align: center;
-            font-size: 0.78rem;
-            color: var(--muted);
-            border-top: 1px solid var(--border)
-        }
-
-        .receipt-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            max-width: 480px;
-            margin: 0 auto
-        }
-
-        .receipt-actions .btn {
-            flex: 1;
-            justify-content: center;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            border: none;
-            transition: all 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none
-        }
-
-        .btn-download {
-            background: var(--green);
-            color: #fff
-        }
-
-        .btn-download:hover {
-            background: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3)
-        }
-
-        .btn-whatsapp {
-            background: #25d366;
-            color: #fff
-        }
-
-        .btn-whatsapp:hover {
-            background: #1da851;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3)
-        }
-
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            top: 22px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            z-index: 9999;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0)
-        }
-
-        .toast-err {
-            background: var(--red);
-            color: #fff;
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2)
-        }
-
-        .toast-ok {
-            background: var(--green);
-            color: #fff;
-            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.2)
-        }
-
-        .toast-info {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 8px 25px rgba(0, 3, 201, 0.2)
-        }
-
-        /* ===== CONFETTI ===== */
-        .confetti-box {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9998;
-            overflow: hidden
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            top: -10px;
-            animation: confFall 3s ease-in forwards
-        }
-
-        @keyframes confFall {
-            0% {
-                transform: translateY(0) rotate(0);
-                opacity: 1
-            }
-
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0
-            }
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media(max-width:900px) {
-            .navbar {
-                padding: 0 20px !important
-            }
-
-            .nav-links {
-                display: none !important
-            }
-
-            .nav-mobile-toggle {
-                display: flex !important
-            }
-
-            .theme-toggle {
-                width: 44px !important;
-                height: 44px !important
-            }
-
-            .lang-switch button {
-                padding: 8px 12px !important
-            }
-
-            .plans-grid {
-                grid-template-columns: 1fr
-            }
-
-            .pay-grid {
-                grid-template-columns: 1fr !important
-            }
-
-            .steps {
-                flex-wrap: wrap;
-                gap: 6px
-            }
-
-            .step-connector {
-                display: none
-            }
-
-            .step {
-                padding: 8px 14px;
-                font-size: 0.75rem
-            }
-        }
-
-        @media(max-width:600px) {
-            .container {
-                padding: 16px 12px 50px
-            }
-
-            .back-link {
-                font-size: 0.8rem;
-                margin-bottom: 16px
-            }
-
-            .page-header h1 {
-                font-size: 1.4rem
-            }
-
-            .page-header p {
-                font-size: 0.8rem
-            }
-
-            .step {
-                padding: 6px 10px;
-                font-size: 0.7rem;
-                gap: 6px
-            }
-
-            .step-num {
-                width: 22px;
-                height: 22px;
-                font-size: 0.65rem
-            }
-
-            .plan-card {
-                padding: 20px 14px
-            }
-
-            .plan-name {
-                font-size: 1rem
-            }
-
-            .plan-price {
-                font-size: 1.5rem
-            }
-
-            .plan-features li {
-                font-size: 0.75rem;
-                padding: 5px 0
-            }
-
-            .plan-features li i {
-                width: 14px;
-                font-size: 0.6rem
-            }
-
-            .btn {
-                padding: 12px 20px;
-                font-size: 0.85rem
-            }
-
-            .wallet-box .wb-number {
-                font-size: 1.4rem;
-                letter-spacing: 0
-            }
-
-            .footer {
-                padding: 30px 20px 15px
-            }
-
-            .footer-content {
-                flex-direction: column
-            }
-        }
-
-        /* ===== MOBILE NAV ===== */
-        .nav-mobile-toggle {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border: none;
-            background: none;
-            font-size: 1.3rem;
-            color: var(--text);
-            cursor: pointer;
-            border-radius: 10px;
-            flex-shrink: 0
-        }
-
-        .nav-mobile-toggle:hover {
-            background: var(--bg2)
-        }
-
-        @media(max-width:900px) {
-            .nav-links.show {
-                display: flex !important;
-                flex-direction: column;
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: var(--card);
-                border-bottom: 1px solid var(--border);
-                padding: 16px 20px;
-                gap: 12px;
-                z-index: 999;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1)
-            }
-
-            .nav-links.show li {
-                width: 100%
-            }
-
-            .nav-links.show li a,
-            .nav-links.show li button {
-                width: 100%;
-                text-align: center;
-                padding: 12px !important
-            }
-
-            .nav-links.show .theme-toggle,
-            .nav-links.show .lang-switch {
-                margin: 0 auto
-            }
-        }
-
-        /* ===== DARK MODE ===== */
-        body.dark-mode .page-header {
-            background: var(--bg2);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .page-header h1 {
-            color: var(--text)
-        }
-
-        body.dark-mode .step {
-            background: var(--card);
-            border-color: #1e293b;
-            color: var(--text)
-        }
-
-        body.dark-mode .step.active {
-            border-color: #27ffed;
-            background: rgba(39, 255, 237, 0.06)
-        }
-
-        body.dark-mode .step-num {
-            background: #1e293b;
-            color: var(--muted)
-        }
-
-        body.dark-mode .step.active .step-num {
-            background: var(--accent);
-            color: #fff
-        }
-
-        body.dark-mode .plans-grid .plan-card {
-            background: var(--card);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .plans-grid .plan-card.popular {
-            border-color: #27ffed;
-            box-shadow: 0 0 30px rgba(39, 255, 237, 0.08)
-        }
-
-        body.dark-mode .plan-card h3 {
-            color: var(--text)
-        }
-
-        body.dark-mode .plan-card .price {
-            color: var(--text)
-        }
-
-        body.dark-mode .plan-card .period {
-            color: var(--muted)
-        }
-
-        body.dark-mode .plan-features li {
-            color: var(--text);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .plan-features li .check {
-            color: #34d399
-        }
-
-        body.dark-mode .plan-features li .cross {
-            color: #f87171
-        }
-
-        body.dark-mode .payment-section {
-            background: var(--card);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .payment-section h2 {
-            color: var(--text)
-        }
-
-        body.dark-mode .method-card {
-            background: var(--bg2);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .method-card.selected {
-            border-color: #27ffed;
-            background: rgba(39, 255, 237, 0.04)
-        }
-
-        body.dark-mode .method-name {
-            color: var(--text)
-        }
-
-        body.dark-mode .method-desc {
-            color: var(--muted)
-        }
-
-        body.dark-mode .method-icon {
-            background: var(--card);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .payment-details {
-            background: var(--bg2);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .payment-details h3 {
-            color: var(--text)
-        }
-
-        body.dark-mode .detail-row {
-            border-color: #1e293b
-        }
-
-        body.dark-mode .detail-label {
-            color: var(--muted)
-        }
-
-        body.dark-mode .detail-value {
-            color: var(--text)
-        }
-
-        body.dark-mode .receipt-card {
-            background: var(--card);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .receipt-header {
-            background: var(--accent);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .receipt-body .row {
-            border-color: #1e293b
-        }
-
-        body.dark-mode .receipt-body .row .label {
-            color: var(--muted)
-        }
-
-        body.dark-mode .receipt-body .row .value {
-            color: var(--text)
-        }
-
-        body.dark-mode .footer {
-            background: var(--bg);
-            border-color: #1e293b
-        }
-
-        body.dark-mode .footer a {
-            color: #27ffed
-        }
-
-        body.dark-mode a {
-            color: #27ffed
-        }
+        :root{--bg:#f8fafc;--card:#fff;--border:#e5e7eb;--accent:#0003c9;--green:#059669;--red:#ef4444;--orange:#f59e0b;--purple:#8b5cf6;--text:#1a1a2e;--muted:#6b7280;--input:#f9fafb}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh}
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;justify-content:space-between;align-items:center}
+        .nav a.logo{font-size:1.4rem;font-weight:900;text-decoration:none;color:var(--text)}.nav a.logo span{color:var(--accent)}
+        .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.82rem;transition:color 0.2s}.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+        .btn-login{background:var(--accent);color:#fff!important;padding:8px 20px;border-radius:50px;font-weight:700!important}
+        .spacer{height:70px}
+        .container{max-width:900px;margin:0 auto;padding:20px 20px 60px}
+        .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:0.82rem;font-weight:600;margin-bottom:20px;transition:color 0.2s}.back:hover{color:var(--accent)}
+        .header{text-align:center;margin-bottom:28px}
+        .header h1{font-size:1.8rem;font-weight:900;margin-bottom:6px}.header h1 span{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .header p{color:var(--muted);font-size:0.88rem}
+        .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+        .plan{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:22px 16px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative}
+        .plan:hover{border-color:rgba(0,3,201,0.25);transform:translateY(-3px);box-shadow:0 12px 35px rgba(0,0,0,0.06)}
+        .plan.sel{border-color:var(--accent);background:rgba(0,3,201,0.04);box-shadow:0 0 30px rgba(0,3,201,0.12);transform:translateY(-4px)}
+        .plan.pop{border-color:var(--accent)}
+        .pop-tag{position:absolute;top:8px;left:8px;background:var(--accent);color:#fff;font-size:0.55rem;padding:2px 10px;border-radius:20px;font-weight:800}
+        .plan-icon{font-size:1.6rem;margin-bottom:8px}
+        .plan-name{font-size:1rem;font-weight:800;margin-bottom:2px}
+        .plan-desc{font-size:0.68rem;color:var(--muted);margin-bottom:8px}
+        .plan-price{font-size:1.6rem;font-weight:900;color:var(--accent);margin-bottom:2px}
+        .plan-price.free{color:var(--green)}
+        .plan-price .cur{font-size:0.7rem;font-weight:600}
+        .plan-period{font-size:0.65rem;color:var(--muted);margin-bottom:12px}
+        .plan-feats{list-style:none;text-align:right;margin-bottom:12px}
+        .plan-feats li{font-size:0.72rem;padding:4px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(0,0,0,0.04)}
+        .plan-feats li:last-child{border:none}
+        .plan-feats li i{width:14px;font-size:0.58rem}
+        .plan-feats li .fa-check{color:var(--green)}.plan-feats li .fa-times{color:var(--red);opacity:0.4}
+        .plan-feats li.off{opacity:0.4}.plan-feats li.off span{text-decoration:line-through}
+        .plan-sel{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:0.6rem;transition:all 0.2s}
+        .plan.sel .plan-sel{background:var(--accent);border-color:var(--accent);color:#fff}
+
+        .quick-box{max-width:500px;margin:0 auto 24px;text-align:center;padding:20px;background:linear-gradient(135deg,rgba(139,92,246,0.06),rgba(56,189,248,0.06));border:1px solid rgba(139,92,246,0.15);border-radius:14px}
+        .quick-box h3{font-size:0.95rem;font-weight:800;margin-bottom:4px}
+        .quick-box p{font-size:0.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6}
+        .quick-price{font-size:1.6rem;font-weight:900;color:var(--accent);margin-bottom:2px}
+        .quick-price .cur{font-size:0.8rem;font-weight:600;color:var(--muted)}
+        .quick-sub{font-size:0.65rem;color:var(--muted);margin-bottom:12px}
+        .btn-quick{padding:10px 28px;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
+        .btn-quick:hover{opacity:0.9;transform:translateY(-1px)}
+        .btn-next{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;box-shadow:0 4px 16px rgba(0,3,201,0.2)}
+        .btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,3,201,0.3)}
+        .btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+        .btn-next:not(:disabled){cursor:pointer;transition:all 0.3s}
+        .btn-next:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(0,3,201,0.3)}
+
+        .pay-section{display:none;animation:fadeUp 0.3s ease}
+        .pay-section.show{display:block}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+        .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.03)}
+        .card h3{font-size:0.95rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+        .card h3 i{color:var(--accent)}
+
+        .method{display:flex;align-items:center;gap:10px;padding:12px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;margin-bottom:8px;background:var(--bg)}
+        .method:hover{border-color:rgba(0,3,201,0.2)}
+        .method.sel{border-color:var(--green);background:rgba(5,150,105,0.04)}
+        .method-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+        .method-icon img{width:30px;height:30px;object-fit:contain;border-radius:6px}
+        .method-info{flex:1}
+        .method-name{font-size:0.85rem;font-weight:700}
+        .method-desc{font-size:0.68rem;color:var(--muted)}
+        .method-ok{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.55rem;flex-shrink:0;transition:all 0.2s}
+        .method.sel .method-ok{background:var(--green);border-color:var(--green);color:#fff}
+
+        .wallet{background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(5,150,105,0.04));border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;margin-top:12px}
+        .wallet .label{font-size:0.78rem;color:var(--muted);margin-bottom:8px}
+        .wallet .number{font-size:1.5rem;font-weight:900;color:var(--accent);font-family:'Courier New',monospace;letter-spacing:1px;margin-bottom:4px}
+        .wallet .name{font-size:0.78rem;color:var(--muted);margin-bottom:12px}
+        .btn-copy{padding:8px 20px;background:rgba(0,3,201,0.06);border:1px solid rgba(0,3,201,0.15);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
+        .btn-copy:hover{background:var(--accent);color:#fff}
+        .btn-copy.ok{background:var(--green);color:#fff;border-color:var(--green)}
+
+        .btn-wa{width:100%;padding:10px;background:#25d366;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px}
+        .btn-wa:hover{background:#1da851;transform:translateY(-1px)}
+
+        .fg{margin-bottom:12px}
+        .fg label{display:block;font-size:0.72rem;color:var(--muted);margin-bottom:4px;font-weight:600}
+        .fg label .req{color:var(--red)}
+        .fg input,.fg textarea{width:100%;padding:10px 12px;background:var(--input);border:1.5px solid var(--border);color:var(--text);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;outline:none;transition:border-color 0.2s}
+        .fg input:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,3,201,0.06)}
+        .fg input.err{border-color:var(--red)}
+        .fg textarea{resize:vertical;min-height:50px;line-height:1.5}
+
+        .btn-submit{width:100%;padding:12px;background:linear-gradient(135deg,var(--green),#047857);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;box-shadow:0 4px 16px rgba(5,150,105,0.2);display:flex;align-items:center;justify-content:center;gap:6px}
+        .btn-submit:hover{transform:translateY(-1px)}
+        .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+        .spinner{display:none;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+        .btn-submit.loading .spinner{display:block}.btn-submit.loading .txt{display:none}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        .success{text-align:center;padding:40px 20px;display:none}
+        .success.show{display:block}
+        .success-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--green),#2563eb);display:flex;align-items:center;justify-content:center;font-size:2.2rem;color:#fff;margin:0 auto 16px;animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1)}
+        @keyframes popIn{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+        .success h2{font-size:1.3rem;font-weight:900;margin-bottom:6px}
+        .success p{color:var(--muted);font-size:0.85rem;line-height:1.7;max-width:400px;margin:0 auto 20px}
+        .receipt{background:var(--card);border:1px solid var(--border);border-radius:14px;max-width:400px;margin:0 auto 20px;overflow:hidden}
+        .receipt-hdr{background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;padding:16px;text-align:center}
+        .receipt-hdr .logo{font-size:1.3rem;font-weight:900;margin-bottom:2px}.receipt-hdr .logo span{color:#fff}
+        .receipt-hdr p{font-size:0.72rem;opacity:0.85}
+        .receipt-body{padding:16px}
+        .receipt-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.82rem}.receipt-row:last-child{border:none}
+        .receipt-row .lbl{color:var(--muted)}.receipt-row .val{font-weight:700}
+        .receipt-row .val.price{color:var(--accent);font-size:1rem}
+        .receipt-row .val.pending{color:var(--orange)}
+        .success-actions{display:flex;gap:8px;justify-content:center;max-width:400px;margin:0 auto}
+        .success-actions .btn{flex:1;padding:10px;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;border:none;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:all 0.2s}
+        .btn-dl{background:var(--green);color:#fff}.btn-wa2{background:#25d366;color:#fff}
+        .btn-dl:hover,.btn-wa2:hover{transform:translateY(-1px)}
+        .btn-back{margin-top:16px;max-width:260px;margin-left:auto;margin-right:auto}
+        .btn-back a{display:block;text-align:center;padding:10px;background:var(--accent);color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.82rem;font-family:'Cairo',sans-serif;transition:all 0.2s}
+        .btn-back a:hover{background:#0002a3}
+
+        .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);padding:10px 22px;border-radius:10px;font-weight:700;font-size:0.82rem;z-index:9999;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1)}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        .toast-ok{background:var(--green);color:#fff}
+        .toast-err{background:var(--red);color:#fff}
+        .toast-info{background:var(--accent);color:#fff}
+        .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;overflow:hidden}
+
+        @media(max-width:900px){.plans{grid-template-columns:1fr}.pay-grid{grid-template-columns:1fr}.nav-links{display:none!important}}
+        @media(max-width:600px){.container{padding:12px 12px 50px}.header h1{font-size:1.3rem}.plan{padding:18px 12px}.plan-price{font-size:1.4rem}}
+        body.dark-mode{background:#0f172a;color:#e2e8f0}.dark-mode .nav{background:rgba(15,23,42,0.95);border-color:#1e293b}.dark-mode .card{background:#1e293b;border-color:#334155}.dark-mode .plan{background:#1e293b;border-color:#334155}.dark-mode .plan.sel{border-color:#27ffed;background:rgba(39,255,237,0.04)}.dark-mode .method{background:#1e293b;border-color:#334155}.dark-mode .method.sel{border-color:#27ffed}.dark-mode .fg input,.dark-mode .fg textarea{background:#0f172a;border-color:#334155;color:#e2e8f0}
     </style>
     <script src="js/theme.js"></script>
-    <script src="js/lang.js"></script>
-    <script src="js/pwa.js" defer></script>
 </head>
-
 <body>
-
-    <nav class="navbar"
-        style="position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar,rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center">
-        <a href="index.html" style="font-size:1.8rem;font-weight:900;text-decoration:none;color:var(--text)">Q<span
-                style="color:var(--accent)">CV</span></a>
-        <ul class="nav-links" style="display:flex;align-items:center;gap:30px;list-style:none">
-            <li><a href="index.html"
-                    style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">الرئيسية</a></li>
-            <li><a href="pay.html"
-                    style="color:var(--accent);text-decoration:none;font-weight:600;font-size:0.9rem">التسعير</a></li>
-            <li><a href="careers.html"
-                    style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">الوظائف</a></li>
-            <li><a href="help.html"
-                    style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">المساعدة</a></li>
-            <li><a href="blog.html"
-                    style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">المدونة</a></li>
-            <li><a href="login.html"
-                    style="background:var(--accent);color:#fff !important;padding:10px 22px;border-radius:50px;font-weight:700 !important;text-decoration:none">ابدأ
-                    مجاناً</a></li>
-            <li><button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي"
-                    style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0"
-                    onmouseover="this.style.borderColor='var(--accent)'"
-                    onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span
-                        class="icon-moon" style="display:none">🌒</span></button></li>
-            <li>
-                <div class="lang-switch"
-                    style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px">
-                    <button class="lang-ar" onclick="QCVLang.set('ar')"
-                        style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;">عربي</button><button
-                        class="lang-en" onclick="QCVLang.set('en')"
-                        style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button>
-                </div>
-            </li>
+    <nav class="nav">
+        <a href="index.html" class="logo">Q<span>CV</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="pay.html" class="active">التسعير</a></li>
+            <li><a href="editor.html">المحرر</a></li>
+            <li><a href="login.html" class="btn-login">ابدأ مجاناً</a></li>
         </ul>
-        <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')"
-            aria-label="القائمة">&#9776;</button>
     </nav>
-
-    <div style="height:90px"></div>
-
+    <div class="spacer"></div>
     <div class="toast" id="toast"></div>
-    <div class="confetti-box" id="confettiBox"></div>
+    <div class="confetti" id="confettiBox"></div>
 
     <div class="container">
-        <div style="max-width:900px;margin:0 auto 18px;text-align:center">
-        </div>
-        <a href="index.html" class="back-link" data-i18n="go_back"><i class="fas fa-arrow-right"></i> العودة
-            للرئيسية</a>
+        <a href="index.html" class="back"><i class="fas fa-arrow-right"></i> العودة</a>
 
-        <div class="page-header">
-            <h1 data-i18n-html="pay_title">اشترك في <span>QCV</span></h1>
-            <p data-i18n="pay_subtitle">اختر الباقة المناسبة وابدأ في بناء سيرتك الذاتية</p>
-        </div>
-
-        <!-- Steps -->
-        <div class="steps">
-            <div class="step active" id="step1Ind"><span class="step-num">1</span> <span data-i18n="pay_step1">اختر
-                    الباقة</span></div>
-            <div class="step-connector" id="conn1"></div>
-            <div class="step" id="step2Ind"><span class="step-num">2</span> <span data-i18n="pay_step2">بيانات
-                    الدفع</span></div>
-            <div class="step-connector" id="conn2"></div>
-            <div class="step" id="step3Ind"><span class="step-num">3</span> <span data-i18n="pay_step3">التأكيد</span>
+        <!-- STEP 1: CHOSE PLAN -->
+        <div id="step1">
+            <div class="header">
+                <h1>اختر <span>باقة QCV</span></h1>
+                <p>ابدأ مجاناً أو احصل على كامل الميزات</p>
             </div>
-        </div>
 
-        <!-- STEP 1: Plan Selection -->
-        <div class="step-content active" id="step1">
-            <!-- Pricing -->
-            <div style="text-align:center;margin-bottom:28px">
-                <span style="font-weight:700;font-size:0.88rem;color:var(--accent)">الأسعار الشهرية</span>
-            </div>
-            <div class="plans-grid">
-                <div class="plan-card" onclick="selectPlan(this,'free')">
-                    <div class="plan-icon"><i class="fas fa-gift"></i></div>
-                    <div class="plan-subtitle">للمبتدئين والطالبين</div>
-                    <div class="plan-name" data-i18n="plan_free_name">الباقة المجانية</div>
-                    <div class="plan-price free-p">مجاني</div>
+            <div class="plans" id="plansGrid">
+                <div class="plan" onclick="pickPlan(this,'free')">
+                    <div class="plan-icon">🎁</div>
+                    <div class="plan-name">مجاني</div>
+                    <div class="plan-desc">للمبتدئين</div>
+                    <div class="plan-price free">0 <span class="cur">ج.م</span></div>
                     <div class="plan-period">للأبد</div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> سيرة ذاتية واحدة</li>
-                        <li><i class="fas fa-check"></i> قالب كلاسيك احترافي</li>
+                    <ul class="plan-feats">
+                        <li><i class="fas fa-check"></i> CV واحد</li>
+                        <li><i class="fas fa-check"></i> قالب كلاسيك</li>
                         <li><i class="fas fa-check"></i> تصدير PDF (بعلامة مائية)</li>
-                        <li><i class="fas fa-check"></i> معاينة جميع القوالب</li>
-                        <li class="dis"><i class="fas fa-times"></i> <span>تحميلات غير محدودة</span></li>
-                        <li class="dis"><i class="fas fa-times"></i> <span>بورتفوليو شخصي</span></li>
-                        <li class="dis"><i class="fas fa-times"></i> <span>مساعد الكتابة بالذكاء الاصطناعي</span></li>
-                        <li class="dis"><i class="fas fa-times"></i> <span>تقييم السيرة بالذكاء الاصطناعي</span></li>
-                        <li class="dis"><i class="fas fa-times"></i> <span>مطابقة الوظائف بالذكاء الاصطناعي</span></li>
+                        <li class="off"><i class="fas fa-times"></i><span> 30 قالب</span></li>
+                        <li class="off"><i class="fas fa-times"></i><span> بورتفوليو</span></li>
+                        <li class="off"><i class="fas fa-times"></i><span> أدوات AI</span></li>
                     </ul>
-                    <div class="plan-check">&#10003;</div>
+                    <div class="plan-sel">&#10003;</div>
                 </div>
-                <div class="plan-card popular" onclick="selectPlan(this,'pro')">
-                    <div class="plan-popular">الأكثر شعبية</div>
-                    <div class="plan-icon"><i class="fas fa-rocket"></i></div>
-                    <div class="plan-subtitle">للمحترفين والباحثين عن عمل</div>
-                    <div class="plan-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
-                    <div class="plan-price">99 <span class="curr">ج.م</span></div>
-                    <div class="plan-period">شهرياً</div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> 5 سير ذاتية احترافية</li>
-                        <li><i class="fas fa-check"></i> جميع القوالب (+15)</li>
-                        <li><i class="fas fa-check"></i> تصدير PDF بدون علامة مائية</li>
-                        <li><i class="fas fa-check"></i> ملفات شخصية وبصرية</li>
-                        <li><i class="fas fa-check"></i> صفحة بورتفوليو شخصية</li>
-                        <li><i class="fas fa-check"></i> تقييم السيرة بالذكاء الاصطناعي</li>
-                        <li><i class="fas fa-check"></i> مساعد كتابة بالذكاء الاصطناعي</li>
-                        <li><i class="fas fa-check"></i> مطابقة الوظائف بالذكاء الاصطناعي</li>
-                        <li><i class="fas fa-check"></i> رفع وتحليل السيرة (3 مرات/شهر)</li>
+                <div class="plan pop" onclick="pickPlan(this,'pro')">
+                    <div class="pop-tag">الأكثر طلباً</div>
+                    <div class="plan-icon">🚀</div>
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-desc">للمحترفين</div>
+                    <div class="plan-price">99 <span class="cur">ج.م/شهر</span></div>
+                    <div class="plan-period">أو 30 ج.م لـ 48 ساعة</div>
+                    <ul class="plan-feats">
+                        <li><i class="fas fa-check"></i> 5 سير ذاتية</li>
+                        <li><i class="fas fa-check"></i> 30+ قالب</li>
+                        <li><i class="fas fa-check"></i> PDF بدون علامة مائية</li>
+                        <li><i class="fas fa-check"></i> بورتفوليو شخصي</li>
+                        <li><i class="fas fa-check"></i> أدوات AI (تقييم + مطابقة)</li>
+                        <li><i class="fas fa-check"></i> رفع CV 3 مرات/شهر</li>
                     </ul>
-                    <div class="plan-check">&#10003;</div>
+                    <div class="plan-sel">&#10003;</div>
                 </div>
-                <div class="plan-card" onclick="selectPlan(this,'unlimited')">
-                    <div class="plan-icon"><i class="fas fa-crown"></i></div>
-                    <div class="plan-subtitle">للشركات والفرق الكبيرة</div>
-                    <div class="plan-name" data-i18n="plan_unlim_name">الباقة غير المحدودة</div>
-                    <div class="plan-price">299 <span class="curr">ج.م</span></div>
-                    <div class="plan-period">شهرياً</div>
-                    <ul class="plan-features">
+                <div class="plan" onclick="pickPlan(this,'unlimited')">
+                    <div class="plan-icon">👑</div>
+                    <div class="plan-name">Unlimited</div>
+                    <div class="plan-desc">للشركات</div>
+                    <div class="plan-price">299 <span class="cur">ج.م/شهر</span></div>
+                    <div class="plan-period">كل شيء غير محدود</div>
+                    <ul class="plan-feats">
                         <li><i class="fas fa-check"></i> سير ذاتية غير محدودة</li>
-                        <li><i class="fas fa-check"></i> جميع القوالب (+15)</li>
-                        <li><i class="fas fa-check"></i> تصدير PDF بدون علامة مائية</li>
-                        <li><i class="fas fa-check"></i> ملفات شخصية وبصرية</li>
-                        <li><i class="fas fa-check"></i> صفحة بورتفوليو شخصية</li>
-                        <li><i class="fas fa-check"></i> تقييم السيرة بالذكاء الاصطناعي</li>
-                        <li><i class="fas fa-check"></i> مساعد كتابة بالذكاء الاصطناعي</li>
-                        <li><i class="fas fa-check"></i> مطابقة الوظائف بالذكاء الاصطناعي</li>
-                        <li><i class="fas fa-check"></i> رفع وتحليل السيرة (غير محدود)</li>
-                        <li><i class="fas fa-check"></i> أولوية في الدعم الفني 24/7</li>
+                        <li><i class="fas fa-check"></i> 30+ قالب</li>
+                        <li><i class="fas fa-check"></i> PDF بدون علامة مائية</li>
+                        <li><i class="fas fa-check"></i> بورتفوليو شخصي</li>
+                        <li><i class="fas fa-check"></i> أدوات AI غير محدودة</li>
+                        <li><i class="fas fa-check"></i> دعم فني 24/7</li>
                     </ul>
-                    <div class="plan-check">&#10003;</div>
+                    <div class="plan-sel">&#10003;</div>
                 </div>
             </div>
-            <!-- One-time Quick Pass -->
-            <div
-                style="max-width:500px;margin:30px auto 0;text-align:center;padding:24px;background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(56,189,248,0.08));border:1px solid rgba(139,92,246,0.2);border-radius:16px">
-                <div style="font-size:1.5rem;margin-bottom:8px">&#9889;</div>
-                <h3 style="font-size:1.05rem;font-weight:800;margin-bottom:6px;color:var(--text)">بديل الاشتراك الشهري
-                </h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px;line-height:1.6">مش عايز اشتراك شهري؟
-                    احصل على <strong style="color:var(--accent)">باقة 48 ساعة</strong> بسعر رمزي واستخدم كل ميزات الذكاء
-                    الاصطناعي</p>
-                <div style="font-size:1.8rem;font-weight:900;color:var(--accent);margin-bottom:4px">30 <span
-                        style="font-size:0.9rem;font-weight:600;color:var(--muted)">ج.م</span></div>
-                <div style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">لفترة محدودة 48 ساعة - بدون تجديد
-                    تلقائي</div>
-                <button onclick="selectQuickPass()"
-                    style="padding:12px 32px;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s"
-                    onmouseover="this.style.opacity='0.9';this.style.transform='translateY(-1px)'"
-                    onmouseout="this.style.style.transform='none'">
-                    <i class="fas fa-bolt"></i> اشترك 48 ساعة
-                </button>
-                <p style="font-size:0.68rem;color:var(--muted);margin-top:10px">باقات محدودة: مساعد كتابة + تقييم CV +
-                    تحليل + تصدير PDF بدون علامة مائية</p>
+
+            <div class="quick-box">
+                <div style="font-size:1.2rem;margin-bottom:6px">⚡</div>
+                <h3>بديل سريع — 48 ساعة</h3>
+                <p>مش عايز اشتراك شهري؟ احصل على كامل ميزات AI لمدة 48 ساعة</p>
+                <div class="quick-price">30 <span class="cur">ج.م</span></div>
+                <div class="quick-sub">بدون تجديد تلقائي — لمرة واحدة</div>
+                <button class="btn-quick" onclick="pickPlan(null,'quick48')"><i class="fas fa-bolt"></i> اشترك 48 ساعة</button>
             </div>
-            <div class="btn-group" style="max-width:460px;margin:24px auto 0">
-                <button class="btn btn-secondary" onclick="location.href='editor.html'">السابق</button>
-                <button class="btn btn-primary" id="nextBtn1" onclick="goToStep(2)" disabled>التالي &#8592;</button>
+
+            <div id="selectedPlanLabel" style="display:none;text-align:center;padding:10px;background:rgba(0,3,201,0.04);border-radius:10px;margin-bottom:10px;font-size:0.85rem;font-weight:700;color:var(--accent)">
+                <i class="fas fa-check-circle" style="margin-left:6px"></i> باقة <span id="selectedPlanName"></span> محددة
             </div>
+            <button class="btn-next" id="btnNext" onclick="goPay()" disabled>التالي — بيانات الدفع ←</button>
         </div>
 
-        <!-- STEP 2: Payment -->
-        <div class="step-content" id="step2">
+        <!-- Inline plan selector — works with or without main script -->
+        <script>
+        (function(){
+            var sel = null, planVar = null;
+            var planMap = { 'مجاني':'free', 'pro':'pro', 'unlimited':'unlimited' };
+            document.querySelectorAll('.plan').forEach(function(card) {
+                card.onclick = function(e) {
+                    e.preventDefault();
+                    var name = (card.querySelector('.plan-name')||{}).textContent||'';
+                    var p = planMap[name.trim()] || 'pro';
+                    if (p === 'free') { window.location.href = 'editor.html'; return; }
+                    document.querySelectorAll('.plan').forEach(function(c){c.classList.remove('sel')});
+                    card.classList.add('sel');
+                    planVar = p;
+                    var lbl = document.getElementById('selectedPlanLabel');
+                    var nm = document.getElementById('selectedPlanName');
+                    if (lbl) lbl.style.display = 'block';
+                    if (nm) nm.textContent = p === 'pro' ? 'Pro' : p === 'unlimited' ? 'Unlimited' : p;
+                    var btn = document.getElementById('btnNext');
+                    if (btn) { btn.disabled = false; btn.style.animation='pulse 0.3s ease'; setTimeout(function(){btn.style.animation=''},300); btn.scrollIntoView({behavior:'smooth',block:'center'}); }
+                };
+            });
+            var qb = document.querySelector('.btn-quick');
+            if (qb) qb.onclick = function(){ planVar = 'quick48'; var lbl = document.getElementById('selectedPlanLabel'); var nm = document.getElementById('selectedPlanName'); if(lbl)lbl.style.display='block'; if(nm)nm.textContent='48 ساعة'; var btn = document.getElementById('btnNext'); if(btn){btn.disabled=false;btn.scrollIntoView({behavior:'smooth',block:'center'});} };
+            var bn = document.getElementById('btnNext');
+            if (bn) bn.onclick = function(){
+                if (!planVar) return;
+                if (typeof window.goPay === 'function') { window.goPay(); return; }
+                document.getElementById('step1').style.display = 'none';
+                document.getElementById('step2').classList.add('show');
+                var pf = document.getElementById('planField');
+                var pl = document.getElementById('planLabel');
+                var labels = { pro:'Pro — 99 ج.م/شهر', unlimited:'Unlimited — 299 ج.م/شهر', quick48:'Quick 48h — 30 ج.م' };
+                if (pf) pf.value = labels[planVar]||'';
+                if (pl) pl.textContent = 'الباقة: ' + (labels[planVar]||'');
+                window.scrollTo({top:0,behavior:'smooth'});
+            };
+            console.log('[QCV Pay Inline] OK - plans=' + document.querySelectorAll('.plan').length);
+        })();
+        </script>
+        <style>@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}</style>
+
+        <!-- STEP 2: PAYMENT -->
+        <div class="pay-section" id="step2">
+            <div class="header">
+                <h1>بيانات <span>الدفع</span></h1>
+                <p id="planLabel">اختر طريقة الدفع وأكمل البيانات</p>
+            </div>
             <div class="pay-grid">
-
-                <!-- RIGHT: Payment Methods -->
-                <div class="methods-col">
-                    <div class="methods-title"><i class="fas fa-credit-card"></i> اختر طريقة الدفع</div>
-
-                    <div class="method-card selected" onclick="selectMethod(this,'vodafone')">
-                        <div class="method-icon" style="background:#fff;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
-                            <img src="pay p/فودافون.png" alt="فودافون كاش" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
-                        </div>
-                        <div class="method-info">
-                            <div class="method-name" data-i18n="pay_vodafone">فودافون كاش</div>
-                            <div class="method-desc" data-i18n="pay_vodafone_desc">تحويل فوري على المحفظة</div>
-                        </div>
-                        <div class="method-check">&#10003;</div>
+                <div class="card">
+                    <h3><i class="fas fa-wallet"></i> طريقة الدفع</h3>
+                    <div class="method sel" onclick="pickMethod(this,'vodafone')">
+                        <div class="method-icon"><img src="pay p/فودافون.png" alt="فودافون"></div>
+                        <div class="method-info"><div class="method-name">فودافون كاش</div><div class="method-desc">تحويل فوري على المحفظة</div></div>
+                        <div class="method-ok">&#10003;</div>
+                    </div>
+                    <div class="method" onclick="pickMethod(this,'fawry')">
+                        <div class="method-icon"><img src="pay p/فوري.jpeg" alt="فوري"></div>
+                        <div class="method-info"><div class="method-name">فوري</div><div class="method-desc">ادفع من أي فرع فوري</div></div>
+                        <div class="method-ok">&#10003;</div>
+                    </div>
+                    <div class="method" onclick="pickMethod(this,'instapay')">
+                        <div class="method-icon"><img src="pay p/انستا.png" alt="إنستاباي"></div>
+                        <div class="method-info"><div class="method-name">إنستاباي</div><div class="method-desc">تحويل فوري من البنك</div></div>
+                        <div class="method-ok">&#10003;</div>
                     </div>
 
-                    <div class="method-card" onclick="selectMethod(this,'fawry')">
-                        <div class="method-icon" style="background:#fff;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
-                            <img src="pay p/فوري.jpeg" alt="فوري" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
-                        </div>
-                        <div class="method-info">
-                            <div class="method-name" data-i18n="pay_fawry">فوري</div>
-                            <div class="method-desc" data-i18n="pay_fawry_desc">ادفع عن طريق فوري</div>
-                        </div>
-                        <div class="method-check">&#10003;</div>
+                    <div class="wallet">
+                        <div class="label">قم بالتحويل على هذا الرقم</div>
+                        <div class="number" id="walletNum">01028707543</div>
+                        <div class="name">محمد ايمن</div>
+                        <button class="btn-copy" onclick="copyNum()"><i class="fas fa-copy"></i> نسخ الرقم</button>
                     </div>
-
-                    <div class="method-card" onclick="selectMethod(this,'instapay')">
-                        <div class="method-icon" style="background:#fff;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
-                            <img src="pay p/انستا.png" alt="إنستاباي" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
-                        </div>
-                        <div class="method-info">
-                            <div class="method-name" data-i18n="pay_instapay">إنستاباي</div>
-                            <div class="method-desc" data-i18n="pay_instapay_desc">تحويل فوري من البنك</div>
-                        </div>
-                        <div class="method-check">&#10003;</div>
-                    </div>
-
-                    <div class="wallet-box" id="walletBox">
-                        <div class="wb-label" data-i18n="pay_wallet_label">قم بالتحويل على هذا الرقم</div>
-                        <div class="wb-number">01028707543</div>
-                        <div class="wb-name">محمد ايمن</div>
-                        <button class="btn-copy" onclick="copyNumber()" data-i18n="copy_link">&#128203; نسخ
-                            الرقم</button>
-                    </div>
+                    <button class="btn-wa" onclick="sendProof()"><i class="fab fa-whatsapp"></i> إرسال إثبات الدفع واتساب</button>
                 </div>
 
-                <!-- LEFT: Payment Form -->
-                <div class="form-col">
-                    <div class="form-title"><i class="fas fa-credit-card"></i> بيانات الدفع</div>
-
+                <div class="card">
+                    <h3><i class="fas fa-user"></i> بياناتك</h3>
                     <div class="fg">
                         <label>الباقة</label>
-                        <input type="text" id="planField" readonly style="opacity:0.7;cursor:default">
+                        <input type="text" id="planField" readonly style="opacity:0.6;cursor:default">
                     </div>
                     <div class="fg">
-                        <label data-i18n="pay_name">الاسم <span class="req">*</span></label>
-                        <input type="text" id="cardName" placeholder="أدخل اسمك">
-                        <div class="err-msg">أدخل اسم صاحب البطاقة</div>
+                        <label>الاسم <span class="req">*</span></label>
+                        <input type="text" id="userName" placeholder="اسمك الكامل">
                     </div>
                     <div class="fg">
-                        <label data-i18n="pay_phone">رقم الهاتف <span class="req">*</span></label>
-                        <input type="text" id="phone" placeholder="01xxxxxxxxx" maxlength="11"
-                            oninput="formatPhone(this)">
-                        <div class="err-msg">أدخل رقم الهاتف</div>
+                        <label>رقم الهاتف <span class="req">*</span></label>
+                        <input type="text" id="userPhone" placeholder="01xxxxxxxxx" maxlength="11" oninput="this.value=this.value.replace(/\D/g,'').substring(0,11)">
                     </div>
                     <div class="fg">
-                        <label data-i18n="pay_wallet">رقم المحفظة</label>
-                        <input type="text" id="walletInput" placeholder="من المحفظة الشخصي">
+                        <label>رقم المحفظة (اختياري)</label>
+                        <input type="text" id="walletIn" placeholder="من أرسلت منه">
                     </div>
                     <div class="fg">
-                        <label data-i18n="pay_notes">ملاحظات</label>
-                        <textarea id="notes" placeholder="أي ملاحظات"></textarea>
+                        <label>ملاحظات (اختياري)</label>
+                        <textarea id="userNotes" placeholder="أي تفاصيل إضافية"></textarea>
                     </div>
-
-                    <div class="btn-group">
-                        <button class="btn btn-secondary" onclick="goToStep(1)">السابق</button>
-                        <button class="btn btn-primary" id="payBtn" onclick="submitPayment()">
-                            <span class="btn-text" data-i18n="pay_submit">تأكيد الدفع &#10003;</span>
-                            <div class="spinner"></div>
-                        </button>
-                    </div>
+                    <button class="btn-submit" id="btnSubmit" onclick="submitPay()">
+                        <span class="txt"><i class="fas fa-check-circle"></i> تأكيد الاشتراك</span>
+                        <div class="spinner"></div>
+                    </button>
+                    <button class="btn-next" style="margin-top:8px;background:var(--bg);color:var(--muted);border:1px solid var(--border);box-shadow:none" onclick="goBack()">← العودة لاختيار الباقة</button>
                 </div>
-
             </div>
         </div>
 
-        <!-- STEP 3: Success / Receipt -->
-        <div class="step-content" id="step3">
-            <div class="success-box">
-                <div class="success-icon">&#10003;</div>
-                <h2 data-i18n="pay_success_title">تم الدفع بنجاح!</h2>
-                <p data-i18n="pay_success_desc">شكراً لك! تم استلام طلبك بنجاح. يمكنك تحميل الإيصال أو مشاركته على
-                    واتساب.</p>
-                <div class="waiting-badge" data-i18n="pay_waiting">&#9203; بانتظار التفعيل</div>
-            </div>
+        <!-- STEP 3: SUCCESS -->
+        <div class="success" id="step3">
+            <div class="success-icon">&#10003;</div>
+            <h2>تم إرسال طلبك!</h2>
+            <p>شكراً لك! تم استلام طلب الاشتراك بنجاح. سيتم التفعيل خلال ساعات قليلة.</p>
+            <div class="waiting" style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,0.08);color:var(--orange);border:1px solid rgba(245,158,11,0.2);padding:8px 20px;border-radius:30px;font-size:0.82rem;font-weight:700;margin-bottom:20px;animation:pulse 2s ease-in-out infinite">⏳ بانتظار التفعيل</div>
+            <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}</style>
 
-            <div class="receipt" id="paymentReceipt">
-                <div class="receipt-header">
-                    <div class="logo">Q<span>CV</span></div>
-                    <p data-i18n="pay_receipt_title">إيصال الدفع</p>
-                </div>
+            <div class="receipt" id="receipt">
+                <div class="receipt-hdr"><div class="logo">Q<span>CV</span></div><p>إيصال الدفع</p></div>
                 <div class="receipt-body">
-                    <div class="receipt-row">
-                        <span class="label">الاسم</span>
-                        <span class="value" id="receiptName">-</span>
-                    </div>
-                    <div class="receipt-row">
-                        <span class="label">الباقة</span>
-                        <span class="value" id="receiptPlan">-</span>
-                    </div>
-                    <div class="receipt-row">
-                        <span class="label">المبلغ</span>
-                        <span class="value price" id="receiptPrice">-</span>
-                    </div>
-                    <div class="receipt-row">
-                        <span class="label">طريقة الدفع</span>
-                        <span class="value" id="receiptMethod">-</span>
-                    </div>
-                    <div class="receipt-row">
-                        <span class="label">التاريخ</span>
-                        <span class="value" id="receiptDate">-</span>
-                    </div>
-                    <div class="receipt-row">
-                        <span class="label">رقم المرجع</span>
-                        <span class="value" id="receiptRef">-</span>
-                    </div>
-                    <div class="receipt-row">
-                        <span class="label">الحالة</span>
-                        <span class="value status">&#9203; بانتظار التفعيل</span>
-                    </div>
-                </div>
-                <div class="receipt-footer">
-                    QCV &copy; 2026 - جميع الحقوق محفوظة | support@qcv.com
+                    <div class="receipt-row"><span class="lbl">الاسم</span><span class="val" id="rName">-</span></div>
+                    <div class="receipt-row"><span class="lbl">الباقة</span><span class="val" id="rPlan">-</span></div>
+                    <div class="receipt-row"><span class="lbl">المبلغ</span><span class="val price" id="rPrice">-</span></div>
+                    <div class="receipt-row"><span class="lbl">الطريقة</span><span class="val" id="rMethod">-</span></div>
+                    <div class="receipt-row"><span class="lbl">التاريخ</span><span class="val" id="rDate">-</span></div>
+                    <div class="receipt-row"><span class="lbl">المرجع</span><span class="val" id="rRef">-</span></div>
+                    <div class="receipt-row"><span class="lbl">الحالة</span><span class="val pending">⏳ بانتظار التفعيل</span></div>
                 </div>
             </div>
 
-            <div class="receipt-actions" style="max-width:480px;margin:0 auto">
-                <button class="btn btn-download" onclick="downloadReceipt()" data-i18n="download"><i
-                        class="fas fa-download"></i> تحميل الإيصال</button>
-                <button class="btn btn-whatsapp" onclick="shareWhatsApp()" data-i18n="whatsapp"><i
-                        class="fab fa-whatsapp"></i> مشاركة على واتساب</button>
+            <div class="success-actions">
+                <button class="btn btn-dl" onclick="dlReceipt()"><i class="fas fa-download"></i> تحميل الإيصال</button>
+                <button class="btn btn-wa2" onclick="shareWA()"><i class="fab fa-whatsapp"></i> مشاركة واتساب</button>
             </div>
-
-            <div class="btn-group"
-                style="justify-content:center;margin-top:24px;max-width:320px;margin-left:auto;margin-right:auto">
-                <a href="editor.html" class="btn btn-primary" style="text-decoration:none">العودة للمحرر &#8592;</a>
-            </div>
+            <div class="btn-back"><a href="editor.html">العودة للمحرر ←</a></div>
         </div>
     </div>
 
-    <!-- ===== FIREBASE ===== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-        import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+    <!-- UI logic (no module — works even if Firebase fails) -->
+    <script id="payScript">
+        var _fb = { user: null, userData: null, db: null, auth: null };
+        var plan = null, method = 'vodafone';
+        var labels = { free: 'مجاني', pro: 'Pro — 99 ج.م/شهر', unlimited: 'Unlimited — 299 ج.م/شهر', quick48: 'Quick 48h — 30 ج.م' };
+        var pricesText = { free: 'مجاني', pro: '99 ج.م', unlimited: '299 ج.م', quick48: '30 ج.م' };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
-            authDomain: "qwcv-1cfad.firebaseapp.com",
-            projectId: "qwcv-1cfad",
-            storageBucket: "qwcv-1cfad.firebasestorage.app",
-            messagingSenderId: "792471802122",
-            appId: "1:792471802122:web:808e04099afc90315aaaf3",
-            databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-
-        let currentUser = null;
-        let userData = null;
-
-        onAuthStateChanged(auth, (user) => {
-            if (!user) { location.replace("login.html"); return; }
-            currentUser = user;
-            loadUserData(user.uid);
-        });
-
-        async function loadUserData(uid) {
-            const snap = await get(ref(db, 'users/' + uid));
-            userData = snap.val() || {};
+        function toast(msg, type) {
+            var t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast toast-' + type + ' show';
+            setTimeout(function() { t.classList.remove('show'); }, 3500);
         }
 
-        // ===== PRICING (monthly only) =====
-
-        // ===== UPDATE PLAN PRICES FROM CENTRAL SETTINGS =====
-        function updatePlanPrices() {
-            // defaults
-            var defaults = { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239, quick: 30 };
-            var proM = defaults.proMonthly, proY = defaults.proYearly, unM = defaults.unMonthly, unY = defaults.unYearly, quick = defaults.quick;
-
-            try {
-                if (window.allSettings) {
-                    proM = parseInt(window.allSettings.proPrice) || proM;
-                    unM = parseInt(window.allSettings.unlimitedPrice) || unM;
-                }
-            } catch (e) { }
-
-            try {
-                if (window.QCVSettings && window.QCVSettings.pricing) {
-                    var p = window.QCVSettings.pricing;
-                    if (p.plans && Array.isArray(p.plans)) {
-                        if (p.plans[1] && p.plans[1].price) quick = parseInt(p.plans[1].price) || quick;
-                        if (p.plans[2] && p.plans[2].price) proM = parseInt(p.plans[2].price) || proM;
-                        if (p.plans[3] && p.plans[3].price) unM = parseInt(p.plans[3].price) || unM;
-                    } else {
-                        if (p.proMonthly) proM = parseInt(p.proMonthly) || proM;
-                        if (p.proYearly) proY = parseInt(p.proYearly) || proY;
-                        if (p.unlimitedMonthly) unM = parseInt(p.unlimitedMonthly) || unM;
-                        if (p.unlimitedYearly) unY = parseInt(p.unlimitedYearly) || unY;
-                        if (p.quick) quick = parseInt(p.quick) || quick;
-                    }
-                }
-            } catch (e) { }
-
-            try {
-                proY = (proY && parseInt(proY)) ? parseInt(proY) : Math.round(proM * 12);
-            } catch (e) { proY = Math.round(proM * 12); }
-            try {
-                unY = (unY && parseInt(unY)) ? parseInt(unY) : Math.round(unM * 12);
-            } catch (e) { unY = Math.round(unM * 12); }
-
-            window.currentPrices = { proMonthly: proM, proYearly: proY, unMonthly: unM, unYearly: unY, quick: quick };
-
-            document.querySelectorAll('.plan-price[data-monthly]').forEach(function (el) {
-                var cls = el.closest('.plan-card') || el;
-                if (cls && cls.querySelector('.plan-name') && cls.querySelector('.plan-name').textContent.match(/مجانية|free/i)) {
-                    el.dataset.monthly = '0'; el.dataset.yearly = '0';
-                } else if (cls && cls.querySelector('.plan-name') && cls.querySelector('.plan-name').textContent.match(/48 ساعة|48h|48/)) {
-                    el.dataset.monthly = quick; el.dataset.yearly = quick;
-                } else if (cls && cls.querySelector('.plan-name') && cls.querySelector('.plan-name').textContent.match(/احترافية|Pro/i)) {
-                    el.dataset.monthly = proM; el.dataset.yearly = proY;
-                } else if (cls && cls.querySelector('.plan-name') && cls.querySelector('.plan-name').textContent.match(/غير محدودة|Unlimited|غير محدودة/i)) {
-                    el.dataset.monthly = unM; el.dataset.yearly = unY;
-                }
-            });
-
-            document.querySelectorAll('[data-monthly]').forEach(function (el) {
-                if (el.dataset.monthly && el.dataset.yearly) {
-                    var price = payYearly ? el.dataset.yearly : el.dataset.monthly;
-                    if (el.classList.contains('plan-price') || el.classList.contains('p-price')) {
-                        var curr = el.querySelector('.curr');
-                        if (curr) el.innerHTML = price + ' ' + curr.outerHTML; else el.textContent = price;
-                    } else {
-                        el.textContent = payYearly ? el.dataset.yearly : el.dataset.monthly;
-                    }
-                }
-            });
-        }
-
-        // try to apply prices once settings load (site-settings.js will populate QCVSettings)
-        (function waitForSettings() {
-            updatePlanPrices();
-            if ((window.allSettings && (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings && window.QCVSettings.pricing)) return;
-            var tries = 0; var max = 10;
-            var iv = setInterval(function () {
-                tries++; updatePlanPrices();
-                if (((window.allSettings && (window.allSettings.proPrice || window.allSettings.unlimitedPrice)) || (window.QCVSettings && window.QCVSettings.pricing)) || tries > max) clearInterval(iv);
-            }, 700);
-        })();
-
-        // Payment config UI
-        document.getElementById('togglePayCfg').addEventListener('click', function () {
-            const el = document.getElementById('payCfg'); el.style.display = el.style.display === 'none' ? 'block' : 'none';
-            try {
-                document.getElementById('cfgStripeEndpoint').value = localStorage.getItem('qcv_stripe_endpoint') || '';
-                document.getElementById('cfgPublishableKey').value = localStorage.getItem('qcv_stripe_publishable') || '';
-            } catch (e) { }
-        });
-
-        document.getElementById('savePayCfg').addEventListener('click', function () {
-            try { localStorage.setItem('qcv_stripe_endpoint', document.getElementById('cfgStripeEndpoint').value.trim()); localStorage.setItem('qcv_stripe_publishable', document.getElementById('cfgPublishableKey').value.trim()); showToast('Saved', 'ok'); } catch (e) { showToast('Save failed', 'err'); }
-        });
-
-        document.getElementById('clearPayCfg').addEventListener('click', function () { try { localStorage.removeItem('qcv_stripe_endpoint'); localStorage.removeItem('qcv_stripe_publishable'); document.getElementById('cfgStripeEndpoint').value = ''; document.getElementById('cfgPublishableKey').value = ''; showToast('Cleared', 'ok'); } catch (e) { } });
-
-        // ===== PLAN SELECTION =====
-        let selectedPlan = null;
-
-        window.selectPlan = function (el, plan) {
-            if (window.QCVNotify) QCVNotify.click();
-            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedPlan = plan;
-            document.getElementById('nextBtn1').disabled = false;
-        };
-
-        window.selectQuickPass = function () {
-            selectedPlan = 'quick48';
-            // Go directly to payment with quick pass
-            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-            document.getElementById('nextBtn1').disabled = false;
-            goToStep(2);
-        };
-
-        // ===== PAYMENT METHOD =====
-        let selectedMethod = 'vodafone';
-
-        window.selectMethod = function (el, method) {
-            document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedMethod = method;
-            // show/hide wallet box for non-card methods
-            const wb = document.getElementById('walletBox'); if (wb) wb.style.display = (method === 'stripe') ? 'none' : '';
-        };
-
-        // ===== STEP NAVIGATION =====
-        window.goToStep = function (step) {
-            if (step === 2 && !selectedPlan) return;
-            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-
-            document.querySelectorAll('.step').forEach((s, i) => {
-                s.classList.remove('active', 'done');
-                if (i + 1 < step) s.classList.add('done');
-                if (i + 1 === step) s.classList.add('active');
-            });
-
-            document.querySelectorAll('.step-connector').forEach((c, i) => {
-                c.classList.remove('active', 'done');
-                if (i + 1 < step) c.classList.add('done');
-                if (i + 1 === step) c.classList.add('active');
-            });
-
-            if (step === 2) {
-                var prices = window.currentPrices || { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239 };
-                var proP = payYearly ? String(prices.proYearly) : String(prices.proMonthly);
-                var unP = payYearly ? String(prices.unYearly) : String(prices.unMonthly);
-                var suffix = payYearly ? '/شهر (سنوي)' : '/شهر';
-                const planLabels = { free: 'مجاني', pro: 'Pro ' + proP + ' ج.م' + suffix, unlimited: 'Unlimited ' + unP + ' ج.م' + suffix };
-                document.getElementById('planField').value = planLabels[selectedPlan] || '';
-                if (currentUser && userData) {
-                    document.getElementById('cardName').value = userData.name || '';
-                    document.getElementById('phone').value = userData.phone || '';
-                }
+        function launchConfetti() {
+            var box = document.getElementById('confettiBox');
+            var colors = ['#38bdf8', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6'];
+            for (var i = 0; i < 40; i++) {
+                (function(idx) {
+                    setTimeout(function() {
+                        var el = document.createElement('div');
+                        el.style.cssText = 'position:absolute;width:8px;height:8px;top:-10px;left:' + Math.random()*100 + '%;background:' + colors[Math.floor(Math.random()*colors.length)] + ';border-radius:' + (Math.random()>0.5?'50%':'2px') + ';animation:confFall ' + (Math.random()*2+2) + 's ease-in forwards';
+                        box.appendChild(el);
+                        setTimeout(function() { el.remove(); }, 4000);
+                    }, idx * 30);
+                })(i);
             }
+        }
 
+        window.pickPlan = function(el, p) {
+            if (window.QCVNotify) QCVNotify.click();
+            document.querySelectorAll('.plan').forEach(function(c) { c.classList.remove('sel'); });
+            if (el) el.classList.add('sel');
+            plan = p;
+            if (p === 'free') {
+                window.location.href = 'editor.html';
+                return;
+            }
+            var planNames = { pro: 'Pro', unlimited: 'Unlimited', quick48: '48 ساعة' };
+            document.getElementById('selectedPlanName').textContent = planNames[p] || p;
+            document.getElementById('selectedPlanLabel').style.display = 'block';
+            document.getElementById('btnNext').disabled = false;
+            document.getElementById('btnNext').style.transform = 'scale(1.03)';
+            document.getElementById('btnNext').style.boxShadow = '0 6px 25px rgba(0,3,201,0.35)';
+            setTimeout(function() {
+                document.getElementById('btnNext').style.transform = '';
+                document.getElementById('btnNext').style.boxShadow = '';
+            }, 400);
+            document.getElementById('btnNext').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
+
+        window.goPay = function() {
+            if (!plan) return;
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').classList.add('show');
+            document.getElementById('planField').value = labels[plan] || '';
+            document.getElementById('planLabel').textContent = 'الباقة: ' + (labels[plan] || '');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // ===== PHONE FORMAT =====
-        window.formatPhone = function (input) {
-            input.value = input.value.replace(/\D/g, '').substring(0, 11);
+        window.goBack = function() {
+            document.getElementById('step2').classList.remove('show');
+            document.getElementById('step1').style.display = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // ===== COPY NUMBER =====
-        window.copyNumber = function () {
-            const num = '01028707543';
-            navigator.clipboard.writeText(num).then(() => {
-                const btn = document.querySelector('.btn-copy');
-                btn.innerHTML = '&#10003; تم النسخ';
-                btn.classList.add('copied');
-                showToast('تم نسخ الرقم بنجاح', 'ok');
-                setTimeout(() => {
-                    btn.innerHTML = '&#128203; نسخ الرقم';
-                    btn.classList.remove('copied');
-                }, 2000);
-            }).catch(() => {
-                showToast('رقم المحفظة: ' + num, 'info');
-            });
+        window.pickMethod = function(el, m) {
+            document.querySelectorAll('.method').forEach(function(c) { c.classList.remove('sel'); });
+            el.classList.add('sel');
+            method = m;
         };
 
-        // ===== SUBMIT =====
-        window.submitPayment = async function () {
-            const name = document.getElementById('cardName').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            let hasErr = false;
+        window.copyNum = function() {
+            navigator.clipboard.writeText('01028707543').then(function() {
+                var btn = document.querySelector('.btn-copy');
+                btn.innerHTML = '✓ تم النسخ';
+                btn.classList.add('ok');
+                toast('تم نسخ الرقم', 'ok');
+                setTimeout(function() { btn.innerHTML = '<i class="fas fa-copy"></i> نسخ الرقم'; btn.classList.remove('ok'); }, 2000);
+            }).catch(function() { toast('01028707543', 'info'); });
+        };
 
-            if (!name) { document.getElementById('cardName').classList.add('err'); hasErr = true; }
-            else { document.getElementById('cardName').classList.remove('err'); }
+        window.sendProof = function() {
+            var msg = encodeURIComponent(
+                'مرحباً، أريد تفعيل اشتراك QCV\n\n' +
+                'الباقة: ' + (labels[plan] || '-') + '\n' +
+                'الاسم: ' + (document.getElementById('userName').value || '-') + '\n' +
+                'الهاتف: ' + (document.getElementById('userPhone').value || '-') + '\n' +
+                'طريقة الدفع: ' + ({vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method] || method)
+            );
+            window.open('https://wa.me/201028707543?text=' + msg, '_blank');
+        };
 
-            if (phone.length < 11) { document.getElementById('phone').classList.add('err'); hasErr = true; }
-            else { document.getElementById('phone').classList.remove('err'); }
+        window.dlReceipt = function() {
+            var r = window._receipt;
+            if (!r) return;
+            var txt = [
+                '═══════════════════════════',
+                '      QCV — إيصال الدفع',
+                '═══════════════════════════',
+                'الاسم:      ' + r.name,
+                'الباقة:     ' + r.plan,
+                'المبلغ:     ' + r.price,
+                'الطريقة:    ' + r.method,
+                'التاريخ:    ' + r.date,
+                'المرجع:     ' + r.ref,
+                'الحالة:     بانتظار التفعيل',
+                '═══════════════════════════',
+                '   QCV © 2026',
+                '═══════════════════════════'
+            ].join('\n');
+            var blob = new Blob(['\uFEFF' + txt], { type: 'text/plain;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url; a.download = 'QCV-Receipt-' + r.ref + '.txt';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            toast('تم تحميل الإيصال', 'ok');
+        };
 
-            if (hasErr) { showToast('أكمل جميع الحقول المطلوبة', 'err'); return; }
-            if (!currentUser) { showToast('سجل دخولك أولاً', 'err'); return; }
+        window.shareWA = function() {
+            var r = window._receipt;
+            if (!r) return;
+            var msg = encodeURIComponent('🧾 *QCV — إيصال الدفع*\n\nالاسم: ' + r.name + '\nالباقة: ' + r.plan + '\nالمبلغ: ' + r.price + '\nالطريقة: ' + r.method + '\nالتاريخ: ' + r.date + '\nالمرجع: ' + r.ref + '\nالحالة: بانتظار التفعيل');
+            window.open('https://wa.me/201028707543?text=' + msg, '_blank');
+        };
 
-            const btn = document.getElementById('payBtn');
+        window.submitPay = async function() {
+            var name = document.getElementById('userName').value.trim();
+            var phone = document.getElementById('userPhone').value.trim();
+            if (!name) { document.getElementById('userName').classList.add('err'); toast('أدخل اسمك', 'err'); return; }
+            if (phone.length < 11) { document.getElementById('userPhone').classList.add('err'); toast('أدخل رقم هاتف صحيح', 'err'); return; }
+            if (!_fb.user) { toast('سجل دخولك أولاً', 'err'); return; }
+            if (!_fb.db) { toast('جاري تحميل النظام...', 'info'); return; }
+
+            var btn = document.getElementById('btnSubmit');
             btn.disabled = true;
             btn.classList.add('loading');
 
-            var prices = window.currentPrices || { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239 };
-            var proP = payYearly ? String(prices.proYearly) : String(prices.proMonthly);
-            var unP = payYearly ? String(prices.unYearly) : String(prices.unMonthly);
-            var billType = payYearly ? 'سنوي' : 'شهري';
-            const planLabels = { free: 'Free', pro: 'Pro (' + proP + ' ج.م/' + billType + ')', unlimited: 'Unlimited (' + unP + ' ج.م/' + billType + ')', quick48: 'Quick 48h (30ج.م)' };
-
-            const subData = {
-                userId: currentUser.uid,
-                userName: name,
-                userEmail: userData?.email || currentUser.email || '',
-                userPhone: phone,
-                plan: selectedPlan,
-                planLabel: planLabels[selectedPlan] || selectedPlan,
-                paymentMethod: selectedMethod,
-                walletNumber: document.getElementById('walletInput').value || '',
-                notes: document.getElementById('notes').value || '',
-                status: 'pending',
-                createdAt: Date.now()
-            };
+            var refId = 'QCV-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 5).toUpperCase();
+            var now = new Date();
+            var dateStr = now.toLocaleDateString('ar-EG') + ' ' + now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
 
             try {
-                await push(ref(db, 'subscriptions'), subData);
-
-                // If Stripe selected, attempt to create checkout session via configured endpoint
-                if (selectedMethod === 'stripe') {
-                    try {
-                        // endpoint configurable via QCVSettings.stripeEndpoint or localStorage qcv_stripe_endpoint
-                        var endpoint = (window.QCVSettings && window.QCVSettings.stripeEndpoint) || localStorage.getItem('qcv_stripe_endpoint') || '';
-                        if (!endpoint) {
-                            showToast('لم يتم إعداد نقطة الدفع (endpoint). اتصل بالمسؤول لإعداد Stripe endpoint.', 'err');
-                        } else {
-                            // post subscription info to endpoint
-                            const resp = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subscription: subData }) });
-                            if (!resp.ok) throw new Error('Checkout creation failed ' + resp.status);
-                            const j = await resp.json();
-                            // expected { checkoutUrl } or { sessionId, publishableKey }
-                            if (j.checkoutUrl) {
-                                window.location.href = j.checkoutUrl; return;
-                            } else if (j.sessionId && j.publishableKey) {
-                                // load Stripe.js then redirect
-                                const s = document.createElement('script'); s.src = 'https://js.stripe.com/v3/'; document.head.appendChild(s);
-                                s.onload = function () {
-                                    const stripe = Stripe(j.publishableKey);
-                                    stripe.redirectToCheckout({ sessionId: j.sessionId }).then(function (res) { if (res.error) alert(res.error.message); });
-                                };
-                                return;
-                            } else {
-                                showToast('رد غير متوقع من endpoint', 'err');
-                            }
-                        }
-                    } catch (e) {
-                        console.error('Stripe checkout failed', e);
-                        showToast('فشل إنشاء جلسة الدفع: ' + (e.message || ''), 'err');
-                    }
-                }
+                var mod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js");
+                await mod.push(mod.ref(_fb.db, 'subscriptions'), {
+                    userId: _fb.user.uid,
+                    userName: name,
+                    userEmail: _fb.userData?.email || _fb.user.email,
+                    userPhone: phone,
+                    plan: plan,
+                    paymentMethod: method,
+                    walletNumber: document.getElementById('walletIn').value || '',
+                    notes: document.getElementById('userNotes').value || '',
+                    refId: refId,
+                    status: 'pending',
+                    createdAt: Date.now()
+                });
 
                 if (window.QCVNotify) QCVNotify.success();
-                document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
-                document.getElementById('step3').classList.add('active');
-                document.querySelectorAll('.step').forEach((s, i) => {
-                    s.classList.remove('active');
-                    if (i < 2) s.classList.add('done');
-                    if (i === 2) s.classList.add('active');
-                });
-                document.querySelectorAll('.step-connector').forEach(c => { c.classList.add('done'); c.classList.remove('active'); });
-
-                var prices2 = window.currentPrices || { proMonthly: 99, proYearly: 79, unMonthly: 299, unYearly: 239 };
-                var proP = payYearly ? String(prices2.proYearly) : String(prices2.proMonthly);
-                var unP = payYearly ? String(prices2.unYearly) : String(prices2.unMonthly);
-                var billType = payYearly ? 'سنوي' : 'شهري';
-                const planLabels = { free: 'Free (مجاني)', pro: 'Pro (' + proP + ' ج.م/' + billType + ')', unlimited: 'Unlimited (' + unP + ' ج.م/' + billType + ')', quick48: 'Quick 48h (30 ج.م)' };
-                const planPrices = { free: 'مجاني', pro: proP + ' ج.م', unlimited: unP + ' ج.م', quick48: '30 ج.م' };
-                const methodLabels = { vodafone: 'فودافون كاش', fawry: 'فوري', instapay: 'استانبي' };
-                const refId = 'QCV-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 6).toUpperCase();
-                const now = new Date();
-                const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) + ' - ' + now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-
-                document.getElementById('receiptName').textContent = name;
-                document.getElementById('receiptPlan').textContent = planLabels[selectedPlan] || selectedPlan;
-                document.getElementById('receiptPrice').textContent = planPrices[selectedPlan] || '-';
-                document.getElementById('receiptMethod').textContent = methodLabels[selectedMethod] || selectedMethod;
-                document.getElementById('receiptDate').textContent = dateStr;
-                document.getElementById('receiptRef').textContent = refId;
-
-                window._receiptData = { name, plan: planLabels[selectedPlan], price: planPrices[selectedPlan], method: methodLabels[selectedMethod], date: dateStr, ref: refId };
-
                 launchConfetti();
-                showToast('تم إرسال طلبك بنجاح!', 'ok');
-            } catch (err) {
-                showToast('حدث خطأ: ' + err.message, 'err');
+
+                document.getElementById('step2').classList.remove('show');
+                document.getElementById('step3').classList.add('show');
+                document.getElementById('rName').textContent = name;
+                document.getElementById('rPlan').textContent = labels[plan] || plan;
+                document.getElementById('rPrice').textContent = pricesText[plan] || '-';
+                document.getElementById('rMethod').textContent = {vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method] || method;
+                document.getElementById('rDate').textContent = dateStr;
+                document.getElementById('rRef').textContent = refId;
+
+                window._receipt = { name: name, plan: labels[plan], price: pricesText[plan], method: {vodafone:'فودافون كاش',fawry:'فوري',instapay:'إنستاباي'}[method], date: dateStr, ref: refId };
+
+                toast('تم إرسال طلبك بنجاح!', 'ok');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (e) {
+                toast('حدث خطأ: ' + e.message, 'err');
                 btn.disabled = false;
                 btn.classList.remove('loading');
             }
         };
-
-        function showToast(msg, type) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.className = 'toast toast-' + type + ' show';
-            setTimeout(() => t.classList.remove('show'), 3500);
-        }
-
-        function launchConfetti() {
-            const box = document.getElementById('confettiBox');
-            const colors = ['#38bdf8', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6'];
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const el = document.createElement('div');
-                    el.className = 'confetti';
-                    el.style.left = Math.random() * 100 + '%';
-                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    el.style.width = Math.random() * 8 + 6 + 'px';
-                    el.style.height = Math.random() * 8 + 6 + 'px';
-                    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-                    el.style.animationDuration = Math.random() * 2 + 2 + 's';
-                    box.appendChild(el);
-                    setTimeout(() => el.remove(), 4000);
-                }, i * 35);
-            }
-        }
-
-        window.downloadReceipt = function () {
-            const r = window._receiptData;
-            if (!r) return;
-            const receiptText = [
-                '═══════════════════════════════',
-                '           QCV - إيصال الدفع',
-                '═══════════════════════════════',
-                '',
-                'الاسم:         ' + r.name,
-                'الباقة:        ' + r.plan,
-                'المبلغ:        ' + r.price,
-                'طريقة الدفع:   ' + r.method,
-                'التاريخ:       ' + r.date,
-                'رقم المرجع:   ' + r.ref,
-                'الحالة:        بانتظار التفعيل',
-                '',
-                '═══════════════════════════════',
-                '   QCV © 2026 - جميع الحقوق محفوظة',
-                '   support@qcv.com',
-                '═══════════════════════════════'
-            ].join('\n');
-            const blob = new Blob(['\uFEFF' + receiptText], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'QCV-Receipt-' + r.ref + '.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('تم تحميل الإيصال', 'ok');
-        };
-
-        window.shareWhatsApp = function () {
-            const r = window._receiptData;
-            if (!r) return;
-            const msg = encodeURIComponent(
-                '🧾 *QCV - إيصال الدفع*\n\n' +
-                'الاسم: ' + r.name + '\n' +
-                'الباقة: ' + r.plan + '\n' +
-                'المبلغ: ' + r.price + '\n' +
-                'طريقة الدفع: ' + r.method + '\n' +
-                'التاريخ: ' + r.date + '\n' +
-                'رقم المرجع: ' + r.ref + '\n' +
-                'الحالة: بانتظار التفعيل\n\n' +
-                'شكراً لك! 🙏'
-            );
-            window.open('https://wa.me/201028707543?text=' + msg, '_blank');
-            showToast('جاري فتح واتساب...', 'info');
-        };
     </script>
 
+    <!-- Firebase (load async — if it fails, UI still works) -->
+    <script type="module">
+        try {
+            var appMod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+            var authMod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js");
+            var dbMod = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js");
 
+            var app = appMod.initializeApp({
+                apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
+                authDomain: "qwcv-1cfad.firebaseapp.com",
+                databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com",
+                projectId: "qwcv-1cfad",
+                storageBucket: "qwcv-1cfad.firebasestorage.app",
+                messagingSenderId: "792471802122",
+                appId: "1:792471802122:web:808e04099afc90315aaaf3"
+            });
+            var auth = authMod.getAuth(app);
+            var db = dbMod.getDatabase(app);
+            _fb.db = db;
 
-    <script defer src="js/maintenance.js"></script>
-    <script defer src="js/site-settings.js"></script>
-    <script defer src="js/auto-reload.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/analytics.js"></script>
-    <script src="js/notify-sounds.js"></script>
-    <a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"
-        aria-label="واتساب"
-        style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s"
-        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
-    </a>
-    <div id="installBanner"
-        style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
-        <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV"
-            style="width:36px;height:36px;border-radius:8px">
-        <div style="flex:1;text-align:right">
-            <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
-            <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
-        </div>
-        <button id="installBtn"
-            style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
-        <button id="installClose"
-            style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
-    </div>
+            authMod.onAuthStateChanged(auth, function(u) {
+                if (!u) { location.replace("login.html?redirect=pay"); return; }
+                _fb.user = u;
+                dbMod.get(dbMod.ref(db, 'users/' + u.uid)).then(function(snap) {
+                    _fb.userData = snap.val() || {};
+                    document.getElementById('userName').value = _fb.userData.name || '';
+                    document.getElementById('userPhone').value = _fb.userData.phone || '';
+                });
+            });
+        } catch(e) {
+            console.error('Firebase init failed:', e);
+            toast('خطأ في الاتصال بالخادم', 'err');
+        }
+    </script>
+    <style>@keyframes confFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}</style>
+
+    <!-- Fallback: ensure click handlers work even if inline onclick fails -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Plan cards — detect plan from name text
+        var planEls = document.querySelectorAll('.plan');
+        planEls.forEach(function(el) {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', function(e) {
+                var name = el.querySelector('.plan-name');
+                if (!name) return;
+                var n = name.textContent.trim().toLowerCase();
+                var p = 'pro';
+                if (n.indexOf('مجاني') > -1 || n.indexOf('free') > -1) p = 'free';
+                else if (n.indexOf('unlimited') > -1 || n.indexOf('غير محدود') > -1) p = 'unlimited';
+                if (typeof window.pickPlan === 'function') {
+                    window.pickPlan(el, p);
+                } else {
+                    // Ultra fallback — define pickPlan inline
+                    document.querySelectorAll('.plan').forEach(function(c) { c.classList.remove('sel'); });
+                    el.classList.add('sel');
+                    window._selectedPlan = p;
+                    if (p === 'free') { window.location.href = 'editor.html'; return; }
+                    var btn = document.getElementById('btnNext');
+                    if (btn) { btn.disabled = false; btn.scrollIntoView({behavior:'smooth',block:'center'}); }
+                    var lbl = document.getElementById('selectedPlanLabel');
+                    if (lbl) lbl.style.display = 'block';
+                    var nm = document.getElementById('selectedPlanName');
+                    if (nm) nm.textContent = p === 'pro' ? 'Pro' : p === 'unlimited' ? 'Unlimited' : p;
+                }
+            });
+        });
+
+        // Quick 48h button
+        var qb = document.querySelector('.btn-quick');
+        if (qb) qb.addEventListener('click', function() {
+            if (typeof window.pickPlan === 'function') window.pickPlan(null, 'quick48');
+            else { window.location.href = 'pay.html?plan=quick48'; }
+        });
+
+        // Next button
+        var bn = document.getElementById('btnNext');
+        if (bn) bn.addEventListener('click', function() {
+            if (typeof window.goPay === 'function') window.goPay();
+        });
+
+        console.log('[QCV Pay] pickPlan=' + typeof window.pickPlan + ' goPay=' + typeof window.goPay);
+    });
+    </script>
 </body>
-
 </html>

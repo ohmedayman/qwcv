@@ -1,6 +1,6 @@
 /**
- * QCV Template Engine — 15 ATS-Friendly CV Templates (English)
- * All templates follow professional ATS format from Wozber/Canva/Enhancv
+ * QCV Template Engine — 30 CV Templates (15 ATS + 15 Creative)
+ * Categories: ats, classic, modern, creative, photo, timeline, infographic, magazine, compact, dark
  */
 
 const QCVTemplates = {
@@ -511,6 +511,483 @@ QCVTemplates.register('international', {
                     ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="ti-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
                 </div>
             </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 16: PHOTO — Professional photo CV
+   ============================================================ */
+QCVTemplates.register('photo', {
+    id: 'photo', name: 'Photo CV', nameAr: 'صور شخصية',
+    category: 'photo', description: 'Professional CV with photo placeholder',
+    accent: '#6366f1',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-photo">
+            <div class="tp-photo-header">
+                <div class="tp-photo-avatar">${(d.name||'Y')[0].toUpperCase()}</div>
+                <div class="tp-photo-info">
+                    <h1 class="tp-photo-name">${d.name || 'YOUR NAME'}</h1>
+                    <div class="tp-photo-title">${d.title || 'JOB TITLE'}</div>
+                    ${contact ? `<div class="tp-photo-contact">${contact}</div>` : ''}
+                </div>
+            </div>
+            <div class="tp-photo-body">
+                <div class="tp-photo-main">
+                    ${d.summary ? `<div class="tpl-section"><h2 class="tp-photo-stitle">Professional Summary</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                    ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tp-photo-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                    ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tp-photo-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${_customSections(d.customSections)}
+                </div>
+                <div class="tp-photo-side">
+                    ${(d.skills||[]).length ? `<div class="tpl-section"><h3 class="tp-photo-sidetitle">Skills</h3><div class="tp-photo-skills">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                    ${(d.languages||[]).length ? `<div class="tpl-section"><h3 class="tp-photo-sidetitle">Languages</h3>${d.languages.map(l=>'<div class="tp-photo-lang">'+l.name+(l.level?' — '+l.level:'')+'</div>').join('')}</div>` : ''}
+                </div>
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 17: TIMELINE — Visual timeline experience
+   ============================================================ */
+QCVTemplates.register('timeline', {
+    id: 'timeline', name: 'Timeline', nameAr: 'خط زمني',
+    category: 'timeline', description: 'Experience shown as visual timeline',
+    accent: '#0891b2',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-timeline">
+            <div class="ttml-header">
+                <h1 class="ttml-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="ttml-title">${d.title || ''}</div>
+                ${contact ? `<div class="ttml-contact">${contact}</div>` : ''}
+            </div>
+            ${d.summary ? `<div class="tpl-section"><h2 class="ttml-stitle">About Me</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+            ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="ttml-stitle">Experience</h2><div class="ttml-timeline">${d.experience.map((e,i)=>'<div class="ttml-entry"><div class="ttml-dot"></div><div class="ttml-line"></div><div class="ttml-content"><div class="ttml-role">'+e.role+'</div><div class="ttml-company">'+(e.company||'')+'</div><div class="ttml-date">'+(e.duration||'')+'</div>'+(e.description?'<div class="ttml-desc">'+e.description.split('\n').filter(l=>l.trim()).map(l=>'<div>• '+l.trim().replace(/^[-•]\s*/,'')+'</div>').join('')+'</div>':'')+'</div></div>').join('')}</div></div>` : ''}
+            ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="ttml-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+            ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="ttml-stitle">Skills</h2><div class="ttml-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+            ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="ttml-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+            ${_customSections(d.customSections)}
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 18: INFOGRAPHIC — Visual skill bars
+   ============================================================ */
+QCVTemplates.register('infographic', {
+    id: 'infographic', name: 'Infographic', nameAr: 'إنفوغرافيك',
+    category: 'infographic', description: 'Skills shown as visual progress bars',
+    accent: '#7c3aed',
+    render(d) {
+        const contact = _contactLine(d);
+        const skillBars = (d.skills||[]).map((s,i) => {
+            const pct = Math.max(40, 95 - (i * 7));
+            return '<div class="tinf-skill"><div class="tinf-skill-name">'+s+'</div><div class="tinf-bar-track"><div class="tinf-bar-fill" style="width:'+pct+'%"></div></div></div>';
+        }).join('');
+        return `
+        <div class="tpl-infographic">
+            <div class="tinf-header">
+                <h1 class="tinf-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tinf-title">${d.title || ''}</div>
+                ${contact ? `<div class="tinf-contact">${contact}</div>` : ''}
+            </div>
+            <div class="tinf-body">
+                <div class="tinf-left">
+                    ${d.summary ? `<div class="tpl-section"><h2 class="tinf-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                    ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tinf-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                    ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tinf-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${_customSections(d.customSections)}
+                </div>
+                <div class="tinf-right">
+                    ${skillBars ? '<div class="tpl-section"><h2 class="tinf-stitle">Skills</h2>'+skillBars+'</div>' : ''}
+                    ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tinf-stitle">Languages</h2>${d.languages.map(l=>'<div class="tinf-lang">'+l.name+(l.level?' — '+l.level:'')+'</div>').join('')}</div>` : ''}
+                </div>
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 19: MAGAZINE — Editorial/newspaper style
+   ============================================================ */
+QCVTemplates.register('magazine', {
+    id: 'magazine', name: 'Magazine', nameAr: 'مجلة',
+    category: 'magazine', description: 'Editorial newspaper-style layout',
+    accent: '#dc2626',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-magazine">
+            <div class="tmg-header">
+                <div class="tmg-topline">${contact}</div>
+                <h1 class="tmg-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tmg-rule"></div>
+                <div class="tmg-title">${d.title || ''}</div>
+            </div>
+            <div class="tmg-cols">
+                <div class="tmg-col-main">
+                    ${d.summary ? `<div class="tpl-section"><h2 class="tmg-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                    ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tmg-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                </div>
+                <div class="tmg-col-side">
+                    ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tmg-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="tmg-stitle">Skills</h2><div class="tmg-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                    ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tmg-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                </div>
+            </div>
+            ${_customSections(d.customSections)}
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 20: COMPACT — Dense single-page
+   ============================================================ */
+QCVTemplates.register('compact', {
+    id: 'compact', name: 'Compact', nameAr: 'مضغوط',
+    category: 'compact', description: 'Dense single-page with minimal spacing',
+    accent: '#475569',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-compact">
+            <div class="tcmp-header">
+                <div><h1 class="tcmp-name">${d.name || 'YOUR NAME'}</h1><div class="tcmp-title">${d.title || ''}</div></div>
+                <div class="tcmp-contact">${contact}</div>
+            </div>
+            <div class="tcmp-grid">
+                <div class="tcmp-col-main">
+                    ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tcmp-stitle">EXPERIENCE</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                    ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tcmp-stitle">EDUCATION</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${_customSections(d.customSections)}
+                </div>
+                <div class="tcmp-col-side">
+                    ${d.summary ? `<div class="tpl-section"><h2 class="tcmp-stitle">PROFILE</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                    ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="tcmp-stitle">SKILLS</h2><p class="tpl-skills-text">${_skillsText(d.skills)}</p></div>` : ''}
+                    ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tcmp-stitle">LANGUAGES</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                </div>
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 21: DARK — Dark background theme
+   ============================================================ */
+QCVTemplates.register('dark', {
+    id: 'dark', name: 'Dark Theme', nameAr: 'داكن',
+    category: 'dark', description: 'Dark background with light text',
+    accent: '#1e1e2e',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-dark">
+            <div class="tdk-header">
+                <h1 class="tdk-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tdk-title">${d.title || ''}</div>
+                ${contact ? `<div class="tdk-contact">${contact}</div>` : ''}
+            </div>
+            <div class="tdk-body">
+                ${d.summary ? `<div class="tpl-section"><h2 class="tdk-stitle">Profile</h2><p class="tdk-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tdk-stitle">Experience</h2>${d.experience.map(e=>'<div class="tdk-item"><div class="tdk-item-row"><span class="tdk-item-left">'+e.role+'</span><span class="tdk-item-date">'+(e.duration||'')+'</span></div>'+(e.company?'<div class="tdk-item-sub">'+e.company+'</div>':'')+(e.description?'<div class="tdk-item-desc">'+e.description.split('\n').filter(l=>l.trim()).map(l=>'<div>• '+l.trim().replace(/^[-•]\s*/,'')+'</div>').join('')+'</div>':'')+'</div>').join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tdk-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="tdk-stitle">Skills</h2><div class="tdk-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tdk-stitle">Languages</h2><p class="tdk-text">${_langsText(d.languages)}</p></div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 22: GRADIENT — Gradient header
+   ============================================================ */
+QCVTemplates.register('gradient', {
+    id: 'gradient', name: 'Gradient', nameAr: 'تدرج لوني',
+    category: 'creative', description: 'Smooth gradient header with modern body',
+    accent: '#a855f7',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-gradient">
+            <div class="tgr-header">
+                <h1 class="tgr-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tgr-title">${d.title || ''}</div>
+                ${contact ? `<div class="tgr-contact">${contact}</div>` : ''}
+            </div>
+            <div class="tgr-body">
+                ${d.summary ? `<div class="tpl-section"><h2 class="tgr-stitle">About Me</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tgr-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tgr-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="tgr-stitle">Skills</h2><div class="tgr-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tgr-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 23: CARD — Each section in a card/box
+   ============================================================ */
+QCVTemplates.register('card', {
+    id: 'card', name: 'Card Layout', nameAr: 'بطاقات',
+    category: 'modern', description: 'Each section wrapped in a card',
+    accent: '#0ea5e9',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-card">
+            <div class="tcd-header">
+                <h1 class="tcd-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tcd-title">${d.title || ''}</div>
+                ${contact ? `<div class="tcd-contact">${contact}</div>` : ''}
+            </div>
+            <div class="tcd-body">
+                ${d.summary ? `<div class="tcd-card"><h2 class="tcd-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tcd-card"><h2 class="tcd-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                <div class="tcd-row">
+                    ${(d.education||[]).length ? `<div class="tcd-card tcd-half"><h2 class="tcd-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${(d.skills||[]).length ? `<div class="tcd-card tcd-half"><h2 class="tcd-stitle">Skills</h2><div class="tcd-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                </div>
+                ${(d.languages||[]).length ? `<div class="tcd-card"><h2 class="tcd-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 24: SPLIT — Split header two-tone
+   ============================================================ */
+QCVTemplates.register('split', {
+    id: 'split', name: 'Split Header', nameAr: 'مقسم',
+    category: 'modern', description: 'Two-tone split header design',
+    accent: '#ea580c',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-split">
+            <div class="tsplit-header">
+                <div class="tsplit-left">
+                    <h1 class="tsplit-name">${d.name || 'YOUR NAME'}</h1>
+                    <div class="tsplit-title">${d.title || ''}</div>
+                </div>
+                <div class="tsplit-right">
+                    ${d.email ? '<div>'+d.email+'</div>' : ''}
+                    ${d.phone ? '<div>'+d.phone+'</div>' : ''}
+                    ${d.location ? '<div>'+d.location+'</div>' : ''}
+                </div>
+            </div>
+            <div class="tsplit-body">
+                ${d.summary ? `<div class="tpl-section"><h2 class="tsplit-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tsplit-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tsplit-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="tsplit-stitle">Skills</h2><p class="tpl-skills-text">${_skillsText(d.skills)}</p></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tsplit-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 25: MONO — Monogram large initial
+   ============================================================ */
+QCVTemplates.register('mono', {
+    id: 'mono', name: 'Monogram', nameAr: 'أحرف كبيرة',
+    category: 'classic', description: 'Large monogram initial as design element',
+    accent: '#374151',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-mono">
+            <div class="tmo-left">
+                <div class="tmo-initial">${(d.name||'Y')[0].toUpperCase()}</div>
+                <div class="tmo-contact">
+                    ${d.email ? '<div>'+d.email+'</div>' : ''}
+                    ${d.phone ? '<div>'+d.phone+'</div>' : ''}
+                    ${d.location ? '<div>'+d.location+'</div>' : ''}
+                </div>
+                ${(d.skills||[]).length ? `<div class="tpl-section"><h3 class="tmo-sidetitle">Skills</h3><div class="tmo-skills">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tpl-section"><h3 class="tmo-sidetitle">Languages</h3>${d.languages.map(l=>'<div class="tmo-lang">'+l.name+(l.level?' — '+l.level:'')+'</div>').join('')}</div>` : ''}
+            </div>
+            <div class="tmo-right">
+                <h1 class="tmo-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tmo-title">${d.title || ''}</div>
+                ${d.summary ? `<div class="tpl-section"><h2 class="tmo-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tmo-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tmo-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 26: BANNER — Full-width banner header
+   ============================================================ */
+QCVTemplates.register('banner', {
+    id: 'banner', name: 'Banner', nameAr: 'بانر',
+    category: 'modern', description: 'Full-width banner header with clean body',
+    accent: '#059669',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-banner">
+            <div class="tbn-banner">
+                <h1 class="tbn-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tbn-title">${d.title || ''}</div>
+                ${contact ? `<div class="tbn-contact">${contact}</div>` : ''}
+            </div>
+            <div class="tbn-body">
+                ${d.summary ? `<div class="tpl-section"><h2 class="tbn-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tbn-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tbn-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="tbn-stitle">Skills</h2><div class="tbn-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="tbn-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 27: TIMELINE-SIDEBAR — Timeline in sidebar
+   ============================================================ */
+QCVTemplates.register('timeline-sidebar', {
+    id: 'timeline-sidebar', name: 'Timeline Sidebar', nameAr: 'خط زمني جانبي',
+    category: 'timeline', description: 'Timeline layout with sidebar for details',
+    accent: '#0d9488',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-tlsidebar">
+            <div class="ttls-header">
+                <h1 class="ttls-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="ttls-title">${d.title || ''}</div>
+            </div>
+            <div class="ttls-body">
+                <div class="ttls-main">
+                    ${d.summary ? `<div class="tpl-section"><h2 class="ttls-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                    ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="ttls-stitle">Experience</h2><div class="ttls-timeline">${d.experience.map(e=>'<div class="ttls-entry"><div class="ttls-dot"></div><div class="ttls-content"><strong>'+e.role+'</strong>'+(e.company?' — '+e.company:'')+(e.duration?'<div class="ttls-date">'+e.duration+'</div>':'')+(e.description?'<div class="ttls-desc">'+e.description.split('\n').filter(l=>l.trim()).map(l=>'<div>• '+l.trim().replace(/^[-•]\s*/,'')+'</div>').join('')+'</div>':'')+'</div></div>').join('')}</div></div>` : ''}
+                    ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="ttls-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${_customSections(d.customSections)}
+                </div>
+                <div class="ttls-side">
+                    <div class="ttls-contact-panel">
+                        ${d.email ? '<div>'+d.email+'</div>' : ''}
+                        ${d.phone ? '<div>'+d.phone+'</div>' : ''}
+                        ${d.location ? '<div>'+d.location+'</div>' : ''}
+                    </div>
+                    ${(d.skills||[]).length ? `<div class="tpl-section"><h3 class="ttls-sidetitle">Skills</h3><div class="ttls-skills">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                    ${(d.languages||[]).length ? `<div class="tpl-section"><h3 class="ttls-sidetitle">Languages</h3>${d.languages.map(l=>'<div class="ttls-lang">'+l.name+(l.level?' — '+l.level:'')+'</div>').join('')}</div>` : ''}
+                </div>
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 28: MINIMAL-PHOTO — Minimal with photo area
+   ============================================================ */
+QCVTemplates.register('minimal-photo', {
+    id: 'minimal-photo', name: 'Minimal Photo', nameAr: 'بسيط بالصورة',
+    category: 'photo', description: 'Clean minimal with photo placeholder',
+    accent: '#6b7280',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-mlphoto">
+            <div class="tmlp-top">
+                <div class="tmlp-avatar">${(d.name||'Y')[0].toUpperCase()}</div>
+                <div class="tmlp-info">
+                    <h1 class="tmlp-name">${d.name || 'YOUR NAME'}</h1>
+                    <div class="tmlp-title">${d.title || ''}</div>
+                    ${contact ? `<div class="tmlp-contact">${contact}</div>` : ''}
+                </div>
+            </div>
+            <div class="tmlp-divider"></div>
+            <div class="tmlp-body">
+                <div class="tmlp-main">
+                    ${d.summary ? `<div class="tpl-section"><h2 class="tmlp-stitle">Profile</h2><p class="tpl-text">${d.summary}</p></div>` : ''}
+                    ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="tmlp-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                    ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="tmlp-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                    ${_customSections(d.customSections)}
+                </div>
+                <div class="tmlp-side">
+                    ${(d.skills||[]).length ? `<div class="tpl-section"><h3 class="tmlp-sidetitle">Skills</h3><p class="tpl-skills-text">${_skillsText(d.skills)}</p></div>` : ''}
+                    ${(d.languages||[]).length ? `<div class="tpl-section"><h3 class="tmlp-sidetitle">Languages</h3><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+                </div>
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 29: EXECUTIVE-DARK — Dark executive
+   ============================================================ */
+QCVTemplates.register('executive-dark', {
+    id: 'executive-dark', name: 'Executive Dark', nameAr: 'تنفيذي داكن',
+    category: 'dark', description: 'Dark executive with gold accents',
+    accent: '#92400e',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-exdark">
+            <div class="ted-header">
+                <div class="ted-left">
+                    <h1 class="ted-name">${d.name || 'YOUR NAME'}</h1>
+                    <div class="ted-title">${d.title || ''}</div>
+                </div>
+                <div class="ted-right">
+                    ${d.email ? '<div>'+d.email+'</div>' : ''}
+                    ${d.phone ? '<div>'+d.phone+'</div>' : ''}
+                </div>
+            </div>
+            <div class="ted-body">
+                ${d.summary ? `<div class="tpl-section"><h2 class="ted-stitle">Professional Summary</h2><p class="ted-text">${d.summary}</p></div>` : ''}
+                ${(d.experience||[]).length ? `<div class="tpl-section"><h2 class="ted-stitle">Experience</h2>${d.experience.map(e=>'<div class="ted-item"><div class="ted-item-row"><span class="ted-item-left">'+e.role+'</span><span class="ted-item-date">'+(e.duration||'')+'</span></div>'+(e.company?'<div class="ted-item-sub">'+e.company+'</div>':'')+(e.description?'<div class="ted-item-desc">'+e.description.split('\n').filter(l=>l.trim()).map(l=>'<div>• '+l.trim().replace(/^[-•]\s*/,'')+'</div>').join('')+'</div>':'')+'</div>').join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tpl-section"><h2 class="ted-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.skills||[]).length ? `<div class="tpl-section"><h2 class="ted-stitle">Skills</h2><div class="ted-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tpl-section"><h2 class="ted-stitle">Languages</h2><p class="ted-text">${_langsText(d.languages)}</p></div>` : ''}
+                ${_customSections(d.customSections)}
+            </div>
+        </div>`;
+    }
+});
+
+/* ============================================================
+   TEMPLATE 30: CREATIVE-GRID — Grid-based creative
+   ============================================================ */
+QCVTemplates.register('creative-grid', {
+    id: 'creative-grid', name: 'Creative Grid', nameAr: 'شبكة إبداعية',
+    category: 'creative', description: 'Grid-based creative layout',
+    accent: '#e11d48',
+    render(d) {
+        const contact = _contactLine(d);
+        return `
+        <div class="tpl-cgrid">
+            <div class="tcg-header">
+                <h1 class="tcg-name">${d.name || 'YOUR NAME'}</h1>
+                <div class="tcg-title">${d.title || ''}</div>
+                ${contact ? `<div class="tcg-contact">${contact}</div>` : ''}
+            </div>
+            <div class="tcg-grid">
+                <div class="tcg-item tcg-wide">
+                    ${d.summary ? `<h2 class="tcg-stitle">Profile</h2><p class="tpl-text">${d.summary}</p>` : ''}
+                </div>
+                ${(d.experience||[]).length ? `<div class="tcg-item tcg-wide"><h2 class="tcg-stitle">Experience</h2>${d.experience.map(e=>_item(e.role, e.company, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.education||[]).length ? `<div class="tcg-item"><h2 class="tcg-stitle">Education</h2>${d.education.map(e=>_item(e.degree, e.school, e.duration, e.description)).join('')}</div>` : ''}
+                ${(d.skills||[]).length ? `<div class="tcg-item"><h2 class="tcg-stitle">Skills</h2><div class="tcg-skill-tags">${d.skills.map(s=>'<span>'+s+'</span>').join('')}</div></div>` : ''}
+                ${(d.languages||[]).length ? `<div class="tcg-item"><h2 class="tcg-stitle">Languages</h2><p class="tpl-skills-text">${_langsText(d.languages)}</p></div>` : ''}
+            </div>
+            ${_customSections(d.customSections)}
         </div>`;
     }
 });

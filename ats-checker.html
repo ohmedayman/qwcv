@@ -387,17 +387,158 @@
             color: #fff;
         }
 
+        .job-sites-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .job-tips-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .job-sites-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 600px) {
             .ats-hero h1 {
                 font-size: 1.5rem;
             }
 
-            .ats-categories {
-                grid-template-columns: 1fr;
+            .ats-hero p {
+                font-size: 0.85rem;
+            }
+
+            .ats-container {
+                padding: 20px 14px;
+            }
+
+            .ats-input-section {
+                padding: 18px;
             }
 
             .ats-textarea {
                 min-height: 200px;
+                font-size: 0.85rem;
+            }
+
+            .ats-categories {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .job-sites-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .job-tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ats-score-card {
+                padding: 24px 16px;
+            }
+
+            .ats-score-circle {
+                width: 110px;
+                height: 110px;
+            }
+
+            .ats-score-circle svg {
+                width: 110px;
+                height: 110px;
+            }
+
+            .ats-score-number {
+                font-size: 2rem;
+            }
+
+            .ats-issues {
+                padding: 16px;
+            }
+
+            .ats-issue {
+                padding: 10px 8px;
+                gap: 8px;
+            }
+
+            .ats-issue-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 0.65rem;
+            }
+
+            .ats-cta {
+                padding: 24px 16px;
+            }
+
+            .ats-cta h3 {
+                font-size: 1rem;
+            }
+
+            .ats-cta a {
+                padding: 10px 24px;
+                font-size: 0.85rem;
+            }
+
+            .ats-btn {
+                padding: 14px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ats-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .job-sites-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .job-tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ats-hero {
+                padding: 60px 16px 36px;
+            }
+
+            .ats-hero h1 {
+                font-size: 1.3rem;
+            }
+
+            .ats-container {
+                padding: 16px 12px;
+            }
+
+            .ats-input-section {
+                padding: 14px;
+                border-radius: 12px;
+            }
+
+            .ats-score-card {
+                border-radius: 12px;
+            }
+
+            .ats-issues {
+                border-radius: 12px;
+            }
+
+            .ats-cta {
+                border-radius: 12px;
+                padding: 20px 14px;
+            }
+
+            .ats-btn {
+                padding: 12px;
+                font-size: 0.85rem;
+                border-radius: 10px;
             }
         }
     </style>
@@ -411,7 +552,7 @@
             <a href="index.html"
                 style="font-size:1.3rem;font-weight:900;color:var(--text,#1a1a2e);text-decoration:none">Q<span
                     style="color:var(--accent,#0003c9)">CV</span></a>
-            <a href="editor.html"
+            <a href="login.html"
                 style="background:var(--accent,#0003c9);color:#fff;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:700">ابدأ
                 مجاناً</a>
         </div>
@@ -470,7 +611,62 @@
             <div class="ats-cta">
                 <h3>ابنِ سيرة ذاتية متوافقة مع ATS</h3>
                 <p>استخدم محرر QCV المجاني لبناء سيرة ذاتية احترافية متوافقة مع أنظمة التوظيف</p>
-                <a href="editor.html">ابدأ الآن مجاناً</a>
+                <a href="login.html">ابدأ الآن مجاناً</a>
+            </div>
+
+            <!-- Job Tips from External Sites -->
+            <div id="jobTipsSection" style="display:none;background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:16px;padding:24px;margin-bottom:24px">
+                <h3 style="font-size:1rem;font-weight:800;margin-bottom:16px"><i class="fas fa-lightbulb" style="color:#f59e0b;margin-left:8px"></i> نصائح من مواقع التوظيف</h3>
+                <div id="jobTipsList" style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="job-tips-grid"></div>
+            </div>
+
+            <!-- External Job Sites References -->
+            <div style="background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:16px;padding:24px;margin-bottom:24px">
+                <h3 style="font-size:1rem;font-weight:800;margin-bottom:16px"><i class="fas fa-link" style="color:var(--accent,#0003c9);margin-left:8px"></i> مواقع وظائف موصى بها</h3>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" id="jobSitesGrid" class="job-sites-grid">
+                    <a href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener" style="text-decoration:none;padding:16px;border:1.5px solid #0a66c2;border-radius:12px;text-align:center;transition:all 0.2s;background:#f0f7ff" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(10,102,194,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.5rem;margin-bottom:6px;color:#0a66c2"><i class="fab fa-linkedin"></i></div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#1a1a2e">LinkedIn Jobs</div>
+                        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px">+900 مليون مستخدم عالمياً</div>
+                        <div style="font-size:0.65rem;color:#0a66c2;margin-top:4px;font-weight:600">linkedin.com/jobs</div>
+                    </a>
+                    <a href="https://wuzzuf.net/" target="_blank" rel="noopener" style="text-decoration:none;padding:16px;border:1.5px solid #00b2a9;border-radius:12px;text-align:center;transition:all 0.2s;background:#f0fffe" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(0,178,169,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.5rem;margin-bottom:6px;color:#00b2a9"><i class="fas fa-briefcase"></i></div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#1a1a2e">Wuzzuf</div>
+                        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px">الوظائف الأولى في مصر</div>
+                        <div style="font-size:0.65rem;color:#00b2a9;margin-top:4px;font-weight:600">wuzzuf.net</div>
+                    </a>
+                    <a href="https://www.forasna.com/" target="_blank" rel="noopener" style="text-decoration:none;padding:16px;border:1.5px solid #ff6600;border-radius:12px;text-align:center;transition:all 0.2s;background:#fff8f0" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(255,102,0,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.5rem;margin-bottom:6px;color:#ff6600"><i class="fas fa-building"></i></div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#1a1a2e">Forasna</div>
+                        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px">فرص عمل في الوطن العربي</div>
+                        <div style="font-size:0.65rem;color:#ff6600;margin-top:4px;font-weight:600">forasna.com</div>
+                    </a>
+                    <a href="https://www.glassdoor.com/Job/" target="_blank" rel="noopener" style="text-decoration:none;padding:16px;border:1.5px solid #0caa41;border-radius:12px;text-align:center;transition:all 0.2s;background:#f0faf3" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(12,170,65,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.5rem;margin-bottom:6px;color:#0caa41"><i class="fas fa-star"></i></div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#1a1a2e">Glassdoor</div>
+                        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px">وظائف + تقييم الشركات</div>
+                        <div style="font-size:0.65rem;color:#0caa41;margin-top:4px;font-weight:600">glassdoor.com</div>
+                    </a>
+                    <a href="https://www.indeed.com/" target="_blank" rel="noopener" style="text-decoration:none;padding:16px;border:1.5px solid #2164f3;border-radius:12px;text-align:center;transition:all 0.2s;background:#f0f4ff" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(33,100,243,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.5rem;margin-bottom:6px;color:#2164f3"><i class="fas fa-search-dollar"></i></div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#1a1a2e">Indeed</div>
+                        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px">أكبر موقع وظائف عالمياً</div>
+                        <div style="font-size:0.65rem;color:#2164f3;margin-top:4px;font-weight:600">indeed.com</div>
+                    </a>
+                    <a href="https://bayt.com/" target="_blank" rel="noopener" style="text-decoration:none;padding:16px;border:1.5px solid #0054aa;border-radius:12px;text-align:center;transition:all 0.2s;background:#f0f6ff" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(0,84,170,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.5rem;margin-bottom:6px;color:#0054aa"><i class="fas fa-globe-americas"></i></div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#1a1a2e">Bayt.com</div>
+                        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px">وظائف في الشرق الأوسط</div>
+                        <div style="font-size:0.65rem;color:#0054aa;margin-top:4px;font-weight:600">bayt.com</div>
+                    </a>
+                </div>
+                <div style="margin-top:16px;padding:12px;background:rgba(0,3,201,0.03);border-radius:10px;border:1px dashed rgba(0,3,201,0.15)">
+                    <p style="font-size:0.78rem;color:var(--muted,#6b7280);line-height:1.7;margin:0">
+                        <i class="fas fa-info-circle" style="color:var(--accent,#0003c9);margin-left:4px"></i>
+                        <strong>نصيحة:</strong> قم بتحسين سيرتك الذاتية باستخدام أداة فحص ATS أعلاه قبل الرفع على أي موقع وظائف. كل موقع يستخدم نظام ATS مختلف — LinkedIn يفضل الكلمات المفتاحية، Wuzzuf يركز على الخبرة العملية، وGlassdoor يهتم بالملخص المهني.
+                    </p>
+                </div>
             </div>
 
             <div style="text-align:center;margin-top:24px">
@@ -488,10 +684,10 @@
                 style="color:var(--accent,#0003c9)">CV</span></div>
         <p style="font-size:0.82rem;color:var(--muted,#6b7280);margin-bottom:16px">ابدأ في كتابة سيرتك الذاتية
             الاحترافية الآن</p>
-        <a href="editor.html"
+        <a href="login.html"
             style="display:inline-block;padding:12px 32px;background:var(--accent,#0003c9);color:#fff;border-radius:10px;font-weight:700;font-size:0.9rem;text-decoration:none">ابدأ
             مجاناً</a>
-        <div style="margin-top:16px;font-size:0.72rem;color:var(--muted,#9ca3af)">&copy; 2025 QCV. جميع الحقوق محفوظة.
+        <div style="margin-top:16px;font-size:0.72rem;color:var(--muted,#9ca3af)">&copy; 2026 QCV. جميع الحقوق محفوظة.
         </div>
     </footer>
 
@@ -548,7 +744,7 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
             try {
                 var prompt = 'You are a senior ATS (Applicant Tracking System) analyst with 15 years of experience at top recruitment firms.\n\n' +
                     'Analyze this CV and return ONLY a JSON object (no markdown, no code blocks, no explanation) with this exact structure:\n' +
-                    '{"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","section":"summary|experience|skills|education|contact","fix":"Arabic fix suggestion with +points"}],"verdict":"Arabic verdict in 1-2 sentences"}\n\n' +
+                    '{"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","section":"summary|experience|skills|education|contact","fix":"Arabic fix suggestion with +points"}],"verdict":"Arabic verdict in 1-2 sentences","keywords":{"missing":["keyword1","keyword2"],"found":["keyword3"]},"jobTips":{"linkedin":"tip for LinkedIn optimization","wuzzuf":"tip for Wuzzuf/Forasna optimization","glassdoor":"tip for Glassdoor optimization"}}\n\n' +
                     'Scoring criteria:\n' +
                     '- Contact: email, phone, LinkedIn, professional title presence\n' +
                     '- Content: summary quality (80+ words), experience depth, bullet points, education\n' +
@@ -559,16 +755,29 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
                     'All text MUST be in Arabic.\n\nCV:\n' + text;
 
                 var aiResult = null;
-                // Try QCVAI first
+                // Try QCVAI first (uses POST to Pollinations)
                 if (window.QCVAI) {
-                    try { aiResult = await QCVAI.callJSON(prompt, null, { maxRetries: 1 }); } catch (e) { }
+                    try { aiResult = await QCVAI.callJSON(prompt, null, { timeout: 20000, maxRetries: 2 }); } catch (e) { }
                 }
-                // Fallback to direct Pollinations
+                // Fallback: direct POST to OpenRouter
                 if (!aiResult || !aiResult.ok) {
                     try {
-                        var response = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=' + Date.now(), { method: 'GET' });
-                        if (!response.ok) throw new Error('fail');
-                        var content = await response.text();
+                        var response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+                            body: JSON.stringify({
+                                model: 'google/gemini-2.5-flash',
+                                messages: [
+                                    { role: 'system', content: 'You are an ATS expert. Return ONLY valid JSON, no markdown, no code blocks.' },
+                                    { role: 'user', content: prompt }
+                                ],
+                                temperature: 0.3,
+                                max_tokens: 2000
+                            })
+                        });
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        var data = await response.json();
+                        var content = data.choices?.[0]?.message?.content || '';
                         content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
                         aiResult = { ok: true, json: JSON.parse(content) };
                     } catch (e) { }
@@ -583,7 +792,6 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
 
             } catch (err) {
                 console.error('ATS analysis error:', err);
-                // Fallback: do local analysis
                 const result = localAnalyze(text);
                 displayResults(result);
             }
@@ -726,6 +934,32 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
             result.issues.forEach(issue => {
                 issuesList.innerHTML += '<div class="ats-issue"><div class="ats-issue-icon ' + issue.type + '"><i class="fas ' + icons[issue.type] + '"></i></div><div><div class="ats-issue-text">' + issue.text + '</div>' + (issue.fix ? '<div class="ats-issue-fix"><i class="fas fa-wrench" style="margin-left:4px"></i>' + issue.fix + '</div>' : '') + '</div></div>';
             });
+
+            // Show job tips from AI
+            if (result.jobTips) {
+                var tipsSection = document.getElementById('jobTipsSection');
+                var tipsList = document.getElementById('jobTipsList');
+                if (tipsSection && tipsList) {
+                    tipsSection.style.display = '';
+                    var tipSites = [
+                        { key: 'linkedin', name: 'LinkedIn', icon: 'fab fa-linkedin', color: '#0a66c2', bg: '#f0f7ff' },
+                        { key: 'wuzzuf', name: 'Wuzzuf / Forasna', icon: 'fas fa-briefcase', color: '#00b2a9', bg: '#f0fffe' },
+                        { key: 'glassdoor', name: 'Glassdoor', icon: 'fas fa-star', color: '#0caa41', bg: '#f0faf3' }
+                    ];
+                    tipsList.innerHTML = tipSites.map(function(site) {
+                        var tip = result.jobTips[site.key] || 'حسّن سيرتك الذاتية لهذا الموقع';
+                        return '<div style="padding:14px;background:' + site.bg + ';border-radius:10px;border:1px solid ' + site.color + '20">' +
+                            '<div style="font-size:0.82rem;font-weight:700;color:' + site.color + ';margin-bottom:6px"><i class="' + site.icon + '" style="margin-left:6px"></i>' + site.name + '</div>' +
+                            '<div style="font-size:0.78rem;color:#1a1a2e;line-height:1.6">' + tip + '</div></div>';
+                    }).join('');
+                }
+            }
+
+            // Show missing keywords
+            if (result.keywords && result.keywords.missing && result.keywords.missing.length) {
+                var kwHtml = '<div class="ats-issue"><div class="ats-issue-icon warning"><i class="fas fa-key"></i></div><div><div class="ats-issue-text">كلمات مفتاحية مقترحة للإضافة: <strong style="color:#8b5cf6">' + result.keywords.missing.join('، ') + '</strong></div><div class="ats-issue-fix"><i class="fas fa-wrench" style="margin-left:4px"></i> أضف هذه الكلمات في قسم المهارات أو الخبرة لتحسين التوافق مع مواقع التوظيف</div></div></div>';
+                document.getElementById('issuesList').insertAdjacentHTML('afterbegin', kwHtml);
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }

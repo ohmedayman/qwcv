@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/cover-letter.html">
+    <meta property="og:title" content="منشئ خطابات التعريف - QCV">
+    <meta property="og:description" content="أنشئ خطاب تعريف احترافي بالذكاء الاصطناعي. قوالب متنوعة مع عرض م-preview فوري ونسخ مباشر.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <title>منشئ خطابات التعريف - QCV | مجاني بالذكاء الاصطناعي</title>
+    <meta name="description" content="أنشئ خطاب تعريف احترافي بالذكاء الاصطناعي. قوالب متنوعة مع عرض مسبق فوري.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/cover-letter.html">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+        :root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--primary:#0003c9;--green:#059669;--red:#ef4444;--yellow:#f59e0b;--blue:#0ea5e9;--purple:#8b5cf6;--pink:#ec4899;--text:#0f172a;--muted:#64748b;--input:#f1f5f9}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo','Inter',sans-serif;min-height:100vh}
+        .nav{background:var(--card);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+        .logo{font-size:1.5rem;font-weight:900;text-decoration:none;color:var(--text)}
+        .logo span{color:var(--primary)}
+        .nav-links{display:flex;gap:20px;align-items:center}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem}
+        .nav-links a:hover{color:var(--primary)}
+        .btn{padding:10px 20px;border:none;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+        .btn-primary{background:var(--primary);color:#fff}
+        .btn-primary:hover{background:#0002a0;transform:translateY(-1px)}
+        .btn-green{background:var(--green);color:#fff}
+        .btn-green:hover{opacity:0.9;transform:translateY(-1px)}
+        .btn-purple{background:linear-gradient(135deg,var(--purple),#6d28d9);color:#fff}
+        .btn-purple:hover{opacity:0.9;transform:translateY(-1px)}
+
+        .hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04))}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:50px;padding:6px 18px;margin-bottom:16px;font-size:0.78rem;font-weight:600;color:var(--purple)}
+        .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:10px}
+        .hero h1 span{color:var(--primary)}
+        .hero p{color:var(--muted);font-size:1.05rem;max-width:600px;margin:0 auto}
+
+        .container{max-width:1200px;margin:0 auto;padding:20px}
+
+        .template-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:28px}
+        .cl-card{border:2px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all 0.2s;text-align:center}
+        .cl-card:hover{border-color:var(--primary);background:rgba(0,3,201,0.03);transform:translateY(-2px)}
+        .cl-card.active{border-color:var(--primary);background:rgba(0,3,201,0.06)}
+        .cl-card i{font-size:1.8rem;margin-bottom:8px;display:block}
+        .cl-card h4{font-size:0.92rem;font-weight:700;margin-bottom:4px}
+        .cl-card p{font-size:0.72rem;color:var(--muted);line-height:1.5}
+
+        .layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+        .panel{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:28px}
+        .panel h2{font-size:1.15rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+        .panel h2 i{color:var(--primary)}
+
+        .form-group{margin-bottom:14px}
+        .form-group label{display:block;font-size:0.82rem;font-weight:700;margin-bottom:5px;color:var(--text)}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.88rem;font-family:inherit;background:var(--input);transition:border-color 0.2s}
+        .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,3,201,0.08)}
+        .form-group textarea{resize:vertical;min-height:100px;line-height:1.7}
+
+        .preview-area{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:28px;position:sticky;top:80px}
+        .preview-area h2{font-size:1.15rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+        .preview-area h2 i{color:var(--green)}
+
+        .letter-preview{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;min-height:400px;margin-bottom:18px;font-size:0.88rem;line-height:2;color:#333;white-space:pre-wrap;font-family:Georgia,'Times New Roman',serif}
+        .letter-preview .letter-header{margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid #e2e8f0}
+        .letter-preview .letter-header h3{font-size:1.1rem;color:var(--primary);margin-bottom:4px}
+        .letter-preview .letter-header p{font-size:0.78rem;color:#64748b}
+
+        .action-bar{display:flex;gap:10px;flex-wrap:wrap}
+        .action-bar .btn{flex:1;min-width:120px;justify-content:center}
+
+        .loading-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,0.85);border-radius:12px;align-items:center;justify-content:center;flex-direction:column;z-index:5}
+        .loading-overlay.show{display:flex}
+        .loading-overlay i{font-size:2rem;color:var(--primary);margin-bottom:8px;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        .copy-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:12px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;z-index:9999;display:none;box-shadow:0 8px 24px rgba(5,150,105,0.3)}
+        .copy-toast.show{display:block;animation:fadeDown 0.3s ease}
+        @keyframes fadeDown{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+        .footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem;margin-top:40px}
+        .footer a{color:var(--primary);text-decoration:none}
+
+        @media(max-width:900px){
+            .layout{grid-template-columns:1fr}
+            .preview-area{position:static}
+            .hero h1{font-size:1.8rem}
+            .template-gallery{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:600px){
+            .template-gallery{grid-template-columns:1fr}
+            .action-bar{flex-direction:column}
+            .nav-links a:not(.btn){display:none}
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html" class="logo">Q<span>CV</span></a>
+    <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="editor.html">المحرر</a>
+        <a href="ai-tools.html">أدوات AI</a>
+        <a href="login.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.82rem">ابدأ الآن</a>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="hero-badge"><i class="fas fa-magic"></i> بالذكاء الاصطناعي</div>
+    <h1>منشئ <span>خطابات التعريف</span></h1>
+    <p>أنشئ خطاب تعريف احترافي في ثوانٍ. اختر قالباً، أدخل معلوماتك، ودع الذكاء الاصطناعي يكتب لك.</p>
+</div>
+
+<div class="container">
+    <div class="template-gallery" id="tplGallery">
+        <div class="cl-card active" data-tpl="professional" onclick="selectTpl('professional',this)">
+            <i class="fas fa-briefcase" style="color:#0003c9"></i>
+            <h4>احترافي</h4>
+            <p>مناسب لجميع المجالات والشركات</p>
+        </div>
+        <div class="cl-card" data-tpl="creative" onclick="selectTpl('creative',this)">
+            <i class="fas fa-palette" style="color:#8b5cf6"></i>
+            <h4>إبداعي</h4>
+            <p>مميز للمجالات الإبداعية والتصميم</p>
+        </div>
+        <div class="cl-card" data-tpl="executive" onclick="selectTpl('executive',this)">
+            <i class="fas fa-crown" style="color:#f59e0b"></i>
+            <h4>تنفيذي</h4>
+            <p>للمناصب الإدارية والقيادية</p>
+        </div>
+        <div class="cl-card" data-tpl="formal" onclick="selectTpl('formal',this)">
+            <i class="fas fa-landmark" style="color:#059669"></i>
+            <h4>رسمي</h4>
+            <p>للجهات الحكومية والأكاديمية</p>
+        </div>
+        <div class="cl-card" data-tpl="startup" onclick="selectTpl('startup',this)">
+            <i class="fas fa-rocket" style="color:#0ea5e9"></i>
+            <h4>ناشئ</h4>
+            <p>للمؤسسات الناشئة وشركات التقنية</p>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="panel">
+            <h2><i class="fas fa-edit"></i> بيانات الخطاب</h2>
+
+            <div class="form-group">
+                <label>اسمك الكامل</label>
+                <input type="text" id="clName" placeholder="محمد أحمد">
+            </div>
+            <div class="form-group">
+                <label>المسمى الوظيفي</label>
+                <input type="text" id="clTitle" placeholder="مطور ويب">
+            </div>
+            <div class="form-group">
+                <label>اسم الشركة المستهدفة</label>
+                <input type="text" id="clCompany" placeholder="شركة تقنية">
+            </div>
+            <div class="form-group">
+                <label>الوظيفة المتقدمة لها</label>
+                <input type="text" id="clPosition" placeholder="مطور Full Stack">
+            </div>
+            <div class="form-group">
+                <label>وصف وظائف الشركة (اختياري - لتحسين النتيجة)</label>
+                <textarea id="clJobDesc" placeholder="انسخ هنا وصف الوظيفة أو معلومات الشركة..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>خبراتك الرئيسية</label>
+                <textarea id="clExperience" placeholder="React, Node.js, 5 سنوات خبرة..." style="min-height:70px"></textarea>
+            </div>
+            <div class="form-group">
+                <label>الرسالة الشخصية (لماذا أنت؟)</label>
+                <textarea id="clPersonal" placeholder="لماذا أنت مناسب لهذه الوظيفة..."></textarea>
+            </div>
+
+            <button class="btn btn-purple" onclick="generateWithAI()" id="aiBtn" style="width:100%;justify-content:center;margin-top:8px">
+                <i class="fas fa-wand-magic-sparkles"></i> توليد بالذكاء الاصطناعي
+            </button>
+            <button class="btn btn-primary" onclick="generateManually()" style="width:100%;justify-content:center;margin-top:8px">
+                <i class="fas fa-pen"></i> إنشاء يدوي
+            </button>
+        </div>
+
+        <div class="preview-area" style="position:relative">
+            <h2><i class="fas fa-eye"></i> عرض مسبق</h2>
+            <div class="letter-preview" id="letterPreview">
+                <div class="letter-header">
+                    <h3>خطاب التعريف</h3>
+                    <p>املأ النموذج على اليسار لإنشاء خطابك</p>
+                </div>
+                <p style="color:#94a3b8;font-style:italic;text-align:center;margin-top:60px">
+                    ستظهر هنا النتيجة بعد الإنشاء
+                </p>
+            </div>
+            <div class="action-bar">
+                <button class="btn btn-primary" onclick="copyLetter()"><i class="fas fa-copy"></i> نسخ النص</button>
+                <button class="btn btn-green" onclick="downloadLetter()"><i class="fas fa-download"></i> تحميل TXT</button>
+            </div>
+            <div class="loading-overlay" id="loadingOverlay">
+                <i class="fas fa-spinner"></i>
+                <span style="font-weight:600;color:var(--primary)">جاري التوليد...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="copy-toast" id="copyToast"><i class="fas fa-check"></i> تم النسخ!</div>
+
+<footer class="footer">
+    © 2026 QCV - جميع الحقوق محفوظة | منتج من <a href="https://vexonet.online" target="_blank" rel="noopener">Vexonet</a>
+</footer>
+
+<script src="js/ai-service.js"></script>
+<script>
+let currentTpl = 'professional';
+let generatedText = '';
+
+const templates = {
+    professional: (d) => `التاريخ: ${new Date().toLocaleDateString('ar-EG')}
+
+${d.name}
+${d.title}
+
+إلى السيد/السيدة المحترم/ة،
+${d.company ? `قسم الموارد البشرية\n${d.company}` : 'قسم الموارد البشرية'}
+
+الموضوع: التقدم لوظيفة ${d.position}
+
+تحية طيبة وبعد،
+
+أتقدم بموجب هذا الخطاب للترشح لوظيفة ${d.position} في ${d.company || 'شركتكم الموقرة'}. أعمل حالياً كـ${d.title} ولدي خبرة واسعة في ${d.experience || 'المجال'}.
+
+${d.personal ? d.personal + '\n\n' : ''}أؤمن بأن مهاراتي وخبرتي ستساهم بشكل فعال في تحقيق أهداف ${d.company || 'شركتكم'}. أتمتع بالقدرة على العمل تحت ضغط والتعامل مع التحديات بشكل إبداعي.
+
+أتطلع إلى الفرصة لمناقشة كيف يمكنني المساهمة في نجاح فريقكم. يسعدني التواصلكم معي في أي وقت مناسب.
+
+وتفضلوا بقبول فائق الاحترام والتقدير،
+${d.name}`,
+
+    creative: (d) => `${d.name} | ${d.title}
+${new Date().toLocaleDateString('ar-EG')}
+
+مرحباً ${d.company || 'بفريقكم'} 👋
+
+أنا ${d.name}، ${d.title} بشغف حقيقي بـ${d.experience || 'المجال'}.
+
+لماذا أنا؟
+
+${d.personal ? d.personal + '\n\n' : ''}أحببت أن أتواصل معكم مباشرة لأن ${d.company || 'شركتكم'} تمثل بالضبط ما أبحث عنه. المبدعون يحتاجون بيئة تمكّنهم من التميز، وأنا واثق أن فريقكم هو المكان المثالي لذلك.
+
+خبرتي تشمل:
+- ${d.experience || 'خبرة واسعة في المجال'}
+
+أبحث عن فرصة أضيف فيها قيمة حقيقية وأنمو مهنياً. يسعدني أن أقابلكم وأروي لكم قصتي.
+
+بانتظار ردّكم!,
+${d.name}`,
+
+    executive: (d) => `${d.name}
+${d.title}
+${new Date().toLocaleDateString('ar-EG')}
+
+إلى مجلس الإدارة / السيد المحترم مدير الموارد البشرية
+${d.company || ''}
+
+الموضوع: ترشح لوظيفة ${d.position}
+
+السيد المحترم،
+
+أتقدم لكم بكل احترام عبر هذا الخطاب للترشح لوظيفة ${d.position} في ${d.company || 'شركتكم'}.
+
+بخبرة تمتد لأكثر من 10 سنوات في ${d.experience || 'إدارة المشاريع الاستراتيجية'}، قمت بقيادة فرق عمل تزيد عن 50 موظف وحققت نتائج استثنائية في:
+
+${d.personal ? d.personal + '\n' : ''}• زيادة الإيرادات بنسبة 40% خلال سنة واحدة
+• إطلاق 3 مشاريع استراتيجية بنجاح
+• بناء شراكات استراتيجية مع شركات رائدة
+
+أتمتع برؤية استراتيجية واضرة وقدرة استثنائية على اتخاذ القرارات الصعبة في الوقت المناسب. أنا ملتزم بتقديم أفضل النتائج لـ${d.company || 'شركتكم'}.
+
+أتطلع إلى مناقشة كيف يمكنني المساهمة في رؤيتكم الاستراتيجية.
+
+مع فائق الاحترام والتقدير،
+${d.name}`,
+
+    formal: (d) => `${d.name}
+${d.title}
+${new Date().toLocaleDateString('ar-EG')}
+
+بسم الله الرحمن الرحيم
+
+إلى السيد المحترم / مدير ${d.company || 'المؤسسة'}
+تحية طيبة وبعد،
+
+الموضوع: التقدم لوظيفة ${d.position}
+
+يشرفني أن أتقدم بموجب هذا الخطاب للترشح لوظيفة ${d.position} المعلن عنها. وقد أرفقت سيرتي الذاتية للتدقيق والمراجعة.
+
+لقد حصلت على شهادة ${d.experience || 'البكالوريوس في هندسة الحاسب'} من جامعة مرموقة، ولدي خبرة عملية في ${d.experience || 'المجال'} تزيد عن ${d.personal || '5 سنوات'}.
+
+أتعهد بالالتزام بالأنظمة واللوائح المعمول بها، وبذل أقصى جهد في خدمة المؤسسة.
+
+أتطلع إلى الفرصة لتقديم نفسي في مقابلة شخصية.
+
+وتفضلوا بقبول فائق الاحترام،
+${d.name}`,
+
+    startup: (d) => `Hey ${d.company || 'Team'}! 🚀
+
+أنا ${d.name}، ${d.title} وعايز انضم لفريقكم!
+
+${d.personal ? d.personal + '\n\n' : ''}بصراحة، أنا متحمس جداً لـ${d.company || 'شركتكم'} لأن اللي بتعملوه فعلاً مختلف. ${d.experience || 'عندي خبرة في تطوير المنتجات من الصفر'} وأقدر أضيف قيمة من اليوم الأول.
+
+ليا خبرة في:
+- ${d.experience || 'بناء منتجات تقنية من الصفر'}
+- العمل في بيئات سريعة التغير
+- Collaboration مع فرق cross-functional
+
+عايز أعرف أكتر عن التحديات اللي بتحدوها وازاي أقدر أساعد. Let's chat?
+
+${d.name}
+${d.title}`
+};
+
+function selectTpl(tpl, el) {
+    currentTpl = tpl;
+    document.querySelectorAll('.cl-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    if (generatedText) generateManually();
+}
+
+function getFormData() {
+    return {
+        name: document.getElementById('clName').value || 'الاسم',
+        title: document.getElementById('clTitle').value || 'المسمى الوظيفي',
+        company: document.getElementById('clCompany').value,
+        position: document.getElementById('clPosition').value || 'الوظيفة',
+        jobDesc: document.getElementById('clJobDesc').value,
+        experience: document.getElementById('clExperience').value,
+        personal: document.getElementById('clPersonal').value
+    };
+}
+
+function generateManually() {
+    const d = getFormData();
+    generatedText = templates[currentTpl](d);
+    renderLetter(generatedText);
+}
+
+async function generateWithAI() {
+    const d = getFormData();
+    if (!d.experience && !d.personal && !d.jobDesc) {
+        alert('الرجاء إدخالخبراتك أو وصف الوظيفة على الأقل');
+        return;
+    }
+    const btn = document.getElementById('aiBtn');
+    const overlay = document.getElementById('loadingOverlay');
+    btn.disabled = true;
+    overlay.classList.add('show');
+
+    try {
+        const prompt = `اكتب خطاب تعريف (Cover Letter) احترافي باللغة العربية بالكامل.
+الاسم: ${d.name}
+المسمى: ${d.title}
+الشركة: ${d.company || 'غير محددة'}
+الوظيفة: ${d.position}
+الخبرات: ${d.experience || 'غير محددة'}
+الرسالة: ${d.personal || ''}
+وصف الوظيفة: ${d.jobDesc || 'غير محدد'}
+
+القالب المطلوب: ${currentTpl}
+اكتب خطاباً احترافياً قصيراً وم direct لا يزيد عن 250 كلمة. لا تستخدم علامات markdown.`;
+
+        if (window.QCVAI) {
+            const result = await window.QCVAI.call(prompt, 'You are a professional cover letter writer. Write in English. Keep it under 250 words. No markdown.', { timeout: 15000 });
+            generatedText = result.ok ? result.text : '';
+        } else {
+            const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+                body: JSON.stringify({
+                    model: 'google/gemini-2.5-flash',
+                    messages: [{ role: 'system', content: 'You are a professional cover letter writer. Write in English. Keep it under 250 words. No markdown.' }, { role: 'user', content: prompt }],
+                    temperature: 0.7,
+                    max_tokens: 1500
+                })
+            });
+            const data = await resp.json();
+            generatedText = data.choices?.[0]?.message?.content || '';
+        }
+        renderLetter(generatedText);
+    } catch (e) {
+        console.error(e);
+        generateManually();
+    } finally {
+        btn.disabled = false;
+        overlay.classList.remove('show');
+    }
+}
+
+function renderLetter(text) {
+    const d = getFormData();
+    const preview = document.getElementById('letterPreview');
+    preview.innerHTML = `
+        <div class="letter-header">
+            <h3>${d.name}</h3>
+            <p>${d.title}${d.company ? ' | ' + d.company : ''} | ${new Date().toLocaleDateString('ar-EG')}</p>
+        </div>
+        <div style="white-space:pre-wrap;line-height:2">${text}</div>
+    `;
+}
+
+function copyLetter() {
+    if (!generatedText) { alert('لم يتم إنشاء خطاب بعد'); return; }
+    navigator.clipboard.writeText(generatedText).then(() => showToast());
+}
+
+function downloadLetter() {
+    if (!generatedText) { alert('لم يتم إنشاء خطاب بعد'); return; }
+    const d = getFormData();
+    const blob = new Blob([generatedText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cover-letter-${d.name.replace(/\s+/g,'-')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function showToast() {
+    const toast = document.getElementById('copyToast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>
