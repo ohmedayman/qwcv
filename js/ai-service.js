@@ -3,7 +3,7 @@
  * OpenAI-compatible endpoint with Gemini REST API fallback + CORS proxy
  */
 const QCVAI = {
-    _bluesmindsKey: (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '',
+    _bluesmindsKey: (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6',
     _bluesmindsEndpoint: (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1',
     _bluesmindsModels: ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'],
     _geminiKey: (window.QCVConfig && window.QCVConfig.geminiKey) || '',

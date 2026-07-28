@@ -9498,7 +9498,7 @@
                     if (onError) onError('AI request failed');
                 });
             } else {
-                var bk = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+                var bk = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
                 var be = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
                 fetch(be + '/chat/completions', {
                     method: 'POST',

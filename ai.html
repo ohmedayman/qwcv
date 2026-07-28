@@ -1710,7 +1710,7 @@
 
         /* ===== Send / Receive via BluesMinds AI ===== */
         const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-        const BLUESMINDS_KEY = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+        const BLUESMINDS_KEY = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
         const AI_MODELS = ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'];
         let currentModelIndex = 0;
 
@@ -2090,10 +2090,16 @@
             const file = event.target.files[0];
             if (!file) return;
             
+            if (file.type && file.type.startsWith('image/')) {
+                alert('لا يمكن رفع الصور. يُرجى رفع ملف نصي (.txt) أو PDF أو مستند.');
+                event.target.value = '';
+                return;
+            }
+            
             const allowedExts = ['.txt', '.pdf', '.doc', '.docx'];
             const ext = '.' + file.name.split('.').pop().toLowerCase();
             if (!allowedExts.includes(ext)) {
-                alert('نوع الملف غير مدعوم. يُرجى رفع ملف نصي (.txt) فقط');
+                alert('نوع الملف غير مدعوم. يُرجى رفع ملف نصي (.txt) أو PDF أو مستند Word.');
                 event.target.value = '';
                 return;
             }
@@ -2212,6 +2218,33 @@
             if (e.key === 'Escape') {
                 closeConfirmDialog();
                 closeVoice();
+            }
+        });
+
+        // Prevent pasting images into input
+        document.getElementById('userInput').addEventListener('paste', function(e) {
+            var items = (e.clipboardData || window.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type && items[i].type.startsWith('image/')) {
+                    e.preventDefault();
+                    alert('لا يمكن لصق الصور. هذا النموذج لا يدعم إدخال الصور.');
+                    return;
+                }
+            }
+        });
+
+        // Prevent dropping images
+        document.getElementById('userInput').addEventListener('dragover', function(e) { e.preventDefault(); });
+        document.getElementById('userInput').addEventListener('drop', function(e) {
+            e.preventDefault();
+            var files = e.dataTransfer.files;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].type && files[i].type.startsWith('image/')) {
+                        alert('لا يمكن إسقاط الصور. هذا النموذج لا يدعم إدخال الصور.');
+                        return;
+                    }
+                }
             }
         });
         }

@@ -384,7 +384,7 @@ async function generateWithAI() {
             const result = await window.QCVAI.call(prompt, 'You are a professional cover letter writer. Write in the same language as the user prompt. Keep it under 250 words. No markdown.', { timeout: 15000 });
             generatedText = result.ok ? result.text : '';
         } else {
-            const bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+            const bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
             const bluesmindsEndpoint = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
             const resp = await fetch(bluesmindsEndpoint + '/chat/completions', {
                 method: 'POST',
