@@ -5496,7 +5496,7 @@
             <i class="fas fa-palette"></i>
             <span>قوالب</span>
         </button>
-        <button class="phone-nav-item" onclick="phoneNav('ai')" id="phoneNavAi">
+        <button class="phone-nav-item" onclick="phoneNav('ai')" id="phoneNavAi" style="display:none">
             <i class="fas fa-wand-magic-sparkles"></i>
             <span>AI</span>
             <div class="phone-nav-badge" id="aiBadge" style="display:none"></div>
@@ -8091,11 +8091,11 @@
         </div>
     </div>
 
-    <!-- AI Assistant -->
-    <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="مساعد الذكاء الاصطناعي">
+    <!-- AI Assistant (hidden) -->
+    <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="مساعد الذكاء الاصطناعي" style="display:none">
         <i class="fas fa-wand-magic-sparkles"></i>
     </button>
-    <div class="ai-menu" id="aiMenu">
+    <div class="ai-menu" id="aiMenu" style="display:none">
         <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt"
                 style="color:#0003c9"></i>ملخص مهني<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check"
@@ -8121,7 +8121,7 @@
         <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots"
                 style="color:var(--muted)"></i>اسأل الذكاء الاصطناعي<span class="ai-shortcut">AI</span></button>
     </div>
-    <div class="ai-result-panel" id="aiResultPanel">
+    <div class="ai-result-panel" id="aiResultPanel" style="display:none">
         <div class="ai-result-header">
             <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">مساعد الذكاء الاصطناعي</span></h4>
             <button class="ai-result-close" onclick="closeAiPanel()">&times;</button>

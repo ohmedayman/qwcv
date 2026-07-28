@@ -950,8 +950,8 @@
             }
 
             .pw-toggle {
-                min-width: 44px;
-                min-height: 44px;
+                min-width: 48px;
+                min-height: 48px;
                 display: flex;
                 align-items: center;
                 justify-content: center
@@ -959,7 +959,7 @@
 
             .nav-cta {
                 padding: 12px 24px !important;
-                min-height: 44px
+                min-height: 48px
             }
 
             .nav-links.show {
@@ -971,52 +971,149 @@
                 right: 0;
                 background: var(--card, #fff);
                 border-bottom: 1px solid var(--card-border, #e5e7eb);
-                padding: 16px 20px;
-                gap: 12px;
+                padding: 12px;
+                gap: 4px;
                 z-index: 999;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+                border-radius: 0 0 16px 16px
             }
 
             .nav-links.show a,
             .nav-links.show button {
                 width: 100%;
                 text-align: center;
-                padding: 12px !important;
+                padding: 14px !important;
+                min-height: 48px;
+                border-radius: 12px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                justify-content: center
             }
 
             .nav-mobile-toggle {
                 display: flex !important;
+                border-radius: 12px
+            }
+
+            .main {
+                padding: 16px;
+                min-height: calc(100vh - 60px)
             }
 
             .auth-card {
-                padding: 30px 24px;
-                border-radius: 16px;
+                padding: 28px 20px;
+                border-radius: 18px;
                 max-width: 100%;
+                animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(16px); }
+                to { opacity: 1; transform: translateY(0); }
             }
 
             .card-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+            }
+
+            .card-subtitle {
+                font-size: 0.85rem
+            }
+
+            .ig input, .ig textarea, .ig select {
+                font-size: 16px;
+                padding: 14px 16px;
+                min-height: 48px;
+                border-radius: 12px
+            }
+
+            .ig label {
+                font-size: 0.82rem;
+                margin-bottom: 6px
+            }
+
+            .btn-submit, .btn-google {
+                min-height: 50px;
+                padding: 14px;
+                font-size: 0.95rem;
+                border-radius: 14px;
+                font-weight: 700
+            }
+
+            .btn-submit:active, .btn-google:active {
+                transform: scale(0.97)
+            }
+
+            .auth-toggle {
+                min-height: 44px;
+                font-size: 0.88rem
+            }
+
+            .forgot-link {
+                font-size: 0.82rem;
+                padding: 8px;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+
+            .pw-reqs {
+                padding: 12px;
+                border-radius: 10px
+            }
+
+            .pw-req {
+                font-size: 0.75rem;
+                padding: 4px 0
+            }
+
+            .footer {
+                padding: 20px 16px 12px
+            }
+
+            .footer-links a {
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+
+            .divider-or {
+                margin: 18px 0;
+                font-size: 0.82rem
             }
         }
 
         @media(max-width: 400px) {
             .auth-card {
                 padding: 24px 16px;
-                border-radius: 14px;
+                border-radius: 16px;
             }
 
             .card-title {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
+            }
+
+            .card-header {
+                margin-bottom: 20px
             }
 
             .btn-submit,
             .btn-google {
-                padding: 12px;
-                font-size: 0.88rem;
+                padding: 13px;
+                font-size: 0.9rem;
+                min-height: 48px
             }
 
             .ig input {
-                padding: 11px 14px;
+                padding: 13px 14px;
+                min-height: 46px
+            }
+
+            .ig {
+                margin-bottom: 14px
             }
         }
 
