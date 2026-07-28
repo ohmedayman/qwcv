@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'qcv-v6';
+﻿const CACHE_NAME = 'qcv-v7';
 const STATIC_ASSETS = [
     '/',
     '/index.html',

@@ -746,13 +746,19 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
                 var prompt = 'You are a senior ATS (Applicant Tracking System) analyst with 15 years of experience at top recruitment firms.\n\n' +
                     'Analyze this CV and return ONLY a JSON object (no markdown, no code blocks, no explanation) with this exact structure:\n' +
                     '{"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","section":"summary|experience|skills|education|contact","fix":"Arabic fix suggestion with +points"}],"verdict":"Arabic verdict in 1-2 sentences","keywords":{"missing":["keyword1","keyword2"],"found":["keyword3"]},"jobTips":{"linkedin":"tip for LinkedIn optimization","wuzzuf":"tip for Wuzzuf/Forasna optimization","glassdoor":"tip for Glassdoor optimization"}}\n\n' +
-                    'Scoring criteria:\n' +
-                    '- Contact: email, phone, LinkedIn, professional title presence\n' +
-                    '- Content: summary quality (80+ words), experience depth, bullet points, education\n' +
-                    '- ATS: keyword density, standard formatting, no special chars, proper sections\n' +
-                    '- Skills: relevance, count (8-12 optimal), mix of technical + soft\n' +
-                    '- Impact: action verbs, quantified achievements (numbers/%), power statements\n\n' +
-                    'Generate 8-12 issues with severity levels. Be specific and actionable.\n' +
+                    'SCORING RULES (IMPORTANT — be generous for good CVs):\n' +
+                    '- A CV with name, email, phone, LinkedIn, summary, 2+ jobs with bullet points, 6+ skills, education = 90-100 overall\n' +
+                    '- A CV missing 1-2 items = 80-89\n' +
+                    '- A CV missing 3+ items = 60-79\n' +
+                    '- A CV with major gaps = below 60\n\n' +
+                    'Category scoring:\n' +
+                    '- Contact (15%): email=25, phone=25, LinkedIn=25, title=25\n' +
+                    '- Content (25%): summary present=25, 2+ jobs=25, bullet points=25, education=25\n' +
+                    '- ATS (25%): clean format=25, proper sections=25, keywords present=25, no special chars=25\n' +
+                    '- Skills (20%): 6+ skills=50, 3-5 skills=35, technical mix=25, soft skills=25\n' +
+                    '- Impact (15%): action verbs=25, quantified results=25, leadership=25, education impact=25\n\n' +
+                    'IMPORTANT: If a CV has all required elements, give 95+ overall. Do NOT be overly critical.\n' +
+                    'Generate 6-10 issues with severity levels. Be specific and actionable.\n' +
                     'All text MUST be in Arabic.\n\nCV:\n' + text;
 
                 var aiResult = null;
@@ -840,28 +846,34 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
             if (!/[^\u0000-\u007F]{3,}/.test(text.split('\n')[0])) { atsScore += 25; issues.push({ type: 'pass', text: 'الاسم خالٍ من الرموز الخاصة', fix: '' }); }
             else issues.push({ type: 'warning', text: 'الاسم يحتوي على رموز خاصة', fix: 'تجنب الرموز في اسم السيرة الذاتية' });
 
-            const techSkills = ['JavaScript', 'Python', 'React', 'Node', 'SQL', 'HTML', 'CSS', 'Java', 'C++', 'PHP', 'TypeScript', 'Angular', 'Vue', 'Docker', 'AWS', 'Git'];
+            const techSkills = ['JavaScript', 'Python', 'React', 'Node', 'SQL', 'HTML', 'CSS', 'Java', 'C++', 'PHP', 'TypeScript', 'Angular', 'Vue', 'Docker', 'AWS', 'Git', 'Firebase', 'MongoDB', 'REST', 'API', 'Linux', 'Nginx', 'CI/CD', 'Figma', 'Photoshop'];
             const foundSkills = techSkills.filter(s => text.toLowerCase().includes(s.toLowerCase()));
-            if (foundSkills.length >= 3) { atsScore += 25; skillsScore += 40; issues.push({ type: 'pass', text: 'يوجد ' + foundSkills.length + ' مهارة تقنية محددة', fix: '' }); }
+            if (foundSkills.length >= 3) { atsScore += 25; skillsScore += 50; issues.push({ type: 'pass', text: 'يوجد ' + foundSkills.length + ' مهارة تقنية محددة', fix: '' }); }
             else { issues.push({ type: 'warning', text: 'عدد المهارات التقنية المحددة قليل (' + foundSkills.length + ')', fix: 'أضف مهارات تقنية محددة مثل: JavaScript, React, SQL' }); skillsScore += 15; }
 
-            atsScore += 25; // Formatting assumed OK for plain text
-            atsScore += 25; // Keywords assumed present
+            // Standard formatting assumed OK
+            atsScore += 25;
+            // Proper sections check
+            if (/(summary|ملخص|profile|experience|خبرة|skills|مهارات|education|تعليم)/i.test(text)) { atsScore += 25; }
+            else { atsScore += 10; }
 
-            // Skills
-            if (foundSkills.length < 3) skillsScore += 15;
-            else if (foundSkills.length < 6) skillsScore += 30;
-            else skillsScore += 50;
+            // Skills scoring (max 100)
+            if (foundSkills.length >= 6) skillsScore += 50;
+            else if (foundSkills.length >= 3) skillsScore += 35;
+            else skillsScore += 15;
 
-            // Impact
+            // Impact scoring
             if (/\d+%|\d+\+|\d+x/i.test(text)) { impactScore += 30; issues.push({ type: 'pass', text: 'يوجد نتائج محددة بأرقام', fix: '' }); }
             else { impactScore += 10; issues.push({ type: 'warning', text: 'أضف نتائج محددة بأرقام (نسبة %، عدد مستخدمين)', fix: 'مثال: "حسّنت أداء النظام بنسبة 40%"' }); }
 
-            if (/(Led|Managed|Directed|Supervised|قاد|أدار|شرّف)/i.test(text)) { impactScore += 25; issues.push({ type: 'pass', text: 'يوجد أفعال قيادية', fix: '' }); }
+            if (/(Led|Managed|Directed|Supervised|قاد|أدار|شرّف|developed|built|created|improved|increased|reduced|delivered)/i.test(text)) { impactScore += 25; issues.push({ type: 'pass', text: 'يوجد أفعال إجراء محترفة', fix: '' }); }
             else impactScore += 5;
 
-            if (/(Bachelor|Degree|University|بكالوريوس|جامعة)/i.test(text)) { impactScore += 20; }
-            impactScore += 25;
+            if (/(Bachelor|Degree|University|بكالوريوس|جامعة|college)/i.test(text)) { impactScore += 25; }
+            else impactScore += 10;
+
+            if (/(Senior|Lead|Manager|Director|Principal|كبير|مدير|قائد)/i.test(text)) { impactScore += 20; }
+            else impactScore += 10;
 
             const overall = Math.round(contactScore * 0.15 + contentScore * 0.25 + atsScore * 0.25 + skillsScore * 0.2 + impactScore * 0.15);
 
