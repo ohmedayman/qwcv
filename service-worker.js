@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qcv-v5';
+﻿const CACHE_NAME = 'qcv-v6';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
@@ -33,7 +33,7 @@ const STATIC_ASSETS = [
     '/js/notify-sounds.js',
     '/js/tutorial.js',
     '/js/maintenance.js',
-    'https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png'
+    'https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png'
 ];
 
 self.addEventListener('install', function(e) {
@@ -109,8 +109,8 @@ self.addEventListener('push', function(e) {
     e.waitUntil(
         self.registration.showNotification(title, {
             body: body,
-            icon: 'https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png',
-            badge: 'https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png',
+            icon: 'https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png',
+            badge: 'https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png',
             data: { url: url },
             vibrate: [200, 100, 200]
         })
