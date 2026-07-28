@@ -1767,7 +1767,12 @@
                 }),
                 signal: signal
             });
-            if (!response.ok) throw new Error('HTTP ' + response.status);
+            if (!response.ok) {
+                var errBody = '';
+                try { errBody = await response.text(); } catch(e) {}
+                var errMsg = errBody || 'HTTP ' + response.status;
+                throw new Error(errMsg);
+            }
             return response;
         }
 
@@ -1859,7 +1864,14 @@
                 saveCurrentChat(text);
                 detectCvData(text, fullText);
             } else {
-                const errMsg = lastError ? lastError.message : 'unknown';
+                var errMsg = lastError ? lastError.message : 'unknown';
+                if (errMsg.toLowerCase().includes('image') || errMsg.toLowerCase().includes('vision')) {
+                    errMsg = 'شات QCV لا يدعم الصور حالياً. يُرجى استخدام النصوص فقط.';
+                } else if (errMsg.includes('rate limit') || errMsg.includes('429') || errMsg.includes('ResourceExhausted')) {
+                    errMsg = 'تم تجاوز حد الاستخدام اليومي. حاول بكرة أو استخدم موديل مختلف.';
+                } else if (errMsg.includes('503') || errMsg.includes('unavailable')) {
+                    errMsg = 'الخدمة غير متاحة حالياً. جرب مرة أخرى.';
+                }
                 updateStreamingMsg(streamId, 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n`' + errMsg + '`');
             }
 
@@ -2222,26 +2234,26 @@
         });
 
         // Prevent pasting images into input
-        document.getElementById('userInput').addEventListener('paste', function(e) {
+        document.addEventListener('paste', function(e) {
             var items = (e.clipboardData || window.clipboardData).items;
             for (var i = 0; i < items.length; i++) {
                 if (items[i].type && items[i].type.startsWith('image/')) {
                     e.preventDefault();
-                    alert('لا يمكن لصق الصور. هذا النموذج لا يدعم إدخال الصور.');
+                    alert('لا يمكن لصق الصور. شات QCV لا يدعم الصور.');
                     return;
                 }
             }
         });
 
-        // Prevent dropping images
-        document.getElementById('userInput').addEventListener('dragover', function(e) { e.preventDefault(); });
-        document.getElementById('userInput').addEventListener('drop', function(e) {
+        // Prevent dropping images anywhere on page
+        document.addEventListener('dragover', function(e) { e.preventDefault(); });
+        document.addEventListener('drop', function(e) {
             e.preventDefault();
             var files = e.dataTransfer.files;
             if (files.length > 0) {
                 for (var i = 0; i < files.length; i++) {
                     if (files[i].type && files[i].type.startsWith('image/')) {
-                        alert('لا يمكن إسقاط الصور. هذا النموذج لا يدعم إدخال الصور.');
+                        alert('لا يمكن إسقاط الصور. شات QCV لا يدعم الصور.');
                         return;
                     }
                 }
