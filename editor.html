@@ -37,7 +37,7 @@
             --text: #1a1a2e;
             --muted: #6b7280;
             --light: #9ca3af;
-            --input: #f9fafb
+            --input: #f9fafb;
         }
 
         * {
@@ -4553,7 +4553,7 @@
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 56px;
                 width: 100% !important;
-                background: #1a1a2e !important;
+                background: var(--bg, #f9fafb) !important;
                 z-index: 1;
                 transition: transform 0.3s ease, opacity 0.3s ease;
                 transform: translateX(100%);
@@ -5161,6 +5161,13 @@
                         <button onclick="moveSection('jobmatch',1)">&#9660; تحريك للأسفل</button>
                     </div>
                 </div>
+                <div class="nav-tab" data-section="followups" onclick="switchTab('followups',this)">
+                    <span class="icon"><i class="fas fa-paper-plane"></i></span><span class="tab-label">التتابع</span>
+                    <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
+                    <div class="nav-tab-menu">
+                        <button onclick="renameTabPrompt('followups')">&#9998; إعادة تسمية</button>
+                    </div>
+                </div>
             </div>
             <button class="add-section-btn" onclick="openSectionModal()">+ إضافة قسم</button>
 
@@ -5519,9 +5526,11 @@
                 <div class="plan-sub">للمحترفين وباحثين عن العمل</div>
             </div>
             <div class="upgrade-price">
-                <span class="price-num">99</span>
+                <span class="price-num">49</span>
                 <span class="price-currency"> ج.م / </span>
                 <span class="price-period">شهري</span>
+                <span style="text-decoration:line-through;color:var(--muted);font-size:0.75rem;margin-right:4px">99</span>
+                <span style="background:#fef3c7;color:#b45309;font-size:0.65rem;padding:2px 6px;border-radius:20px;font-weight:700">خصم 50%</span>
             </div>
             <div class="upgrade-features">
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
@@ -6557,6 +6566,7 @@
             };
         }
         window._collectData = collectData;
+        window.collectData = collectData;
         window._getDesignSettings = function () { return designSettings; };
 
         window.generateProfessionalSummary = function () {
@@ -8173,7 +8183,7 @@
                 { target: '#tab-skills', title: '🛠️ المهارات', message: 'اكتب مهارة واحدة في كل سطر. رتّبها من الأهم للأقل أهمية.', tip: 'استخدم زر AI لاقتراح مهارات مناسبة لتخصصك!' },
                 { target: '.topbar-center', title: '🎨 التصميم', message: 'اختار القالب والخط والحجم من هنا. 30+ قالب احترافي متاح. غيّر الألوان بسهولة.', tip: 'جرب قالب مختلف كل مرة عشان تشوف الأنسب لعملك!' },
                 { target: '.preview-zone', title: '👁️ معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
-                { target: '.topbar', title: '💾 حفظ وتصدير', message: 'حفظ تلقائي شغال على طول. اضغط "تصدير PDF" عشان تحمل السيرة الذاتية. تقدر تشوف رابط صفحتك الشخصية.', tip: 'بياناتك آمنة في السحابة自动!' },
+                { target: '.topbar', title: '💾 حفظ وتصدير', message: 'حفظ تلقائي شغال على طول. اضغط "تصدير PDF" عشان تحمل السيرة الذاتية. تقدر تشوف رابط صفحتك الشخصية.', tip: 'بياناتك آمنة في السحابة تلقائياً!' },
                 { target: '.portfolio-link-box', title: '🔗 رابط المعرض', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
             ] : [
                 { target: '.sidebar-nav', title: '📋 Sections', message: 'Navigate between CV sections: Personal Info, Experience, Education, Skills, Languages.', tip: 'Click any section to edit. Changes appear instantly in the preview!' },
@@ -8230,7 +8240,7 @@
             const btn = document.getElementById('aiAssistBtn');
             const menu = document.getElementById('aiMenu');
             const panel = document.getElementById('aiResultPanel');
-            if (!btn.contains(e.target) && !menu.contains(e.target) && !panel.contains(e.target)) {
+            if (btn && !btn.contains(e.target) && menu && !menu.contains(e.target) && panel && !panel.contains(e.target)) {
                 menu.classList.remove('show');
                 aiMenuOpen = false;
             }
@@ -8886,7 +8896,7 @@
 
         // Load followups on tab switch
         (function () {
-            var followupTab = document.querySelector('[onclick*="tab-followups"]');
+            var followupTab = document.querySelector('[data-section="followups"]');
             if (followupTab) {
                 followupTab.addEventListener('click', function () { setTimeout(loadApplications, 300); });
             }
