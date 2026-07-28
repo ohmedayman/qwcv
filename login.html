@@ -1448,7 +1448,7 @@
 
     <footer class="footer">
         <div class="footer-brand">
-            <img src="images/logo.png" alt="QCV Logo" width="36" onerror="this.style.display='none'">
+            <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV Logo" width="44" style="border-radius:8px">
             <span>QCV</span>
             <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px"><i class="fas fa-robot" style="margin-left:4px"></i> باني سير ذاتية احترافية بالذكاء الاصطناعي</p>
         </div>
@@ -1613,9 +1613,12 @@
         }
 
         onAuthStateChanged(auth, (user) => {
-            if (user && !isSignUpMode && !isResetting) {
+            if (user && !isSignUpMode && !isResetting && !location.search.includes('switch=1')) {
                 showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
                 setTimeout(() => location.replace(getRedirectPage()), 400);
+            }
+            if (user && location.search.includes('switch=1')) {
+                showLoginBox();
             }
         });
 

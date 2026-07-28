@@ -124,6 +124,7 @@
         }
         .theme-toggle:hover { border-color: var(--accent); transform: scale(1.05); }
         .nav-mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
+        .nav-links.show { display: flex !important; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 20px; gap: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); z-index: 99; }
         .spacer { height: 68px; }
 
         /* ===== PROGRESS STEPS ===== */
@@ -1259,14 +1260,15 @@
                 // 6. Fallback: write via REST API if SDK writes failed
                 if (dbFailed) {
                     try {
-                        await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/subscriptions.json', {
+                        const restResp = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/subscriptions.json', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(subData)
                         });
-                        console.log('Fallback REST write succeeded');
+                        const restData = await restResp.json();
+                        if (restData && restData.name) subId = restData.name;
+                        console.log('Fallback REST write succeeded, subId:', subId);
                         dbFailed = false;
-                        subId = null;
                     } catch(restErr) { console.error('REST fallback also failed:', restErr); }
                 }
 

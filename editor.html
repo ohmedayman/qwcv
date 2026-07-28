@@ -4925,12 +4925,27 @@
                 <input type="range" id="lineSpacing" min="10" max="25" value="15" oninput="setLineSpacing(this.value)">
                 <span id="lineSpacingVal" class="slider-val">1.5</span>
             </div>
-            <!-- Color Picker -->
+            <!-- Page Margin -->
+            <div class="ctrl-group slider-group">
+                <label title="هامش الصفحة"><i class="fas fa-expand-arrows-alt" style="font-size:0.55rem"></i></label>
+                <input type="range" id="pageMargin" min="10" max="50" value="20" oninput="setPageMargin(this.value)">
+                <span id="pageMarginVal" class="slider-val">20</span>
+            </div>
+            <!-- Font Color -->
             <div class="ctrl-group">
                 <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)" title="لون النص">
             </div>
+            <!-- Accent Color -->
+            <div class="ctrl-group">
+                <input type="color" id="accentColor" value="#0003c9" onchange="setAccentColor(this.value)" title="اللون الرئيسي">
+            </div>
         </div>
         <div class="topbar-left">
+            <!-- Auto-save indicator -->
+            <div id="autoSaveIndicator" style="display:flex;align-items:center;gap:4px;font-size:0.65rem;color:var(--muted);padding:4px 8px;border-radius:6px;transition:all 0.3s;flex-shrink:0">
+                <i class="fas fa-check-circle" style="color:var(--green);font-size:0.7rem"></i>
+                <span>محفوظ</span>
+            </div>
             <!-- Notifications -->
             <div class="notif-bell" onclick="toggleNotifPanel()" title="الإشعارات">
                 <i class="fas fa-bell"></i>
@@ -5848,14 +5863,6 @@
 
         window.logout = async () => { await signOut(auth); location.replace("login.html") };
 
-        // ===== NEW CV =====
-        window.createNewCV = function() {
-            if (!confirm('إنشاء سيرة ذاتية جديدة؟ البيانات الحالية ستُحفظ تلقائياً.')) return;
-            saveToFirebase();
-            localStorage.removeItem('qcv_editor_data');
-            location.reload();
-        };
-
         // ===== DELETE ACCOUNT =====
         window.deleteAccount = async function() {
             if (!confirm('هل أنت متأكد من حذف حسابك نهائياً؟ لن تتمكن من التراجع عن هذا الإجراء.')) return;
@@ -6244,6 +6251,7 @@
 
         window.saveToFirebase = function () {
             const btn = document.querySelector('.btn-save');
+            const indicator = document.getElementById('autoSaveIndicator');
             try {
                 if (!window.currentUid) { console.error('No currentUid'); return; }
                 const data = window._collectData ? window._collectData() : null;
@@ -6251,12 +6259,13 @@
                 data.designSettings = window._getDesignSettings ? window._getDesignSettings() : {};
                 const cid = window.currentCvId || 'default';
                 const path = cid === 'default' ? 'users/' + window.currentUid + '/cvData' : 'users/' + window.currentUid + '/cvs/' + cid + '/data';
+                if (indicator) { indicator.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:var(--yellow);font-size:0.7rem"></i><span>جاري الحفظ...</span>'; indicator.style.background = 'rgba(245,158,11,0.08)'; }
                 set(ref(db, path), data).then(() => {
                     if (window.QCVNotify) { QCVNotify.save(); QCVNotify.success() }
                     if (btn) { const o = btn.innerHTML; btn.innerHTML = '&#10003; تم الحفظ'; btn.style.color = '#38bdf8'; btn.style.borderColor = '#38bdf8'; setTimeout(() => { btn.innerHTML = o; btn.style.color = ''; btn.style.borderColor = '' }, 2000) }
-                    // Save version history (max 20 versions, skip if identical to last)
+                    if (indicator) { indicator.innerHTML = '<i class="fas fa-check-circle" style="color:var(--green);font-size:0.7rem"></i><span>محفوظ</span>'; indicator.style.background = 'rgba(5,150,105,0.06)'; setTimeout(() => { indicator.style.background = '' }, 1500); }
                     saveCvVersion(cid, data);
-                }).catch(e => { console.error('Firebase save error:', e); if (btn) { btn.innerHTML = '&#10007; فشل الحفظ'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; حفظ'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
+                }).catch(e => { console.error('Firebase save error:', e); if (indicator) { indicator.innerHTML = '<i class="fas fa-exclamation-circle" style="color:var(--red);font-size:0.7rem"></i><span>فشل الحفظ</span>'; indicator.style.background = 'rgba(239,68,68,0.08)'; } if (btn) { btn.innerHTML = '&#10007; فشل الحفظ'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; حفظ'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
             } catch (e) { console.error('saveToFirebase exception:', e); }
         };
 
@@ -6640,6 +6649,7 @@
         });
 
         window.renderCV = function () {
+            markDirty();
             const data = collectData();
             const html = QCVTemplates.render(currentTemplate, data);
             document.getElementById('cvPage').innerHTML = html;
@@ -6722,7 +6732,10 @@
         }
 
         let _saveTimer = null;
-        function debouncedSave() { clearTimeout(_saveTimer); _saveTimer = setTimeout(() => { if (window.saveToFirebase) window.saveToFirebase(); }, 800); }
+        let _hasUnsavedChanges = false;
+        function debouncedSave() { clearTimeout(_saveTimer); _saveTimer = setTimeout(() => { if (window.saveToFirebase) window.saveToFirebase(); _hasUnsavedChanges = false; }, 800); }
+        function markDirty() { _hasUnsavedChanges = true; }
+        window.addEventListener('beforeunload', function(e) { if (_hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; } });
 
         window.addExp = function (role = '', company = '', dur = '', desc = '') {
             const id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
@@ -6801,7 +6814,8 @@
         };
         window.setPageMargin = function (v) {
             designSettings.pageMargin = parseInt(v);
-            document.getElementById('pageMarginVal').textContent = v;
+            const valEl = document.getElementById('pageMarginVal');
+            if (valEl) valEl.textContent = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
@@ -6812,8 +6826,9 @@
             debouncedSnapshot();
         };
         window.setAccentColor = function (v) {
-            // B&W mode — accent color is always black
-            designSettings.accentColor = '#111111';
+            designSettings.accentColor = v;
+            applyDesignSettings();
+            debouncedSnapshot();
         };
 
         // Zoom Controls

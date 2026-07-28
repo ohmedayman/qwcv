@@ -2926,40 +2926,6 @@
         </div>
     </section>
 
-    <!-- ===== TESTIMONIALS ===== -->
-    <section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-        <div class="section-header">
-            <h2>عملاؤنا بيقولوا إيه</h2>
-            <p>آلاف المستخدمين اتحققوا من قوة QCV في تحسين فرصهم الوظيفية</p>
-        </div>
-        <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative">
-                <div style="color:#f59e0b;font-size:1rem;margin-bottom:10px">★★★★★</div>
-                <p style="font-size:0.88rem;color:var(--text);line-height:1.7;margin-bottom:16px">"بعد ما استخدمت QCV، اتلقبلت في 3 وظائف في أسبوع واحد! تحليل ATS ساعدني أحسن سيرتي بشكل كبير."</p>
-                <div style="display:flex;align-items:center;gap:10px">
-                    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#0003c9,#27ffed);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem">أ</div>
-                    <div><div style="font-weight:700;font-size:0.85rem">أحمد محمد</div><div style="font-size:0.72rem;color:var(--muted)">مطور Full-Stack</div></div>
-                </div>
-            </div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative">
-                <div style="color:#f59e0b;font-size:1rem;margin-bottom:10px">★★★★★</div>
-                <p style="font-size:0.88rem;color:var(--text);line-height:1.7;margin-bottom:16px">"القوالب احترافية جداً والـ AI بيساعدك تكتب ملخص مميز. أفضل منصة سير ذاتية استخدمتها."</p>
-                <div style="display:flex;align-items:center;gap:10px">
-                    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#ec4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem">س</div>
-                    <div><div style="font-weight:700;font-size:0.85rem">سارة أحمد</div><div style="font-size:0.72rem;color:var(--muted)">مديرة تسويق</div></div>
-                </div>
-            </div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative">
-                <div style="color:#f59e0b;font-size:1rem;margin-bottom:10px">★★★★★</div>
-                <p style="font-size:0.88rem;color:var(--text);line-height:1.7;margin-bottom:16px">"منصة رائعة وبسيطة. عملت سيرتي في 10 دقايق وجابتلي عروض وظيفية أحسن بكتير من قبل."</p>
-                <div style="display:flex;align-items:center;gap:10px">
-                    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#059669,#27ffed);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem">ع</div>
-                    <div><div style="font-weight:700;font-size:0.85rem">عمر خالد</div><div style="font-size:0.72rem;color:var(--muted)">محاسب</div></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== NEWSLETTER ===== -->
     <section class="section" style="padding:60px 20px">
         <div
@@ -2990,7 +2956,11 @@
             msg.style.display = 'block';
             msg.style.color = 'var(--accent)';
             msg.innerHTML = '<div style="width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:qcvSpin 0.8s linear infinite;margin:0 auto"></div>';
-            firebase.database().ref('newsletter/' + email.replace(/\./g, '_')).set({ email: email, date: Date.now() }).then(function () {
+            fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/newsletter/' + email.replace(/\./g, '_') + '.json', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, date: Date.now() })
+            }).then(function () {
                 msg.style.color = 'var(--green)';
                 msg.innerHTML = '<i class="fas fa-check-circle"></i> تم الاشتراك بنجاح!';
                 document.getElementById('newsletterEmail').value = '';
@@ -3073,7 +3043,12 @@
             }
             result.style.display = 'block';
             result.innerHTML = '<div style="text-align:center;padding:20px"><div style="width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:qcvSpin 0.8s linear infinite;margin:0 auto 10px"></div><div style="color:var(--muted);font-size:0.82rem">جاري التحليل...</div></div>';
-            var score = Math.floor(Math.random() * 30) + 60;
+            var txt = input.value.trim();
+            var len = txt.length;
+            var hasNumbers = /\d/.test(txt);
+            var hasVerbs = /قاد| أسّس| طوّر| قدّم| أنشأ| yönet/.test(txt);
+            var base = Math.min(95, 55 + Math.floor(len / 15) + (hasNumbers ? 8 : 0) + (hasVerbs ? 7 : 0));
+            var score = Math.max(60, base);
             var suggestions = [
                 { icon: 'fa-check-circle', color: 'var(--green)', text: 'الملخص يحتوي على كلمات مفتاحية قوية' },
                 { icon: 'fa-exclamation-triangle', color: 'var(--yellow)', text: 'أضف أرقاماً ونسباً مئوية لتعزيز المصداقية' },
