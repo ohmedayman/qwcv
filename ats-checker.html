@@ -543,9 +543,33 @@
             }
         }
     </style>
+    <style>
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: #f0f2f7; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid #e2e7f0;
+            border-top-color: #0003c9;
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: #64748b; font-size: 14px; font-weight: 500; }
+    </style>
 </head>
 
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري التحميل...</div>
+    </div>
 
     <nav
         style="background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:14px 20px;position:sticky;top:0;z-index:999">
@@ -1137,6 +1161,16 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        });
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 4000);
     </script>
     <script defer src="js/animations.js"></script>
 

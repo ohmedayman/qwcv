@@ -257,7 +257,91 @@
             overflow-x: hidden
         }
 
-        /* ===== NAVBAR ===== */
+        /* ===== SCROLL PROGRESS BAR ===== */
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            height: 3px;
+            background: linear-gradient(90deg, #0003c9, #27ffed, #8b5cf6, #0003c9);
+            background-size: 300% 100%;
+            animation: progressGlow 3s ease infinite;
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0
+        }
+        @keyframes progressGlow {
+            0%,100% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+        }
+
+        /* ===== COOKIE CONSENT ===== */
+        .cookie-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: 0.82rem;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.06)
+        }
+        .cookie-bar.show { transform: translateY(0) }
+        .cookie-bar p { margin: 0; color: var(--muted); flex:1 }
+        .cookie-bar a { color: var(--accent); text-decoration: underline }
+        .cookie-btn {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+            transition: all 0.2s
+        }
+        .cookie-btn:hover { opacity: 0.9; transform: translateY(-1px) }
+
+        /* ===== LOADING SKELETON ===== */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none }
+        .page-loader .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: qcvSpin 0.8s linear infinite;
+            margin-bottom: 16px
+        }
+        .page-loader p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        /* ===== PERFORMANCE ===== */
+        .lazy-section { content-visibility: auto; contain-intrinsic-size: 500px }
         .navbar {
             position: fixed;
             top: 0;
@@ -2146,9 +2230,24 @@
 
 <body>
 
+    <!-- ===== PAGE LOADER ===== -->
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner"></div>
+        <p>QCV</p>
+    </div>
+
+    <!-- ===== SCROLL PROGRESS BAR ===== -->
+    <div id="scrollProgress"></div>
+
+    <!-- ===== COOKIE CONSENT ===== -->
+    <div class="cookie-bar" id="cookieBar">
+        <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك. <a href="privacy.html">اعرف المزيد</a></p>
+        <button class="cookie-btn" onclick="acceptCookies()">قبول</button>
+    </div>
+
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
-        <a href="index.html" class="nav-logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
+        <a href="index.html" class="nav-logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" loading="eager" fetchpriority="high" decoding="async" style="height:44px;width:auto"></a>
         <ul class="nav-center">
             <li><a href="index.html" data-i18n="home"><i class="fas fa-home" style="font-size:0.7rem;margin-left:4px"></i> الرئيسية</a></li>
             <li><a href="pay.html" data-i18n="pricing"><i class="fas fa-tag" style="font-size:0.7rem;margin-left:4px"></i> التسعير</a></li>
@@ -2437,7 +2536,7 @@
     </section>
 
     <!-- ===== FEATURES ===== -->
-    <section class="section" id="features">
+    <section class="section lazy-section" id="features">
         <div class="section-header reveal">
             <h2 data-i18n="features_title">ليه تختار QCV؟</h2>
             <p>أدوات احترافية لبناء سيرة ذاتية تتجاوز أنظمة الفرز الآلي</p>
@@ -2651,7 +2750,7 @@
             <div class="marquee-track" id="partnersTrack">
                 <div class="partner-card">
                     <div class="partner-icon" style="background:#fff;padding:10px">
-                        <img src="صور/ينكد.png" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain">
+                        <img src="صور/ينكد.png" alt="LinkedIn" loading="lazy" decoding="async" style="width:40px;height:40px;object-fit:contain">
                     </div>
                     <div class="partner-info">
                         <div class="partner-name">LinkedIn</div>
@@ -2660,7 +2759,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-icon" style="background:#fff;padding:10px">
-                        <img src="صور/وظف.jpeg" alt="Wuzzuf" style="width:40px;height:40px;object-fit:contain">
+                        <img src="صور/وظف.jpeg" alt="Wuzzuf" loading="lazy" decoding="async" style="width:40px;height:40px;object-fit:contain">
                     </div>
                     <div class="partner-info">
                         <div class="partner-name">Wuzzuf</div>
@@ -2669,7 +2768,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-icon" style="background:#fff;padding:10px">
-                        <img src="صور/بيت.webp" alt="Bayt.com" style="width:40px;height:40px;object-fit:contain">
+                        <img src="صور/بيت.webp" alt="Bayt.com" loading="lazy" decoding="async" style="width:40px;height:40px;object-fit:contain">
                     </div>
                     <div class="partner-info">
                         <div class="partner-name">Bayt.com</div>
@@ -2678,7 +2777,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-icon" style="background:#fff;padding:10px">
-                        <img src="صور/توظيف مصر.jpeg" alt="Forasna" style="width:40px;height:40px;object-fit:contain">
+                        <img src="صور/توظيف مصر.jpeg" alt="Forasna" loading="lazy" decoding="async" style="width:40px;height:40px;object-fit:contain">
                     </div>
                     <div class="partner-info">
                         <div class="partner-name">Forasna</div>
@@ -2687,7 +2786,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-icon" style="background:#fff;padding:10px">
-                        <img src="صور/شغنلي.png" alt="شغنلي" style="width:40px;height:40px;object-fit:contain">
+                        <img src="صور/شغنلي.png" alt="شغنلي" loading="lazy" decoding="async" style="width:40px;height:40px;object-fit:contain">
                     </div>
                     <div class="partner-info">
                         <div class="partner-name">شغنلي</div>
@@ -2926,7 +3025,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-brand">
-                <div class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:36px;width:auto"></div>
+                <div class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" loading="lazy" decoding="async" style="height:36px;width:auto"></div>
                 <p data-i18n="footer_brand"><i class="fas fa-robot" style="margin-left:4px;color:var(--accent)"></i> منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة
                     الأحلام</p>
             </div>
@@ -2966,6 +3065,31 @@
     </footer>
 
     <script>
+        // ===== SCROLL PROGRESS BAR =====
+        window.addEventListener('scroll', function () {
+            var scrollTop = window.scrollY;
+            var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            document.getElementById('scrollProgress').style.width = progress + '%';
+        }, { passive: true });
+
+        // ===== COOKIE CONSENT =====
+        if (!localStorage.getItem('qcv_cookies')) {
+            setTimeout(function () { document.getElementById('cookieBar').classList.add('show'); }, 500);
+        }
+        window.acceptCookies = function () {
+            localStorage.setItem('qcv_cookies', 'accepted');
+            document.getElementById('cookieBar').classList.remove('show');
+        };
+
+        // ===== PAGE LOADER =====
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                var loader = document.getElementById('pageLoader');
+                if (loader) loader.classList.add('hide');
+            }, 300);
+        });
+
         function toggleFaq(el) {
             const item = el.parentElement;
             const wasActive = item.classList.contains('active');

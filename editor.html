@@ -5362,6 +5362,42 @@
 
 <body>
 
+    <!-- ===== EDITOR LOADING SKELETON ===== -->
+    <div class="editor-loader" id="editorLoader">
+        <div class="el-spinner"><div class="el-ring"></div></div>
+        <div class="el-text">جاري تجهيز المحرر...</div>
+        <div class="el-progress"><div class="el-bar" id="elBar"></div></div>
+    </div>
+    <style>
+        .editor-loader {
+            position: fixed; inset: 0; z-index: 99999;
+            background: var(--bg, #fff);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease
+        }
+        .editor-loader.hide { opacity: 0; visibility: hidden; pointer-events: none }
+        .el-spinner { margin-bottom: 20px }
+        .el-ring {
+            width: 48px; height: 48px;
+            border: 3px solid var(--border, #e5e7eb);
+            border-top-color: var(--accent, #0003c9);
+            border-radius: 50%;
+            animation: elSpin 0.8s linear infinite
+        }
+        @keyframes elSpin { to { transform: rotate(360deg) } }
+        .el-text { font-size: 0.9rem; color: var(--muted, #6b7280); font-weight: 600; margin-bottom: 16px }
+        .el-progress { width: 200px; height: 3px; background: var(--border, #e5e7eb); border-radius: 4px; overflow: hidden }
+        .el-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--accent, #0003c9), #27ffed);
+            border-radius: 4px;
+            transition: width 0.3s ease
+        }
+        body.dark-mode .editor-loader { background: #0a0e1a }
+        body.dark-mode .el-text { color: #94a3b8 }
+    </style>
+
     <!-- Mobile Top Bar (Stitch design) -->
     <div class="mobile-topbar" id="mobileTopbar">
         <div class="mtb-left">
@@ -5582,6 +5618,8 @@
             <button class="btn-save" onclick="showVersionHistory()" title="سجل الإصدارات" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">السجل</span></button>
             <!-- Export PDF -->
             <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> تصدير PDF</span><div class="spinner"></div></button>
+            <!-- Shortcuts -->
+            <button class="btn-save" onclick="toggleShortcutsPanel()" title="اختصارات لوحة المفاتيح (Ctrl+/)" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15);font-size:0.75rem"><i class="fas fa-keyboard"></i></button>
         </div>
     </div>
 
@@ -6360,6 +6398,9 @@
             } catch (e) { console.warn('QR generation failed:', e); }
 
             await loadSavedData();
+            // Hide editor loader
+            var el = document.getElementById('editorLoader');
+            if (el) { el.classList.add('hide'); setTimeout(function () { el.style.display = 'none'; }, 500); }
             togglePaidFeatures(userData.plan || 'free');
             loadAffiliateState();
             cleanExpiredTrash();
@@ -6785,6 +6826,15 @@
             } catch (e) { console.error('saveToFirebase exception:', e); }
         };
 
+        window.toggleShortcutsPanel = function () {
+            var panel = document.getElementById('shortcutsPanel');
+            if (panel) panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+        };
+        window.closeShortcutsPanel = function () {
+            var panel = document.getElementById('shortcutsPanel');
+            if (panel) panel.style.display = 'none';
+        };
+
         let _lastVersionHash = '';
         function saveCvVersion(cvId, data) {
             try {
@@ -7128,6 +7178,8 @@
         document.addEventListener('keydown', function (e) {
             if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); window.undoAction(); }
             if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); window.redoAction(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); if (window.saveToFirebase) window.saveToFirebase(); }
+            if (e.key === '/' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); toggleShortcutsPanel(); }
         });
 
         // Auto-snapshot on user input changes
@@ -8141,6 +8193,14 @@
             if (!file) return;
             if (file.size > 5 * 1024 * 1024) { alert('الملف أكبر من 5 ميجا'); return; }
 
+            var allowedExts = ['html', 'htm', 'txt', 'json', 'pdf'];
+            var ext = file.name.split('.').pop().toLowerCase();
+            if (!allowedExts.includes(ext)) {
+                alert('نوع الملف غير مدعوم. الملفات المدعومة: HTML, TXT, JSON, PDF');
+                closeUploadModal();
+                return;
+            }
+
             document.getElementById('uploadDropzone').style.display = 'none';
             document.getElementById('uploadProgress').classList.add('show');
             document.getElementById('uploadActions').style.display = 'none';
@@ -8776,6 +8836,81 @@
             <button id="aiApplyBtn" class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>تطبيق</button>
         </div>
     </div>
+
+    <!-- ===== KEYBOARD SHORTCUTS PANEL ===== -->
+    <div class="shortcuts-overlay" id="shortcutsPanel" style="display:none" onclick="if(event.target===this)closeShortcutsPanel()">
+        <div class="shortcuts-modal">
+            <div class="shortcuts-header">
+                <h4><i class="fas fa-keyboard" style="margin-left:8px;color:var(--accent)"></i>اختصارات لوحة المفاتيح</h4>
+                <button class="shortcuts-close" onclick="closeShortcutsPanel()">&times;</button>
+            </div>
+            <div class="shortcuts-body">
+                <div class="shortcut-group">
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>S</kbd><span>حفظ السيرة الذاتية</span></div>
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>Z</kbd><span>تراجع عن آخر تعديل</span></div>
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>Y</kbd><span>إعادة التعديل</span></div>
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>/</kbd><span>إظهار/إخفاء الاختصارات</span></div>
+                </div>
+            </div>
+            <div class="shortcuts-footer">
+                <button class="shortcuts-btn" onclick="closeShortcutsPanel()">حسناً</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        .shortcuts-overlay {
+            position: fixed; inset: 0; z-index: 100000;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+            animation: scFadeIn 0.2s ease
+        }
+        .shortcuts-modal {
+            background: var(--card); border-radius: 16px;
+            width: 90%; max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: scSlideUp 0.25s cubic-bezier(0.16,1,0.3,1)
+        }
+        .shortcuts-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 20px; border-bottom: 1px solid var(--border)
+        }
+        .shortcuts-header h4 { font-size: 0.95rem; font-weight: 800; margin: 0; color: var(--text) }
+        .shortcuts-close {
+            background: none; border: none; font-size: 1.4rem;
+            color: var(--muted); cursor: pointer; padding: 0 4px;
+            transition: color 0.2s
+        }
+        .shortcuts-close:hover { color: var(--text) }
+        .shortcuts-body { padding: 16px 20px }
+        .shortcut-group { display: flex; flex-direction: column; gap: 8px }
+        .shortcut-row {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 10px; border-radius: 8px;
+            background: var(--bg2); font-size: 0.8rem
+        }
+        .shortcut-row kbd {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 2px 8px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 4px; font-size: 0.72rem; font-weight: 700;
+            font-family: 'Cairo', sans-serif; color: var(--text);
+            min-width: 28px; box-shadow: 0 1px 2px rgba(0,0,0,0.06)
+        }
+        .shortcut-row span { color: var(--muted); margin-right: auto; font-size: 0.82rem }
+        .shortcuts-footer { padding: 12px 20px; border-top: 1px solid var(--border); text-align: center }
+        .shortcuts-btn {
+            padding: 8px 32px; border: none; border-radius: 8px;
+            background: var(--accent); color: #fff; font-weight: 700;
+            font-size: 0.82rem; cursor: pointer; font-family: 'Cairo', sans-serif;
+            transition: all 0.2s
+        }
+        .shortcuts-btn:hover { opacity: 0.9; transform: translateY(-1px) }
+        @keyframes scFadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes scSlideUp { from { opacity: 0; transform: translateY(20px) scale(0.96) } to { opacity: 1; transform: translateY(0) scale(1) } }
+        body.dark-mode .shortcuts-overlay { background: rgba(0,0,0,0.7) }
+        body.dark-mode .shortcut-row kbd { background: #1e293b; border-color: #334155; color: #f1f5f9 }
+    </style>
 
     <script src="js/tutorial.js"></script>
     <script src="js/site-settings.js"></script>

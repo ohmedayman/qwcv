@@ -1227,6 +1227,26 @@
             border-color: #1e293b;
         }
     </style>
+    <style>
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg); z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: var(--text2); font-size: 14px; font-weight: 500; }
+    </style>
     <script defer src="js/maintenance.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>
@@ -1234,6 +1254,10 @@
 </head>
 
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري التحميل...</div>
+    </div>
     <nav class="navbar">
             <a href="index.html" class="nav-logo">
             <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto">
@@ -1616,10 +1640,13 @@
             if (user && !isSignUpMode && !isResetting && !location.search.includes('switch=1')) {
                 showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
                 setTimeout(() => location.replace(getRedirectPage()), 400);
+                return;
             }
             if (user && location.search.includes('switch=1')) {
                 showLoginBox();
             }
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
         });
 
         function setLoading(btn, loading) { btn.classList.toggle('loading', loading); btn.disabled = loading; }
@@ -1938,6 +1965,12 @@
         <button id="installClose"
             style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
     </div>
+    <script>
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 5000);
+    </script>
 </body>
 
 </html>

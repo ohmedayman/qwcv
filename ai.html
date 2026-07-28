@@ -984,9 +984,33 @@
             .topbar-actions .tb-btn span { display: none; }
         }
     </style>
+    <style>
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: #f0f2f7; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid #e2e7f0;
+            border-top-color: #0003c9;
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: #64748b; font-size: 14px; font-weight: 500; }
+    </style>
 </head>
 
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري التحميل...</div>
+    </div>
     <!-- Sidebar Overlay (mobile) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
@@ -2068,14 +2092,33 @@
             const file = event.target.files[0];
             if (!file) return;
             
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result;
-                const prompt = `قم بتحليل محتوى هذا الملف (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
-                document.getElementById('userInput').value = prompt;
-                sendMessage();
-            };
-            reader.readAsText(file);
+            const allowedExts = ['.txt', '.pdf', '.doc', '.docx'];
+            const ext = '.' + file.name.split('.').pop().toLowerCase();
+            if (!allowedExts.includes(ext)) {
+                alert('نوع الملف غير مدعوم. يُرجى رفع ملف نصي (.txt) فقط');
+                event.target.value = '';
+                return;
+            }
+            
+            if (ext === '.txt') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result.substring(0, 5000);
+                    const prompt = `قم بتحليل محتوى هذا الملف (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
+                    document.getElementById('userInput').value = prompt;
+                    sendMessage();
+                };
+                reader.readAsText(file);
+            } else {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = (e.target.result || '').substring(0, 5000).replace(/[^\x20-\x7E\u0600-\u06FF\u0750-\u077F\n\r]/g, ' ');
+                    const prompt = `قم بتحليل محتوى هذا الملف المستخرج (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
+                    document.getElementById('userInput').value = prompt;
+                    sendMessage();
+                };
+                reader.readAsBinaryString ? reader.readAsBinaryString(file) : reader.readAsText(file);
+            }
             event.target.value = '';
         }
 
@@ -2122,6 +2165,8 @@
 
         /* ===== Firebase Auth Gate ===== */
         auth.onAuthStateChanged(function(user) {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
             if (!user) {
                 var gate = document.getElementById('authGate');
                 gate.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)';
@@ -2172,6 +2217,12 @@
             }
         });
         }
+    </script>
+    <script>
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 5000);
     </script>
 </body>
 </html>

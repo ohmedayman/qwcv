@@ -638,10 +638,52 @@
             .quick-price { font-size: 1.6rem; }
             .btn-quick { padding: 12px; min-height: 48px; border-radius: 12px; }
         }
+</style>
+    <style>
+        /* Page Loader Skeleton */
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: var(--text2); font-size: 14px; font-weight: 500; }
+        .loader-skeleton {
+            display: none; flex-direction: column; gap: 16px; padding: 20px; width: 340px;
+        }
+        .loader-skeleton .sk { 
+            height: 16px; border-radius: 8px; 
+            background: linear-gradient(90deg, var(--border) 25%, var(--bg2) 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: skShimmer 1.5s ease infinite;
+        }
+        .loader-skeleton .sk-h1 { height: 28px; width: 60%; }
+        .loader-skeleton .sk-card { height: 120px; border-radius: 16px; }
+        .loader-skeleton .sk-row { display: flex; gap: 12px; }
+        .loader-skeleton .sk-row .sk { flex: 1; height: 100px; border-radius: 12px; }
+        @keyframes skShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
     <script src="js/theme.js"></script>
 </head>
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري تجهيز صفحة الدفع...</div>
+    </div>
     <nav class="nav">
         <a href="index.html" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
         <div class="nav-right">
@@ -777,7 +819,7 @@
                 <div class="card">
                     <div class="card-title"><i class="fas fa-wallet"></i> طريقة الدفع</div>
                     <div class="method sel" onclick="pickMethod(this,'vodafone')">
-                        <div class="method-icon"><img src="pay p/فودافون.png" alt="فودافون كاش"></div>
+                        <div class="method-icon"><img src="pay p/فودافون.png" alt="فودافون كاش" loading="lazy"></div>
                         <div class="method-info">
                             <div class="method-name">فودافون كاش</div>
                             <div class="method-desc">تحويل فوري على المحفظة</div>
@@ -785,7 +827,7 @@
                         <div class="method-ok">&#10003;</div>
                     </div>
                     <div class="method" onclick="pickMethod(this,'fawry')">
-                        <div class="method-icon"><img src="pay p/فوري.jpeg" alt="فوري"></div>
+                        <div class="method-icon"><img src="pay p/فوري.jpeg" alt="فوري" loading="lazy"></div>
                         <div class="method-info">
                             <div class="method-name">فوري</div>
                             <div class="method-desc">ادفع من أي فرع فوري</div>
@@ -793,7 +835,7 @@
                         <div class="method-ok">&#10003;</div>
                     </div>
                     <div class="method" onclick="pickMethod(this,'instapay')">
-                        <div class="method-icon"><img src="pay p/انستا.png" alt="إنستاباي"></div>
+                        <div class="method-icon"><img src="pay p/انستا.png" alt="إنستاباي" loading="lazy"></div>
                         <div class="method-info">
                             <div class="method-name">إنستاباي</div>
                             <div class="method-desc">تحويل فوري من أي بنك</div>
@@ -891,6 +933,11 @@
     </div>
 
     <script id="payScript">
+        window.hideLoader = function () {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        };
+
         var _fb = { user: null, userData: null, db: null, auth: null };
         var plan = null, method = 'vodafone';
         var labels = { free: 'مجاني', pro: 'Pro — 49 ج.م/شهر', unlimited: 'Unlimited — 299 ج.م/شهر', quick48: '48 ساعة — 30 ج.م' };
@@ -1320,6 +1367,13 @@
         };
     </script>
 
+    <script>
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 5000);
+    </script>
+
     <!-- Firebase init -->
     <script type="module">
         try {
@@ -1355,11 +1409,13 @@
                     var phoneEl = document.getElementById('userPhone');
                     if (nameEl && !nameEl.value) nameEl.value = _fb.userData.name || '';
                     if (phoneEl && !phoneEl.value) phoneEl.value = _fb.userData.phone || '';
+                    hideLoader();
                 });
             });
         } catch(e) {
             console.error('Firebase init failed:', e);
             toast('خطأ في الاتصال بالخادم — يرجى المحاولة لاحقاً', 'err');
+            hideLoader();
         }
     </script>
 </body>
