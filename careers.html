@@ -246,6 +246,7 @@
     <script src="js/pwa.js" defer></script>
 </head>
 <body>
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div><div class="loader-text">جاري التحميل...</div></div>
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar">
@@ -497,4 +498,5 @@
     <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
 </div>
 </body>
+    <script>setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');},4000);document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');});</script>
 </html>

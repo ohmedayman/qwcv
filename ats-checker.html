@@ -816,14 +816,16 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
                 if (window.QCVAI) {
                     try { aiResult = await QCVAI.callJSON(prompt, null, { timeout: 25000, maxRetries: 1 }); } catch (e) { }
                 }
-                // Fallback: OpenRouter
+                // Fallback: BluesMinds
                 if (!aiResult || !aiResult.ok) {
                     try {
-                        var response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                        var bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+                        var bluesmindsEndpoint = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+                        var response = await fetch(bluesmindsEndpoint + '/chat/completions', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || 'sk-or-v1-p0Cqy8LDEh3kRh1nRzT6Wx9Jm4bG2vF7Nd5Xa8YcZwE') },
+                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
                             body: JSON.stringify({
-                                model: 'google/gemini-2.0-flash-001',
+                                model: 'meta/llama-3.3-70b-instruct',
                                 messages: [
                                     { role: 'system', content: 'You are an ATS expert. Return ONLY valid JSON, no markdown, no code blocks.' },
                                     { role: 'user', content: prompt }

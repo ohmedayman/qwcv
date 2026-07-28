@@ -9498,10 +9498,12 @@
                     if (onError) onError('AI request failed');
                 });
             } else {
-                fetch('https://openrouter.ai/api/v1/chat/completions', {
+                var bk = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+                var be = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+                fetch(be + '/chat/completions', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
-                    body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bk },
+                    body: JSON.stringify({ model: 'meta/llama-3.3-70b-instruct', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
                 }).then(function(r){return r.json()}).then(function(d){var t=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'';if(t.length>5)onSuccess(t.trim());else onError('Empty response')}).catch(function(){onError('AI unavailable')});
             }
         }

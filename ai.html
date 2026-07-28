@@ -1708,10 +1708,10 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        /* ===== Send / Receive via OpenRouter AI ===== */
-        const OPENROUTER_URL = (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1/chat/completions';
-        const OPENROUTER_KEY = (window.QCVConfig && window.QCVConfig.openrouterKey) || '';
-        const AI_MODELS = ['google/gemini-2.5-flash', 'openai/gpt-4o-mini', 'openai/gpt-4.1-nano'];
+        /* ===== Send / Receive via BluesMinds AI ===== */
+        const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+        const BLUESMINDS_KEY = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+        const AI_MODELS = ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'];
         let currentModelIndex = 0;
 
         function onSendClick() {
@@ -1750,15 +1750,13 @@
             }
         }
 
-        async function callPollinations(apiMessages, signal) {
+        async function callBluesminds(apiMessages, signal) {
             const model = AI_MODELS[currentModelIndex % AI_MODELS.length];
-            const response = await fetch(OPENROUTER_URL, {
+            const response = await fetch(BLUESMINDS_URL + '/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + OPENROUTER_KEY,
-                    'HTTP-Referer': 'https://qcv.vexonet.online',
-                    'X-Title': 'QCV AI'
+                    'Authorization': 'Bearer ' + BLUESMINDS_KEY
                 },
                 body: JSON.stringify({
                     model: model,
@@ -1814,7 +1812,7 @@
             for (let attempt = 0; attempt < maxAttempts; attempt++) {
                 try {
                     const model = AI_MODELS[modelIndex % AI_MODELS.length];
-                    const response = await callPollinations(apiMessages, currentAbortController.signal);
+                    const response = await callBluesminds(apiMessages, currentAbortController.signal);
                     const reader = response.body.getReader();
                     const decoder = new TextDecoder();
                     let buffer = '';

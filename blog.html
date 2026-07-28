@@ -339,6 +339,7 @@
     </style>
 </head>
 <body>
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div><div class="loader-text">جاري التحميل...</div></div>
 
 <!-- NAV -->
 <nav style="background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:14px 20px;position:sticky;top:0;z-index:999">
@@ -546,5 +547,6 @@ function doSearch() {
 <script defer src="js/animations.js"></script>
 
 </body>
+    <script>setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');},4000);document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');});</script>
 </html>
 

@@ -170,6 +170,7 @@
     </style>
 </head>
 <body>
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div><div class="loader-text">جاري التحميل...</div></div>
 
     <div class="page-header">
         <a href="index.html" class="logo" style="font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
@@ -465,4 +466,5 @@
     <script defer src="js/analytics.js"></script>
     <script defer src="js/notify-sounds.js"></script>
 </body>
+    <script>setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');},4000);document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');});</script>
 </html>
