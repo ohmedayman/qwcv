@@ -4941,6 +4941,82 @@
             </div>
         </div>
         <div class="topbar-left">
+            <!-- Profile -->
+            <div class="profile-area">
+                <div class="profile-trigger" onclick="toggleProfile()">
+                    <div class="profile-avatar" id="userAvatar">U</div>
+                    <span class="profile-name" id="userName">المستخدم</span>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dd-header">
+                        <div class="dd-avatar" id="ddAvatar">U</div>
+                        <div class="dd-info">
+                            <div class="d-name" id="ddName">المستخدم</div>
+                            <div class="d-email" id="ddEmail">user@email.com</div>
+                        </div>
+                    </div>
+                    <div class="dd-plan">
+                        <span class="pl">الباقة الحالية</span>
+                        <span class="pn" id="ddPlan">مجاني</span>
+                    </div>
+                    <div class="dd-subscription" id="ddSubscription">
+                        <div class="dd-sub-row"><span class="dd-sub-label">التحميلات</span><span class="dd-sub-value" id="ddDownloads" style="font-weight:700">0 / 1</span></div>
+                        <div class="dd-sub-row"><span class="dd-sub-label">تنتهي</span><span class="dd-sub-value" id="ddExpiry" style="font-weight:700">-</span></div>
+                        <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> ترقية الباقة</button>
+                    </div>
+                    <div class="dd-divider"></div>
+                    <div class="dd-section">
+                        <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> الملف الشخصي</div>
+                        <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> سيري الذاتية</div>
+                        <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
+                        <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> الإعدادات</div>
+                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-book-open"></i></span> الدليل الإرشادي</div>
+                    </div>
+                    <div class="dd-divider"></div>
+                    <div class="dd-section">
+                        <div id="affApplyView">
+                            <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i> <span>حساب الشراكة</span></div>
+                            <div class="dd-aff-apply-desc">أرسل طلبك، واحصل على رابطك الخاص واكسب <strong>5 نقاط</strong> لكل عضو جديد يسجل من خلالك</div>
+                            <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i class="fas fa-paper-plane"></i> إرسال الطلب</button>
+                        </div>
+                        <div id="affPendingView" style="display:none">
+                            <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك قيد المراجعة</div>
+                            <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من قبل الإدارة وستتلقى إشعاراً عند الموافقة</div>
+                        </div>
+                        <div id="affActiveView" style="display:none">
+                            <div class="dd-aff-header"><i class="fas fa-coins" style="color:#f59e0b"></i> <span>شارك واكسب</span></div>
+                            <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل جديد</div>
+                            <div class="dd-aff-stats">
+                                <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span class="lbl">الزيارات</span></div>
+                                <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span class="lbl">التسجيلات</span></div>
+                                <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span class="lbl">النقاط</span></div>
+                            </div>
+                            <div class="dd-aff-link-box">
+                                <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="انقر للنسخ">
+                                <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <div class="dd-aff-share">
+                                <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i class="fab fa-facebook-f"></i></button>
+                                <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i class="fab fa-twitter"></i></button>
+                                <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i class="fab fa-telegram-plane"></i></button>
+                            </div>
+                            <div class="dd-divider" style="margin:12px 0"></div>
+                            <div class="dd-aff-exchange" id="affExchangeSection">
+                                <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i> استبدال النقاط</div>
+                                <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> لباقة <strong>Pro</strong> لمدة 30 يوم</div>
+                                <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
+                                <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dd-divider"></div>
+                    <div class="dd-section">
+                        <div class="dd-item danger" onclick="deleteAccount()" style="color:#ef4444"><span class="dd-icon" style="color:#ef4444"><i class="fas fa-user-times"></i></span> إلغاء الحساب</div>
+                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
+                    </div>
+                </div>
+            </div>
             <!-- Auto-save indicator -->
             <div id="autoSaveIndicator" style="display:flex;align-items:center;gap:4px;font-size:0.65rem;color:var(--muted);padding:4px 8px;border-radius:6px;transition:all 0.3s;flex-shrink:0">
                 <i class="fas fa-check-circle" style="color:var(--green);font-size:0.7rem"></i>
@@ -4980,117 +5056,6 @@
             <button class="btn-save" onclick="showVersionHistory()" title="سجل الإصدارات" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">السجل</span></button>
             <!-- Export PDF -->
             <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> تصدير PDF</span><div class="spinner"></div></button>
-            <!-- Profile -->
-            <div class="profile-area">
-                <div class="profile-trigger" onclick="toggleProfile()">
-                    <div class="profile-avatar" id="userAvatar">U</div>
-                    <span class="profile-name" id="userName">المستخدم</span>
-                </div>
-                <div class="profile-dropdown" id="profileDropdown">
-                    <div class="dd-header">
-                        <div class="dd-avatar" id="ddAvatar">U</div>
-                        <div class="dd-info">
-                            <div class="d-name" id="ddName">المستخدم</div>
-                            <div class="d-email" id="ddEmail">user@email.com</div>
-                        </div>
-                    </div>
-                    <div class="dd-plan">
-                        <span class="pl">الباقة الحالية</span>
-                        <span class="pn" id="ddPlan">مجاني</span>
-                    </div>
-                    <div class="dd-subscription" id="ddSubscription">
-                        <div class="dd-sub-row"><span class="dd-sub-label">التحميلات</span><span class="dd-sub-value"
-                                id="ddDownloads" style="font-weight:700">0 / 1</span></div>
-                        <div class="dd-sub-row"><span class="dd-sub-label">تنتهي</span><span class="dd-sub-value"
-                                id="ddExpiry" style="font-weight:700">-</span></div>
-                        <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> ترقية
-                            الباقة</button>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> الملف الشخصي</div>
-                        <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> سيري الذاتية</div>
-                        <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
-                        <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> الإعدادات</div>
-                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-book-open"></i></span> الدليل الإرشادي</div>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item danger" onclick="deleteAccount()" style="color:#ef4444"><span class="dd-icon" style="color:#ef4444"><i class="fas fa-user-times"></i></span> إلغاء الحساب</div>
-                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
-                    </div>
-                        <div id="affApplyView">
-                            <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i>
-                                <span>حساب الشراكة</span>
-                            </div>
-                            <div class="dd-aff-apply-desc">أرسل طلبك، واحصل على رابطك الخاص واكسب <strong>5
-                                    نقاط</strong> لكل عضو جديد يسجل من خلالك</div>
-                            <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i
-                                    class="fas fa-paper-plane"></i> إرسال الطلب</button>
-                        </div>
-                        <div id="affPendingView" style="display:none">
-                            <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك
-                                قيد المراجعة</div>
-                            <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من قبل الإدارة وستتلقى إشعاراً عند الموافقة</div>
-                        </div>
-                        <div id="affActiveView" style="display:none">
-                            <div class="dd-aff-header">
-                                <i class="fas fa-coins" style="color:#f59e0b"></i>
-                                <span>شارك واكسب</span>
-                            </div>
-                            <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل
-                                جديد</div>
-                            <div class="dd-aff-stats">
-                                <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span
-                                        class="lbl">الزيارات</span></div>
-                                <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span
-                                        class="lbl">التسجيلات</span></div>
-                                <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span
-                                        class="lbl">النقاط</span></div>
-                            </div>
-                            <div class="dd-aff-link-box">
-                                <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="انقر للنسخ">
-                                <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
-                            </div>
-                            <div class="dd-aff-share">
-                                <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i
-                                        class="fab fa-whatsapp"></i></button>
-                                <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i
-                                        class="fab fa-facebook-f"></i></button>
-                                <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i
-                                        class="fab fa-twitter"></i></button>
-                                <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i
-                                        class="fab fa-telegram-plane"></i></button>
-                            </div>
-                            <div class="dd-divider" style="margin:12px 0"></div>
-                            <div class="dd-aff-exchange" id="affExchangeSection">
-                                <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i>
-                                    استبدال النقاط</div>
-                                <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> لباقة
-                                    <strong>Pro</strong> لمدة 30 يوم
-                                </div>
-                                <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i
-                                        class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
-                                <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i
-                                        class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i
-                                    class="fas fa-question-circle"></i></span> Help Center</div>
-                        <div class="dd-item" onclick="window.open('index.html')"><span class="dd-icon"><i
-                                    class="fas fa-home"></i></span> Home</div>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i
-                                    class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
