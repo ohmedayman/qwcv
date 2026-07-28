@@ -47,7 +47,7 @@
         .btn-whatsapp:hover{background:#1da851}
 
         .portfolio-container{width:100%;max-width:900px;padding:30px 20px;flex:1;display:flex;justify-content:center;align-items:flex-start}
-        .cv-wrapper{width:210mm;min-height:297mm;background:#fff;color:#1a1a1a;font-size:11px;line-height:1.5;font-family:'Inter','Cairo',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.12);direction:ltr;text-align:left}
+        .cv-wrapper{width:210mm;min-height:297mm;background:#fff;color:#1a1a1a;font-size:11px;line-height:1.5;font-family:'Inter','Cairo',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.12)}
 
         .portfolio-footer{text-align:center;padding:30px;color:var(--muted);font-size:0.82rem;width:100%}
         .portfolio-footer a{color:var(--accent);text-decoration:none}
@@ -191,6 +191,9 @@
             document.title = (userName || 'CV') + ' - QCV Portfolio';
             var html = QCVTemplates.render(template, cvData);
             content.innerHTML = '<div class="cv-wrapper"><div id="cvPage" class="cv-page tpl-' + template + '">' + html + '</div></div>';
+            var allText = [cvData.name, cvData.title, cvData.summary, ...(Array.isArray(cvData.skills) ? cvData.skills : []), ...(cvData.experience || []).map(function(e) { return (e.role || '') + ' ' + (e.company || '') + ' ' + (e.description || ''); }), ...(cvData.languages || []).map(function(l) { return l.name || ''; })].join(' ');
+            var dir = allText.match(/[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/) ? 'rtl' : 'ltr';
+            document.querySelector('.cv-wrapper').setAttribute('dir', dir);
             makeLinksClickable();
         }
 

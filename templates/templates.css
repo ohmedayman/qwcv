@@ -13,12 +13,19 @@
     padding: var(--cv-page-padding, 40px);
     margin: 0 auto;
     font-family: var(--cv-font-family, 'Inter', 'Cairo', sans-serif);
-    direction: ltr;
     text-align: left;
     box-shadow: 0 4px 24px rgba(0,0,0,0.3);
     position: relative;
     overflow: visible;
     box-sizing: border-box;
+}
+.cv-page[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+.cv-page[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
 }
 
 /* ---- Shared section/item helpers ---- */

@@ -5755,9 +5755,9 @@
                 <div class="form-card-header"><span class="icon"><i class="fas fa-user"></i></span>
                     <h3>المعلومات الشخصية</h3>
                 </div>
-                <div class="field"><label>الاسم الكامل</label><input type="text" id="inputName" oninput="renderCV()"
+                <div class="field"><label>الاسم الكامل</label><input type="text" id="inputName" dir="auto" oninput="renderCV()"
                         placeholder="John Doe"></div>
-                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" oninput="renderCV()" list="jobTitlesList" placeholder="UI/UX Designer"></div>
+                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" dir="auto" oninput="renderCV()" list="jobTitlesList" placeholder="UI/UX Designer"></div>
                 <datalist id="jobTitlesList">
                     <option value="Software Engineer">
                     <option value="Frontend Developer">
@@ -5884,16 +5884,16 @@
                     <option value="مهندس Cloud">
                     <option value="مدير إلكترونيات">
                 </datalist>
-                <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" oninput="renderCV()"
+                <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" dir="auto" oninput="renderCV()"
                         placeholder="john@example.com"></div>
-                <div class="field"><label>الهاتف</label><input type="text" id="inputPhone" oninput="renderCV()"
+                <div class="field"><label>الهاتف</label><input type="text" id="inputPhone" dir="auto" oninput="renderCV()"
                         placeholder="+1 234 567 890"></div>
-                <div class="field"><label>الموقع</label><input type="text" id="inputLocation" oninput="renderCV()"
+                <div class="field"><label>الموقع</label><input type="text" id="inputLocation" dir="auto" oninput="renderCV()"
                         placeholder="New York, NY"></div>
-                <div class="field"><label>لينكدإن</label><input type="text" id="inputLinkedin" oninput="renderCV()"
+                <div class="field"><label>لينكدإن</label><input type="text" id="inputLinkedin" dir="auto" oninput="renderCV()"
                         placeholder="linkedin.com/in/johndoe"></div>
                 <div class="field"><label>الملخص المهني <span class="char-count" id="summaryCount">0 /
-                            100</span></label><textarea id="inputSummary"
+                            100</span></label><textarea id="inputSummary" dir="auto"
                         oninput="updateCharCount('summary');renderCV()"
                         placeholder="A passionate designer creating exceptional digital experiences..."
                         style="min-height:110px"></textarea><button type="button" class="btn-generate-summary"
@@ -6599,8 +6599,9 @@
                 const paid = isPaidPlan();
                 const addBtn = paid
                     ? `<button class="btn-add" style="margin-top:12px" onclick="createNewCV()">+ إنشاء سيرة ذاتية جديدة</button>`
-                    : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="closePanel();openUpgradeModal()">اشترك لإنشاء المزيد من السير الذاتية</button>`;
-                h = `<div class="panel-header"><h2>سيري الذاتية</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}</div>`
+                    : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="createNewCV()">+ إنشاء سيرة ذاتية جديدة (حتى 3 للمجاني)</button>`;
+                const limitNote = paid ? '' : '<div style="font-size:0.72rem;color:var(--muted);margin-top:8px;text-align:center"><i class="fas fa-info-circle"></i> الباقة المجانية: حتى 3 سير ذاتية</div>';
+                h = `<div class="panel-header"><h2>سيري الذاتية</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}${limitNote}</div>`
             }
             else if (type === 'settings') { h = `<div class="panel-header"><h2>الإعدادات</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-row"><div class="panel-row-info"><div class="pr-title">الإشعارات</div><div class="pr-desc">استقبال التحديثات</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div><div class="panel-row"><div class="panel-row-info"><div class="pr-title">حفظ تلقائي</div><div class="pr-desc">حفظ تلقائياً</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div></div>` }
             p.innerHTML = h; document.getElementById('panelOverlay').classList.add('show');
@@ -6614,9 +6615,13 @@
             if (!window.currentUid) return;
             const paid = isPaidPlan();
             if (!paid) {
-                closePanel();
-                window.location.href = 'pay.html';
-                return;
+                const snap = await get(ref(db, 'users/' + window.currentUid + '/cvs'));
+                const list = snap.val() || {};
+                if (Object.keys(list).length >= 3) {
+                    closePanel();
+                    openUpgradeModal();
+                    return;
+                }
             }
             const newRef = push(ref(db, 'users/' + window.currentUid + '/cvs'));
             const cvId = newRef.key;
@@ -7189,6 +7194,13 @@
         window.collectData = collectData;
         window._getDesignSettings = function () { return designSettings; };
 
+        function detectDirection(text) {
+            if (!text) return 'ltr';
+            const rtlRegex = /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/;
+            return rtlRegex.test(text) ? 'rtl' : 'ltr';
+        }
+        window.detectDirection = detectDirection;
+
         window.generateProfessionalSummary = function () {
             try {
                 const data = collectData();
@@ -7245,13 +7257,19 @@
             if (typeof updateMobileTopTitle === 'function') updateMobileTopTitle('personal');
         });
 
+        var _scoreDebounceTimer = null;
+
         window.renderCV = function () {
             markDirty();
             const data = collectData();
             const html = QCVTemplates.render(currentTemplate, data);
             document.getElementById('cvPage').innerHTML = html;
+            const allText = [data.name, data.title, data.summary, ...(data.skills || []), ...(data.experience || []).map(e => e.role + ' ' + e.company + ' ' + e.description), ...(data.languages || []).map(l => l.name)].join(' ');
+            document.getElementById('cvPage').setAttribute('dir', detectDirection(allText));
             applyDesignSettings();
-            updateAIScore(data);
+            // Debounce ATS score update — avoid heavy recalc on every keystroke
+            if (_scoreDebounceTimer) clearTimeout(_scoreDebounceTimer);
+            _scoreDebounceTimer = setTimeout(function () { updateAIScore(data); }, 600);
             debouncedSave();
         };
 
@@ -7342,10 +7360,10 @@
                         <span class="rb-title"><i class="fas fa-briefcase" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> خبرة جديدة</span>
                         <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
                     </div>
-                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-building" style="font-size:0.7rem;margin-left:4px"></i>اسم الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Google, Meta, Vodafone, etc." style="font-weight:700;font-size:0.95rem"></div>
-                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-user-tie" style="font-size:0.7rem;margin-left:4px"></i>المسمى الوظيفي</label><input type="text" value="${role}" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
-                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-calendar-alt" style="font-size:0.7rem;margin-left:4px"></i>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="Jan 2020 - Present / يناير 2020 - حتى الآن"></div>
-                    <div class="field" style="margin-bottom:0"><label><i class="fas fa-align-right" style="font-size:0.7rem;margin-left:4px"></i>الوصف والإنجازات</label><textarea oninput="renderCV()" placeholder="- قمت بقيادة فريق من 5 مهندسين&#10;- زدت الإيرادات بنسبة 25%&#10;- بنيت نظام CI/CD من الصفر" style="min-height:80px">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة <b>-</b> لقائمة الإنجازات. كل إنجاز في سطر مستقل.</div></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-building" style="font-size:0.7rem;margin-left:4px"></i>اسم الشركة</label><input type="text" value="${company}" dir="auto" oninput="renderCV()" placeholder="Google, Meta, Vodafone, etc." style="font-weight:700;font-size:0.95rem"></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-user-tie" style="font-size:0.7rem;margin-left:4px"></i>المسمى الوظيفي</label><input type="text" value="${role}" dir="auto" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-calendar-alt" style="font-size:0.7rem;margin-left:4px"></i>المدة</label><input type="text" value="${dur}" dir="auto" oninput="renderCV()" placeholder="Jan 2020 - Present / يناير 2020 - حتى الآن"></div>
+                    <div class="field" style="margin-bottom:0"><label><i class="fas fa-align-right" style="font-size:0.7rem;margin-left:4px"></i>الوصف والإنجازات</label><textarea dir="auto" oninput="renderCV()" placeholder="- قمت بقيادة فريق من 5 مهندسين&#10;- زدت الإيرادات بنسبة 25%&#10;- بنيت نظام CI/CD من الصفر" style="min-height:80px">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة <b>-</b> لقائمة الإنجازات. كل إنجاز في سطر مستقل.</div></div>
                 </div>`);
             renderCV();
             snapshotState();
@@ -7359,10 +7377,10 @@
                         <span class="rb-title"><i class="fas fa-graduation-cap" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> تعليم جديد</span>
                         <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
                     </div>
-                    <div class="field"><label>الدرجة العلمية</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div>
-                    <div class="field"><label>المؤسسة التعليمية</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="Cairo University"></div>
-                    <div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div>
-                    <div class="field"><label>التفاصيل</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8/4.0&#10;- Dean's List&#10;- Computer Science Club">${desc}</textarea></div>
+                    <div class="field"><label>الدرجة العلمية</label><input type="text" value="${deg}" dir="auto" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div>
+                    <div class="field"><label>المؤسسة التعليمية</label><input type="text" value="${sch}" dir="auto" oninput="renderCV()" placeholder="Cairo University"></div>
+                    <div class="field"><label>المدة</label><input type="text" value="${dur}" dir="auto" oninput="renderCV()" placeholder="2016 - 2020"></div>
+                    <div class="field"><label>التفاصيل</label><textarea dir="auto" oninput="renderCV()" placeholder="- GPA: 3.8/4.0&#10;- Dean's List&#10;- Computer Science Club">${desc}</textarea></div>
                 </div>`);
             renderCV();
             snapshotState();
@@ -7535,7 +7553,7 @@
                     summaryEl.style.borderColor = 'rgba(5,150,105,0.15)';
                     summaryEl.style.color = '#059669';
                 } else {
-                    const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + parseInt(r.fix.replace('+', '')), 0);
+                    const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + (parseInt((r.fix || '').replace('+', '')) || 0), 0);
                     summaryEl.innerHTML = `إصلاح <strong>${totalIssues} مشكلة${totalIssues > 1 ? '' : ''}</strong> للوصول إلى <strong>${Math.min(100, potential)}/100</strong>`;
                     summaryEl.style.background = 'rgba(0,3,201,0.04)';
                     summaryEl.style.borderColor = 'rgba(0,3,201,0.1)';
@@ -7736,7 +7754,10 @@
             const closeHead = '</' + 'head>';
             const closeBody = '</' + 'body>';
             const closeHtml = '</' + 'html>';
-            const htmlContent = '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + defaultName + ' - QCV</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="https://qcv.vexonet.online/templates/templates.css">\n' + closeStyle + '\n' + closeHead + '\n<body>\n<div class="cv-wrapper">' + el.innerHTML + '</div>\n' + closeBody + '\n' + closeHtml;
+            const allText = [data.name, data.title, data.summary, ...(data.skills || []), ...(data.experience || []).map(e => e.role + ' ' + e.company + ' ' + e.description), ...(data.languages || []).map(l => l.name)].join(' ');
+            const dir = detectDirection(allText);
+            const lang = dir === 'rtl' ? 'ar' : 'en';
+            const htmlContent = '<!DOCTYPE html>\n<html lang="' + lang + '" dir="' + dir + '">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + defaultName + ' - QCV</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="https://qcv.vexonet.online/templates/templates.css">\n' + closeStyle + '\n' + closeHead + '\n<body>\n<div class="cv-wrapper">' + el.innerHTML + '</div>\n' + closeBody + '\n' + closeHtml;
 
             const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
             const url = URL.createObjectURL(blob);
