@@ -1968,6 +1968,106 @@
             font-style: italic
         }
 
+        /* ===== Skills Chips UI ===== */
+        .skills-chips-wrapper {
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            min-height: 120px;
+            background: var(--card);
+            transition: border-color 0.2s
+        }
+        .skills-chips-wrapper:focus-within { border-color: var(--accent) }
+        .skills-chips-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center
+        }
+        .skills-chips-input-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.82rem;
+            background: var(--input);
+            color: var(--text);
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s
+        }
+        .skills-chips-input-row input:focus { border-color: var(--accent) }
+        .skills-chips-input-row .btn-add-chip {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            transition: opacity 0.2s
+        }
+        .skills-chips-input-row .btn-add-chip:hover { opacity: 0.85 }
+        .skills-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+        .skill-chip-desktop {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,3,201,0.06);
+            border: 1.5px solid rgba(0,3,201,0.12);
+            border-radius: 10px;
+            padding: 6px 10px;
+            transition: all 0.2s;
+            cursor: default
+        }
+        .skill-chip-desktop .skill-name {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text)
+        }
+        .skill-chip-desktop .skill-proficiency {
+            display: flex;
+            gap: 3px;
+            margin: 0 4px
+        }
+        .skill-chip-desktop .skill-proficiency .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: background 0.2s
+        }
+        .skill-chip-desktop .skill-proficiency .dot.filled { background: var(--accent) }
+        .skill-chip-desktop .skill-proficiency .dot:hover { background: var(--accent) }
+        .skill-chip-desktop .btn-remove-skill {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(239,68,68,0.08);
+            color: #ef4444;
+            font-size: 0.65rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: background 0.2s;
+            line-height: 1
+        }
+        .skill-chip-desktop .btn-remove-skill:hover { background: rgba(239,68,68,0.2) }
+        body.dark-mode .skill-chip-desktop { background: rgba(39,255,237,0.06); border-color: rgba(39,255,237,0.15) }
+        body.dark-mode .skill-chip-desktop .skill-proficiency .dot { background: #334155 }
+        body.dark-mode .skill-chip-desktop .skill-proficiency .dot.filled { background: #27ffed }
+
         .btn-generate-summary {
             margin-top: 8px;
             padding: 8px 12px;
@@ -5825,10 +5925,20 @@
                 <div class="form-card-header"><span class="icon"><i class="fas fa-tools"></i></span>
                     <h3>المهارات</h3>
                 </div>
-                <div class="field"><label>المهارات <span class="char-count">(كل مهارة في سطر)</span></label><textarea
-                        id="inputSkills" oninput="renderCV()"
-                        placeholder="JavaScript&#10;React.js&#10;Node.js&#10;Python&#10;Git&#10;Docker&#10;AWS&#10;SQL"
-                        style="min-height:150px"></textarea><div class="field-hint">اكتب مهارة واحدة في كل سطر. رتّبها من الأهم للأقل أهمية.</div></div>
+                <div class="field">
+                    <div class="skills-chips-wrapper">
+                        <div class="skills-chips-input-row">
+                            <input type="text" id="skillInput" placeholder="اكتب مهارة واضغط Enter للإضافة..."
+                                onkeydown="if(event.key==='Enter'||event.key===','){event.preventDefault();addSkill()}">
+                            <button class="btn-add-chip" onclick="addSkill()"><i class="fas fa-plus"></i> أضف</button>
+                        </div>
+                        <div class="skills-chips-container" id="skillsChipsContainer"></div>
+                    </div>
+                    <textarea id="inputSkills" oninput="syncSkillChipsFromTextarea()"
+                        style="display:none"></textarea>
+                    <input type="hidden" id="skillsProficiency" value="{}">
+                    <div class="field-hint">اضغط Enter أو اضغط "أضف" لإدخال المهارة. انقر على النقاط لتحديد مستوى الإتقان.</div>
+                </div>
             </div>
 
             <!-- Languages -->
@@ -6864,6 +6974,84 @@
         let currentZoom = 100;
         let isGridView = false;
 
+        // ===== Skills Chips UI =====
+        var _skillProficiency = {};
+
+        function getSkillsArray() {
+            return (document.getElementById('inputSkills').value || '').split('\n').filter(function(l) { return l.trim(); });
+        }
+
+        function setSkillsData(arr, triggerRender) {
+            var ta = document.getElementById('inputSkills');
+            if (ta) ta.value = arr.join('\n');
+            renderSkillChips();
+            if (triggerRender !== false) renderCV();
+        }
+
+        function getProficiency(skill) { return _skillProficiency[skill] || 0; }
+
+        function renderSkillChips() {
+            var container = document.getElementById('skillsChipsContainer');
+            if (!container) return;
+            var skills = getSkillsArray();
+            if (!skills.length) {
+                container.innerHTML = '<div style="color:var(--muted);font-size:0.78rem;padding:8px 0"><i class="fas fa-info-circle" style="margin-left:4px"></i>لم تضف أي مهارات بعد. اكتب مهارة فوق و اضغط Enter.</div>';
+                return;
+            }
+            var html = '';
+            skills.forEach(function(s) {
+                var prof = getProficiency(s);
+                var dotsHtml = '';
+                for (var i = 1; i <= 4; i++) {
+                    dotsHtml += '<span class="dot' + (i <= prof ? ' filled' : '') + '" onclick="setSkillLevel(\'' + s.replace(/'/g, "\\'") + '\',' + i + ')" title="' + (['', 'مبتدئ', 'متوسط', 'متقدم', 'خبير'][i]) + '"></span>';
+                }
+                html += '<div class="skill-chip-desktop"><span class="skill-name">' + s + '</span>' +
+                    '<span class="skill-proficiency">' + dotsHtml + '</span>' +
+                    '<button class="btn-remove-skill" onclick="removeSkill(\'' + s.replace(/'/g, "\\'") + '\')" title="حذف">&#x2715;</button></div>';
+            });
+            container.innerHTML = html;
+            document.getElementById('skillsProficiency').value = JSON.stringify(_skillProficiency);
+        }
+
+        function addSkill() {
+            var input = document.getElementById('skillInput');
+            if (!input) return;
+            var val = input.value.trim().replace(/,$/, '');
+            if (!val || val.length < 2) return;
+            var skills = getSkillsArray();
+            if (skills.indexOf(val) !== -1) { input.value = ''; return; }
+            skills.push(val);
+            if (!_skillProficiency[val]) _skillProficiency[val] = 2;
+            setSkillsData(skills);
+            input.value = '';
+            input.focus();
+            renderCV();
+        }
+
+        function removeSkill(name) {
+            var skills = getSkillsArray().filter(function(s) { return s !== name; });
+            delete _skillProficiency[name];
+            setSkillsData(skills);
+            renderCV();
+        }
+
+        function setSkillLevel(name, level) {
+            _skillProficiency[name] = level;
+            renderSkillChips();
+            document.getElementById('skillsProficiency').value = JSON.stringify(_skillProficiency);
+            renderCV();
+        }
+
+        function syncSkillChipsFromTextarea() {
+            renderSkillChips();
+            renderCV();
+        }
+
+        function initSkillChips() {
+            var skills = getSkillsArray();
+            if (skills.length) renderSkillChips();
+        }
+
         // Undo/Redo
         var undoStack = [];
         var redoStack = [];
@@ -6889,7 +7077,8 @@
             document.getElementById('inputLocation').value = state.data.location || '';
             document.getElementById('inputLinkedin').value = state.data.linkedin || '';
             document.getElementById('inputSummary').value = state.data.summary || '';
-            document.getElementById('inputSkills').value = Array.isArray(state.data.skills) ? state.data.skills.join('\n') : (state.data.skills || '');
+            setSkillsData(Array.isArray(state.data.skills) ? state.data.skills : (state.data.skills ? [state.data.skills] : []), false);
+            if (state.data._skillProficiency) { _skillProficiency = state.data._skillProficiency; renderSkillChips(); }
             document.getElementById('expContainer').innerHTML = '';
             document.getElementById('eduContainer').innerHTML = '';
             document.getElementById('langContainer').innerHTML = '';
@@ -6978,6 +7167,8 @@
                 langData.push({ name: f[0].value, level: f[1].value });
             });
             const skillsRaw = (document.getElementById('inputSkills').value || '').split('\n').filter(l => l.trim());
+            let prof = {};
+            try { prof = JSON.parse(document.getElementById('skillsProficiency').value || '{}'); } catch (e) {}
             return {
                 name: document.getElementById('inputName').value,
                 title: document.getElementById('inputTitle').value,
@@ -6990,7 +7181,8 @@
                 languages: langData,
                 experience: expData,
                 education: eduData,
-                customSections: customSections
+                customSections: customSections,
+                _skillProficiency: prof
             };
         }
         window._collectData = collectData;
@@ -7583,7 +7775,7 @@
             document.getElementById('inputLocation').value = sample.location;
             document.getElementById('inputLinkedin').value = sample.linkedin;
             document.getElementById('inputSummary').value = sample.summary;
-            document.getElementById('inputSkills').value = sample.skills.join('\n');
+            setSkillsData(sample.skills);
             document.getElementById('expContainer').innerHTML = '';
             document.getElementById('eduContainer').innerHTML = '';
             document.getElementById('langContainer').innerHTML = '';
@@ -7607,7 +7799,8 @@
                     document.getElementById('inputLocation').value = d.location || '';
                     document.getElementById('inputLinkedin').value = d.linkedin || '';
                     document.getElementById('inputSummary').value = d.summary || '';
-                    document.getElementById('inputSkills').value = Array.isArray(d.skills) ? d.skills.join('\n') : (d.skills || '');
+                    setSkillsData(Array.isArray(d.skills) ? d.skills : (d.skills ? [d.skills] : []), false);
+                    if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
                     document.getElementById('expContainer').innerHTML = '';
                     document.getElementById('eduContainer').innerHTML = '';
                     document.getElementById('langContainer').innerHTML = '';
@@ -7642,7 +7835,8 @@
             document.getElementById('inputLocation').value = d.location || '';
             document.getElementById('inputLinkedin').value = d.linkedin || '';
             document.getElementById('inputSummary').value = d.summary || '';
-            document.getElementById('inputSkills').value = Array.isArray(d.skills) ? d.skills.join('\n') : (d.skills || '');
+            setSkillsData(Array.isArray(d.skills) ? d.skills : (d.skills ? [d.skills] : []), false);
+            if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
             document.getElementById('expContainer').innerHTML = '';
             document.getElementById('eduContainer').innerHTML = '';
             document.getElementById('langContainer').innerHTML = '';
@@ -7855,7 +8049,7 @@
             if (secId === 'experience') { document.getElementById('expContainer').innerHTML = ''; }
             if (secId === 'education') { document.getElementById('eduContainer').innerHTML = ''; }
             if (secId === 'languages') { document.getElementById('langContainer').innerHTML = ''; }
-            if (secId === 'skills') { document.getElementById('inputSkills').value = ''; }
+            if (secId === 'skills') { setSkillsData([], false); }
             if (secId === 'personal') {
                 ['inputName', 'inputTitle', 'inputEmail', 'inputPhone', 'inputLocation', 'inputLinkedin', 'inputSummary'].forEach(id => {
                     const el = document.getElementById(id); if (el) el.value = '';
@@ -8237,10 +8431,8 @@
 
             // Map skills
             if (d.skills && d.skills.length) {
-                var inputSkills = document.getElementById('inputSkills');
-                if (inputSkills) {
-                    inputSkills.value = d.skills.join('\n');
-                }
+                setSkillsData(d.skills, false);
+                if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
             }
 
             // Add custom sections
@@ -8731,8 +8923,7 @@
                 } else if (section === 'skills') {
                     const skills = aiResultText.split(/[,،\n]+/).map(function (s) { return s.replace(/^[-•*]\s*/, '').trim(); }).filter(function (s) { return s && s.length > 1; });
                     data.skills = skills;
-                    var inputSkills = document.getElementById('inputSkills');
-                    if (inputSkills) inputSkills.value = skills.join('\n');
+                    setSkillsData(skills, false);
                 } else if (section === 'personal') {
                     var lines = aiResultText.split('\n').filter(function (l) { return l.trim(); });
                     if (lines.length >= 1) { document.getElementById('inputName').value = lines[0]; data.name = lines[0]; }
@@ -8762,8 +8953,7 @@
             } else if (action === 'skills') {
                 const skills = aiResultText.split(/[,،\n]+/).map(function (s) { return s.replace(/^[-•*]\s*/, '').trim(); }).filter(function (s) { return s && s.length > 1; });
                 data.skills = skills;
-                var inputSkills2 = document.getElementById('inputSkills');
-                if (inputSkills2) inputSkills2.value = skills.join('\n');
+                setSkillsData(skills, false);
             } else if (action === 'translate') {
                 var tl = aiResultText.split('\n');
                 var nM = '', tM = '', eM = '', sM = [], skM = '', inSum = false;
@@ -8781,7 +8971,7 @@
                 if (tM) { document.getElementById('inputTitle').value = tM; data.title = tM; }
                 if (eM) { document.getElementById('inputEmail').value = eM; data.email = eM; }
                 if (sM.length) { var sv = sM.join(' '); document.getElementById('inputSummary').value = sv; data.summary = sv; }
-                if (skM) { var sarr = skM.split(/[,،\n]+/).map(function (x) { return x.trim(); }).filter(function (x) { return x; }); data.skills = sarr; var isk = document.getElementById('inputSkills'); if (isk) isk.value = sarr.join('\n'); }
+                if (skM) { var sarr = skM.split(/[,،\n]+/).map(function (x) { return x.trim(); }).filter(function (x) { return x; }); data.skills = sarr; setSkillsData(sarr, false); }
             } else if (action === 'custom') {
                 document.getElementById('aiResultBody').innerHTML = '<div style="padding:12px;text-align:center;color:var(--muted);font-size:0.8rem">اقتراحات الذكاء الاصطناعي للمعاينة فقط. يُنصح بالتطبيق يدوياً عند الحاجة.</div>';
                 return;
@@ -9400,8 +9590,8 @@
             else if (sec === 'education') addEdu();
             else if (sec === 'languages') addLang();
             else if (sec === 'skills') {
-                var ta = document.getElementById('inputSkills');
-                if (ta) { ta.focus(); ta.value += '\n'; ta.dispatchEvent(new Event('input')); }
+                var si = document.getElementById('skillInput');
+                if (si) { si.focus(); si.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
             }
         }
 
