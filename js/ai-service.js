@@ -5,7 +5,7 @@
 const QCVAI = {
     get _bluesmindsKey() { return (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6'; },
     get _bluesmindsEndpoint() { return (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1'; },
-    _bluesmindsModels: ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'],
+    _bluesmindsModels: ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'],
     get _openrouterKey() { return (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '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'; },
     get _openrouterEndpoint() { return (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1'; },
     _openrouterModels: ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'],
@@ -157,48 +157,21 @@ const QCVAI = {
 
         let lastError = null;
 
-        // 1) Try OpenRouter first (most reliable key)
-        if (this._openrouterKey) {
-            for (let i = 0; i < this._openrouterModels.length; i++) {
-                for (let retry = 0; retry < 2; retry++) {
-                    const res = await this._callOpenRouter(prompt, systemPrompt, this._openrouterModels[i], opts.timeout || 20000);
-                    if (res.ok) {
-                        if (useCache) this._setCache(prompt, res);
-                        return res;
-                    }
-                    lastError = res.error;
-                    if (retry < 1) await new Promise(r => setTimeout(r, 1000 * (retry + 1)));
+        // Try providers in order — one model at a time, no retries (fast fail)
+        const attempts = [
+            { provider: 'openrouter', models: this._openrouterModels, key: this._openrouterKey, fn: this._callOpenRouter, timeout: 15000 },
+            { provider: 'bluesminds', models: this._bluesmindsModels, key: this._bluesmindsKey, fn: this._callBluesminds, timeout: 15000 },
+            { provider: 'gemini', models: this._geminiModels, key: this._geminiKey, fn: this._callGemini, timeout: 10000 }
+        ];
+        for (const a of attempts) {
+            if (!a.key) continue;
+            for (const model of a.models) {
+                const res = await a.fn.call(this, prompt, systemPrompt, model, opts.timeout || a.timeout);
+                if (res.ok) {
+                    if (useCache) this._setCache(prompt, res);
+                    return res;
                 }
-            }
-        }
-
-        // 2) Try BluesMinds
-        if (this._bluesmindsKey) {
-            for (let i = 0; i < this._bluesmindsModels.length; i++) {
-                for (let retry = 0; retry < 2; retry++) {
-                    const res = await this._callBluesminds(prompt, systemPrompt, this._bluesmindsModels[i], opts.timeout || 20000);
-                    if (res.ok) {
-                        if (useCache) this._setCache(prompt, res);
-                        return res;
-                    }
-                    lastError = res.error;
-                    if (retry < 1) await new Promise(r => setTimeout(r, 1000 * (retry + 1)));
-                }
-            }
-        }
-
-        // 3) Fallback to Gemini
-        if (this._geminiKey) {
-            for (let i = 0; i < this._geminiModels.length; i++) {
-                for (let retry = 0; retry < 2; retry++) {
-                    const res = await this._callGemini(prompt, systemPrompt, this._geminiModels[i], opts.timeout || 15000);
-                    if (res.ok) {
-                        if (useCache) this._setCache(prompt, res);
-                        return res;
-                    }
-                    lastError = res.error;
-                    if (retry < 1) await new Promise(r => setTimeout(r, 1000 * (retry + 1)));
-                }
+                lastError = res.error;
             }
         }
 
