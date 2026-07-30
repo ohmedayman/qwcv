@@ -1113,6 +1113,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <div class="field"><label>مفتاح DeepSeek API (رخيص)</label><input type="password" id="settingsDeepseekKey" placeholder="...-sk"></div>
                         <div class="field"><label>مفتاح NaraRouter API</label><input type="password" id="settingsNaraKey" placeholder="...-sk-nry"></div>
                         <div class="field"><label>مفتاح BluesMinds API (مجاني)</label><input type="password" id="settingsBluesmindsKey" placeholder="sk-..."></div>
+                        <div class="field"><label>مفتاح OpenRouter API (مجاني)</label><input type="password" id="settingsOpenrouterKey" placeholder="sk-or-..."></div>
                         <div class="field"><label>مفتاح Gemini API (احتياطي)</label><input type="password" id="settingsGeminiKey" placeholder="...AI"></div>
                     </div>
                 </div>
@@ -1590,6 +1591,7 @@ function checkAndLoad() {
         el = document.getElementById('settingsDeepseekKey'); if (el) el.value = window.allSettings.deepseekKey || '';
         el = document.getElementById('settingsNaraKey'); if (el) el.value = window.allSettings.naraKey || '';
         el = document.getElementById('settingsBluesmindsKey'); if (el) el.value = window.allSettings.bluesmindsKey || '';
+        el = document.getElementById('settingsOpenrouterKey'); if (el) el.value = window.allSettings.openrouterKey || '';
         el = document.getElementById('settingsGeminiKey'); if (el) el.value = window.allSettings.geminiKey || '';
 
         // Domain Watermark
@@ -2474,6 +2476,7 @@ window.saveSettings = async function() {
         deepseekKey: document.getElementById('settingsDeepseekKey') ? document.getElementById('settingsDeepseekKey').value : '',
         naraKey: document.getElementById('settingsNaraKey') ? document.getElementById('settingsNaraKey').value : '',
         bluesmindsKey: document.getElementById('settingsBluesmindsKey') ? document.getElementById('settingsBluesmindsKey').value : '',
+        openrouterKey: document.getElementById('settingsOpenrouterKey') ? document.getElementById('settingsOpenrouterKey').value : '',
         geminiKey: document.getElementById('settingsGeminiKey') ? document.getElementById('settingsGeminiKey').value : '',
         domainWatermark: window.allSettings.domainWatermark || { enabled: true, domains: [] },
         updatedAt: Date.now()

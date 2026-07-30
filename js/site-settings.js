@@ -183,6 +183,7 @@
             get xaiKey() { return adminSettings.xaiKey || ''; },
             get groqKey() { return adminSettings.groqKey || ''; },
             get openrouterKey() { return adminSettings.openrouterKey || ''; },
+            get bluesmindsKey() { return adminSettings.bluesmindsKey || ''; },
             get geminiKey() { return adminSettings.geminiKey || ''; },
             get naraKey() { return adminSettings.naraKey || ''; },
             get: function() { return { ...siteData, ...adminSettings }; },

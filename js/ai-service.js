@@ -3,13 +3,13 @@
  * OpenAI-compatible endpoints with Gemini REST API fallback + CORS proxy
  */
 const QCVAI = {
-    _bluesmindsKey: (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6',
-    _bluesmindsEndpoint: (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1',
+    get _bluesmindsKey() { return (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6'; },
+    get _bluesmindsEndpoint() { return (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1'; },
     _bluesmindsModels: ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'],
-    _openrouterKey: (window.QCVConfig && window.QCVConfig.openrouterKey) || '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',
-    _openrouterEndpoint: (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1',
+    get _openrouterKey() { return (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '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'; },
+    get _openrouterEndpoint() { return (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1'; },
     _openrouterModels: ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'],
-    _geminiKey: (window.QCVConfig && window.QCVConfig.geminiKey) || '',
+    get _geminiKey() { return (window.QCVSettings && window.QCVSettings.geminiKey) || (window.QCVConfig && window.QCVConfig.geminiKey) || ''; },
     _geminiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models',
     _proxyEndpoint: 'https://corsproxy.io/?url=',
     _geminiModels: ['gemini-2.5-flash', 'gemini-2.0-flash-001', 'gemini-2.0-flash-lite-001'],
