@@ -1708,11 +1708,13 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        /* ===== Send / Receive via BluesMinds AI ===== */
+        /* ===== Send / Receive via AI ===== */
         const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-        const BLUESMINDS_KEY = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
-        const OPENROUTER_KEY = (window.QCVConfig && window.QCVConfig.openrouterKey) || 'sk-Y_FfqYW14efutjUKScfHaSfCoacBrVl1nXVbVKFSWjnkm69wsLI_vSLsvf6YVGLd8UkoroEMQuE8oBxQnL4Vssiz0iIm';
-        const AI_MODELS = ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'];
+        const BLUESMINDS_KEY = (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+        const OPENROUTER_KEY = (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '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';
+        const OR_MODELS = ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'];
+        const BM_MODELS = ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'];
+        const AI_MODELS = OPENROUTER_KEY ? OR_MODELS : BM_MODELS;
         let currentModelIndex = 0;
 
         function onSendClick() {
@@ -1751,47 +1753,13 @@
             }
         }
 
-        async function callBluesminds(apiMessages, signal) {
-            const model = AI_MODELS[currentModelIndex % AI_MODELS.length];
-            const response = await fetch(BLUESMINDS_URL + '/chat/completions', {
+        async function callProvider(apiMessages, signal, provider, model) {
+            var url = provider === 'openrouter' ? 'https://openrouter.ai/api/v1/chat/completions' : BLUESMINDS_URL + '/chat/completions';
+            var key = provider === 'openrouter' ? OPENROUTER_KEY : BLUESMINDS_KEY;
+            const response = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + BLUESMINDS_KEY
-                },
-                body: JSON.stringify({
-                    model: model,
-                    messages: apiMessages,
-                    temperature: 0.7,
-                    max_tokens: 2000,
-                    stream: true
-                }),
-                signal: signal
-            });
-            if (!response.ok) {
-                var errBody = '';
-                try { errBody = await response.text(); } catch(e) {}
-                var errMsg = errBody || 'HTTP ' + response.status;
-                throw new Error(errMsg);
-            }
-            return response;
-        }
-
-        async function callOpenRouter(apiMessages, signal) {
-            const model = AI_MODELS[currentModelIndex % AI_MODELS.length];
-            const response = await fetch(OPENROUTER_KEY ? 'https://openrouter.ai/api/v1/chat/completions' : '', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + OPENROUTER_KEY
-                },
-                body: JSON.stringify({
-                    model: model,
-                    messages: apiMessages,
-                    temperature: 0.7,
-                    max_tokens: 2000,
-                    stream: true
-                }),
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+                body: JSON.stringify({ model: model, messages: apiMessages, temperature: 0.7, max_tokens: 2000, stream: true }),
                 signal: signal
             });
             if (!response.ok) {
@@ -1837,57 +1805,61 @@
             currentAbortController = new AbortController();
 
             let lastError = null;
-            let modelIndex = 0;
-            const maxAttempts = AI_MODELS.length;
 
-            let providerTries = 0;
+            // Try providers: OpenRouter first, then BluesMinds
+            const providers = [
+                { name: 'openrouter', models: OR_MODELS, key: OPENROUTER_KEY },
+                { name: 'bluesminds', models: BM_MODELS, key: BLUESMINDS_KEY }
+            ];
+            for (const p of providers) {
+                if (!p.key) continue;
+                for (const model of p.models) {
+                    if (!isTyping) break;
+                    try {
+                        const response = await callProvider(apiMessages, currentAbortController.signal, p.name, model);
+                        const reader = response.body.getReader();
+                        const decoder = new TextDecoder();
+                        let buffer = '';
 
-            for (let attempt = 0; attempt < maxAttempts * 2; attempt++) {
-                try {
-                    var fn = providerTries < maxAttempts ? callBluesminds : callOpenRouter;
-                    if (providerTries >= maxAttempts && !OPENROUTER_KEY) break;
-                    const model = AI_MODELS[modelIndex % AI_MODELS.length];
-                    const response = await fn(apiMessages, currentAbortController.signal);
-                    const reader = response.body.getReader();
-                    const decoder = new TextDecoder();
-                    let buffer = '';
-
-                    while (true) {
-                        if (!isTyping) break;
-                        const { done, value } = await reader.read();
-                        if (done) break;
-
-                        buffer += decoder.decode(value, { stream: true });
-                        const lines = buffer.split('\n');
-                        buffer = lines.pop();
-
-                        for (const line of lines) {
+                        while (true) {
                             if (!isTyping) break;
-                            const trimmed = line.trim();
-                            if (!trimmed || !trimmed.startsWith('data: ')) continue;
-                            const data = trimmed.slice(6);
-                            if (data === '[DONE]') continue;
-                            try {
-                                const parsed = JSON.parse(data);
-                                const delta = parsed.choices?.[0]?.delta?.content;
-                                if (delta) {
-                                    fullText += delta;
-                                    updateStreamingMsg(streamId, fullText);
-                                }
-                            } catch(e) {}
-                        }
-                    }
+                            const { done, value } = await reader.read();
+                            if (done) break;
 
-                    if (fullText.trim() && !/image|vision|does not support/i.test(fullText)) break;
-                    lastError = new Error(fullText.trim() ? 'AI refused image input' : 'فارغ');
-                    fullText = '';
-                } catch (err) {
-                    if (err.name === 'AbortError') break;
-                    lastError = err;
-                    modelIndex++;
-                    providerTries++;
-                    if (attempt < maxAttempts * 2 - 1) await new Promise(r => setTimeout(r, 1000));
+                            buffer += decoder.decode(value, { stream: true });
+                            const lines = buffer.split('\n');
+                            buffer = lines.pop();
+
+                            for (const line of lines) {
+                                if (!isTyping) break;
+                                const trimmed = line.trim();
+                                if (!trimmed || !trimmed.startsWith('data: ')) continue;
+                                const data = trimmed.slice(6);
+                                if (data === '[DONE]') continue;
+                                try {
+                                    const parsed = JSON.parse(data);
+                                    const delta = parsed.choices?.[0]?.delta?.content;
+                                    if (delta) {
+                                        fullText += delta;
+                                        // Plain text during streaming (no markdown)
+                                        const bubble = document.getElementById(streamId + '_bubble');
+                                        if (bubble) { bubble.textContent = fullText; scrollDown(); }
+                                        const copyBtn = document.getElementById(streamId + '_copy');
+                                        if (copyBtn) copyBtn.setAttribute('data-text', fullText);
+                                    }
+                                } catch(e) {}
+                            }
+                        }
+
+                        if (fullText.trim() && !/image|vision|does not support/i.test(fullText)) { lastError = null; break; }
+                        lastError = new Error(fullText.trim() ? 'AI refused image input' : 'فارغ');
+                        fullText = '';
+                    } catch (err) {
+                        if (err.name === 'AbortError') { lastError = null; break; }
+                        lastError = err;
+                    }
                 }
+                if (!lastError) break;
             }
 
             if (fullText.trim()) {
