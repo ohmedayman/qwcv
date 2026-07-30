@@ -1,11 +1,14 @@
 /**
- * QCV AI Service — BluesMinds (primary) + Google Gemini (fallback)
- * OpenAI-compatible endpoint with Gemini REST API fallback + CORS proxy
+ * QCV AI Service — BluesMinds (primary) + OpenRouter (secondary) + Gemini (fallback)
+ * OpenAI-compatible endpoints with Gemini REST API fallback + CORS proxy
  */
 const QCVAI = {
     _bluesmindsKey: (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6',
     _bluesmindsEndpoint: (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1',
     _bluesmindsModels: ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'],
+    _openrouterKey: (window.QCVConfig && window.QCVConfig.openrouterKey) || 'sk-Y_FfqYW14efutjUKScfHaSfCoacBrVl1nXVbVKFSWjnkm69wsLI_vSLsvf6YVGLd8UkoroEMQuE8oBxQnL4Vssiz0iIm',
+    _openrouterEndpoint: (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1',
+    _openrouterModels: ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'],
     _geminiKey: (window.QCVConfig && window.QCVConfig.geminiKey) || '',
     _geminiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models',
     _proxyEndpoint: 'https://corsproxy.io/?url=',
@@ -112,6 +115,38 @@ const QCVAI = {
         }
     },
 
+    async _callOpenRouter(prompt, systemPrompt, model, timeout) {
+        const messages = [];
+        if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
+        messages.push({ role: 'user', content: prompt });
+        const body = { model, messages, temperature: 0.7, max_tokens: 2000 };
+        const url = this._openrouterEndpoint + '/chat/completions';
+
+        try {
+            const res = await this._fetch(url, body, {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this._openrouterKey
+            }, timeout);
+            if (!res.ok) {
+                const err = await res.text().catch(() => '');
+                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
+            }
+            const data = await res.json();
+            let text = '';
+            if (data.choices && data.choices[0] && data.choices[0].message) {
+                text = data.choices[0].message.content || '';
+            }
+            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
+            if (text.length > 3000) text = text.substring(0, 3000);
+            const tokens = data.usage?.total_tokens || data.usage?.completion_tokens || 0;
+            this._usageLog.push({ model, tokens, time: Date.now(), provider: 'openrouter' });
+            return { ok: true, text, provider: 'openrouter-' + model };
+        } catch (e) {
+            console.error('[QCV AI] OpenRouter ' + model + ' failed:', e.message);
+            return { ok: false, error: e.message };
+        }
+    },
+
     async call(prompt, systemPrompt, opts) {
         opts = opts || {};
         const useCache = opts.useCache !== false;
@@ -137,7 +172,22 @@ const QCVAI = {
             }
         }
 
-        // 2) Fallback to Gemini
+        // 2) Try OpenRouter (secondary)
+        if (this._openrouterKey) {
+            for (let i = 0; i < this._openrouterModels.length; i++) {
+                for (let retry = 0; retry < 2; retry++) {
+                    const res = await this._callOpenRouter(prompt, systemPrompt, this._openrouterModels[i], opts.timeout || 20000);
+                    if (res.ok) {
+                        if (useCache) this._setCache(prompt, res);
+                        return res;
+                    }
+                    lastError = res.error;
+                    if (retry < 1) await new Promise(r => setTimeout(r, 1000 * (retry + 1)));
+                }
+            }
+        }
+
+        // 3) Fallback to Gemini
         if (this._geminiKey) {
             for (let i = 0; i < this._geminiModels.length; i++) {
                 for (let retry = 0; retry < 2; retry++) {

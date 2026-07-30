@@ -1711,6 +1711,7 @@
         /* ===== Send / Receive via BluesMinds AI ===== */
         const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
         const BLUESMINDS_KEY = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+        const OPENROUTER_KEY = (window.QCVConfig && window.QCVConfig.openrouterKey) || 'sk-Y_FfqYW14efutjUKScfHaSfCoacBrVl1nXVbVKFSWjnkm69wsLI_vSLsvf6YVGLd8UkoroEMQuE8oBxQnL4Vssiz0iIm';
         const AI_MODELS = ['meta/llama-3.3-70b-instruct', 'meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash'];
         let currentModelIndex = 0;
 
@@ -1776,6 +1777,31 @@
             return response;
         }
 
+        async function callOpenRouter(apiMessages, signal) {
+            const model = AI_MODELS[currentModelIndex % AI_MODELS.length];
+            const response = await fetch(OPENROUTER_KEY ? 'https://openrouter.ai/api/v1/chat/completions' : '', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + OPENROUTER_KEY
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: apiMessages,
+                    temperature: 0.7,
+                    max_tokens: 2000,
+                    stream: true
+                }),
+                signal: signal
+            });
+            if (!response.ok) {
+                var errBody = '';
+                try { errBody = await response.text(); } catch(e) {}
+                throw new Error(errBody || 'HTTP ' + response.status);
+            }
+            return response;
+        }
+
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const text = input.value.trim();
@@ -1814,10 +1840,14 @@
             let modelIndex = 0;
             const maxAttempts = AI_MODELS.length;
 
-            for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            let providerTries = 0;
+
+            for (let attempt = 0; attempt < maxAttempts * 2; attempt++) {
                 try {
+                    var fn = providerTries < maxAttempts ? callBluesminds : callOpenRouter;
+                    if (providerTries >= maxAttempts && !OPENROUTER_KEY) break;
                     const model = AI_MODELS[modelIndex % AI_MODELS.length];
-                    const response = await callBluesminds(apiMessages, currentAbortController.signal);
+                    const response = await fn(apiMessages, currentAbortController.signal);
                     const reader = response.body.getReader();
                     const decoder = new TextDecoder();
                     let buffer = '';
@@ -1848,13 +1878,15 @@
                         }
                     }
 
-                    if (fullText.trim()) break; // Success
-                    lastError = new Error('فارغ');
+                    if (fullText.trim() && !/image|vision|does not support/i.test(fullText)) break;
+                    lastError = new Error(fullText.trim() ? 'AI refused image input' : 'فارغ');
+                    fullText = '';
                 } catch (err) {
                     if (err.name === 'AbortError') break;
                     lastError = err;
-                    modelIndex++; // Try next model
-                    if (attempt < maxAttempts - 1) await new Promise(r => setTimeout(r, 1000));
+                    modelIndex++;
+                    providerTries++;
+                    if (attempt < maxAttempts * 2 - 1) await new Promise(r => setTimeout(r, 1000));
                 }
             }
 
@@ -2102,14 +2134,17 @@
             const file = event.target.files[0];
             if (!file) return;
             
-            if (file.type && file.type.startsWith('image/')) {
+            var fileName = file.name.toLowerCase();
+            var imageExts = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg', '.ico', '.tiff', '.avif'];
+            var ext = '.' + fileName.split('.').pop();
+            
+            if (file.type && file.type.startsWith('image/') || imageExts.includes(ext)) {
                 alert('لا يمكن رفع الصور. يُرجى رفع ملف نصي (.txt) أو PDF أو مستند.');
                 event.target.value = '';
                 return;
             }
             
             const allowedExts = ['.txt', '.pdf', '.doc', '.docx'];
-            const ext = '.' + file.name.split('.').pop().toLowerCase();
             if (!allowedExts.includes(ext)) {
                 alert('نوع الملف غير مدعوم. يُرجى رفع ملف نصي (.txt) أو PDF أو مستند Word.');
                 event.target.value = '';
