@@ -4,6 +4,6 @@ window.QCVConfig = {
     geminiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models',
     bluesmindsKey: 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6',
     bluesmindsEndpoint: 'https://api.bluesminds.com/v1',
-    openrouterKey: 'sk-Y_FfqYW14efutjUKScfHaSfCoacBrVl1nXVbVKFSWjnkm69wsLI_vSLsvf6YVGLd8UkoroEMQuE8oBxQnL4Vssiz0iIm',
+    openrouterKey: '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',
     openrouterEndpoint: 'https://openrouter.ai/api/v1'
 };
