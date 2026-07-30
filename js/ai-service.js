@@ -157,11 +157,11 @@ const QCVAI = {
 
         let lastError = null;
 
-        // 1) Try BluesMinds (primary) — iterate through models with 2 retries each
-        if (this._bluesmindsKey) {
-            for (let i = 0; i < this._bluesmindsModels.length; i++) {
+        // 1) Try OpenRouter first (most reliable key)
+        if (this._openrouterKey) {
+            for (let i = 0; i < this._openrouterModels.length; i++) {
                 for (let retry = 0; retry < 2; retry++) {
-                    const res = await this._callBluesminds(prompt, systemPrompt, this._bluesmindsModels[i], opts.timeout || 20000);
+                    const res = await this._callOpenRouter(prompt, systemPrompt, this._openrouterModels[i], opts.timeout || 20000);
                     if (res.ok) {
                         if (useCache) this._setCache(prompt, res);
                         return res;
@@ -172,11 +172,11 @@ const QCVAI = {
             }
         }
 
-        // 2) Try OpenRouter (secondary)
-        if (this._openrouterKey) {
-            for (let i = 0; i < this._openrouterModels.length; i++) {
+        // 2) Try BluesMinds
+        if (this._bluesmindsKey) {
+            for (let i = 0; i < this._bluesmindsModels.length; i++) {
                 for (let retry = 0; retry < 2; retry++) {
-                    const res = await this._callOpenRouter(prompt, systemPrompt, this._openrouterModels[i], opts.timeout || 20000);
+                    const res = await this._callBluesminds(prompt, systemPrompt, this._bluesmindsModels[i], opts.timeout || 20000);
                     if (res.ok) {
                         if (useCache) this._setCache(prompt, res);
                         return res;

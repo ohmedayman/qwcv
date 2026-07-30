@@ -1901,10 +1901,14 @@
                     errMsg = 'شات QCV لا يدعم الصور حالياً. يُرجى استخدام النصوص فقط.';
                 } else if (errMsg.includes('rate limit') || errMsg.includes('429') || errMsg.includes('ResourceExhausted')) {
                     errMsg = 'تم تجاوز حد الاستخدام اليومي. حاول بكرة أو استخدم موديل مختلف.';
+                } else if (errMsg.includes('401')) {
+                    errMsg = 'مفتاح API غير صالح. تواصل مع الدعم الفني.';
                 } else if (errMsg.includes('503') || errMsg.includes('unavailable')) {
                     errMsg = 'الخدمة غير متاحة حالياً. جرب مرة أخرى.';
+                } else if (errMsg.includes('HTTP')) {
+                    errMsg = 'الخدمة غير متاحة حالياً. جرب مرة أخرى.';
                 }
-                updateStreamingMsg(streamId, 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n`' + errMsg + '`');
+                updateStreamingMsg(streamId, 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n' + errMsg);
             }
 
             isTyping = false;
