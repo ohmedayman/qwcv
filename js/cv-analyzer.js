@@ -38,29 +38,29 @@ const CVAnalyzer = {
 
         // Summary scoring
         if (summary.length === 0) {
-            issues.push({ type: 'critical', text: 'Add a professional summary (2-3 lines about your experience)', section: 'summary', fix: '+15' });
+            issues.push({ type: 'critical', text: 'أضف ملخصاً مهنياً (2-3 أسطر عن خبرتك)', section: 'summary', fix: '+15' });
         } else if (summary.length < 50) {
             score += 8;
-            issues.push({ type: 'warning', text: `Summary too short (${summary.length}/100+ chars) — add more details about your achievements`, section: 'summary', fix: '+7' });
+            issues.push({ type: 'warning', text: `الملخص قصير جداً (${summary.length}/100 حرف) — أضف تفاصيل عن إنجازاتك`, section: 'summary', fix: '+7' });
         } else if (summary.length < 100) {
             score += 15;
-            issues.push({ type: 'info', text: `Good summary — consider expanding to 100+ chars for better score`, section: 'summary', fix: '+5' });
+            issues.push({ type: 'info', text: `ملخص جيد — وسّعه لـ 100+ حرف لتحسين التقييم`, section: 'summary', fix: '+5' });
         } else if (summary.length < 150) {
             score += 20;
-            issues.push({ type: 'info', text: 'Strong summary — add numbers/results for even better impact', section: 'summary', fix: '+5' });
+            issues.push({ type: 'info', text: 'ملخص قوي — أضف أرقام/نتائج لزيادة التأثير', section: 'summary', fix: '+5' });
         } else {
             score += 25;
         }
 
         // Experience count
         if (exp.length === 0) {
-            issues.push({ type: 'critical', text: 'Add at least 1 work experience entry', section: 'experience', fix: '+10' });
+            issues.push({ type: 'critical', text: 'أضف خبرة عمل واحدة على الأقل', section: 'experience', fix: '+10' });
         } else {
             score += 10;
             if (exp.length >= 2) score += 10;
             if (exp.length >= 3) score += 5;
             if (exp.length < 2) {
-                issues.push({ type: 'warning', text: 'Add 2+ work experiences for stronger CV', section: 'experience', fix: '+10' });
+                issues.push({ type: 'warning', text: 'أضف خ Asking تجربتين+ لسيرة ذاتية أقوى', section: 'experience', fix: '+10' });
             }
         }
 
@@ -70,10 +70,10 @@ const CVAnalyzer = {
             const bullets = (e.description || '').split('\n').filter(l => l.trim().length > 5);
             totalBullets += bullets.length;
             if (bullets.length === 0) {
-                issues.push({ type: 'critical', text: `Experience #${i + 1} has no description — add 3-5 bullet points`, section: 'experience', fix: '+5' });
+                issues.push({ type: 'critical', text: `الخبرة #${i + 1} بدون وصف — أضف 3-5 نقاط إنجاز`, section: 'experience', fix: '+5' });
             } else if (bullets.length < 3) {
                 score += 2;
-                issues.push({ type: 'warning', text: `Experience #${i + 1}: only ${bullets.length} bullet(s) — add ${3 - bullets.length} more`, section: 'experience', fix: '+3' });
+                issues.push({ type: 'warning', text: `الخبرة #${i + 1}: ${bullets.length} نقطة فقط — أضف ${3 - bullets.length} نقاط إضافية`, section: 'experience', fix: '+3' });
             } else {
                 score += 5;
                 if (bullets.length >= 5) score += 5;
@@ -82,10 +82,19 @@ const CVAnalyzer = {
 
         // Education
         if (edu.length === 0) {
-            issues.push({ type: 'info', text: 'Add your educational background', section: 'education', fix: '+5' });
+            issues.push({ type: 'info', text: 'أضف مؤهلاتك التعليمية', section: 'education', fix: '+5' });
         } else {
             score += 5;
+            edu.forEach((e, i) => {
+                if (!(e.degree || '').trim()) issues.push({ type: 'info', text: `التعليم #${i + 1}: أضف اسم الشهادة`, section: 'education', fix: '+3' });
+                else score += 3;
+                if (!(e.school || '').trim()) issues.push({ type: 'info', text: `التعليم #${i + 1}: أضف اسم المؤسسة`, section: 'education', fix: '+2' });
+                else score += 2;
+            });
         }
+
+        // LinkedIn check
+        if ((data.linkedin || '').trim()) score += 5;
 
         return { total: Math.min(100, score), max, issues };
     },
@@ -95,56 +104,69 @@ const CVAnalyzer = {
         let score = 0;
         const max = 100;
 
-        // Contact fields
+        // Name
         if (!(data.name || '').trim()) {
-            issues.push({ type: 'critical', text: 'Add your full name', section: 'personal', fix: '+10' });
+            issues.push({ type: 'critical', text: 'أضف اسمك الكامل', section: 'personal', fix: '+10' });
         } else { score += 10; }
 
+        // Email
         if (!(data.email || '').trim()) {
-            issues.push({ type: 'critical', text: 'Add your email address', section: 'personal', fix: '+10' });
+            issues.push({ type: 'critical', text: 'أضف بريدك الإلكتروني', section: 'personal', fix: '+10' });
         } else { score += 10; }
 
+        // Phone
         if (!(data.phone || '').trim()) {
-            issues.push({ type: 'critical', text: 'Add your phone number', section: 'personal', fix: '+10' });
+            issues.push({ type: 'critical', text: 'أضف رقم هاتفك', section: 'personal', fix: '+10' });
         } else { score += 10; }
 
+        // Job title
         if (!(data.title || '').trim()) {
-            issues.push({ type: 'warning', text: 'Add your job title (e.g. "Software Engineer")', section: 'personal', fix: '+10' });
+            issues.push({ type: 'warning', text: 'أضف المسمى الوظيفي (مثال: "مهندس برمجيات")', section: 'personal', fix: '+10' });
         } else { score += 10; }
 
+        // Summary
         if (!(data.summary || '').trim()) {
-            issues.push({ type: 'critical', text: 'Add a professional summary for ATS parsing', section: 'summary', fix: '+15' });
-        } else { score += 15; }
-
-        // Skills for ATS
-        const skills = data.skills || [];
-        if (skills.length < 3) {
-            issues.push({ type: 'critical', text: `Only ${skills.length} skill(s) — ATS needs at least 3-5 relevant skills`, section: 'skills', fix: '+10' });
+            issues.push({ type: 'critical', text: 'أضف ملخصاً مهنياً لأنظمة ATS', section: 'summary', fix: '+10' });
         } else { score += 10; }
 
-        if (skills.length < 5) {
-            issues.push({ type: 'warning', text: 'Add 5+ skills to pass ATS keyword filters', section: 'skills', fix: '+5' });
+        // LinkedIn
+        if (!(data.linkedin || '').trim()) {
+            issues.push({ type: 'warning', text: 'أضف رابط LinkedIn — أنظمة ATS تبحث عنه', section: 'personal', fix: '+5' });
         } else { score += 5; }
 
-        if (skills.length < 8) {
-            issues.push({ type: 'info', text: '8+ skills recommended for maximum ATS matching', section: 'skills', fix: '+5' });
+        // Location
+        if (!(data.location || '').trim()) {
+            issues.push({ type: 'info', text: 'أضف موقعك (المدينة، الدولة) لتحسين الفرص المحلية', section: 'personal', fix: '+5' });
         } else { score += 5; }
 
-        // Experience ATS fields
+        // Section headers check — ATS needs proper structure
         const exp = data.experience || [];
+        const edu = data.education || [];
+        const skills = data.skills || [];
+
+        if (exp.length === 0) {
+            issues.push({ type: 'critical', text: 'قسم الخبرة العملية مطلوب لأنظمة ATS', section: 'experience', fix: '+10' });
+        } else { score += 10; }
+
+        if (edu.length === 0) {
+            issues.push({ type: 'warning', text: 'قسم التعليم يساعد أنظمة ATS في تصنيفك', section: 'education', fix: '+5' });
+        } else { score += 5; }
+
+        if (skills.length < 3) {
+            issues.push({ type: 'critical', text: `المهارات قليلة جداً (${skills.length}) — ATS يحتاج 3-5 مهارات`, section: 'skills', fix: '+5' });
+        } else { score += 5; }
+
+        // Experience completeness for ATS
         exp.forEach((e, i) => {
             if (!(e.role || '').trim()) {
-                issues.push({ type: 'warning', text: `Experience #${i + 1}: missing job title`, section: 'experience', fix: '+3' });
-            } else { score += 3; }
+                issues.push({ type: 'warning', text: `الخبرة #${i + 1}: المسمى الوظيفي مطلوب`, section: 'experience', fix: '+3' });
+            } else { score += 2; }
             if (!(e.company || '').trim()) {
-                issues.push({ type: 'warning', text: `Experience #${i + 1}: missing company name`, section: 'experience', fix: '+2' });
+                issues.push({ type: 'warning', text: `الخبرة #${i + 1}: اسم الشركة مطلوب`, section: 'experience', fix: '+2' });
             } else { score += 2; }
             if (!(e.duration || '').trim()) {
-                issues.push({ type: 'info', text: `Experience #${i + 1}: add work duration (e.g. "2022 - Present")`, section: 'experience', fix: '+2' });
-            } else { score += 2; }
-            if ((e.description || '').length <= 20) {
-                issues.push({ type: 'warning', text: `Experience #${i + 1}: description too short — ATS needs 20+ chars`, section: 'experience', fix: '+3' });
-            } else { score += 3; }
+                issues.push({ type: 'info', text: `الخبرة #${i + 1}: أضف المدة (مثال "2022 - حتى الآن")`, section: 'experience', fix: '+1' });
+            } else { score += 1; }
         });
 
         return { total: Math.min(100, score), max, issues };
@@ -157,34 +179,36 @@ const CVAnalyzer = {
         const skills = data.skills || [];
 
         if (skills.length === 0) {
-            issues.push({ type: 'critical', text: 'No skills listed — this is the #1 thing ATS systems look for', section: 'skills', fix: '+20' });
+            issues.push({ type: 'critical', text: 'لا توجد مهارات — أهم ما تبحث عنه أنظمة ATS', section: 'skills', fix: '+25' });
         } else {
             score += 10;
-            if (skills.length >= 3) score += 20;
-            if (skills.length >= 5) score += 15;
-            if (skills.length >= 8) score += 15;
+            if (skills.length >= 3) score += 15;
+            if (skills.length >= 5) score += 10;
+            if (skills.length >= 8) score += 10;
             if (skills.length >= 12) score += 10;
         }
 
         if (skills.length > 0 && skills.length < 5) {
-            issues.push({ type: 'warning', text: `Only ${skills.length} skills — aim for 8-12 for best results`, section: 'skills', fix: '+15' });
+            issues.push({ type: 'warning', text: `فقط ${skills.length} مهارة — استهدف 8-12 مهارة`, section: 'skills', fix: '+15' });
         }
 
         if (skills.length >= 5 && skills.length < 8) {
-            issues.push({ type: 'info', text: `Good (${skills.length} skills) — add 3+ more to maximize ATS matching`, section: 'skills', fix: '+10' });
+            issues.push({ type: 'info', text: `جيد (${skills.length} مهارات) — أضف 3+ مهارات إضافية`, section: 'skills', fix: '+10' });
         }
 
-        const longSkills = skills.filter(s => s.length > 15);
+        // Long skills hurt ATS parsing
+        const longSkills = skills.filter(s => s.length > 20);
         if (longSkills.length > 0) {
-            score += 5;
-            issues.push({ type: 'info', text: `${longSkills.length} skill(s) longer than 15 chars — keep them concise for ATS`, section: 'skills', fix: '+5' });
+            score -= 5;
+            issues.push({ type: 'warning', text: `${longSkills.length} مهارة طويلة (+20 حرف) — اختصرها لأنظمة ATS`, section: 'skills', fix: '+5' });
         } else if (skills.length > 0) {
-            score += 10;
+            score += 5;
         }
 
-        if (skills.length > 0 && skills.length <= 20) score += 10;
+        // Conciseness bonus
+        if (skills.length > 0 && skills.every(s => s.length <= 20)) score += 5;
 
-        return { total: Math.min(100, score + 10), max, issues };
+        return { total: Math.min(100, Math.max(0, score)), max, issues };
     },
 
     scoreImpact(data) {
@@ -197,7 +221,7 @@ const CVAnalyzer = {
         // Numbers/metrics
         const numbers = allDescriptions.match(/\d+/g) || [];
         if (numbers.length === 0 && exp.length > 0) {
-            issues.push({ type: 'critical', text: 'No numbers/metrics in experience — add quantifiable results (e.g. "increased sales by 30%")', section: 'experience', fix: '+15' });
+            issues.push({ type: 'critical', text: 'لا توجد أرقام في الخبرات — أضف نتائج قابلة للقياس (مثال "زدت المبيعات 30%")', section: 'experience', fix: '+15' });
         } else {
             score += 15;
             if (numbers.length >= 3) score += 10;
@@ -205,42 +229,42 @@ const CVAnalyzer = {
         }
 
         if (numbers.length > 0 && numbers.length < 3 && exp.length > 0) {
-            issues.push({ type: 'warning', text: `Only ${numbers.length} number(s) found — add 3+ metrics for stronger impact`, section: 'experience', fix: '+10' });
+            issues.push({ type: 'warning', text: `فقط ${numbers.length} رقم — أضف 3+ أرقام لتأثير أقوى`, section: 'experience', fix: '+10' });
         }
 
         // Power verbs
-        const powerVerbs = ['lead', 'managed', 'developed', 'designed', 'built', 'achieved', 'increased', 'reduced', 'improved', 'launched', 'created', 'implemented', 'optimized', 'delivered', 'قاد', 'أدرت', 'طورت', 'صممت', 'بنيت', 'حققت', 'زدت', 'قللت', 'حسنت', 'أطلقت'];
+        const powerVerbs = ['lead', 'managed', 'developed', 'designed', 'built', 'achieved', 'increased', 'reduced', 'improved', 'launched', 'created', 'implemented', 'optimized', 'delivered', 'قاد', 'أدرت', 'طورت', 'صممت', 'بنيت', 'حققت', 'زدت', 'قللت', 'حسنت', 'أطلقت', 'نفذت', 'أنشأت'];
         const lower = allDescriptions.toLowerCase();
         const matched = powerVerbs.filter(v => lower.includes(v));
         if (matched.length === 0 && exp.length > 0) {
-            issues.push({ type: 'warning', text: 'No action verbs found — start each bullet with words like "Led", "Developed", "Achieved"', section: 'experience', fix: '+10' });
+            issues.push({ type: 'warning', text: 'لا توجد أفعال إجراء — ابدأ كل نقطة بـ "قاد"، "طور"، "حقق"', section: 'experience', fix: '+10' });
         } else {
             score += 10;
             if (matched.length >= 3) score += 5;
         }
 
         if (matched.length > 0 && matched.length < 3 && exp.length > 0) {
-            issues.push({ type: 'info', text: `Found ${matched.length} action verb(s) — use 3+ different power verbs for maximum impact`, section: 'experience', fix: '+5' });
+            issues.push({ type: 'info', text: `وجد ${matched.length} فعل إجراء — استخدم 3+ أفعال مختلفة`, section: 'experience', fix: '+5' });
         }
 
         // Bullet points count
         const bullets = allDescriptions.split('\n').filter(l => l.trim().length > 10);
         if (bullets.length === 0 && exp.length > 0) {
-            issues.push({ type: 'critical', text: 'No bullet points in experience — use line breaks to list achievements', section: 'experience', fix: '+10' });
+            issues.push({ type: 'critical', text: 'لا توجد نقاط إنجاز في الخبرة — استخدم فواصل الأسطر', section: 'experience', fix: '+10' });
         } else {
             score += 10;
             if (bullets.length >= 5) score += 5;
         }
 
         if (bullets.length > 0 && bullets.length < 5 && exp.length > 0) {
-            issues.push({ type: 'info', text: `Only ${bullets.length} bullet(s) — aim for 5+ across all experiences`, section: 'experience', fix: '+5' });
+            issues.push({ type: 'info', text: `فقط ${bullets.length} نقطة — استهدف 5+ نقاط في كل الخبرات`, section: 'experience', fix: '+5' });
         }
 
         // Percentage or currency symbols
-        if (allDescriptions.includes('%') || allDescriptions.includes('$')) {
+        if (allDescriptions.includes('%') || allDescriptions.includes('$') || allDescriptions.includes('EGP')) {
             score += 10;
         } else if (exp.length > 0) {
-            issues.push({ type: 'info', text: 'Add percentages or currency values to show measurable results', section: 'experience', fix: '+10' });
+            issues.push({ type: 'info', text: 'أضف نسب مئوية أو قيم مالية لإظهار نتائج ملموسة', section: 'experience', fix: '+10' });
         }
 
         // Summary numbers
@@ -248,10 +272,10 @@ const CVAnalyzer = {
         if (summary.match(/\d+/)) {
             score += 5;
         } else if ((data.summary || '').trim().length > 0) {
-            issues.push({ type: 'info', text: 'Add a number to your summary for stronger first impression', section: 'summary', fix: '+5' });
+            issues.push({ type: 'info', text: 'أضف رقماً لملخصك لانطباع أول أقوى', section: 'summary', fix: '+5' });
         }
 
-        return { total: Math.min(100, score + 10), max, issues };
+        return { total: Math.min(100, Math.max(0, score)), max, issues };
     },
 
     scoreContact(data) {
@@ -260,19 +284,19 @@ const CVAnalyzer = {
         const max = 100;
 
         if (!(data.name || '').trim()) {
-            issues.push({ type: 'critical', text: 'Name is required', section: 'personal', fix: '+25' });
+            issues.push({ type: 'critical', text: 'الاسم مطلوب', section: 'personal', fix: '+25' });
         } else { score += 25; }
 
         if (!(data.email || '').trim()) {
-            issues.push({ type: 'critical', text: 'Email is required', section: 'personal', fix: '+25' });
+            issues.push({ type: 'critical', text: 'البريد الإلكتروني مطلوب', section: 'personal', fix: '+25' });
         } else { score += 25; }
 
         if (!(data.phone || '').trim()) {
-            issues.push({ type: 'critical', text: 'Phone number is required', section: 'personal', fix: '+25' });
+            issues.push({ type: 'critical', text: 'رقم الهاتف مطلوب', section: 'personal', fix: '+25' });
         } else { score += 25; }
 
         if (!(data.title || '').trim()) {
-            issues.push({ type: 'warning', text: 'Job title helps recruiters find you faster', section: 'personal', fix: '+25' });
+            issues.push({ type: 'warning', text: 'المسمى الوظيفي يساعد في العثور عليك', section: 'personal', fix: '+25' });
         } else { score += 25; }
 
         return { total: Math.min(100, score), max, issues };
@@ -281,7 +305,6 @@ const CVAnalyzer = {
     getRecommendations(data, scores) {
         const recs = [];
 
-        // Gather all issues from all categories
         const allIssues = [
             ...scores.contact.issues,
             ...scores.content.issues,
@@ -290,7 +313,6 @@ const CVAnalyzer = {
             ...scores.impact.issues
         ];
 
-        // Deduplicate by section+text
         const seen = new Set();
         allIssues.forEach(issue => {
             const key = issue.section + '|' + issue.text;
@@ -306,7 +328,6 @@ const CVAnalyzer = {
             }
         });
 
-        // Sort: critical first, then warning, then info
         const order = { critical: 0, warning: 1, info: 2 };
         recs.sort((a, b) => (order[a.type] || 3) - (order[b.type] || 3));
 
@@ -322,12 +343,6 @@ const CVAnalyzer = {
         return { grade: 'يحتاج تحسين', label: 'NEEDS WORK', color: '#ef4444', emoji: '\uD83D\uDD27' };
     },
 
-    /**
-     * Get AI-powered personalized improvement suggestions
-     * @param {object} data - CV data
-     * @param {object} scores - Analysis scores
-     * @returns {Promise<string|null>} AI suggestions or null if unavailable
-     */
     async getAISuggestions(data, scores) {
         if (!window.QCVAI) return null;
 
@@ -352,8 +367,8 @@ const CVAnalyzer = {
             'CV:\n' + cvText + '\n\n' +
             'Weak areas: ' + weakCategories.join(', ') + '\n\n' +
             'Provide exactly 5 specific, actionable improvements (not generic advice). Format:\n' +
-            '1. [Section] — Specific improvement with example\n' +
-            '2. [Section] — Specific improvement with example\n' +
+            '1. [Section] \u2014 Specific improvement with example\n' +
+            '2. [Section] \u2014 Specific improvement with example\n' +
             '...\n\n' +
             'Keep each point under 30 words. Be specific to THIS person\'s CV.';
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -7,14 +7,14 @@
     <meta property="og:url" content="https://qcv.vexonet.online/cover-letter.html">
     <meta property="og:title" content="منشئ خطابات التعريف - QCV">
     <meta property="og:description" content="أنشئ خطاب تعريف احترافي بالذكاء الاصطناعي. قوالب متنوعة مع عرض م-preview فوري ونسخ مباشر.">
-    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:image" content="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <meta property="og:site_name" content="QCV">
     <meta property="og:locale" content="ar_AR">
     <title>منشئ خطابات التعريف - QCV | مجاني بالذكاء الاصطناعي</title>
     <meta name="description" content="أنشئ خطاب تعريف احترافي بالذكاء الاصطناعي. قوالب متنوعة مع عرض مسبق فوري.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://qcv.vexonet.online/cover-letter.html">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
 <body>
 
 <div class="nav">
-    <a href="index.html" class="logo">Q<span>CV</span></a>
+    <a href="index.html" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
     <div class="nav-links">
         <a href="index.html">الرئيسية</a>
         <a href="editor.html">المحرر</a>
@@ -384,11 +384,13 @@ async function generateWithAI() {
             const result = await window.QCVAI.call(prompt, 'You are a professional cover letter writer. Write in the same language as the user prompt. Keep it under 250 words. No markdown.', { timeout: 15000 });
             generatedText = result.ok ? result.text : '';
         } else {
-            const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            const bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+            const bluesmindsEndpoint = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+            const resp = await fetch(bluesmindsEndpoint + '/chat/completions', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
                 body: JSON.stringify({
-                    model: 'google/gemini-2.5-flash',
+                    model: 'meta/llama-3.3-70b-instruct',
                     messages: [{ role: 'system', content: 'You are a professional cover letter writer. Write in the same language as the user prompt. Keep it under 250 words. No markdown.' }, { role: 'user', content: prompt }],
                     temperature: 0.7,
                     max_tokens: 1500
@@ -442,5 +444,6 @@ function showToast() {
     setTimeout(() => toast.classList.remove('show'), 2000);
 }
 </script>
+<script src="js/site-settings.js"></script>
 </body>
 </html>

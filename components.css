@@ -724,3 +724,23 @@ body.dark-mode .upgrade-card-top { color: #f1f5f9; }
 body.dark-mode .partner-card { background: #141b2d; border-color: #1e293b; }
 body.dark-mode .partner-name { color: #f1f5f9; }
 body.dark-mode .partner-type { color: #94a3b8; }
+
+/* ===== PAGE LOADER ===== */
+.page-loader {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg, #f0f4ff); z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+body.dark-mode .page-loader { background: #0b1120; }
+.loader-spinner {
+    width: 48px; height: 48px;
+    border: 4px solid var(--border, #e0e7f7);
+    border-top-color: var(--accent, #0003c9);
+    border-radius: 50%;
+    animation: loadSpin 0.8s linear infinite;
+}
+@keyframes loadSpin { to { transform: rotate(360deg); } }
+.loader-text { color: var(--muted, #64748b); font-size: 14px; font-weight: 500; }

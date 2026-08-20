@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>لوحة تحكم QCV - Admin Panel</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
@@ -476,7 +476,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
 <!-- LOGIN SCREEN -->
 <div class="login-screen" id="adminLogin">
     <div class="login-box">
-        <div class="logo">Q<span>CV</span></div>
+        <div class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></div>
         <div class="sub">لوحة تحكم الإدارة</div>
         <form id="adminLoginForm" onsubmit="return false">
             <div class="fg">
@@ -498,7 +498,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
 <!-- STAFF LOGIN -->
 <div class="login-screen hidden" id="staffLogin">
     <div class="login-box">
-        <div class="logo">Q<span>CV</span></div>
+        <div class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></div>
         <div class="sub">دخول الموظفين</div>
         <form id="staffLoginForm" onsubmit="return false">
             <div class="fg">
@@ -523,7 +523,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">Q<span>CV</span> Admin</div>
+        <div class="sidebar-brand"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"> Admin</div>
         <nav class="sidebar-nav">
             <div class="nav-item active" onclick="switchPanel('dashboard')"><span class="icon"><i class="fas fa-chart-pie"></i></span>الرئيسية</div>
             <div class="nav-item" onclick="switchPanel('users')"><span class="icon"><i class="fas fa-users"></i></span>المستخدمين</div>
@@ -925,9 +925,9 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     <h3><i class="fas fa-envelope-open-text" style="color:var(--accent);margin-left:8px"></i>النشرة البريدية</h3>
                 </div>
                 <div class="stats-grid" style="margin-bottom:20px">
-                    <div class="stat-card"><div class="stat-icon" style="background:rgba(0,3,201,.1);color:var(--accent)"><i class="fas fa-users"></i></div><div class="stat-num" id="nlTotal">0</div><div class="stat-label">إجمالي المشتركين</div></div>
-                    <div class="stat-card"><div class="stat-icon" style="background:rgba(5,150,105,.1);color:var(--green)"><i class="fas fa-check-circle"></i></div><div class="stat-num" id="nlActive">0</div><div class="stat-label">نشط</div></div>
-                    <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.1);color:var(--red)"><i class="fas fa-times-circle"></i></div><div class="stat-num" id="nlUnsub">0</div><div class="stat-label">ملغي</div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(0,3,201,.1);color:var(--accent)"><i class="fas fa-users"></i></div><div class="stat-value" id="nlTotal">0</div><div class="stat-label">إجمالي المشتركين</div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(5,150,105,.1);color:var(--green)"><i class="fas fa-check-circle"></i></div><div class="stat-value" id="nlActive">0</div><div class="stat-label">نشط</div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.1);color:var(--red)"><i class="fas fa-times-circle"></i></div><div class="stat-value" id="nlUnsub">0</div><div class="stat-label">ملغي</div></div>
                 </div>
                 <div class="settings-card" style="margin-bottom:16px">
                     <h4><i class="fas fa-paper-plane" style="color:var(--accent);margin-left:6px"></i>إرسال بريد جماعي</h4>
@@ -1112,7 +1112,8 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <div class="field"><label>مفتاح xAI/Grok API (مجاني)</label><input type="password" id="settingsXaiKey" placeholder="...-xai"></div>
                         <div class="field"><label>مفتاح DeepSeek API (رخيص)</label><input type="password" id="settingsDeepseekKey" placeholder="...-sk"></div>
                         <div class="field"><label>مفتاح NaraRouter API</label><input type="password" id="settingsNaraKey" placeholder="...-sk-nry"></div>
-                        <div class="field"><label>مفتاح OpenRouter API (مجاني)</label><input type="password" id="settingsOpenrouterKey" placeholder="...-sk-or"></div>
+                        <div class="field"><label>مفتاح BluesMinds API (مجاني)</label><input type="password" id="settingsBluesmindsKey" placeholder="sk-..."></div>
+                        <div class="field"><label>مفتاح OpenRouter API (مجاني)</label><input type="password" id="settingsOpenrouterKey" placeholder="sk-or-..."></div>
                         <div class="field"><label>مفتاح Gemini API (احتياطي)</label><input type="password" id="settingsGeminiKey" placeholder="...AI"></div>
                     </div>
                 </div>
@@ -1233,6 +1234,11 @@ function switchPanel(panel) {
     if (panel === 'backup') renderBackupLog();
     if (panel === 'security') renderSecurityPanel();
     if (panel === 'newsletter') loadNewsletter();
+    if (panel === 'subscriptions') {
+        restGet('/subscriptions.json').then(function(data) {
+            if (data) { window.allSubs = data; renderAll(); }
+        });
+    }
 }
 
 // ===== LOGIN LOGIC =====
@@ -1584,6 +1590,7 @@ function checkAndLoad() {
         el = document.getElementById('settingsXaiKey'); if (el) el.value = window.allSettings.xaiKey || '';
         el = document.getElementById('settingsDeepseekKey'); if (el) el.value = window.allSettings.deepseekKey || '';
         el = document.getElementById('settingsNaraKey'); if (el) el.value = window.allSettings.naraKey || '';
+        el = document.getElementById('settingsBluesmindsKey'); if (el) el.value = window.allSettings.bluesmindsKey || '';
         el = document.getElementById('settingsOpenrouterKey'); if (el) el.value = window.allSettings.openrouterKey || '';
         el = document.getElementById('settingsGeminiKey'); if (el) el.value = window.allSettings.geminiKey || '';
 
@@ -2468,6 +2475,7 @@ window.saveSettings = async function() {
         xaiKey: document.getElementById('settingsXaiKey') ? document.getElementById('settingsXaiKey').value : '',
         deepseekKey: document.getElementById('settingsDeepseekKey') ? document.getElementById('settingsDeepseekKey').value : '',
         naraKey: document.getElementById('settingsNaraKey') ? document.getElementById('settingsNaraKey').value : '',
+        bluesmindsKey: document.getElementById('settingsBluesmindsKey') ? document.getElementById('settingsBluesmindsKey').value : '',
         openrouterKey: document.getElementById('settingsOpenrouterKey') ? document.getElementById('settingsOpenrouterKey').value : '',
         geminiKey: document.getElementById('settingsGeminiKey') ? document.getElementById('settingsGeminiKey').value : '',
         domainWatermark: window.allSettings.domainWatermark || { enabled: true, domains: [] },

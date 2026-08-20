@@ -128,7 +128,7 @@
                 }
             });
         }, { threshold: 0.3 });
-        var statsBar = document.querySelector('.stats-bar');
+        var statsBar = document.getElementById('liveStats');
         if (statsBar) observer.observe(statsBar);
     }
 

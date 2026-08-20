@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -9,15 +9,15 @@
     <meta property="og:title" content="تسجيل الدخول - QCV">
     <meta property="og:description"
         content="أنشئ حسابك مجاناً وابدأ في بناء سيرتك الذاتية الاحترافية بالذكاء الاصطناعي.">
-    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:image" content="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <meta property="og:site_name" content="QCV">
     <meta property="og:locale" content="ar_AR">
     <title>تسجيل الدخول - QCV الإصدار الاحترافي</title>
     <meta name="description"
         content="سجل دخولك في QCV أو أنشئ حساباً جديداً مجاناً. ابنِ سيرة ذاتية احترافية بالذكاء الاصطناعي في دقائق.">
     <meta name="robots" content="noindex, follow">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -950,8 +950,8 @@
             }
 
             .pw-toggle {
-                min-width: 44px;
-                min-height: 44px;
+                min-width: 48px;
+                min-height: 48px;
                 display: flex;
                 align-items: center;
                 justify-content: center
@@ -959,7 +959,7 @@
 
             .nav-cta {
                 padding: 12px 24px !important;
-                min-height: 44px
+                min-height: 48px
             }
 
             .nav-links.show {
@@ -971,52 +971,149 @@
                 right: 0;
                 background: var(--card, #fff);
                 border-bottom: 1px solid var(--card-border, #e5e7eb);
-                padding: 16px 20px;
-                gap: 12px;
+                padding: 12px;
+                gap: 4px;
                 z-index: 999;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+                border-radius: 0 0 16px 16px
             }
 
             .nav-links.show a,
             .nav-links.show button {
                 width: 100%;
                 text-align: center;
-                padding: 12px !important;
+                padding: 14px !important;
+                min-height: 48px;
+                border-radius: 12px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                justify-content: center
             }
 
             .nav-mobile-toggle {
                 display: flex !important;
+                border-radius: 12px
+            }
+
+            .main {
+                padding: 16px;
+                min-height: calc(100vh - 60px)
             }
 
             .auth-card {
-                padding: 30px 24px;
-                border-radius: 16px;
+                padding: 28px 20px;
+                border-radius: 18px;
                 max-width: 100%;
+                animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(16px); }
+                to { opacity: 1; transform: translateY(0); }
             }
 
             .card-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+            }
+
+            .card-subtitle {
+                font-size: 0.85rem
+            }
+
+            .ig input, .ig textarea, .ig select {
+                font-size: 16px;
+                padding: 14px 16px;
+                min-height: 48px;
+                border-radius: 12px
+            }
+
+            .ig label {
+                font-size: 0.82rem;
+                margin-bottom: 6px
+            }
+
+            .btn-submit, .btn-google {
+                min-height: 50px;
+                padding: 14px;
+                font-size: 0.95rem;
+                border-radius: 14px;
+                font-weight: 700
+            }
+
+            .btn-submit:active, .btn-google:active {
+                transform: scale(0.97)
+            }
+
+            .auth-toggle {
+                min-height: 44px;
+                font-size: 0.88rem
+            }
+
+            .forgot-link {
+                font-size: 0.82rem;
+                padding: 8px;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+
+            .pw-reqs {
+                padding: 12px;
+                border-radius: 10px
+            }
+
+            .pw-req {
+                font-size: 0.75rem;
+                padding: 4px 0
+            }
+
+            .footer {
+                padding: 20px 16px 12px
+            }
+
+            .footer-links a {
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+
+            .divider-or {
+                margin: 18px 0;
+                font-size: 0.82rem
             }
         }
 
         @media(max-width: 400px) {
             .auth-card {
                 padding: 24px 16px;
-                border-radius: 14px;
+                border-radius: 16px;
             }
 
             .card-title {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
+            }
+
+            .card-header {
+                margin-bottom: 20px
             }
 
             .btn-submit,
             .btn-google {
-                padding: 12px;
-                font-size: 0.88rem;
+                padding: 13px;
+                font-size: 0.9rem;
+                min-height: 48px
             }
 
             .ig input {
-                padding: 11px 14px;
+                padding: 13px 14px;
+                min-height: 46px
+            }
+
+            .ig {
+                margin-bottom: 14px
             }
         }
 
@@ -1130,6 +1227,26 @@
             border-color: #1e293b;
         }
     </style>
+    <style>
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg); z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: var(--text2); font-size: 14px; font-weight: 500; }
+    </style>
     <script defer src="js/maintenance.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>
@@ -1137,9 +1254,13 @@
 </head>
 
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري التحميل...</div>
+    </div>
     <nav class="navbar">
             <a href="index.html" class="nav-logo">
-            <div class="logo-box">Q</div>CV
+            <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto">
         </a>
         <div class="nav-links">
             <a href="index.html" data-i18n="home"><i class="fas fa-home" style="font-size:0.75rem"></i> الرئيسية</a>
@@ -1351,7 +1472,7 @@
 
     <footer class="footer">
         <div class="footer-brand">
-            <img src="images/logo.png" alt="QCV Logo" width="36" onerror="this.style.display='none'">
+            <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV Logo" width="44" style="border-radius:8px">
             <span>QCV</span>
             <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px"><i class="fas fa-robot" style="margin-left:4px"></i> باني سير ذاتية احترافية بالذكاء الاصطناعي</p>
         </div>
@@ -1516,10 +1637,16 @@
         }
 
         onAuthStateChanged(auth, (user) => {
-            if (user && !isSignUpMode && !isResetting) {
+            if (user && !isSignUpMode && !isResetting && !location.search.includes('switch=1')) {
                 showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
                 setTimeout(() => location.replace(getRedirectPage()), 400);
+                return;
             }
+            if (user && location.search.includes('switch=1')) {
+                showLoginBox();
+            }
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
         });
 
         function setLoading(btn, loading) { btn.classList.toggle('loading', loading); btn.disabled = loading; }
@@ -1827,8 +1954,8 @@
     </a>
     <div id="installBanner"
         style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
-        <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV"
-            style="width:36px;height:36px;border-radius:8px">
+        <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV"
+            style="width:44px;height:44px;border-radius:10px">
         <div style="flex:1;text-align:right">
             <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
             <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
@@ -1838,6 +1965,12 @@
         <button id="installClose"
             style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
     </div>
+    <script>
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 5000);
+    </script>
 </body>
 
 </html>

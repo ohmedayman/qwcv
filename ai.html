@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QCV — مساعد السيرة الذاتية</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -984,9 +984,33 @@
             .topbar-actions .tb-btn span { display: none; }
         }
     </style>
+    <style>
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: #f0f2f7; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid #e2e7f0;
+            border-top-color: #0003c9;
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: #64748b; font-size: 14px; font-weight: 500; }
+    </style>
 </head>
 
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري التحميل...</div>
+    </div>
     <!-- Sidebar Overlay (mobile) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
@@ -1684,10 +1708,13 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        /* ===== Send / Receive via OpenRouter AI ===== */
-        const OPENROUTER_URL = (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1/chat/completions';
-        const OPENROUTER_KEY = (window.QCVConfig && window.QCVConfig.openrouterKey) || '';
-        const AI_MODELS = ['google/gemini-2.5-flash', 'openai/gpt-4o-mini', 'openai/gpt-4.1-nano'];
+        /* ===== Send / Receive via AI ===== */
+        const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+        const BLUESMINDS_KEY = (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+        const OPENROUTER_KEY = (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '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';
+        const OR_MODELS = ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'];
+        const BM_MODELS = ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'];
+        const AI_MODELS = OPENROUTER_KEY ? OR_MODELS : BM_MODELS;
         let currentModelIndex = 0;
 
         function onSendClick() {
@@ -1726,26 +1753,20 @@
             }
         }
 
-        async function callPollinations(apiMessages, signal) {
-            const model = AI_MODELS[currentModelIndex % AI_MODELS.length];
-            const response = await fetch(OPENROUTER_URL, {
+        async function callProvider(apiMessages, signal, provider, model) {
+            var url = provider === 'openrouter' ? 'https://openrouter.ai/api/v1/chat/completions' : BLUESMINDS_URL + '/chat/completions';
+            var key = provider === 'openrouter' ? OPENROUTER_KEY : BLUESMINDS_KEY;
+            const response = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + OPENROUTER_KEY,
-                    'HTTP-Referer': 'https://qcv.vexonet.online',
-                    'X-Title': 'QCV AI'
-                },
-                body: JSON.stringify({
-                    model: model,
-                    messages: apiMessages,
-                    temperature: 0.7,
-                    max_tokens: 2000,
-                    stream: true
-                }),
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+                body: JSON.stringify({ model: model, messages: apiMessages, temperature: 0.7, max_tokens: 2000, stream: true }),
                 signal: signal
             });
-            if (!response.ok) throw new Error('HTTP ' + response.status);
+            if (!response.ok) {
+                var errBody = '';
+                try { errBody = await response.text(); } catch(e) {}
+                throw new Error(errBody || 'HTTP ' + response.status);
+            }
             return response;
         }
 
@@ -1784,51 +1805,61 @@
             currentAbortController = new AbortController();
 
             let lastError = null;
-            let modelIndex = 0;
-            const maxAttempts = AI_MODELS.length;
 
-            for (let attempt = 0; attempt < maxAttempts; attempt++) {
-                try {
-                    const model = AI_MODELS[modelIndex % AI_MODELS.length];
-                    const response = await callPollinations(apiMessages, currentAbortController.signal);
-                    const reader = response.body.getReader();
-                    const decoder = new TextDecoder();
-                    let buffer = '';
+            // Try providers: OpenRouter first, then BluesMinds
+            const providers = [
+                { name: 'openrouter', models: OR_MODELS, key: OPENROUTER_KEY },
+                { name: 'bluesminds', models: BM_MODELS, key: BLUESMINDS_KEY }
+            ];
+            for (const p of providers) {
+                if (!p.key) continue;
+                for (const model of p.models) {
+                    if (!isTyping) break;
+                    try {
+                        const response = await callProvider(apiMessages, currentAbortController.signal, p.name, model);
+                        const reader = response.body.getReader();
+                        const decoder = new TextDecoder();
+                        let buffer = '';
 
-                    while (true) {
-                        if (!isTyping) break;
-                        const { done, value } = await reader.read();
-                        if (done) break;
-
-                        buffer += decoder.decode(value, { stream: true });
-                        const lines = buffer.split('\n');
-                        buffer = lines.pop();
-
-                        for (const line of lines) {
+                        while (true) {
                             if (!isTyping) break;
-                            const trimmed = line.trim();
-                            if (!trimmed || !trimmed.startsWith('data: ')) continue;
-                            const data = trimmed.slice(6);
-                            if (data === '[DONE]') continue;
-                            try {
-                                const parsed = JSON.parse(data);
-                                const delta = parsed.choices?.[0]?.delta?.content;
-                                if (delta) {
-                                    fullText += delta;
-                                    updateStreamingMsg(streamId, fullText);
-                                }
-                            } catch(e) {}
-                        }
-                    }
+                            const { done, value } = await reader.read();
+                            if (done) break;
 
-                    if (fullText.trim()) break; // Success
-                    lastError = new Error('فارغ');
-                } catch (err) {
-                    if (err.name === 'AbortError') break;
-                    lastError = err;
-                    modelIndex++; // Try next model
-                    if (attempt < maxAttempts - 1) await new Promise(r => setTimeout(r, 1000));
+                            buffer += decoder.decode(value, { stream: true });
+                            const lines = buffer.split('\n');
+                            buffer = lines.pop();
+
+                            for (const line of lines) {
+                                if (!isTyping) break;
+                                const trimmed = line.trim();
+                                if (!trimmed || !trimmed.startsWith('data: ')) continue;
+                                const data = trimmed.slice(6);
+                                if (data === '[DONE]') continue;
+                                try {
+                                    const parsed = JSON.parse(data);
+                                    const delta = parsed.choices?.[0]?.delta?.content;
+                                    if (delta) {
+                                        fullText += delta;
+                                        // Plain text during streaming (no markdown)
+                                        const bubble = document.getElementById(streamId + '_bubble');
+                                        if (bubble) { bubble.textContent = fullText; scrollDown(); }
+                                        const copyBtn = document.getElementById(streamId + '_copy');
+                                        if (copyBtn) copyBtn.setAttribute('data-text', fullText);
+                                    }
+                                } catch(e) {}
+                            }
+                        }
+
+                        if (fullText.trim() && !/image|vision|does not support/i.test(fullText)) { lastError = null; break; }
+                        lastError = new Error(fullText.trim() ? 'AI refused image input' : 'فارغ');
+                        fullText = '';
+                    } catch (err) {
+                        if (err.name === 'AbortError') { lastError = null; break; }
+                        lastError = err;
+                    }
                 }
+                if (!lastError) break;
             }
 
             if (fullText.trim()) {
@@ -1837,8 +1868,19 @@
                 saveCurrentChat(text);
                 detectCvData(text, fullText);
             } else {
-                const errMsg = lastError ? lastError.message : 'unknown';
-                updateStreamingMsg(streamId, 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n`' + errMsg + '`');
+                var errMsg = lastError ? lastError.message : 'unknown';
+                if (errMsg.toLowerCase().includes('image') || errMsg.toLowerCase().includes('vision')) {
+                    errMsg = 'شات QCV لا يدعم الصور حالياً. يُرجى استخدام النصوص فقط.';
+                } else if (errMsg.includes('rate limit') || errMsg.includes('429') || errMsg.includes('ResourceExhausted')) {
+                    errMsg = 'تم تجاوز حد الاستخدام اليومي. حاول بكرة أو استخدم موديل مختلف.';
+                } else if (errMsg.includes('401')) {
+                    errMsg = 'مفتاح API غير صالح. تواصل مع الدعم الفني.';
+                } else if (errMsg.includes('503') || errMsg.includes('unavailable')) {
+                    errMsg = 'الخدمة غير متاحة حالياً. جرب مرة أخرى.';
+                } else if (errMsg.includes('HTTP')) {
+                    errMsg = 'الخدمة غير متاحة حالياً. جرب مرة أخرى.';
+                }
+                updateStreamingMsg(streamId, 'عذراً، حدث خطأ. حاول مرة أخرى.\n\n' + errMsg);
             }
 
             isTyping = false;
@@ -2068,14 +2110,42 @@
             const file = event.target.files[0];
             if (!file) return;
             
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result;
-                const prompt = `قم بتحليل محتوى هذا الملف (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
-                document.getElementById('userInput').value = prompt;
-                sendMessage();
-            };
-            reader.readAsText(file);
+            var fileName = file.name.toLowerCase();
+            var imageExts = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg', '.ico', '.tiff', '.avif'];
+            var ext = '.' + fileName.split('.').pop();
+            
+            if (file.type && file.type.startsWith('image/') || imageExts.includes(ext)) {
+                alert('لا يمكن رفع الصور. يُرجى رفع ملف نصي (.txt) أو PDF أو مستند.');
+                event.target.value = '';
+                return;
+            }
+            
+            const allowedExts = ['.txt', '.pdf', '.doc', '.docx'];
+            if (!allowedExts.includes(ext)) {
+                alert('نوع الملف غير مدعوم. يُرجى رفع ملف نصي (.txt) أو PDF أو مستند Word.');
+                event.target.value = '';
+                return;
+            }
+            
+            if (ext === '.txt') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result.substring(0, 5000);
+                    const prompt = `قم بتحليل محتوى هذا الملف (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
+                    document.getElementById('userInput').value = prompt;
+                    sendMessage();
+                };
+                reader.readAsText(file);
+            } else {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = (e.target.result || '').substring(0, 5000).replace(/[^\x20-\x7E\u0600-\u06FF\u0750-\u077F\n\r]/g, ' ');
+                    const prompt = `قم بتحليل محتوى هذا الملف المستخرج (سيرة ذاتية) وأعطني ملاحظات التحسين:\n\n---\n${content}\n---\n\nأعطني:\n1. ملخص نقاط القوة\n2. نقاط تحتاج تحسين\n3. اقتراحات عملية للتحسين\n4. تقييم من 10`;
+                    document.getElementById('userInput').value = prompt;
+                    sendMessage();
+                };
+                reader.readAsBinaryString ? reader.readAsBinaryString(file) : reader.readAsText(file);
+            }
             event.target.value = '';
         }
 
@@ -2122,6 +2192,8 @@
 
         /* ===== Firebase Auth Gate ===== */
         auth.onAuthStateChanged(function(user) {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
             if (!user) {
                 var gate = document.getElementById('authGate');
                 gate.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)';
@@ -2171,7 +2243,41 @@
                 closeVoice();
             }
         });
+
+        // Prevent pasting images into input
+        document.addEventListener('paste', function(e) {
+            var items = (e.clipboardData || window.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type && items[i].type.startsWith('image/')) {
+                    e.preventDefault();
+                    alert('لا يمكن لصق الصور. شات QCV لا يدعم الصور.');
+                    return;
+                }
+            }
+        });
+
+        // Prevent dropping images anywhere on page
+        document.addEventListener('dragover', function(e) { e.preventDefault(); });
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+            var files = e.dataTransfer.files;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].type && files[i].type.startsWith('image/')) {
+                        alert('لا يمكن إسقاط الصور. شات QCV لا يدعم الصور.');
+                        return;
+                    }
+                }
+            }
+        });
         }
+    </script>
+    <script src="js/site-settings.js"></script>
+    <script>
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 5000);
     </script>
 </body>
 </html>

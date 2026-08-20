@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QCV - CV Editor</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -31,18 +31,13 @@
             --accent: #0003c9;
             --sky: #2563eb;
             --glow: rgba(0, 3, 201, 0.25);
-            --green: #059669;
+            --green: #0003c9;
             --red: #ef4444;
             --yellow: #f59e0b;
             --text: #1a1a2e;
             --muted: #6b7280;
             --light: #9ca3af;
             --input: #f9fafb;
-            --primary: #0003c9;
-            --primary-light: #0005a0;
-            --blue: #0ea5e9;
-            --purple: #8b5cf6;
-            --pink: #ec4899
         }
 
         * {
@@ -60,7 +55,6 @@
             color: var(--text);
             font-family: 'Inter', 'Cairo', sans-serif;
             height: 100vh;
-            height: 100dvh;
             overflow-y: hidden
         }
 
@@ -80,7 +74,7 @@
         }
 
         .topbar-logo {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 900;
             color: var(--text);
             display: flex;
@@ -828,83 +822,6 @@
             margin: 2px 14px
         }
 
-        /* Dropdown Design Controls */
-        .dd-design-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px 4px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--accent)
-        }
-
-        .dd-design-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 7px 10px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--light)
-        }
-
-        .dd-design-row select {
-            flex: 1;
-            max-width: 160px;
-            padding: 7px 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--input);
-            color: var(--text);
-            font-size: 0.75rem;
-            font-family: inherit;
-            direction: ltr
-        }
-
-        .dd-slider {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            max-width: 160px
-        }
-
-        .dd-slider input[type="range"] {
-            flex: 1;
-            accent-color: var(--accent)
-        }
-
-        .dd-slider span {
-            min-width: 24px;
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--accent)
-        }
-
-        .dd-color {
-            display: flex;
-            align-items: center;
-            gap: 8px
-        }
-
-        .dd-color input[type="color"] {
-            width: 36px;
-            height: 30px;
-            padding: 2px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--input);
-            cursor: pointer
-        }
-
-        .dd-color span {
-            font-size: 0.68rem;
-            color: var(--light)
-        }
-
         /* Affiliate Section */
         .dd-affiliate {
             padding: 12px 14px;
@@ -1224,7 +1141,7 @@
         /* ===== LAYOUT ===== */
         .editor-layout {
             display: flex;
-            height: calc(100vh - 48px);
+            height: calc(100vh - 56px);
             overflow: hidden
         }
 
@@ -2050,6 +1967,106 @@
             margin-top: 4px;
             font-style: italic
         }
+
+        /* ===== Skills Chips UI ===== */
+        .skills-chips-wrapper {
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            min-height: 120px;
+            background: var(--card);
+            transition: border-color 0.2s
+        }
+        .skills-chips-wrapper:focus-within { border-color: var(--accent) }
+        .skills-chips-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center
+        }
+        .skills-chips-input-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.82rem;
+            background: var(--input);
+            color: var(--text);
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s
+        }
+        .skills-chips-input-row input:focus { border-color: var(--accent) }
+        .skills-chips-input-row .btn-add-chip {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            transition: opacity 0.2s
+        }
+        .skills-chips-input-row .btn-add-chip:hover { opacity: 0.85 }
+        .skills-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+        .skill-chip-desktop {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,3,201,0.06);
+            border: 1.5px solid rgba(0,3,201,0.12);
+            border-radius: 10px;
+            padding: 6px 10px;
+            transition: all 0.2s;
+            cursor: default
+        }
+        .skill-chip-desktop .skill-name {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text)
+        }
+        .skill-chip-desktop .skill-proficiency {
+            display: flex;
+            gap: 3px;
+            margin: 0 4px
+        }
+        .skill-chip-desktop .skill-proficiency .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: background 0.2s
+        }
+        .skill-chip-desktop .skill-proficiency .dot.filled { background: var(--accent) }
+        .skill-chip-desktop .skill-proficiency .dot:hover { background: var(--accent) }
+        .skill-chip-desktop .btn-remove-skill {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(239,68,68,0.08);
+            color: #ef4444;
+            font-size: 0.65rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: background 0.2s;
+            line-height: 1
+        }
+        .skill-chip-desktop .btn-remove-skill:hover { background: rgba(239,68,68,0.2) }
+        body.dark-mode .skill-chip-desktop { background: rgba(39,255,237,0.06); border-color: rgba(39,255,237,0.15) }
+        body.dark-mode .skill-chip-desktop .skill-proficiency .dot { background: #334155 }
+        body.dark-mode .skill-chip-desktop .skill-proficiency .dot.filled { background: #27ffed }
 
         .btn-generate-summary {
             margin-top: 8px;
@@ -3082,68 +3099,6 @@
         .portfolio-url-btns .btn-open:hover {
             background: #059669
         }
-
-        .portfolio-share {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 2px
-        }
-
-        .portfolio-share .ps-label {
-            font-size: 0.68rem;
-            font-weight: 700;
-            color: var(--muted);
-            white-space: nowrap
-        }
-
-        .portfolio-share .ps-btns {
-            display: flex;
-            gap: 5px;
-            flex: 1
-        }
-
-        .portfolio-share .ps-btn {
-            flex: 1;
-            height: 30px;
-            border: none;
-            border-radius: 7px;
-            color: #fff;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-            -webkit-tap-highlight-color: transparent
-        }
-
-        .portfolio-share .ps-btn:hover {
-            transform: translateY(-1px);
-            opacity: 0.88
-        }
-
-        .portfolio-share .ps-btn:active {
-            transform: scale(0.92)
-        }
-
-        .ps-btn.ps-wa { background: #25d366; }
-        .ps-btn.ps-tg { background: #0088cc; }
-        .ps-btn.ps-fb { background: #1877f2; }
-        .ps-btn.ps-tw { background: #0f1419; }
-        .ps-btn.ps-mail { background: #6b7280; }
-
-        body.dark-mode .ps-btn.ps-tw { background: #000; }
-        body.dark-mode .portfolio-link-box {
-            background: rgba(56, 189, 248, 0.08);
-            border-color: rgba(56, 189, 248, 0.2);
-        }
-        body.dark-mode .portfolio-url input {
-            background: #0f172a;
-            border-color: #1e293b;
-            color: #e2e8f0;
-        }
-        body.dark-mode .portfolio-share .ps-label { color: #94a3b8; }
 
         /* Right - Preview */
         .preview-zone {
@@ -4654,35 +4609,114 @@
             color: #fff
         }
 
-        /* ===== PHONE-LIKE MOBILE LAYOUT ===== */
+        /* ===== MOBILE TOP BAR (default hidden) ===== */
+        .mobile-topbar { display: none; }
+        .mobile-fab { display: none; }
+
+        /* ===== STITCH-INSPIRED MOBILE LAYOUT ===== */
         @media(max-width:768px) {
             html, body { height: 100% !important; overflow: hidden !important; }
 
             .topbar { display: none !important; }
 
+            /* ── Mobile Top Bar ── */
+            .mobile-topbar {
+                display: flex !important;
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                height: 56px;
+                background: #fff;
+                z-index: 1002;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            .mobile-topbar .mtb-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .mobile-topbar .mtb-title {
+                font-size: 1rem;
+                font-weight: 800;
+                color: #1a1a2e;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 180px;
+                text-align: center;
+            }
+            .mobile-topbar .mtb-right {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .mobile-topbar .mtb-hamburger {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                border: none;
+                background: #f8fafc;
+                color: #1a1a2e;
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .mobile-topbar .mtb-hamburger:active { background: #e5e7eb; }
+            .mobile-topbar .mtb-bell {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                border: none;
+                background: #f8fafc;
+                color: #1a1a2e;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                position: relative;
+            }
+            .mobile-topbar .mtb-pro-btn {
+                padding: 6px 14px;
+                background: linear-gradient(135deg, #0003c9, #0005e0);
+                color: #fff;
+                border: none;
+                border-radius: 20px;
+                font-size: 0.72rem;
+                font-weight: 700;
+                cursor: pointer;
+                white-space: nowrap;
+                font-family: inherit;
+            }
+
+            /* ── Editor Layout ── */
             .editor-layout {
                 flex-direction: column !important;
                 height: 100vh !important;
                 height: 100dvh !important;
                 position: relative;
                 overflow: hidden;
+                padding-top: 56px !important;
             }
 
-            .sidebar-nav {
-                display: none !important;
-            }
+            .sidebar-nav { display: none !important; }
 
             .editor-forms {
                 position: absolute;
-                top: 24px; left: 0; right: 0; bottom: 56px;
+                top: 56px; left: 0; right: 0; bottom: 64px;
                 width: 100% !important;
                 min-width: auto !important;
                 max-width: none !important;
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
-                padding: 12px !important;
-                padding-bottom: 20px !important;
-                background: var(--bg, #f9fafb);
+                padding: 16px !important;
+                padding-bottom: 80px !important;
+                background: #f0f4f9;
                 z-index: 2;
                 transition: transform 0.3s ease, opacity 0.3s ease;
                 -webkit-overflow-scrolling: touch;
@@ -4696,9 +4730,9 @@
 
             .preview-zone {
                 position: absolute;
-                top: 24px; left: 0; right: 0; bottom: 56px;
+                top: 56px; left: 0; right: 0; bottom: 64px;
                 width: 100% !important;
-                background: #1a1a2e !important;
+                background: #f0f4f9 !important;
                 z-index: 1;
                 transition: transform 0.3s ease, opacity 0.3s ease;
                 transform: translateX(100%);
@@ -4719,7 +4753,7 @@
             }
 
             .cv-page {
-                transform: scale(calc((100vw - 24px) / 794)) !important;
+                transform: scale(0.55) !important;
                 transform-origin: top center !important;
                 border-radius: 4px;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -4727,20 +4761,20 @@
 
             .zoom-controls { display: none !important; }
 
-            /* Bottom Navigation Bar */
+            /* ── Bottom Navigation (Stitch style) ── */
             .phone-bottom-nav {
                 display: flex !important;
                 position: fixed;
                 bottom: 0; left: 0; right: 0;
-                height: 56px;
-                background: var(--sidebar, #fff);
-                border-top: 1px solid var(--border, #e5e7eb);
+                height: 64px;
+                background: #fff;
+                border-top: 1px solid #e5e7eb;
                 z-index: 1000;
                 align-items: center;
                 justify-content: space-around;
-                padding: 0 4px;
+                padding: 0 8px;
                 padding-bottom: env(safe-area-inset-bottom, 0);
-                box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+                box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
             }
 
             .phone-nav-item {
@@ -4748,15 +4782,15 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 2px;
-                padding: 6px 10px;
-                border-radius: 12px;
+                gap: 3px;
+                padding: 8px 12px;
+                border-radius: 14px;
                 cursor: pointer;
                 transition: all 0.2s;
-                color: var(--muted, #6b7280);
-                font-size: 0.6rem;
+                color: #94a3b8;
+                font-size: 0.65rem;
                 font-weight: 600;
-                min-width: 56px;
+                min-width: 60px;
                 position: relative;
                 border: none;
                 background: none;
@@ -4764,26 +4798,27 @@
             }
 
             .phone-nav-item i {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
                 transition: all 0.2s;
             }
 
             .phone-nav-item.active {
-                color: var(--accent, #0003c9);
+                color: #002147;
+                background: rgba(0,33,71,0.04);
             }
 
             .phone-nav-item.active i {
-                transform: scale(1.15);
+                transform: scale(1.1);
             }
 
             .phone-nav-item.active::before {
                 content: '';
                 position: absolute;
-                top: 2px;
-                width: 16px;
+                top: 0;
+                width: 20px;
                 height: 3px;
-                background: var(--accent, #0003c9);
-                border-radius: 2px;
+                background: #002147;
+                border-radius: 0 0 3px 3px;
             }
 
             .phone-nav-badge {
@@ -4794,285 +4829,589 @@
                 height: 8px;
                 background: #ef4444;
                 border-radius: 50%;
-                border: 1.5px solid var(--sidebar, #fff);
+                border: 1.5px solid #fff;
             }
 
-            /* Phone Notch */
-            .phone-notch {
-                display: block !important;
-                position: fixed;
-                top: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 150px;
-                height: 24px;
-                background: #000;
-                border-radius: 0 0 18px 18px;
-                z-index: 1001;
-            }
-
-            .phone-status-bar {
-                display: flex !important;
-                position: fixed;
-                top: 0;
-                left: 0; right: 0;
-                height: 24px;
-                background: var(--sidebar, #fff);
-                z-index: 1000;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 16px;
-                font-size: 0.65rem;
-                font-weight: 700;
-                color: var(--text, #1a1a2e);
-                border-bottom: 1px solid var(--border, #e5e7eb);
-            }
-
-            .phone-status-bar .status-time { font-size: 0.7rem; font-weight: 800; }
-            .phone-status-bar .status-icons { display: flex; gap: 5px; align-items: center; font-size: 0.6rem; }
-
-            /* Adjust editor layout for status bar + bottom nav */
-            .editor-layout {
-                padding-top: 24px !important;
-            }
-
-            /* Form cards phone style */
+            /* ── Form Cards (Stitch style) ── */
             .form-card {
-                border-radius: 12px !important;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-                margin-bottom: 10px !important;
+                background: #fff !important;
+                border-radius: 20px !important;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+                margin-bottom: 16px !important;
+                border: none !important;
+                padding: 20px !important;
+            }
+
+            .form-card-header {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .form-card-header .icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 14px;
+                background: rgba(0,33,71,0.06);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #002147;
+                font-size: 1rem;
+                flex-shrink: 0;
             }
 
             .form-card-header h3 {
-                font-size: 0.9rem !important;
+                font-size: 1.05rem !important;
+                font-weight: 800 !important;
+                color: #1a1a2e !important;
+                margin: 0 !important;
             }
 
             .field label {
-                font-size: 0.75rem !important;
+                font-size: 0.8rem !important;
                 font-weight: 700 !important;
+                color: #374151 !important;
+                margin-bottom: 6px !important;
             }
 
             .field input, .field textarea, .field select {
                 font-size: 16px !important;
-                padding: 12px !important;
-                border-radius: 10px !important;
-                min-height: 48px !important;
+                padding: 14px 16px !important;
+                border-radius: 14px !important;
+                min-height: 50px !important;
+                border: 1.5px solid #e5e7eb !important;
+                background: #fff !important;
+                color: #1a1a2e !important;
+                transition: border-color 0.2s !important;
+            }
+
+            .field input:focus, .field textarea:focus, .field select:focus {
+                border-color: #002147 !important;
+                box-shadow: 0 0 0 3px rgba(0,33,71,0.08) !important;
+            }
+
+            .field input::placeholder, .field textarea::placeholder {
+                color: #94a3b8 !important;
             }
 
             .btn-add {
                 width: 100% !important;
-                padding: 12px !important;
-                border-radius: 10px !important;
-                font-size: 0.82rem !important;
+                padding: 14px !important;
+                border-radius: 14px !important;
+                font-size: 0.85rem !important;
+                font-weight: 700 !important;
+                background: #002147 !important;
+                color: #fff !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 12px !important;
             }
 
             .btn-generate-summary {
                 width: 100% !important;
-                padding: 10px !important;
-                border-radius: 10px !important;
-            }
-
-            /* AI Menu phone style */
-            .ai-menu {
-                bottom: 64px !important;
-                left: 8px !important;
-                right: 8px !important;
-                width: auto !important;
-                max-width: none !important;
+                padding: 12px !important;
                 border-radius: 14px !important;
+                font-size: 0.82rem !important;
             }
 
-            .ai-result-panel {
-                bottom: 64px !important;
-                left: 8px !important;
-                right: 8px !important;
-                width: auto !important;
-                max-width: none !important;
-                border-radius: 14px !important;
-                max-height: 50vh !important;
-            }
-
-            /* Section Modal phone style */
-            .section-modal-content {
-                border-radius: 16px 16px 0 0 !important;
-                max-height: 80vh !important;
-                bottom: 56px !important;
-            }
-
-            /* Upgrade modal phone style */
-            .upgrade-overlay .upgrade-box {
+            /* ── Repeater Blocks (Experience/Education cards) ── */
+            .repeater-block {
+                background: #fff !important;
+                border: 1.5px solid #e5e7eb !important;
                 border-radius: 16px !important;
-                width: 95% !important;
-                max-height: 80vh !important;
-                bottom: 56px !important;
+                padding: 16px !important;
+                margin-bottom: 12px !important;
+                border-left: 4px solid #002147 !important;
+            }
+
+            .rb-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #f1f5f9;
+            }
+
+            .rb-title {
+                font-weight: 700;
+                font-size: 0.85rem;
+                color: #002147;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .btn-rb-delete {
+                background: rgba(239,68,68,0.08);
+                color: #ef4444;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 10px;
+                font-size: 0.75rem;
+                cursor: pointer;
+                font-weight: 600;
+                font-family: inherit;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            /* ── FAB Button ── */
+            .mobile-fab {
+                display: flex !important;
+                position: fixed;
+                bottom: 80px;
+                left: 20px;
+                width: 56px;
+                height: 56px;
+                background: #002147;
+                color: #fff;
+                border: none;
+                border-radius: 16px;
+                font-size: 1.5rem;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 999;
+                box-shadow: 0 4px 20px rgba(0,33,71,0.35);
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .mobile-fab:active {
+                transform: scale(0.92);
+            }
+
+            /* ── Skill Chips ── */
+            .skill-chips-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 12px;
+            }
+            .skill-chip {
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                background: #fff;
+                border: 1.5px solid #e5e7eb;
+                border-radius: 14px;
+                padding: 10px 14px;
+                position: relative;
+                min-width: 100px;
+            }
+            .skill-chip-top {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+            }
+            .skill-chip-name {
+                font-weight: 700;
+                font-size: 0.82rem;
+                color: #1a1a2e;
+                flex: 1;
+            }
+            .skill-chip-remove {
+                width: 22px;
+                height: 22px;
+                border-radius: 6px;
+                border: none;
+                background: rgba(239,68,68,0.08);
+                color: #ef4444;
+                font-size: 0.7rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+            }
+            .skill-dots {
+                display: flex;
+                gap: 4px;
+            }
+            .skill-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #e5e7eb;
+            }
+            .skill-dot.filled {
+                background: #002147;
+            }
+
+            /* ── Language Cards ── */
+            .lang-card {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #fff;
+                border: 1.5px solid #e5e7eb;
+                border-radius: 14px;
+                padding: 14px 16px;
+                margin-bottom: 10px;
+            }
+            .lang-card-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .lang-card-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                background: rgba(0,33,71,0.06);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #002147;
+                font-size: 0.9rem;
+            }
+            .lang-card-info h4 {
+                font-size: 0.85rem;
+                font-weight: 700;
+                color: #1a1a2e;
+                margin: 0;
+            }
+            .lang-card-info span {
+                font-size: 0.72rem;
+                color: #6b7280;
+            }
+            .lang-card-right {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .lang-proficiency-dots {
+                display: flex;
+                gap: 4px;
+            }
+
+            /* ── Language Level Buttons ── */
+            .lang-level-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin: 10px 0;
+            }
+            .lang-level-btn {
+                padding: 12px;
+                border: 2px solid #e5e7eb;
+                border-radius: 12px;
+                background: #fff;
+                font-size: 0.82rem;
+                font-weight: 600;
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.2s;
+                color: #374151;
+                font-family: inherit;
+            }
+            .lang-level-btn.active {
+                border-color: #002147;
+                background: rgba(0,33,71,0.04);
+                color: #002147;
+                font-weight: 700;
+            }
+
+            /* ── Language Add Button ── */
+            .btn-add-lang {
+                width: 100%;
+                padding: 14px;
+                border: none;
+                border-radius: 14px;
+                background: #002147;
+                color: #fff;
+                font-size: 0.85rem;
+                font-weight: 700;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 8px;
+                font-family: inherit;
+            }
+
+            /* ── Language Added Badge ── */
+            .lang-added-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(0,33,71,0.06);
+                color: #002147;
+                padding: 4px 10px;
+                border-radius: 8px;
+                font-size: 0.72rem;
+                font-weight: 700;
+            }
+
+            /* ── Inline Add Form ── */
+            .inline-add-form {
+                border: 2px dashed #e5e7eb;
+                border-radius: 16px;
+                padding: 20px;
+                margin-top: 12px;
+                background: rgba(0,33,71,0.02);
+            }
+            .inline-add-form h4 {
+                font-size: 0.9rem;
+                font-weight: 700;
+                color: #1a1a2e;
+                margin: 0 0 12px 0;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            /* ── Section Header (mobile) ── */
+            .section-header-mobile {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                margin-bottom: 16px;
+                gap: 12px;
+            }
+            .section-header-mobile h2 {
+                font-size: 1.3rem;
+                font-weight: 900;
+                color: #1a1a2e;
+                margin: 0;
+                line-height: 1.4;
+            }
+            .section-header-mobile .section-desc {
+                font-size: 0.78rem;
+                color: #6b7280;
+                margin: 4px 0 0 0;
+                line-height: 1.5;
+            }
+            .section-header-mobile .btn-add-section {
+                flex-shrink: 0;
+                padding: 8px 16px;
+                border: 2px solid #002147;
+                border-radius: 12px;
+                background: #fff;
+                color: #002147;
+                font-size: 0.78rem;
+                font-weight: 700;
+                cursor: pointer;
+                white-space: nowrap;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: inherit;
+            }
+
+            /* ── Template panel phone style ── */
+            .templates-overlay {
+                border-radius: 20px 20px 0 0 !important;
+                max-height: 85vh !important;
+                bottom: 64px !important;
                 top: auto !important;
             }
 
-            /* Notification panel phone style */
+            /* ── AI Menu phone style ── */
+            .ai-menu-popup {
+                bottom: 72px !important;
+                left: 8px !important;
+                right: 8px !important;
+                width: auto !important;
+                max-width: none !important;
+                border-radius: 16px !important;
+            }
+
+            .ai-result-panel {
+                bottom: 72px !important;
+                left: 8px !important;
+                right: 8px !important;
+                width: auto !important;
+                max-width: none !important;
+                border-radius: 16px !important;
+                max-height: 50vh !important;
+            }
+
+            /* ── Section Modal phone style ── */
+            .section-modal-content {
+                border-radius: 20px 20px 0 0 !important;
+                max-height: 80vh !important;
+                bottom: 64px !important;
+            }
+
+            /* ── Upgrade modal phone style ── */
+            .upgrade-overlay .upgrade-box {
+                border-radius: 20px !important;
+                width: 95% !important;
+                max-height: 80vh !important;
+                bottom: 64px !important;
+                top: auto !important;
+            }
+
+            /* ── Notification panel phone style ── */
             .notif-panel {
-                border-radius: 14px 14px 0 0 !important;
+                border-radius: 20px 20px 0 0 !important;
                 max-height: 60vh !important;
-                bottom: 56px !important;
+                bottom: 64px !important;
                 top: auto !important;
                 width: 100% !important;
             }
 
-            /* Profile dropdown phone style */
+            /* ── Profile dropdown phone style ── */
             .profile-dropdown {
-                border-radius: 14px 14px 0 0 !important;
+                border-radius: 20px 20px 0 0 !important;
                 max-height: 70vh !important;
-                bottom: 56px !important;
+                bottom: 64px !important;
                 top: auto !important;
                 width: 100% !important;
                 right: 0 !important;
             }
 
-            /* Hide desktop-only elements */
+            /* ── Hide desktop-only elements ── */
             .sidebar-feature, .pro-upsell, .sidebar-bottom,
             .portfolio-link-wrap, #portfolioLinkWrap,
             .add-section-btn, .sidebar-bottom { display: none !important; }
 
-            /* Tab menu styles */
+            /* ── Tab menu styles ── */
             .nav-tab-menu {
                 position: fixed !important;
-                bottom: 56px !important;
+                bottom: 64px !important;
                 left: 8px !important;
                 right: 8px !important;
                 width: auto !important;
-                border-radius: 14px !important;
+                border-radius: 16px !important;
             }
 
-            /* AI assist button */
+            /* ── AI assist button ── */
             .ai-assist-btn {
                 width: 52px !important;
                 height: 52px !important;
-                bottom: 70px !important;
+                bottom: 80px !important;
                 left: 12px !important;
                 border-radius: 16px !important;
                 font-size: 1.2rem !important;
             }
 
-            /* Template panel */
+            /* ── Template panel ── */
             .template-panel {
-                border-radius: 16px 16px 0 0 !important;
+                border-radius: 20px 20px 0 0 !important;
                 max-height: 80vh !important;
-                bottom: 56px !important;
-                top: auto !important;
+                bottom: 64px !important;
             }
 
-            /* Mobile Quick Actions Bar */
-            .mobile-quick-actions {
-                display: flex !important;
-                position: sticky;
-                top: 0;
-                z-index: 30;
-                gap: 8px;
-                margin: -12px -12px 0;
-                padding: 12px 12px 14px;
-                background: var(--bg, #f9fafb);
-            }
-
-            .mq-btn {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 4px;
-                flex: 1;
-                padding: 10px 4px;
-                border: none;
-                border-radius: 12px;
-                background: var(--card, #fff);
-                box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-                font-family: inherit;
-                font-size: 0.68rem;
-                font-weight: 700;
-                color: var(--text, #1a1a2e);
-                cursor: pointer;
-                min-height: 52px;
-                transition: transform 0.15s ease, box-shadow 0.15s ease;
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .mq-btn i { font-size: 1.05rem; margin-bottom: 3px; }
-
-            .mq-btn.mq-save { color: var(--green, #059669); }
-            .mq-btn.mq-export { color: #dc2626; }
-            .mq-btn.mq-templates { color: var(--accent, #0003c9); }
-            .mq-btn.mq-more { color: var(--muted, #6b7280); }
-
-            .mq-btn:active {
-                transform: scale(0.94);
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            }
-
-            body.dark-mode .mq-btn {
+            /* ── Dark mode adjustments ── */
+            body.dark-mode .mobile-topbar {
                 background: #0f172a;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+                border-color: #1e293b;
             }
-
-            /* Dark mode adjustments */
+            body.dark-mode .mobile-topbar .mtb-title { color: #f1f5f9; }
+            body.dark-mode .mobile-topbar .mtb-hamburger { background: #1e293b; color: #f1f5f9; }
+            body.dark-mode .mobile-topbar .mtb-bell { background: #1e293b; color: #f1f5f9; }
             body.dark-mode .phone-bottom-nav {
                 background: #0f172a;
                 border-color: #1e293b;
             }
+            body.dark-mode .phone-nav-item { color: #64748b; }
+            body.dark-mode .phone-nav-item.active { color: #27ffed; background: rgba(39,255,237,0.06); }
+            body.dark-mode .phone-nav-item.active::before { background: #27ffed; }
             body.dark-mode .phone-status-bar {
                 background: #0f172a;
                 border-color: #1e293b;
                 color: #f1f5f9;
             }
-            body.dark-mode .phone-notch { background: #000; }
+            body.dark-mode .form-card { background: #1e293b !important; }
+            body.dark-mode .form-card-header h3 { color: #f1f5f9 !important; }
+            body.dark-mode .form-card-header .icon { background: rgba(39,255,237,0.1); color: #27ffed; }
+            body.dark-mode .field label { color: #cbd5e1 !important; }
+            body.dark-mode .field input,
+            body.dark-mode .field textarea,
+            body.dark-mode .field select {
+                background: #0f172a !important;
+                border-color: #334155 !important;
+                color: #f1f5f9 !important;
+            }
+            body.dark-mode .repeater-block {
+                background: #1e293b !important;
+                border-color: #334155 !important;
+                border-left-color: #27ffed !important;
+            }
+            body.dark-mode .rb-title { color: #27ffed; }
+            body.dark-mode .skill-chip { background: #1e293b; border-color: #334155; }
+            body.dark-mode .skill-chip-name { color: #f1f5f9; }
+            body.dark-mode .lang-card { background: #1e293b; border-color: #334155; }
+            body.dark-mode .lang-card-info h4 { color: #f1f5f9; }
+            body.dark-mode .lang-level-btn { background: #1e293b; border-color: #334155; color: #cbd5e1; }
+            body.dark-mode .lang-level-btn.active { border-color: #27ffed; background: rgba(39,255,237,0.06); color: #27ffed; }
+            body.dark-mode .inline-add-form { background: rgba(39,255,237,0.02); border-color: #334155; }
+            body.dark-mode .section-header-mobile h2 { color: #f1f5f9; }
+            body.dark-mode .section-header-mobile .section-desc { color: #94a3b8; }
+            body.dark-mode .section-header-mobile .btn-add-section { background: #1e293b; border-color: #27ffed; color: #27ffed; }
+            body.dark-mode .mobile-fab { background: #27ffed; color: #002147; }
+            body.dark-mode .skill-dot { background: #334155; }
+            body.dark-mode .skill-dot.filled { background: #27ffed; }
         }
 
-        /* Elements hidden by default, shown only on mobile */
-        .phone-bottom-nav,
-        .phone-notch,
-        .phone-status-bar,
-        .mobile-quick-actions { display: none; }
-
-        /* ===== MOBILE SAFE-AREA + POLISH ===== */
-        @media (max-width: 768px) {
-            .phone-bottom-nav {
-                height: calc(56px + env(safe-area-inset-bottom, 0px));
-            }
-            .editor-forms,
-            .preview-zone,
-            .section-modal-content,
-            .upgrade-overlay .upgrade-box,
-            .notif-panel,
-            .profile-dropdown,
-            .nav-tab-menu,
-            .template-panel {
-                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
-            }
-            .ai-menu,
-            .ai-result-panel {
-                bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
-            }
-            .ai-assist-btn {
-                bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
-            }
-            .ai-result-panel {
-                max-height: 50dvh !important;
-            }
-            .editor-forms {
-                overscroll-behavior: contain;
-            }
-            .phone-nav-item {
-                -webkit-tap-highlight-color: transparent;
-            }
-        }
+        /* ── Elements hidden by default, shown only on mobile ── */
+        .phone-bottom-nav { display: none; }
+        .phone-notch, .phone-status-bar { display: none !important; }
     </style>
 </head>
 
 <body>
 
-    <!-- Phone UI Elements -->
-    <div class="phone-notch"></div>
-    <div class="phone-status-bar">
-        <span class="status-time" id="phoneTime">9:41</span>
-        <span class="status-icons"><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+    <!-- ===== EDITOR LOADING SKELETON ===== -->
+    <div class="editor-loader" id="editorLoader">
+        <div class="el-spinner"><div class="el-ring"></div></div>
+        <div class="el-text">جاري تجهيز المحرر...</div>
+        <div class="el-progress"><div class="el-bar" id="elBar"></div></div>
     </div>
+    <style>
+        .editor-loader {
+            position: fixed; inset: 0; z-index: 99999;
+            background: var(--bg, #fff);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease
+        }
+        .editor-loader.hide { opacity: 0; visibility: hidden; pointer-events: none }
+        .el-spinner { margin-bottom: 20px }
+        .el-ring {
+            width: 48px; height: 48px;
+            border: 3px solid var(--border, #e5e7eb);
+            border-top-color: var(--accent, #0003c9);
+            border-radius: 50%;
+            animation: elSpin 0.8s linear infinite
+        }
+        @keyframes elSpin { to { transform: rotate(360deg) } }
+        .el-text { font-size: 0.9rem; color: var(--muted, #6b7280); font-weight: 600; margin-bottom: 16px }
+        .el-progress { width: 200px; height: 3px; background: var(--border, #e5e7eb); border-radius: 4px; overflow: hidden }
+        .el-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--accent, #0003c9), #27ffed);
+            border-radius: 4px;
+            transition: width 0.3s ease
+        }
+        body.dark-mode .editor-loader { background: #0a0e1a }
+        body.dark-mode .el-text { color: #94a3b8 }
+    </style>
+
+    <!-- Mobile Top Bar (Stitch design) -->
+    <div class="mobile-topbar" id="mobileTopbar">
+        <div class="mtb-left">
+            <span class="mtb-title" id="mobileTopTitle">صانع السيرة الذاتية</span>
+        </div>
+        <div class="mtb-right">
+            <button class="mtb-pro-btn" onclick="openUpgradeModal()" style="display:none" id="mobileProBtn">ترقية برو</button>
+            <button class="mtb-bell" id="mobileBell" onclick="toggleNotifPanel()" style="display:none"><i class="fas fa-bell"></i></button>
+            <button class="mtb-hamburger" id="mobileHamburger" onclick="document.querySelector('.profile-dropdown').classList.toggle('show')"><i class="fas fa-bars"></i></button>
+        </div>
+    </div>
+
+    <!-- Mobile FAB -->
+    <button class="mobile-fab" id="mobileFab" onclick="handleMobileFab()"><i class="fas fa-plus"></i></button>
 
     <!-- ===== TOP BAR ===== -->
     <div class="topbar">
@@ -5148,12 +5487,103 @@
                 <input type="range" id="lineSpacing" min="10" max="25" value="15" oninput="setLineSpacing(this.value)">
                 <span id="lineSpacingVal" class="slider-val">1.5</span>
             </div>
-            <!-- Color Picker -->
+            <!-- Page Margin -->
+            <div class="ctrl-group slider-group">
+                <label title="هامش الصفحة"><i class="fas fa-expand-arrows-alt" style="font-size:0.55rem"></i></label>
+                <input type="range" id="pageMargin" min="10" max="50" value="20" oninput="setPageMargin(this.value)">
+                <span id="pageMarginVal" class="slider-val">20</span>
+            </div>
+            <!-- Font Color -->
             <div class="ctrl-group">
                 <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)" title="لون النص">
             </div>
+            <!-- Accent Color -->
+            <div class="ctrl-group">
+                <input type="color" id="accentColor" value="#0003c9" onchange="setAccentColor(this.value)" title="اللون الرئيسي">
+            </div>
         </div>
         <div class="topbar-left">
+            <!-- Profile -->
+            <div class="profile-area">
+                <div class="profile-trigger" onclick="toggleProfile()">
+                    <div class="profile-avatar" id="userAvatar">U</div>
+                    <span class="profile-name" id="userName">المستخدم</span>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dd-header">
+                        <div class="dd-avatar" id="ddAvatar">U</div>
+                        <div class="dd-info">
+                            <div class="d-name" id="ddName">المستخدم</div>
+                            <div class="d-email" id="ddEmail">user@email.com</div>
+                        </div>
+                    </div>
+                    <div class="dd-plan">
+                        <span class="pl">الباقة الحالية</span>
+                        <span class="pn" id="ddPlan">مجاني</span>
+                    </div>
+                    <div class="dd-subscription" id="ddSubscription">
+                        <div class="dd-sub-row"><span class="dd-sub-label">التحميلات</span><span class="dd-sub-value" id="ddDownloads" style="font-weight:700">0 / 1</span></div>
+                        <div class="dd-sub-row"><span class="dd-sub-label">تنتهي</span><span class="dd-sub-value" id="ddExpiry" style="font-weight:700">-</span></div>
+                        <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> ترقية الباقة</button>
+                    </div>
+                    <div class="dd-divider"></div>
+                    <div class="dd-section">
+                        <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> الملف الشخصي</div>
+                        <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> سيري الذاتية</div>
+                        <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
+                        <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> الإعدادات</div>
+                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-book-open"></i></span> الدليل الإرشادي</div>
+                    </div>
+                    <div class="dd-divider"></div>
+                    <div class="dd-section">
+                        <div id="affApplyView">
+                            <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i> <span>حساب الشراكة</span></div>
+                            <div class="dd-aff-apply-desc">أرسل طلبك، واحصل على رابطك الخاص واكسب <strong>5 نقاط</strong> لكل عضو جديد يسجل من خلالك</div>
+                            <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i class="fas fa-paper-plane"></i> إرسال الطلب</button>
+                        </div>
+                        <div id="affPendingView" style="display:none">
+                            <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك قيد المراجعة</div>
+                            <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من قبل الإدارة وستتلقى إشعاراً عند الموافقة</div>
+                        </div>
+                        <div id="affActiveView" style="display:none">
+                            <div class="dd-aff-header"><i class="fas fa-coins" style="color:#f59e0b"></i> <span>شارك واكسب</span></div>
+                            <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل جديد</div>
+                            <div class="dd-aff-stats">
+                                <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span class="lbl">الزيارات</span></div>
+                                <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span class="lbl">التسجيلات</span></div>
+                                <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span class="lbl">النقاط</span></div>
+                            </div>
+                            <div class="dd-aff-link-box">
+                                <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="انقر للنسخ">
+                                <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <div class="dd-aff-share">
+                                <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i class="fab fa-facebook-f"></i></button>
+                                <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i class="fab fa-twitter"></i></button>
+                                <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i class="fab fa-telegram-plane"></i></button>
+                            </div>
+                            <div class="dd-divider" style="margin:12px 0"></div>
+                            <div class="dd-aff-exchange" id="affExchangeSection">
+                                <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i> استبدال النقاط</div>
+                                <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> لباقة <strong>Pro</strong> لمدة 30 يوم</div>
+                                <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
+                                <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dd-divider"></div>
+                    <div class="dd-section">
+                        <div class="dd-item danger" onclick="deleteAccount()" style="color:#ef4444"><span class="dd-icon" style="color:#ef4444"><i class="fas fa-user-times"></i></span> إلغاء الحساب</div>
+                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Auto-save indicator -->
+            <div id="autoSaveIndicator" style="display:flex;align-items:center;gap:4px;font-size:0.65rem;color:var(--muted);padding:4px 8px;border-radius:6px;transition:all 0.3s;flex-shrink:0">
+                <i class="fas fa-check-circle" style="color:var(--green);font-size:0.7rem"></i>
+                <span>محفوظ</span>
+            </div>
             <!-- Notifications -->
             <div class="notif-bell" onclick="toggleNotifPanel()" title="الإشعارات">
                 <i class="fas fa-bell"></i>
@@ -5188,163 +5618,8 @@
             <button class="btn-save" onclick="showVersionHistory()" title="سجل الإصدارات" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)"><i class="fas fa-history"></i> <span class="btn-label">السجل</span></button>
             <!-- Export PDF -->
             <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> تصدير PDF</span><div class="spinner"></div></button>
-            <!-- Profile -->
-            <div class="profile-area">
-                <div class="profile-trigger" onclick="toggleProfile()">
-                    <div class="profile-avatar" id="userAvatar">U</div>
-                    <span class="profile-name" id="userName">المستخدم</span>
-                </div>
-                <div class="profile-dropdown" id="profileDropdown">
-                    <div class="dd-header">
-                        <div class="dd-avatar" id="ddAvatar">U</div>
-                        <div class="dd-info">
-                            <div class="d-name" id="ddName">المستخدم</div>
-                            <div class="d-email" id="ddEmail">user@email.com</div>
-                        </div>
-                    </div>
-                    <div class="dd-plan">
-                        <span class="pl">الباقة الحالية</span>
-                        <span class="pn" id="ddPlan">مجاني</span>
-                    </div>
-                    <div class="dd-subscription" id="ddSubscription">
-                        <div class="dd-sub-row"><span class="dd-sub-label">التحميلات</span><span class="dd-sub-value"
-                                id="ddDownloads" style="font-weight:700">0 / 1</span></div>
-                        <div class="dd-sub-row"><span class="dd-sub-label">تنتهي</span><span class="dd-sub-value"
-                                id="ddExpiry" style="font-weight:700">-</span></div>
-                        <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> ترقية
-                            الباقة</button>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> الملف الشخصي</div>
-                        <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> سيري الذاتية</div>
-                        <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
-                        <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> الإعدادات</div>
-                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-book-open"></i></span> الدليل الإرشادي</div>
-                        <div class="dd-divider"></div>
-                        <div class="dd-section">
-                            <div class="dd-item" onclick="saveToFirebase()"><span class="dd-icon"><i class="fas fa-save"></i></span> حفظ التغييرات</div>
-                            <div class="dd-item" onclick="exportPDF()"><span class="dd-icon"><i class="fas fa-file-pdf"></i></span> تصدير PDF</div>
-                            <div class="dd-item" onclick="createNewCV()"><span class="dd-icon"><i class="fas fa-plus"></i></span> سيرة ذاتية جديدة</div>
-                            <div class="dd-item" onclick="showVersionHistory()"><span class="dd-icon"><i class="fas fa-history"></i></span> سجل الإصدارات</div>
-                            <div class="dd-item" onclick="openUploadModal()"><span class="dd-icon"><i class="fas fa-cloud-upload-alt"></i></span> رفع سيرة ذاتية</div>
-                            <div class="dd-item" onclick="openSectionModal()"><span class="dd-icon"><i class="fas fa-layer-group"></i></span> إضافة قسم</div>
-                        </div>
-                        <div class="dd-divider"></div>
-                        <div class="dd-section">
-                            <div class="dd-design-header"><i class="fas fa-palette"></i> تنسيق السيرة</div>
-                            <div class="dd-design-row">
-                                <label>الخط</label>
-                                <select id="ddFontFamily" onchange="setFontFamily(this.value)">
-                                    <option value="Inter">Inter</option>
-                                    <option value="Cairo">Cairo</option>
-                                    <option value="Arial">Arial</option>
-                                    <option value="Times New Roman">Times</option>
-                                    <option value="Courier New">Courier</option>
-                                    <option value="Georgia">Georgia</option>
-                                    <option value="Verdana">Verdana</option>
-                                </select>
-                            </div>
-                            <div class="dd-design-row">
-                                <label>حجم الخط</label>
-                                <div class="dd-slider">
-                                    <input type="range" id="ddFontSize" min="9" max="16" value="11" oninput="setFontSize(this.value)">
-                                    <span id="ddFontSizeVal">11</span>
-                                </div>
-                            </div>
-                            <div class="dd-design-row">
-                                <label>تباعد الأسطر</label>
-                                <div class="dd-slider">
-                                    <input type="range" id="ddLineSpacing" min="10" max="25" value="15" oninput="setLineSpacing(this.value)">
-                                    <span id="ddLineSpacingVal">1.5</span>
-                                </div>
-                            </div>
-                            <div class="dd-design-row">
-                                <label>لون النص</label>
-                                <div class="dd-color">
-                                    <input type="color" id="ddFontColor" value="#111111" onchange="setFontColor(this.value)">
-                                    <span>اختيار لون</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item danger" onclick="deleteAccount()" style="color:#ef4444"><span class="dd-icon" style="color:#ef4444"><i class="fas fa-user-times"></i></span> إلغاء الحساب</div>
-                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
-                    </div>
-                        <div id="affApplyView">
-                            <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i>
-                                <span>حساب الشراكة</span>
-                            </div>
-                            <div class="dd-aff-apply-desc">أرسل طلبك، واحصل على رابطك الخاص واكسب <strong>5
-                                    نقاط</strong> لكل عضو جديد يسجل من خلالك</div>
-                            <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i
-                                    class="fas fa-paper-plane"></i> إرسال الطلب</button>
-                        </div>
-                        <div id="affPendingView" style="display:none">
-                            <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك
-                                قيد المراجعة</div>
-                            <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من قبل الإدارة وستتلقى إشعاراً عند الموافقة</div>
-                        </div>
-                        <div id="affActiveView" style="display:none">
-                            <div class="dd-aff-header">
-                                <i class="fas fa-coins" style="color:#f59e0b"></i>
-                                <span>شارك واكسب</span>
-                            </div>
-                            <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل
-                                جديد</div>
-                            <div class="dd-aff-stats">
-                                <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span
-                                        class="lbl">الزيارات</span></div>
-                                <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span
-                                        class="lbl">التسجيلات</span></div>
-                                <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span
-                                        class="lbl">النقاط</span></div>
-                            </div>
-                            <div class="dd-aff-link-box">
-                                <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="انقر للنسخ">
-                                <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
-                            </div>
-                            <div class="dd-aff-share">
-                                <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i
-                                        class="fab fa-whatsapp"></i></button>
-                                <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i
-                                        class="fab fa-facebook-f"></i></button>
-                                <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i
-                                        class="fab fa-twitter"></i></button>
-                                <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i
-                                        class="fab fa-telegram-plane"></i></button>
-                            </div>
-                            <div class="dd-divider" style="margin:12px 0"></div>
-                            <div class="dd-aff-exchange" id="affExchangeSection">
-                                <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i>
-                                    استبدال النقاط</div>
-                                <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> لباقة
-                                    <strong>Pro</strong> لمدة 30 يوم
-                                </div>
-                                <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i
-                                        class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
-                                <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i
-                                        class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i
-                                    class="fas fa-question-circle"></i></span> Help Center</div>
-                        <div class="dd-item" onclick="window.open('index.html')"><span class="dd-icon"><i
-                                    class="fas fa-home"></i></span> Home</div>
-                    </div>
-                    <div class="dd-divider"></div>
-                    <div class="dd-section">
-                        <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i
-                                    class="fas fa-sign-out-alt"></i></span> تسجيل الخروج</div>
-                    </div>
-                </div>
-            </div>
+            <!-- Shortcuts -->
+            <button class="btn-save" onclick="toggleShortcutsPanel()" title="اختصارات لوحة المفاتيح (Ctrl+/)" style="background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15);font-size:0.75rem"><i class="fas fa-keyboard"></i></button>
         </div>
     </div>
 
@@ -5450,6 +5725,13 @@
                         <button onclick="moveSection('jobmatch',1)">&#9660; تحريك للأسفل</button>
                     </div>
                 </div>
+                <div class="nav-tab" data-section="followups" onclick="switchTab('followups',this)">
+                    <span class="icon"><i class="fas fa-paper-plane"></i></span><span class="tab-label">التتابع</span>
+                    <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
+                    <div class="nav-tab-menu">
+                        <button onclick="renameTabPrompt('followups')">&#9998; إعادة تسمية</button>
+                    </div>
+                </div>
             </div>
             <button class="add-section-btn" onclick="openSectionModal()">+ إضافة قسم</button>
 
@@ -5464,16 +5746,6 @@
                                     class="fas fa-copy"></i> نسخ</button>
                             <button class="btn-open" onclick="openPortfolioLink()"><i
                                     class="fas fa-external-link-alt"></i> فتح</button>
-                        </div>
-                        <div class="portfolio-share">
-                            <span class="ps-label"><i class="fas fa-share-alt"></i> شارك</span>
-                            <div class="ps-btns">
-                                <button class="ps-btn ps-wa" onclick="sharePortfolio('whatsapp')" title="واتساب"><i class="fab fa-whatsapp"></i></button>
-                                <button class="ps-btn ps-tg" onclick="sharePortfolio('telegram')" title="تيليجرام"><i class="fab fa-telegram-plane"></i></button>
-                                <button class="ps-btn ps-fb" onclick="sharePortfolio('facebook')" title="فيسبوك"><i class="fab fa-facebook-f"></i></button>
-                                <button class="ps-btn ps-tw" onclick="sharePortfolio('twitter')" title="إكس"><i class="fab fa-twitter"></i></button>
-                                <button class="ps-btn ps-mail" onclick="sharePortfolio('email')" title="البريد"><i class="fas fa-envelope"></i></button>
-                            </div>
                         </div>
                     </div>
                     <div style="text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
@@ -5516,21 +5788,14 @@
 
         <!-- Forms -->
         <div class="editor-forms">
-            <!-- Mobile Quick Actions (shown on mobile only) -->
-            <div class="mobile-quick-actions">
-                <button class="mq-btn mq-save" onclick="saveToFirebase()"><i class="fas fa-save"></i><span>حفظ</span></button>
-                <button class="mq-btn mq-export" id="mqExportBtn" onclick="exportPDF()"><i class="fas fa-file-pdf"></i><span>تصدير PDF</span></button>
-                <button class="mq-btn mq-templates" onclick="phoneNav('templates')"><i class="fas fa-palette"></i><span>قوالب</span></button>
-                <button class="mq-btn mq-more" onclick="phoneNav('more')"><i class="fas fa-bars"></i><span>المزيد</span></button>
-            </div>
             <!-- Personal Info -->
             <div class="form-card active" id="tab-personal">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-user"></i></span>
                     <h3>المعلومات الشخصية</h3>
                 </div>
-                <div class="field"><label>الاسم الكامل</label><input type="text" id="inputName" oninput="renderCV()"
+                <div class="field"><label>الاسم الكامل</label><input type="text" id="inputName" dir="auto" oninput="renderCV()"
                         placeholder="John Doe"></div>
-                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" oninput="renderCV()" list="jobTitlesList" placeholder="UI/UX Designer"></div>
+                <div class="field"><label>المسمى الوظيفي</label><input type="text" id="inputTitle" dir="auto" oninput="renderCV()" list="jobTitlesList" placeholder="UI/UX Designer"></div>
                 <datalist id="jobTitlesList">
                     <option value="Software Engineer">
                     <option value="Frontend Developer">
@@ -5657,18 +5922,18 @@
                     <option value="مهندس Cloud">
                     <option value="مدير إلكترونيات">
                 </datalist>
-                <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" oninput="renderCV()"
+                <div class="field"><label>البريد الإلكتروني</label><input type="email" id="inputEmail" dir="auto" oninput="renderCV()"
                         placeholder="john@example.com"></div>
-                <div class="field"><label>الهاتف</label><input type="text" id="inputPhone" oninput="renderCV()"
+                <div class="field"><label>الهاتف</label><input type="text" id="inputPhone" dir="auto" oninput="renderCV()"
                         placeholder="+1 234 567 890"></div>
-                <div class="field"><label>الموقع</label><input type="text" id="inputLocation" oninput="renderCV()"
+                <div class="field"><label>الموقع</label><input type="text" id="inputLocation" dir="auto" oninput="renderCV()"
                         placeholder="New York, NY"></div>
-                <div class="field"><label>لينكدإن</label><input type="text" id="inputLinkedin" oninput="renderCV()"
+                <div class="field"><label>لينكدإن</label><input type="text" id="inputLinkedin" dir="auto" oninput="renderCV()"
                         placeholder="linkedin.com/in/johndoe"></div>
                 <div class="field"><label>الملخص المهني <span class="char-count" id="summaryCount">0 /
-                            100</span></label><textarea id="inputSummary"
+                            100</span></label><textarea id="inputSummary" dir="auto"
                         oninput="updateCharCount('summary');renderCV()"
-                        placeholder="مصمم شغوف يصنع تجارب رقمية استثنائية..."
+                        placeholder="A passionate designer creating exceptional digital experiences..."
                         style="min-height:110px"></textarea><button type="button" class="btn-generate-summary"
                         onclick="generateProfessionalSummary()"><i class="fas fa-magic"></i> إنشاء ملخص</button>
                     <div class="field-hint">يُنصح بـ 50-100 كلمة</div>
@@ -5698,10 +5963,20 @@
                 <div class="form-card-header"><span class="icon"><i class="fas fa-tools"></i></span>
                     <h3>المهارات</h3>
                 </div>
-                <div class="field"><label>المهارات <span class="char-count">(كل مهارة في سطر)</span></label><textarea
-                        id="inputSkills" oninput="renderCV()"
-                        placeholder="JavaScript&#10;React.js&#10;Node.js&#10;Python&#10;Git&#10;Docker&#10;AWS&#10;SQL"
-                        style="min-height:150px"></textarea><div class="field-hint">اكتب مهارة واحدة في كل سطر. رتّبها من الأهم للأقل أهمية.</div></div>
+                <div class="field">
+                    <div class="skills-chips-wrapper">
+                        <div class="skills-chips-input-row">
+                            <input type="text" id="skillInput" placeholder="اكتب مهارة واضغط Enter للإضافة..."
+                                onkeydown="if(event.key==='Enter'||event.key===','){event.preventDefault();addSkill()}">
+                            <button class="btn-add-chip" onclick="addSkill()"><i class="fas fa-plus"></i> أضف</button>
+                        </div>
+                        <div class="skills-chips-container" id="skillsChipsContainer"></div>
+                    </div>
+                    <textarea id="inputSkills" oninput="syncSkillChipsFromTextarea()"
+                        style="display:none"></textarea>
+                    <input type="hidden" id="skillsProficiency" value="{}">
+                    <div class="field-hint">اضغط Enter أو اضغط "أضف" لإدخال المهارة. انقر على النقاط لتحديد مستوى الإتقان.</div>
+                </div>
             </div>
 
             <!-- Languages -->
@@ -5720,7 +5995,7 @@
                 </div>
                 <div class="field"><label>الصق إعلان الوظيفة هنا</label>
                     <textarea class="job-match-input" id="jobDescInput"
-                        placeholder="الصق إعلان الوظيفة هنا...\n\nمثال: نبحث عن مطور فرونت إند لديه خبرة في React و Angular..."></textarea>
+                        placeholder="Paste the job posting here...\n\nExample: We are looking for a frontend developer with experience in React and Angular..."></textarea>
                 </div>
                 <button class="btn-match" onclick="runJobMatch()">مطابقة الآن</button>
                 <div class="match-results" id="matchResults"></div>
@@ -5768,28 +6043,23 @@
         </div>
     </div>
 
-    <!-- Phone Bottom Navigation -->
+    <!-- Phone Bottom Navigation (Stitch design) -->
     <nav class="phone-bottom-nav" id="phoneNav">
-        <button class="phone-nav-item active" onclick="phoneNav('edit')" id="phoneNavEdit">
-            <i class="fas fa-pen-to-square"></i>
-            <span>تحرير</span>
-        </button>
         <button class="phone-nav-item" onclick="phoneNav('preview')" id="phoneNavPreview">
             <i class="fas fa-eye"></i>
             <span>معاينة</span>
         </button>
-        <button class="phone-nav-item" onclick="phoneNav('templates')" id="phoneNavTemplates">
-            <i class="fas fa-palette"></i>
-            <span>قوالب</span>
+        <button class="phone-nav-item" onclick="phoneNav('section')" id="phoneNavSection">
+            <i class="fas fa-folder"></i>
+            <span id="phoneNavSectionLabel">القسم</span>
         </button>
-        <button class="phone-nav-item" onclick="phoneNav('ai')" id="phoneNavAi">
-            <i class="fas fa-wand-magic-sparkles"></i>
-            <span>AI</span>
-            <div class="phone-nav-badge" id="aiBadge" style="display:none"></div>
+        <button class="phone-nav-item active" onclick="phoneNav('edit')" id="phoneNavEdit">
+            <i class="fas fa-pen-to-square"></i>
+            <span>المحرر</span>
         </button>
-        <button class="phone-nav-item" onclick="phoneNav('more')" id="phoneNavMore">
-            <i class="fas fa-ellipsis-vertical"></i>
-            <span>المزيد</span>
+        <button class="phone-nav-item" onclick="phoneNav('dashboard')" id="phoneNavDashboard">
+            <i class="fas fa-th-large"></i>
+            <span>الرئيسية</span>
         </button>
     </nav>
 
@@ -5825,9 +6095,11 @@
                 <div class="plan-sub">للمحترفين وباحثين عن العمل</div>
             </div>
             <div class="upgrade-price">
-                <span class="price-num">99</span>
+                <span class="price-num">49</span>
                 <span class="price-currency"> ج.م / </span>
                 <span class="price-period">شهري</span>
+                <span style="text-decoration:line-through;color:var(--muted);font-size:0.75rem;margin-right:4px">99</span>
+                <span style="background:#fef3c7;color:#b45309;font-size:0.65rem;padding:2px 6px;border-radius:20px;font-weight:700">خصم 50%</span>
             </div>
             <div class="upgrade-features">
                 <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span
@@ -6126,6 +6398,9 @@
             } catch (e) { console.warn('QR generation failed:', e); }
 
             await loadSavedData();
+            // Hide editor loader
+            var el = document.getElementById('editorLoader');
+            if (el) { el.classList.add('hide'); setTimeout(function () { el.style.display = 'none'; }, 500); }
             togglePaidFeatures(userData.plan || 'free');
             loadAffiliateState();
             cleanExpiredTrash();
@@ -6133,31 +6408,6 @@
         });
 
         window.logout = async () => { await signOut(auth); location.replace("login.html") };
-
-        // ===== NEW CV =====
-        window.createNewCV = function() {
-            if (!window.currentUid) {
-                // Not logged in: reset editor locally
-                if (!confirm('إنشاء سيرة ذاتية جديدة؟ البيانات الحالية ستُحفظ محلياً.')) return;
-                saveToFirebase();
-                localStorage.removeItem('qcv_editor_data');
-                location.reload();
-                return;
-            }
-            const paid = isPaidPlan();
-            if (!paid) {
-                closePanel();
-                window.location.href = 'pay.html';
-                return;
-            }
-            // Paid users: create a new CV entry in Firebase
-            const newRef = push(ref(db, 'users/' + window.currentUid + '/cvs'));
-            const cvId = newRef.key;
-            set(newRef, { name: 'New CV', createdAt: Date.now(), data: { name: '', title: '', email: '', phone: '', summary: '', skills: '', experience: [], education: [] } });
-            currentCvId = cvId;
-            window.currentCvId = cvId;
-            loadSavedData().then(closePanel);
-        };
 
         // ===== DELETE ACCOUNT =====
         window.deleteAccount = async function() {
@@ -6350,17 +6600,17 @@
             if (proUpsell) proUpsell.style.display = paid ? 'none' : 'block';
             if (myPageLink) myPageLink.style.display = paid ? '' : 'none';
             if (portfolioWrap) portfolioWrap.style.display = paid ? '' : 'none';
-            if (aiScore) aiScore.classList.toggle('show', paid);
-            if (aiAssist) aiAssist.style.display = paid ? '' : 'none';
-            if (aiMenu) aiMenu.style.display = paid ? '' : 'none';
+            if (aiScore) aiScore.classList.toggle('show', true);
+            if (aiAssist) aiAssist.style.display = '';
+            if (aiMenu) aiMenu.style.display = '';
             if (jobTab) jobTab.style.display = paid ? '' : 'none';
             if (jobForm) jobForm.style.display = paid ? '' : 'none';
-            if (aiBadge) aiBadge.style.display = paid ? 'flex' : 'none';
-            if (btnAiGen) btnAiGen.style.display = paid ? '' : 'none';
+            if (aiBadge) aiBadge.style.display = 'flex';
+            if (btnAiGen) btnAiGen.style.display = '';
             const uploadBtn = document.getElementById('uploadCvBtn');
             if (uploadBtn) uploadBtn.style.display = plan === 'unlimited' ? '' : 'none';
             const sideAiBtn = document.getElementById('aiAssistantBtn');
-            if (sideAiBtn) sideAiBtn.style.display = paid ? '' : 'none';
+            if (sideAiBtn) sideAiBtn.style.display = '';
             const sel = document.getElementById('templateSelect');
             if (sel) {
                 Array.from(sel.options).forEach(opt => {
@@ -6372,25 +6622,15 @@
                     }
                 });
             }
+            /* Mobile top bar: show pro badge for non-paid users */
+            var mobileProBtn = document.getElementById('mobileProBtn');
+            if (mobileProBtn) mobileProBtn.style.display = paid ? 'none' : '';
+            /* Mobile top bar: show notification bell for paid users */
+            var mobileBell = document.getElementById('mobileBell');
+            if (mobileBell) mobileBell.style.display = paid ? '' : 'none';
         }
-        window.toggleProfile = () => { document.getElementById('profileDropdown').classList.toggle('show'); syncDropdownDesign(); };
-        document.addEventListener('click', e => { if (!e.target.closest('.profile-area')) document.getElementById('profileDropdown').classList.remove('show') });
-
-        // Keep mobile dropdown design controls in sync with topbar controls
-        function syncDropdownDesign() {
-            var ddFf = document.getElementById('ddFontFamily');
-            var ddFs = document.getElementById('ddFontSize');
-            var ddLs = document.getElementById('ddLineSpacing');
-            var ddFc = document.getElementById('ddFontColor');
-            var topFf = document.getElementById('fontFamily');
-            var topFs = document.getElementById('fontSize');
-            var topLs = document.getElementById('lineSpacing');
-            var topFc = document.getElementById('fontColor');
-            if (ddFf && topFf) ddFf.value = topFf.value;
-            if (ddFs && topFs) { ddFs.value = topFs.value; var v1 = document.getElementById('ddFontSizeVal'); if (v1) v1.textContent = topFs.value; }
-            if (ddLs && topLs) { ddLs.value = topLs.value; var v2 = document.getElementById('ddLineSpacingVal'); if (v2) v2.textContent = topLs.value; }
-            if (ddFc && topFc) ddFc.value = topFc.value;
-        }
+        window.toggleProfile = () => document.getElementById('profileDropdown').classList.toggle('show');
+        document.addEventListener('click', e => { if (!e.target.closest('.profile-area') && !e.target.closest('.mtb-hamburger')) document.getElementById('profileDropdown').classList.remove('show') });
 
         window.openPanel = function (type) {
             document.getElementById('profileDropdown').classList.remove('show');
@@ -6400,8 +6640,9 @@
                 const paid = isPaidPlan();
                 const addBtn = paid
                     ? `<button class="btn-add" style="margin-top:12px" onclick="createNewCV()">+ إنشاء سيرة ذاتية جديدة</button>`
-                    : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="closePanel();openUpgradeModal()">اشترك لإنشاء المزيد من السير الذاتية</button>`;
-                h = `<div class="panel-header"><h2>سيري الذاتية</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}</div>`
+                    : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="createNewCV()">+ إنشاء سيرة ذاتية جديدة (حتى 3 للمجاني)</button>`;
+                const limitNote = paid ? '' : '<div style="font-size:0.72rem;color:var(--muted);margin-top:8px;text-align:center"><i class="fas fa-info-circle"></i> الباقة المجانية: حتى 3 سير ذاتية</div>';
+                h = `<div class="panel-header"><h2>سيري الذاتية</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}${limitNote}</div>`
             }
             else if (type === 'settings') { h = `<div class="panel-header"><h2>الإعدادات</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-row"><div class="panel-row-info"><div class="pr-title">الإشعارات</div><div class="pr-desc">استقبال التحديثات</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div><div class="panel-row"><div class="panel-row-info"><div class="pr-title">حفظ تلقائي</div><div class="pr-desc">حفظ تلقائياً</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div></div>` }
             p.innerHTML = h; document.getElementById('panelOverlay').classList.add('show');
@@ -6410,7 +6651,28 @@
         window.closePanel = e => { if (e && e.target !== e.currentTarget) return; document.getElementById('panelOverlay').classList.remove('show') };
         window.saveProfile = () => { const n = document.getElementById('panelName').value.trim(); if (!n) return; if (window.currentUid) window._set(window._ref(window._db, 'users/' + window.currentUid + '/name'), n).catch(() => { }); if (userData) userData.name = n; if (window._userData) window._userData.name = n; const i = n[0].toUpperCase();['userAvatar', 'ddAvatar'].forEach(id => { if (document.getElementById(id)) document.getElementById(id).textContent = i });['userName', 'ddName'].forEach(id => { if (document.getElementById(id)) document.getElementById(id).textContent = n }) };
 
-        // Multiple CVs (createNewCV defined above in NEW CV section)
+        // Multiple CVs
+        window.createNewCV = async function () {
+            if (!window.currentUid) return;
+            const paid = isPaidPlan();
+            if (!paid) {
+                const snap = await get(ref(db, 'users/' + window.currentUid + '/cvs'));
+                const list = snap.val() || {};
+                if (Object.keys(list).length >= 3) {
+                    closePanel();
+                    openUpgradeModal();
+                    return;
+                }
+            }
+            const newRef = push(ref(db, 'users/' + window.currentUid + '/cvs'));
+            const cvId = newRef.key;
+            await set(newRef, { name: 'New CV', createdAt: Date.now(), data: { name: '', title: '', email: '', phone: '', summary: '', skills: '', experience: [], education: [] } });
+            currentCvId = cvId;
+            window.currentCvId = cvId;
+            await loadSavedData();
+            closePanel();
+        };
+
         window.loadCvsList = async function () {
             if (!window.currentUid) return;
             const snap = await get(ref(db, 'users/' + window.currentUid + '/cvs'));
@@ -6546,6 +6808,7 @@
 
         window.saveToFirebase = function () {
             const btn = document.querySelector('.btn-save');
+            const indicator = document.getElementById('autoSaveIndicator');
             try {
                 if (!window.currentUid) { console.error('No currentUid'); return; }
                 const data = window._collectData ? window._collectData() : null;
@@ -6553,13 +6816,23 @@
                 data.designSettings = window._getDesignSettings ? window._getDesignSettings() : {};
                 const cid = window.currentCvId || 'default';
                 const path = cid === 'default' ? 'users/' + window.currentUid + '/cvData' : 'users/' + window.currentUid + '/cvs/' + cid + '/data';
+                if (indicator) { indicator.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:var(--yellow);font-size:0.7rem"></i><span>جاري الحفظ...</span>'; indicator.style.background = 'rgba(245,158,11,0.08)'; }
                 set(ref(db, path), data).then(() => {
                     if (window.QCVNotify) { QCVNotify.save(); QCVNotify.success() }
                     if (btn) { const o = btn.innerHTML; btn.innerHTML = '&#10003; تم الحفظ'; btn.style.color = '#38bdf8'; btn.style.borderColor = '#38bdf8'; setTimeout(() => { btn.innerHTML = o; btn.style.color = ''; btn.style.borderColor = '' }, 2000) }
-                    // Save version history (max 20 versions, skip if identical to last)
+                    if (indicator) { indicator.innerHTML = '<i class="fas fa-check-circle" style="color:var(--green);font-size:0.7rem"></i><span>محفوظ</span>'; indicator.style.background = 'rgba(5,150,105,0.06)'; setTimeout(() => { indicator.style.background = '' }, 1500); }
                     saveCvVersion(cid, data);
-                }).catch(e => { console.error('Firebase save error:', e); if (btn) { btn.innerHTML = '&#10007; فشل الحفظ'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; حفظ'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
+                }).catch(e => { console.error('Firebase save error:', e); if (indicator) { indicator.innerHTML = '<i class="fas fa-exclamation-circle" style="color:var(--red);font-size:0.7rem"></i><span>فشل الحفظ</span>'; indicator.style.background = 'rgba(239,68,68,0.08)'; } if (btn) { btn.innerHTML = '&#10007; فشل الحفظ'; btn.style.color = '#ef4444'; btn.style.borderColor = '#ef4444'; setTimeout(() => { btn.innerHTML = '&#128190; حفظ'; btn.style.color = ''; btn.style.borderColor = '' }, 2000) } });
             } catch (e) { console.error('saveToFirebase exception:', e); }
+        };
+
+        window.toggleShortcutsPanel = function () {
+            var panel = document.getElementById('shortcutsPanel');
+            if (panel) panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+        };
+        window.closeShortcutsPanel = function () {
+            var panel = document.getElementById('shortcutsPanel');
+            if (panel) panel.style.display = 'none';
         };
 
         let _lastVersionHash = '';
@@ -6756,6 +7029,84 @@
         let currentZoom = 100;
         let isGridView = false;
 
+        // ===== Skills Chips UI =====
+        var _skillProficiency = {};
+
+        function getSkillsArray() {
+            return (document.getElementById('inputSkills').value || '').split('\n').filter(function(l) { return l.trim(); });
+        }
+
+        function setSkillsData(arr, triggerRender) {
+            var ta = document.getElementById('inputSkills');
+            if (ta) ta.value = arr.join('\n');
+            renderSkillChips();
+            if (triggerRender !== false) renderCV();
+        }
+
+        function getProficiency(skill) { return _skillProficiency[skill] || 0; }
+
+        function renderSkillChips() {
+            var container = document.getElementById('skillsChipsContainer');
+            if (!container) return;
+            var skills = getSkillsArray();
+            if (!skills.length) {
+                container.innerHTML = '<div style="color:var(--muted);font-size:0.78rem;padding:8px 0"><i class="fas fa-info-circle" style="margin-left:4px"></i>لم تضف أي مهارات بعد. اكتب مهارة فوق و اضغط Enter.</div>';
+                return;
+            }
+            var html = '';
+            skills.forEach(function(s) {
+                var prof = getProficiency(s);
+                var dotsHtml = '';
+                for (var i = 1; i <= 4; i++) {
+                    dotsHtml += '<span class="dot' + (i <= prof ? ' filled' : '') + '" onclick="setSkillLevel(\'' + s.replace(/'/g, "\\'") + '\',' + i + ')" title="' + (['', 'مبتدئ', 'متوسط', 'متقدم', 'خبير'][i]) + '"></span>';
+                }
+                html += '<div class="skill-chip-desktop"><span class="skill-name">' + s + '</span>' +
+                    '<span class="skill-proficiency">' + dotsHtml + '</span>' +
+                    '<button class="btn-remove-skill" onclick="removeSkill(\'' + s.replace(/'/g, "\\'") + '\')" title="حذف">&#x2715;</button></div>';
+            });
+            container.innerHTML = html;
+            document.getElementById('skillsProficiency').value = JSON.stringify(_skillProficiency);
+        }
+
+        function addSkill() {
+            var input = document.getElementById('skillInput');
+            if (!input) return;
+            var val = input.value.trim().replace(/,$/, '');
+            if (!val || val.length < 2) return;
+            var skills = getSkillsArray();
+            if (skills.indexOf(val) !== -1) { input.value = ''; return; }
+            skills.push(val);
+            if (!_skillProficiency[val]) _skillProficiency[val] = 2;
+            setSkillsData(skills);
+            input.value = '';
+            input.focus();
+            renderCV();
+        }
+
+        function removeSkill(name) {
+            var skills = getSkillsArray().filter(function(s) { return s !== name; });
+            delete _skillProficiency[name];
+            setSkillsData(skills);
+            renderCV();
+        }
+
+        function setSkillLevel(name, level) {
+            _skillProficiency[name] = level;
+            renderSkillChips();
+            document.getElementById('skillsProficiency').value = JSON.stringify(_skillProficiency);
+            renderCV();
+        }
+
+        function syncSkillChipsFromTextarea() {
+            renderSkillChips();
+            renderCV();
+        }
+
+        function initSkillChips() {
+            var skills = getSkillsArray();
+            if (skills.length) renderSkillChips();
+        }
+
         // Undo/Redo
         var undoStack = [];
         var redoStack = [];
@@ -6781,7 +7132,8 @@
             document.getElementById('inputLocation').value = state.data.location || '';
             document.getElementById('inputLinkedin').value = state.data.linkedin || '';
             document.getElementById('inputSummary').value = state.data.summary || '';
-            document.getElementById('inputSkills').value = Array.isArray(state.data.skills) ? state.data.skills.join('\n') : (state.data.skills || '');
+            setSkillsData(Array.isArray(state.data.skills) ? state.data.skills : (state.data.skills ? [state.data.skills] : []), false);
+            if (state.data._skillProficiency) { _skillProficiency = state.data._skillProficiency; renderSkillChips(); }
             document.getElementById('expContainer').innerHTML = '';
             document.getElementById('eduContainer').innerHTML = '';
             document.getElementById('langContainer').innerHTML = '';
@@ -6826,6 +7178,8 @@
         document.addEventListener('keydown', function (e) {
             if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); window.undoAction(); }
             if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); window.redoAction(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); if (window.saveToFirebase) window.saveToFirebase(); }
+            if (e.key === '/' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); toggleShortcutsPanel(); }
         });
 
         // Auto-snapshot on user input changes
@@ -6850,6 +7204,7 @@
             document.querySelectorAll('.form-card').forEach(c => c.classList.remove('active'));
             if (el) el.classList.add('active');
             document.getElementById('tab-' + tab).classList.add('active');
+            if (typeof updateMobileTopTitle === 'function') updateMobileTopTitle(tab);
         };
 
         function collectData() {
@@ -6869,6 +7224,8 @@
                 langData.push({ name: f[0].value, level: f[1].value });
             });
             const skillsRaw = (document.getElementById('inputSkills').value || '').split('\n').filter(l => l.trim());
+            let prof = {};
+            try { prof = JSON.parse(document.getElementById('skillsProficiency').value || '{}'); } catch (e) {}
             return {
                 name: document.getElementById('inputName').value,
                 title: document.getElementById('inputTitle').value,
@@ -6881,11 +7238,20 @@
                 languages: langData,
                 experience: expData,
                 education: eduData,
-                customSections: customSections
+                customSections: customSections,
+                _skillProficiency: prof
             };
         }
         window._collectData = collectData;
+        window.collectData = collectData;
         window._getDesignSettings = function () { return designSettings; };
+
+        function detectDirection(text) {
+            if (!text) return 'ltr';
+            const rtlRegex = /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/;
+            return rtlRegex.test(text) ? 'rtl' : 'ltr';
+        }
+        window.detectDirection = detectDirection;
 
         window.generateProfessionalSummary = function () {
             try {
@@ -6939,14 +7305,23 @@
                 });
                 btn.dataset.bound = '1';
             }
+            /* Initialize mobile top bar title */
+            if (typeof updateMobileTopTitle === 'function') updateMobileTopTitle('personal');
         });
 
+        var _scoreDebounceTimer = null;
+
         window.renderCV = function () {
+            markDirty();
             const data = collectData();
             const html = QCVTemplates.render(currentTemplate, data);
             document.getElementById('cvPage').innerHTML = html;
+            const allText = [data.name, data.title, data.summary, ...(data.skills || []), ...(data.experience || []).map(e => e.role + ' ' + e.company + ' ' + e.description), ...(data.languages || []).map(l => l.name)].join(' ');
+            document.getElementById('cvPage').setAttribute('dir', detectDirection(allText));
             applyDesignSettings();
-            if (isPaidPlan()) updateAIScore(data);
+            // Debounce ATS score update — avoid heavy recalc on every keystroke
+            if (_scoreDebounceTimer) clearTimeout(_scoreDebounceTimer);
+            _scoreDebounceTimer = setTimeout(function () { updateAIScore(data); }, 600);
             debouncedSave();
         };
 
@@ -7024,7 +7399,10 @@
         }
 
         let _saveTimer = null;
-        function debouncedSave() { clearTimeout(_saveTimer); _saveTimer = setTimeout(() => { if (window.saveToFirebase) window.saveToFirebase(); }, 800); }
+        let _hasUnsavedChanges = false;
+        function debouncedSave() { clearTimeout(_saveTimer); _saveTimer = setTimeout(() => { if (window.saveToFirebase) window.saveToFirebase(); _hasUnsavedChanges = false; }, 800); }
+        function markDirty() { _hasUnsavedChanges = true; }
+        window.addEventListener('beforeunload', function(e) { if (_hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; } });
 
         window.addExp = function (role = '', company = '', dur = '', desc = '') {
             const id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
@@ -7034,10 +7412,10 @@
                         <span class="rb-title"><i class="fas fa-briefcase" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> خبرة جديدة</span>
                         <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
                     </div>
-                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-building" style="font-size:0.7rem;margin-left:4px"></i>اسم الشركة</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Google, Meta, Vodafone, etc." style="font-weight:700;font-size:0.95rem"></div>
-                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-user-tie" style="font-size:0.7rem;margin-left:4px"></i>المسمى الوظيفي</label><input type="text" value="${role}" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
-                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-calendar-alt" style="font-size:0.7rem;margin-left:4px"></i>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="Jan 2020 - Present / يناير 2020 - حتى الآن"></div>
-                    <div class="field" style="margin-bottom:0"><label><i class="fas fa-align-right" style="font-size:0.7rem;margin-left:4px"></i>الوصف والإنجازات</label><textarea oninput="renderCV()" placeholder="- قمت بقيادة فريق من 5 مهندسين&#10;- زدت الإيرادات بنسبة 25%&#10;- بنيت نظام CI/CD من الصفر" style="min-height:80px">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة <b>-</b> لقائمة الإنجازات. كل إنجاز في سطر مستقل.</div></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-building" style="font-size:0.7rem;margin-left:4px"></i>اسم الشركة</label><input type="text" value="${company}" dir="auto" oninput="renderCV()" placeholder="Google, Meta, Vodafone, etc." style="font-weight:700;font-size:0.95rem"></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-user-tie" style="font-size:0.7rem;margin-left:4px"></i>المسمى الوظيفي</label><input type="text" value="${role}" dir="auto" oninput="renderCV()" list="jobTitlesList" placeholder="Software Engineer"></div>
+                    <div class="field" style="margin-bottom:8px"><label><i class="fas fa-calendar-alt" style="font-size:0.7rem;margin-left:4px"></i>المدة</label><input type="text" value="${dur}" dir="auto" oninput="renderCV()" placeholder="Jan 2020 - Present / يناير 2020 - حتى الآن"></div>
+                    <div class="field" style="margin-bottom:0"><label><i class="fas fa-align-right" style="font-size:0.7rem;margin-left:4px"></i>الوصف والإنجازات</label><textarea dir="auto" oninput="renderCV()" placeholder="- قمت بقيادة فريق من 5 مهندسين&#10;- زدت الإيرادات بنسبة 25%&#10;- بنيت نظام CI/CD من الصفر" style="min-height:80px">${desc}</textarea><div class="field-hint">ابدأ كل سطر بعلامة <b>-</b> لقائمة الإنجازات. كل إنجاز في سطر مستقل.</div></div>
                 </div>`);
             renderCV();
             snapshotState();
@@ -7051,10 +7429,10 @@
                         <span class="rb-title"><i class="fas fa-graduation-cap" style="margin-left:6px;color:var(--accent);font-size:0.75rem"></i> تعليم جديد</span>
                         <button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()"><i class="fas fa-trash-alt"></i> حذف</button>
                     </div>
-                    <div class="field"><label>الدرجة العلمية</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div>
-                    <div class="field"><label>المؤسسة التعليمية</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="Cairo University"></div>
-                    <div class="field"><label>المدة</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div>
-                    <div class="field"><label>التفاصيل</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8/4.0&#10;- Dean's List&#10;- Computer Science Club">${desc}</textarea></div>
+                    <div class="field"><label>الدرجة العلمية</label><input type="text" value="${deg}" dir="auto" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div>
+                    <div class="field"><label>المؤسسة التعليمية</label><input type="text" value="${sch}" dir="auto" oninput="renderCV()" placeholder="Cairo University"></div>
+                    <div class="field"><label>المدة</label><input type="text" value="${dur}" dir="auto" oninput="renderCV()" placeholder="2016 - 2020"></div>
+                    <div class="field"><label>التفاصيل</label><textarea dir="auto" oninput="renderCV()" placeholder="- GPA: 3.8/4.0&#10;- Dean's List&#10;- Computer Science Club">${desc}</textarea></div>
                 </div>`);
             renderCV();
             snapshotState();
@@ -7087,44 +7465,37 @@
         // Design Controls - all update state + apply immediately
         window.setFontSize = function (v) {
             designSettings.fontSize = parseInt(v);
-            var tv = document.getElementById('fontSizeVal'); if (tv) tv.textContent = v;
-            var dv = document.getElementById('ddFontSizeVal'); if (dv) dv.textContent = v;
-            var dr = document.getElementById('ddFontSize'); if (dr) dr.value = v;
+            document.getElementById('fontSizeVal').textContent = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setFontColor = function (v) {
             designSettings.fontColor = v;
-            var d = document.getElementById('ddFontColor'); if (d) d.value = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setFontFamily = function (v) {
             designSettings.fontFamily = v;
-            var t = document.getElementById('fontFamily'); if (t) t.value = v;
-            var d = document.getElementById('ddFontFamily'); if (d) d.value = v;
             applyDesignSettings();
             snapshotState();
         };
         window.setPageMargin = function (v) {
             designSettings.pageMargin = parseInt(v);
-            var el = document.getElementById('pageMarginVal');
-            if (el) el.textContent = v;
+            const valEl = document.getElementById('pageMarginVal');
+            if (valEl) valEl.textContent = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setLineSpacing = function (v) {
             designSettings.lineSpacing = (v / 10).toFixed(1);
-            var el = document.getElementById('lineSpacingVal');
-            if (el) el.textContent = (v / 10).toFixed(1);
-            var dv = document.getElementById('ddLineSpacingVal'); if (dv) dv.textContent = (v / 10).toFixed(1);
-            var dr = document.getElementById('ddLineSpacing'); if (dr) dr.value = v;
+            document.getElementById('lineSpacingVal').textContent = (v / 10).toFixed(1);
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setAccentColor = function (v) {
-            // B&W mode — accent color is always black
-            designSettings.accentColor = '#111111';
+            designSettings.accentColor = v;
+            applyDesignSettings();
+            debouncedSnapshot();
         };
 
         // Zoom Controls
@@ -7171,46 +7542,6 @@
 
         // CV Score issues - keep in English
         function translateIssue(text) {
-            if (!text) return text;
-            var map = [
-                [/Add a professional summary \(2-3 lines about your experience\)/i, 'أضف ملخصاً مهنياً (2-3 أسطر عن خبراتك)'],
-                [/Summary too short \((\d+)\/100\+ chars\) — add more details about your achievements/i, 'الملخص قصير جداً ($1/100+) — أضف المزيد من التفاصيل عن إنجازاتك'],
-                [/Good summary — consider expanding to 100\+ chars for better score/i, 'ملخص جيد — فكر في التوسعة إلى أكثر من 100 حرفاً لتحسين النتيجة'],
-                [/Strong summary — add numbers\/results for even better impact/i, 'ملخص قوي — أضف أرقاماً ونتائج لزيادة التأثير'],
-                [/Add at least 1 work experience entry/i, 'أضف خبرة عملية واحدة على الأقل'],
-                [/Add 2\+ work experiences for stronger CV/i, 'أضف خبرتين عملية أو أكثر لتقوية السيرة الذاتية'],
-                [/Experience #(\d+) has no description — add 3-5 bullet points/i, 'الخبرة #$1 بلا وصف — أضف 3-5 نقاط إنجازات'],
-                [/Experience #(\d+): only (\d+) bullet\(s\) — add (\d+) more/i, 'الخبرة #$1: عدد النقاط $2 فقط — أضف $3 نقاط إضافية'],
-                [/Add your educational background/i, 'أضف خلفيتك التعليمية'],
-                [/Add your full name/i, 'أضف اسمك الكامل'],
-                [/Add your email address/i, 'أضف بريدك الإلكتروني'],
-                [/Add your phone number/i, 'أضف رقم هاتفك'],
-                [/Add your job title \(e\.g\. "Software Engineer"\)/i, 'أضف مسمى وظيفتك (مثال: "مهندس برمجيات")'],
-                [/Add a professional summary for ATS parsing/i, 'أضف ملخصاً مهنياً لتحسين قراءة أنظمة ATS'],
-                [/Only (\d+) skill\(s\) — ATS needs at least 3-5 relevant skills/i, 'عدد المهارات $1 فقط — تحتاج أنظمة ATS إلى 3-5 مهارات ذات صلة على الأقل'],
-                [/Add 5\+ skills to pass ATS keyword filters/i, 'أضف 5 مهارات أو أكثر لتجاوز فلاتر الكلمات المفتاحية لـ ATS'],
-                [/8\+ skills recommended for maximum ATS matching/i, 'يُنصح بـ 8 مهارات أو أكثر لأقصى توافق مع ATS'],
-                [/Experience #(\d+): missing job title/i, 'الخبرة #$1: المسمى الوظيفي مفقود'],
-                [/Experience #(\d+): missing company name/i, 'الخبرة #$1: اسم الشركة مفقود'],
-                [/Experience #(\d+): add work duration \(e\.g\. "2022 - Present"\)/i, 'الخبرة #$1: أضف مدة العمل (مثال: "2022 - حتى الآن")'],
-                [/Experience #(\d+): description too short — ATS needs 20\+ chars/i, 'الخبرة #$1: الوصف قصير جداً — تحتاج ATS إلى 20+ حرفاً'],
-                [/No skills listed — this is the #1 thing ATS systems look for/i, 'لا توجد مهارات — المهارات هي أول ما تبحث عنه أنظمة ATS'],
-                [/Only (\d+) skills — aim for 8-12 for best results/i, 'عدد المهارات $1 فقط — استهدف 8-12 مهارة لأفضل النتائج'],
-                [/Good \((\d+) skills\) — add 3\+ more to maximize ATS matching/i, 'جيد ($1 مهارة) — أضف 3 مهارات إضافية لتعظيم توافق ATS'],
-                [/(\d+) skill\(s\) longer than 15 chars — keep them concise for ATS/i, '$1 مهارة أطول من 15 حرفاً — اجعلها مختصرة لقراءة أفضل من ATS'],
-                [/No numbers\/metrics in experience — add quantifiable results \(e\.g\. "increased sales by 30%"\)/i, 'لا توجد أرقام أو مقاييس في الخبرات — أضف نتائج قابلة للقياس (مثال: "زدت المبيعات بنسبة 30%")'],
-                [/Only (\d+) number\(s\) found — add 3\+ metrics for stronger impact/i, 'تم العثور على $1 رقم فقط — أضف 3 مقاييس أو أكثر لتعزيز التأثير'],
-                [/No action verbs found — start each bullet with words like "Led", "Developed", "Achieved"/i, 'لا توجد أفعال فعلية — ابدأ كل نقطة بأفعال مثل "قاد"، "طوّر"، "حقّق"'],
-                [/Found (\d+) action verb\(s\) — use 3\+ different power verbs for maximum impact/i, 'تم العثور على $1 أفعال فعلية — استخدم 3 أفعال قوية مختلفة أو أكثر لتعظيم التأثير'],
-                [/No bullet points in experience — use line breaks to list achievements/i, 'لا توجد نقاط إنجازات في الخبرات — استخدم أسطراً منفصلة لسرد إنجازاتك'],
-                [/Only (\d+) bullet\(s\) — aim for 5\+ across all experiences/i, 'عدد النقاط $1 فقط — استهدف 5 نقاط أو أكثر في كل الخبرات'],
-                [/Add percentages or currency values to show measurable results/i, 'أضف نسباً مئوية أو قيماً نقدية لإظهار نتائج قابلة للقياس']
-            ];
-            for (var i = 0; i < map.length; i++) {
-                if (map[i][0].test(text)) {
-                    return text.replace(map[i][0], map[i][1]);
-                }
-            }
             return text;
         }
 
@@ -7248,7 +7579,7 @@
                             const icon = iss.type === 'critical' ? 'fa-exclamation-circle' : iss.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
                             const clr = iss.type === 'critical' ? '#ef4444' : iss.type === 'warning' ? '#f59e0b' : '#0ea5e9';
                             const arText = translateIssue(iss.text);
-                            return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g, "\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${iss.fix}</span></div>`;
+                            return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g, "\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> Fix ${iss.fix}</span></div>`;
                         }).join('') + '</div>';
                     }
                     return `<div class="ai-detail-row">
@@ -7274,7 +7605,7 @@
                     summaryEl.style.borderColor = 'rgba(5,150,105,0.15)';
                     summaryEl.style.color = '#059669';
                 } else {
-                    const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + parseInt(r.fix.replace('+', '')), 0);
+                    const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + (parseInt((r.fix || '').replace('+', '')) || 0), 0);
                     summaryEl.innerHTML = `إصلاح <strong>${totalIssues} مشكلة${totalIssues > 1 ? '' : ''}</strong> للوصول إلى <strong>${Math.min(100, potential)}/100</strong>`;
                     summaryEl.style.background = 'rgba(0,3,201,0.04)';
                     summaryEl.style.borderColor = 'rgba(0,3,201,0.1)';
@@ -7299,7 +7630,7 @@
                         return `<div class="ai-rec ${r.type}" onclick="aiFixIssue('${r.section}','${arTitle.replace(/'/g, "\\'")}','${r.type}')">
                         <div class="rec-icon"><i class="fas ${r.type === 'critical' ? 'fa-exclamation-circle' : r.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i></div>
                         <div class="rec-body"><div class="rec-title">${arTitle}</div></div>
-                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${r.fix}</span>
+                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> Fix ${r.fix}</span>
                     </div>`;
                     }).join('');
                     if (scores.recommendations.length > 8) {
@@ -7352,13 +7683,12 @@
 
             // Track download count for ALL users
             console.log('ExportPDF: currentUid =', window.currentUid, 'paid =', paid);
-            let downloads = 0, plan = 'free';
             if (window.currentUid) {
                 try {
                     const userSnap = await _get(_ref(_db, 'users/' + window.currentUid));
                     const ud = userSnap.val() || {};
-                    downloads = ud.downloads || 0;
-                    plan = ud.plan || 'free';
+                    const downloads = ud.downloads || 0;
+                    const plan = ud.plan || 'free';
                     console.log('ExportPDF: current downloads =', downloads, 'plan =', plan);
 
                     const dlLimit = plan === 'unlimited' ? Infinity : plan === 'pro' ? 5 : 1;
@@ -7383,9 +7713,15 @@
             b.classList.add('loading');
             const el = document.getElementById('cvPage');
 
-            // Fix: temporarily hide overflow to prevent blank page in PDF
+            // Fix: force single A4 page during PDF generation
             const origOverflow = el.style.overflow;
+            const origHeight = el.style.height;
+            const origMinHeight = el.style.minHeight;
+            const origMaxHeight = el.style.maxHeight;
             el.style.overflow = 'hidden';
+            el.style.height = '297mm';
+            el.style.minHeight = '297mm';
+            el.style.maxHeight = '297mm';
 
             let watermark = null;
             let domainWatermark = null;
@@ -7422,7 +7758,7 @@
                     image: { type: 'jpeg', quality: paid ? 0.98 : 0.85 },
                     html2canvas: { scale: paid ? 2 : 1.5, useCORS: true, letterRendering: true, logging: false },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                    pagebreak: { mode: ['css', 'legacy'], before: '.page-break', avoid: '.avoid-break' }
+                    pagebreak: { mode: 'avoid-all' }
                 };
                 await html2pdf().set(opt).from(el).save();
                 if (window.QCVNotify) QCVNotify.download();
@@ -7448,6 +7784,9 @@
                 if (window.QCVNotify) QCVNotify.error();
             } finally {
                 el.style.overflow = origOverflow || 'visible';
+                el.style.height = origHeight || '';
+                el.style.minHeight = origMinHeight || '';
+                el.style.maxHeight = origMaxHeight || '';
                 if (watermark && watermark.parentNode) watermark.remove();
                 if (domainWatermark && domainWatermark.parentNode) domainWatermark.remove();
                 b.classList.remove('loading');
@@ -7467,7 +7806,10 @@
             const closeHead = '</' + 'head>';
             const closeBody = '</' + 'body>';
             const closeHtml = '</' + 'html>';
-            const htmlContent = '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + defaultName + ' - QCV</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="https://qcv.vexonet.online/templates/templates.css">\n' + closeStyle + '\n' + closeHead + '\n<body>\n<div class="cv-wrapper">' + el.innerHTML + '</div>\n' + closeBody + '\n' + closeHtml;
+            const allText = [data.name, data.title, data.summary, ...(data.skills || []), ...(data.experience || []).map(e => e.role + ' ' + e.company + ' ' + e.description), ...(data.languages || []).map(l => l.name)].join(' ');
+            const dir = detectDirection(allText);
+            const lang = dir === 'rtl' ? 'ar' : 'en';
+            const htmlContent = '<!DOCTYPE html>\n<html lang="' + lang + '" dir="' + dir + '">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + defaultName + ' - QCV</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="https://qcv.vexonet.online/templates/templates.css">\n' + closeStyle + '\n' + closeHead + '\n<body>\n<div class="cv-wrapper">' + el.innerHTML + '</div>\n' + closeBody + '\n' + closeHtml;
 
             const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
             const url = URL.createObjectURL(blob);
@@ -7506,7 +7848,7 @@
             document.getElementById('inputLocation').value = sample.location;
             document.getElementById('inputLinkedin').value = sample.linkedin;
             document.getElementById('inputSummary').value = sample.summary;
-            document.getElementById('inputSkills').value = sample.skills.join('\n');
+            setSkillsData(sample.skills);
             document.getElementById('expContainer').innerHTML = '';
             document.getElementById('eduContainer').innerHTML = '';
             document.getElementById('langContainer').innerHTML = '';
@@ -7530,7 +7872,8 @@
                     document.getElementById('inputLocation').value = d.location || '';
                     document.getElementById('inputLinkedin').value = d.linkedin || '';
                     document.getElementById('inputSummary').value = d.summary || '';
-                    document.getElementById('inputSkills').value = Array.isArray(d.skills) ? d.skills.join('\n') : (d.skills || '');
+                    setSkillsData(Array.isArray(d.skills) ? d.skills : (d.skills ? [d.skills] : []), false);
+                    if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
                     document.getElementById('expContainer').innerHTML = '';
                     document.getElementById('eduContainer').innerHTML = '';
                     document.getElementById('langContainer').innerHTML = '';
@@ -7565,7 +7908,8 @@
             document.getElementById('inputLocation').value = d.location || '';
             document.getElementById('inputLinkedin').value = d.linkedin || '';
             document.getElementById('inputSummary').value = d.summary || '';
-            document.getElementById('inputSkills').value = Array.isArray(d.skills) ? d.skills.join('\n') : (d.skills || '');
+            setSkillsData(Array.isArray(d.skills) ? d.skills : (d.skills ? [d.skills] : []), false);
+            if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
             document.getElementById('expContainer').innerHTML = '';
             document.getElementById('eduContainer').innerHTML = '';
             document.getElementById('langContainer').innerHTML = '';
@@ -7611,8 +7955,8 @@
                 document.getElementById('fontSizeVal').textContent = designSettings.fontSize;
                 document.getElementById('fontFamily').value = designSettings.fontFamily;
                 document.getElementById('fontColor').value = designSettings.fontColor;
-                if (document.getElementById('pageMargin')) document.getElementById('pageMargin').value = designSettings.pageMargin;
-                if (document.getElementById('lineSpacing')) document.getElementById('lineSpacing').value = designSettings.lineSpacing * 10;
+                document.getElementById('pageMargin').value = designSettings.pageMargin;
+                document.getElementById('lineSpacing').value = designSettings.lineSpacing * 10;
             }
 
             renderCV();
@@ -7698,56 +8042,27 @@
             if (!raw || raw === 'جاري التحميل...') return;
             const url = raw.startsWith('http') ? raw : 'https://' + raw;
             const btn = document.getElementById('copyPortBtn');
-            const done = function () {
-                if (btn) btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1600);
-            };
-            const fail = function () {
-                if (btn) btn.innerHTML = '<i class="fas fa-times"></i> فشل';
-                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1600);
-            };
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(url).then(done).catch(function () {
-                        legacyCopy(url, done, fail);
-                    });
-                } else {
-                    legacyCopy(url, done, fail);
-                }
-            } catch (e) { legacyCopy(url, done, fail); }
-        };
-        function legacyCopy(text, done, fail) {
             try {
                 const ta = document.createElement('textarea');
-                ta.value = text;
+                ta.value = url;
                 ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
                 document.body.appendChild(ta);
                 ta.focus();
                 ta.select();
                 document.execCommand('copy');
                 document.body.removeChild(ta);
-                done();
-            } catch (e) { fail(); }
-        }
+                if (btn) btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1500);
+            } catch (e) {
+                if (btn) btn.innerHTML = '<i class="fas fa-times"></i> فشل';
+                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1500);
+            }
+        };
         window.openPortfolioLink = function () {
             const raw = document.getElementById('portfolioUrl').value;
             if (!raw || raw === 'جاري التحميل...') return;
             const url = raw.startsWith('http') ? raw : 'https://' + raw;
             window.open(url, '_blank');
-        };
-        window.sharePortfolio = function (net) {
-            const raw = document.getElementById('portfolioUrl').value;
-            if (!raw || raw === 'جاري التحميل...') return;
-            const url = raw.startsWith('http') ? raw : 'https://' + raw;
-            const text = 'أهلاً! هذا هو معرض سيرتي الذاتية — تفضل بمشاهدته 👇 ' + url;
-            let link = '';
-            if (net === 'whatsapp') link = 'https://wa.me/?text=' + encodeURIComponent(text);
-            else if (net === 'telegram') link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
-            else if (net === 'facebook') link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
-            else if (net === 'twitter') link = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
-            else if (net === 'email') link = 'mailto:?subject=' + encodeURIComponent('معرض سيرتي الذاتية - QCV') + '&body=' + encodeURIComponent(text);
-            if (link) window.open(link, '_blank', 'noopener,width=680,height=520');
-            if (typeof showToast === 'function') showToast('فتح نافذة المشاركة...', 'info');
         };
 
         // ---- Tab Menu (3-dots) ----
@@ -7807,7 +8122,7 @@
             if (secId === 'experience') { document.getElementById('expContainer').innerHTML = ''; }
             if (secId === 'education') { document.getElementById('eduContainer').innerHTML = ''; }
             if (secId === 'languages') { document.getElementById('langContainer').innerHTML = ''; }
-            if (secId === 'skills') { document.getElementById('inputSkills').value = ''; }
+            if (secId === 'skills') { setSkillsData([], false); }
             if (secId === 'personal') {
                 ['inputName', 'inputTitle', 'inputEmail', 'inputPhone', 'inputLocation', 'inputLinkedin', 'inputSummary'].forEach(id => {
                     const el = document.getElementById(id); if (el) el.value = '';
@@ -7877,6 +8192,14 @@
             var file = input.files ? input.files[0] : null;
             if (!file) return;
             if (file.size > 5 * 1024 * 1024) { alert('الملف أكبر من 5 ميجا'); return; }
+
+            var allowedExts = ['html', 'htm', 'txt', 'json', 'pdf'];
+            var ext = file.name.split('.').pop().toLowerCase();
+            if (!allowedExts.includes(ext)) {
+                alert('نوع الملف غير مدعوم. الملفات المدعومة: HTML, TXT, JSON, PDF');
+                closeUploadModal();
+                return;
+            }
 
             document.getElementById('uploadDropzone').style.display = 'none';
             document.getElementById('uploadProgress').classList.add('show');
@@ -8189,10 +8512,8 @@
 
             // Map skills
             if (d.skills && d.skills.length) {
-                var inputSkills = document.getElementById('inputSkills');
-                if (inputSkills) {
-                    inputSkills.value = d.skills.join('\n');
-                }
+                setSkillsData(d.skills, false);
+                if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
             }
 
             // Add custom sections
@@ -8472,11 +8793,11 @@
         </div>
     </div>
 
-    <!-- AI Assistant -->
-    <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="مساعد الذكاء الاصطناعي">
+    <!-- AI Assistant (hidden) -->
+    <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="مساعد الذكاء الاصطناعي" style="display:none">
         <i class="fas fa-wand-magic-sparkles"></i>
     </button>
-    <div class="ai-menu" id="aiMenu">
+    <div class="ai-menu" id="aiMenu" style="display:none">
         <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt"
                 style="color:#0003c9"></i>ملخص مهني<span class="ai-shortcut">AI</span></button>
         <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check"
@@ -8502,7 +8823,7 @@
         <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots"
                 style="color:var(--muted)"></i>اسأل الذكاء الاصطناعي<span class="ai-shortcut">AI</span></button>
     </div>
-    <div class="ai-result-panel" id="aiResultPanel">
+    <div class="ai-result-panel" id="aiResultPanel" style="display:none">
         <div class="ai-result-header">
             <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">مساعد الذكاء الاصطناعي</span></h4>
             <button class="ai-result-close" onclick="closeAiPanel()">&times;</button>
@@ -8515,6 +8836,81 @@
             <button id="aiApplyBtn" class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>تطبيق</button>
         </div>
     </div>
+
+    <!-- ===== KEYBOARD SHORTCUTS PANEL ===== -->
+    <div class="shortcuts-overlay" id="shortcutsPanel" style="display:none" onclick="if(event.target===this)closeShortcutsPanel()">
+        <div class="shortcuts-modal">
+            <div class="shortcuts-header">
+                <h4><i class="fas fa-keyboard" style="margin-left:8px;color:var(--accent)"></i>اختصارات لوحة المفاتيح</h4>
+                <button class="shortcuts-close" onclick="closeShortcutsPanel()">&times;</button>
+            </div>
+            <div class="shortcuts-body">
+                <div class="shortcut-group">
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>S</kbd><span>حفظ السيرة الذاتية</span></div>
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>Z</kbd><span>تراجع عن آخر تعديل</span></div>
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>Y</kbd><span>إعادة التعديل</span></div>
+                    <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>/</kbd><span>إظهار/إخفاء الاختصارات</span></div>
+                </div>
+            </div>
+            <div class="shortcuts-footer">
+                <button class="shortcuts-btn" onclick="closeShortcutsPanel()">حسناً</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        .shortcuts-overlay {
+            position: fixed; inset: 0; z-index: 100000;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+            animation: scFadeIn 0.2s ease
+        }
+        .shortcuts-modal {
+            background: var(--card); border-radius: 16px;
+            width: 90%; max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: scSlideUp 0.25s cubic-bezier(0.16,1,0.3,1)
+        }
+        .shortcuts-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 20px; border-bottom: 1px solid var(--border)
+        }
+        .shortcuts-header h4 { font-size: 0.95rem; font-weight: 800; margin: 0; color: var(--text) }
+        .shortcuts-close {
+            background: none; border: none; font-size: 1.4rem;
+            color: var(--muted); cursor: pointer; padding: 0 4px;
+            transition: color 0.2s
+        }
+        .shortcuts-close:hover { color: var(--text) }
+        .shortcuts-body { padding: 16px 20px }
+        .shortcut-group { display: flex; flex-direction: column; gap: 8px }
+        .shortcut-row {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 10px; border-radius: 8px;
+            background: var(--bg2); font-size: 0.8rem
+        }
+        .shortcut-row kbd {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 2px 8px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 4px; font-size: 0.72rem; font-weight: 700;
+            font-family: 'Cairo', sans-serif; color: var(--text);
+            min-width: 28px; box-shadow: 0 1px 2px rgba(0,0,0,0.06)
+        }
+        .shortcut-row span { color: var(--muted); margin-right: auto; font-size: 0.82rem }
+        .shortcuts-footer { padding: 12px 20px; border-top: 1px solid var(--border); text-align: center }
+        .shortcuts-btn {
+            padding: 8px 32px; border: none; border-radius: 8px;
+            background: var(--accent); color: #fff; font-weight: 700;
+            font-size: 0.82rem; cursor: pointer; font-family: 'Cairo', sans-serif;
+            transition: all 0.2s
+        }
+        .shortcuts-btn:hover { opacity: 0.9; transform: translateY(-1px) }
+        @keyframes scFadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes scSlideUp { from { opacity: 0; transform: translateY(20px) scale(0.96) } to { opacity: 1; transform: translateY(0) scale(1) } }
+        body.dark-mode .shortcuts-overlay { background: rgba(0,0,0,0.7) }
+        body.dark-mode .shortcut-row kbd { background: #1e293b; border-color: #334155; color: #f1f5f9 }
+    </style>
 
     <script src="js/tutorial.js"></script>
     <script src="js/site-settings.js"></script>
@@ -8574,7 +8970,7 @@
                 { target: '#tab-skills', title: '🛠️ المهارات', message: 'اكتب مهارة واحدة في كل سطر. رتّبها من الأهم للأقل أهمية.', tip: 'استخدم زر AI لاقتراح مهارات مناسبة لتخصصك!' },
                 { target: '.topbar-center', title: '🎨 التصميم', message: 'اختار القالب والخط والحجم من هنا. 30+ قالب احترافي متاح. غيّر الألوان بسهولة.', tip: 'جرب قالب مختلف كل مرة عشان تشوف الأنسب لعملك!' },
                 { target: '.preview-zone', title: '👁️ معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
-                { target: '.topbar', title: '💾 حفظ وتصدير', message: 'حفظ تلقائي شغال على طول. اضغط "تصدير PDF" عشان تحمل السيرة الذاتية. تقدر تشوف رابط صفحتك الشخصية.', tip: 'بياناتك آمنة في السحابة自动!' },
+                { target: '.topbar', title: '💾 حفظ وتصدير', message: 'حفظ تلقائي شغال على طول. اضغط "تصدير PDF" عشان تحمل السيرة الذاتية. تقدر تشوف رابط صفحتك الشخصية.', tip: 'بياناتك آمنة في السحابة تلقائياً!' },
                 { target: '.portfolio-link-box', title: '🔗 رابط المعرض', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
             ] : [
                 { target: '.sidebar-nav', title: '📋 Sections', message: 'Navigate between CV sections: Personal Info, Experience, Education, Skills, Languages.', tip: 'Click any section to edit. Changes appear instantly in the preview!' },
@@ -8631,7 +9027,7 @@
             const btn = document.getElementById('aiAssistBtn');
             const menu = document.getElementById('aiMenu');
             const panel = document.getElementById('aiResultPanel');
-            if (!btn.contains(e.target) && !menu.contains(e.target) && !panel.contains(e.target)) {
+            if (btn && !btn.contains(e.target) && menu && !menu.contains(e.target) && panel && !panel.contains(e.target)) {
                 menu.classList.remove('show');
                 aiMenuOpen = false;
             }
@@ -8683,8 +9079,7 @@
                 } else if (section === 'skills') {
                     const skills = aiResultText.split(/[,،\n]+/).map(function (s) { return s.replace(/^[-•*]\s*/, '').trim(); }).filter(function (s) { return s && s.length > 1; });
                     data.skills = skills;
-                    var inputSkills = document.getElementById('inputSkills');
-                    if (inputSkills) inputSkills.value = skills.join('\n');
+                    setSkillsData(skills, false);
                 } else if (section === 'personal') {
                     var lines = aiResultText.split('\n').filter(function (l) { return l.trim(); });
                     if (lines.length >= 1) { document.getElementById('inputName').value = lines[0]; data.name = lines[0]; }
@@ -8714,8 +9109,7 @@
             } else if (action === 'skills') {
                 const skills = aiResultText.split(/[,،\n]+/).map(function (s) { return s.replace(/^[-•*]\s*/, '').trim(); }).filter(function (s) { return s && s.length > 1; });
                 data.skills = skills;
-                var inputSkills2 = document.getElementById('inputSkills');
-                if (inputSkills2) inputSkills2.value = skills.join('\n');
+                setSkillsData(skills, false);
             } else if (action === 'translate') {
                 var tl = aiResultText.split('\n');
                 var nM = '', tM = '', eM = '', sM = [], skM = '', inSum = false;
@@ -8733,7 +9127,7 @@
                 if (tM) { document.getElementById('inputTitle').value = tM; data.title = tM; }
                 if (eM) { document.getElementById('inputEmail').value = eM; data.email = eM; }
                 if (sM.length) { var sv = sM.join(' '); document.getElementById('inputSummary').value = sv; data.summary = sv; }
-                if (skM) { var sarr = skM.split(/[,،\n]+/).map(function (x) { return x.trim(); }).filter(function (x) { return x; }); data.skills = sarr; var isk = document.getElementById('inputSkills'); if (isk) isk.value = sarr.join('\n'); }
+                if (skM) { var sarr = skM.split(/[,،\n]+/).map(function (x) { return x.trim(); }).filter(function (x) { return x; }); data.skills = sarr; setSkillsData(sarr, false); }
             } else if (action === 'custom') {
                 document.getElementById('aiResultBody').innerHTML = '<div style="padding:12px;text-align:center;color:var(--muted);font-size:0.8rem">اقتراحات الذكاء الاصطناعي للمعاينة فقط. يُنصح بالتطبيق يدوياً عند الحاجة.</div>';
                 return;
@@ -8809,10 +9203,10 @@
                 var body = document.getElementById('aiResultBody');
                 var actionLabels = { tailor: 'تخصيص السيرة للوظيفة', skillgap: 'تحليل فجوات المهارات', interview: 'تحضير المقابلة', coverletter: 'إنشاء خطاب تعريف' };
                 var placeholders = {
-                    tailor: 'الصق وصف الوظيفة هنا...\n\nسيقوم الذكاء الاصطناعي بإعادة صياغة ملخصك وخبراتك لتتناسب مع هذه الوظيفة تماماً.',
-                    skillgap: 'الصق وصف الوظيفة هنا...\n\nسيحلل الذكاء الاصطناعي المهارات المفقودة لديك وينشئ خطة تعلم.',
-                    interview: 'الصق وصف الوظيفة هنا...\n\nسيحاكي الذكاء الاصطناعي مقابلة مع مدير توظيف بأسئلة صعبة مبنية على هذه الوظيفة.',
-                    coverletter: 'الصق وصف الوظيفة هنا...\n\nسينشئ الذكاء الاصطناعي خطاب تعريف مخصصاً لهذه الوظيفة.'
+                    tailor: 'Paste the job description here...\n\nThe AI will rewrite your summary and experience to match this job perfectly.',
+                    skillgap: 'Paste the job description here...\n\nThe AI will analyze what skills you\'re missing and create a learning roadmap.',
+                    interview: 'Paste the job description here...\n\nThe AI will simulate a hiring manager interview with tough questions based on this role.',
+                    coverletter: 'Paste the job description here...\n\nThe AI will generate a tailored cover letter for this position.'
                 };
                 body.innerHTML = '<div style="padding:12px">' +
                     '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">وصف الوظيفة:</label>' +
@@ -9104,10 +9498,12 @@
                     if (onError) onError('AI request failed');
                 });
             } else {
-                fetch('https://openrouter.ai/api/v1/chat/completions', {
+                var bk = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+                var be = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+                fetch(be + '/chat/completions', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
-                    body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bk },
+                    body: JSON.stringify({ model: 'meta/llama-3.3-70b-instruct', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
                 }).then(function(r){return r.json()}).then(function(d){var t=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'';if(t.length>5)onSuccess(t.trim());else onError('Empty response')}).catch(function(){onError('AI unavailable')});
             }
         }
@@ -9287,7 +9683,7 @@
 
         // Load followups on tab switch
         (function () {
-            var followupTab = document.querySelector('[onclick*="tab-followups"]');
+            var followupTab = document.querySelector('[data-section="followups"]');
             if (followupTab) {
                 followupTab.addEventListener('click', function () { setTimeout(loadApplications, 300); });
             }
@@ -9295,7 +9691,17 @@
             if (location.hash === '#followups') setTimeout(loadApplications, 500);
         })();
 
-        // ===== PHONE NAVIGATION =====
+        // ===== PHONE NAVIGATION (Stitch design) =====
+        var sectionLabels = {
+            'personal': 'المعلومات الشخصية',
+            'experience': 'الخبرة العملية',
+            'education': 'المؤهلات التعليمية',
+            'skills': 'المهارات والقدرات',
+            'languages': 'إتقان اللغات',
+            'jobmatch': 'مطابقة الوظائف',
+            'followups': 'التتابع'
+        };
+
         function phoneNav(section) {
             var forms = document.querySelector('.editor-forms');
             var preview = document.querySelector('.preview-zone');
@@ -9307,38 +9713,50 @@
                 document.getElementById('phoneNavEdit').classList.add('active');
                 forms.classList.remove('panel-hidden');
                 preview.classList.remove('panel-active');
+                document.getElementById('mobileFab').style.display = 'flex';
             } else if (section === 'preview') {
                 document.getElementById('phoneNavPreview').classList.add('active');
                 forms.classList.add('panel-hidden');
                 preview.classList.add('panel-active');
-            } else if (section === 'templates') {
-                document.getElementById('phoneNavTemplates').classList.add('active');
-                showTemplates();
-                return;
-            } else if (section === 'ai') {
-                document.getElementById('phoneNavAi').classList.add('active');
-                toggleAiMenu();
-                return;
-            } else if (section === 'more') {
-                document.getElementById('phoneNavMore').classList.add('active');
-                var dd = document.querySelector('.profile-dropdown');
-                if (dd) dd.classList.toggle('show');
-                setTimeout(function() {
-                    document.getElementById('phoneNavMore').classList.remove('active');
-                }, 2000);
-                return;
+                document.getElementById('mobileFab').style.display = 'none';
+            } else if (section === 'section') {
+                document.getElementById('phoneNavSection').classList.add('active');
+                forms.classList.remove('panel-hidden');
+                preview.classList.remove('panel-active');
+                document.getElementById('mobileFab').style.display = 'flex';
+            } else if (section === 'dashboard') {
+                document.getElementById('phoneNavDashboard').classList.add('active');
+                forms.classList.add('panel-hidden');
+                preview.classList.add('panel-active');
+                document.getElementById('mobileFab').style.display = 'none';
             }
         }
 
-        function updatePhoneTime() {
-            var now = new Date();
-            var h = now.getHours();
-            var m = now.getMinutes().toString().padStart(2, '0');
-            var el = document.getElementById('phoneTime');
-            if (el) el.textContent = h + ':' + m;
+        function updateMobileTopTitle(section) {
+            var label = sectionLabels[section] || 'صانع السيرة الذاتية';
+            var el = document.getElementById('mobileTopTitle');
+            if (el) el.textContent = label;
+            var secLabel = document.getElementById('phoneNavSectionLabel');
+            if (secLabel) secLabel.textContent = label;
         }
-        updatePhoneTime();
-        setInterval(updatePhoneTime, 30000);
+
+        function handleMobileFab() {
+            var activeTab = document.querySelector('.nav-tab.active');
+            if (!activeTab) return;
+            var sec = activeTab.getAttribute('data-section');
+            if (sec === 'experience') addExp();
+            else if (sec === 'education') addEdu();
+            else if (sec === 'languages') addLang();
+            else if (sec === 'skills') {
+                var si = document.getElementById('skillInput');
+                if (si) { si.focus(); si.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+            }
+        }
+
+        function toggleMobileProfileMenu() {
+            var dd = document.getElementById('profileDropdown');
+            if (dd) dd.classList.toggle('show');
+        }
 
     </script>
 </body>

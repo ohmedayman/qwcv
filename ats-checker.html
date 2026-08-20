@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -16,7 +16,7 @@
     <meta property="og:description" content="أداة فحص ATS مجانية — اختبر توافق سيرتك الذاتية مع أنظمة التوظيف الحديثة.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qcv.vexonet.online/ats-checker.html">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -543,9 +543,33 @@
             }
         }
     </style>
+    <style>
+        .page-loader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: #f0f2f7; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.dark-mode .page-loader { background: #0b1120; }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid #e2e7f0;
+            border-top-color: #0003c9;
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+        .loader-text { color: #64748b; font-size: 14px; font-weight: 500; }
+    </style>
 </head>
 
 <body>
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">جاري التحميل...</div>
+    </div>
 
     <nav
         style="background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:14px 20px;position:sticky;top:0;z-index:999">
@@ -571,6 +595,13 @@
                 الذاتية هنا</h2>
             <textarea class="ats-textarea" id="cvInput"
                 placeholder="الصق محتوى سيرتك الذاتية هنا...&#10;&#10;يتضمن: الاسم، البريد الإلكتروني، الملخص المهني، الخبرات العملية، التعليم، المهارات...&#10;&#10;أو اضغط على 'تجربة بعينة' أدناه لرؤية مثال"></textarea>
+            <div style="margin-top:16px">
+                <details style="background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:12px;cursor:pointer">
+                    <summary style="font-weight:700;font-size:0.82rem;color:var(--accent,#0003c9)"><i class="fas fa-crosshairs" style="margin-left:6px"></i> مقارنة مع وصف وظيفي (اختياري)</summary>
+                    <textarea class="ats-textarea" id="jdInput" style="margin-top:10px;min-height:100px"
+                        placeholder="الصق وصف الوظيفة هنا لمقارنة الكلمات المفتاحية...&#10;&#10;مثال: We are looking for a Frontend Developer with experience in React, TypeScript, and modern CSS frameworks."></textarea>
+                </details>
+            </div>
             <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
                 <button class="ats-sample-btn" style="border-color:var(--border,#e5e7eb);color:var(--muted,#6b7280)"
                     onclick="loadSample()"><i class="fas fa-magic" style="margin-left:4px"></i> تجربة بعينة</button>
@@ -616,9 +647,22 @@
             </div>
 
             <!-- Job Tips from External Sites -->
-            <div id="jobTipsSection" style="display:none;background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:16px;padding:24px;margin-bottom:24px">
+            <div id="jobTipsSection" style="display:block;background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:16px;padding:24px;margin-bottom:24px">
                 <h3 style="font-size:1rem;font-weight:800;margin-bottom:16px"><i class="fas fa-lightbulb" style="color:#f59e0b;margin-left:8px"></i> نصائح من مواقع التوظيف</h3>
-                <div id="jobTipsList" style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="job-tips-grid"></div>
+                <div id="jobTipsList" style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="job-tips-grid">
+                    <div style="padding:14px;background:#f0f7ff;border-radius:10px;border:1px solid #0a66c220">
+                        <div style="font-size:0.82rem;font-weight:700;color:#0a66c2;margin-bottom:6px"><i class="fab fa-linkedin" style="margin-left:6px"></i>LinkedIn</div>
+                        <div style="font-size:0.78rem;color:#1a1a2e;line-height:1.6">استخدم كلمات مفتاحية من الوظائف اللي بتقدم عليها، وخلي ملخصك أول 3 أسطر يركز على إنجازاتك بالأرقام.</div>
+                    </div>
+                    <div style="padding:14px;background:#f0fffe;border-radius:10px;border:1px solid #00b2a920">
+                        <div style="font-size:0.82rem;font-weight:700;color:#00b2a9;margin-bottom:6px"><i class="fas fa-briefcase" style="margin-left:6px"></i>Wuzzuf / Forasna</div>
+                        <div style="font-size:0.78rem;color:#1a1a2e;line-height:1.6">Wuzzuf و Forasna بيفضلوا السيرة الذاتية بالعربي مع قسم خبرة واضح ومهارات تقنية محددة.</div>
+                    </div>
+                    <div style="padding:14px;background:#f0faf3;border-radius:10px;border:1px solid #0caa4120">
+                        <div style="font-size:0.82rem;font-weight:700;color:#0caa41;margin-bottom:6px"><i class="fas fa-star" style="margin-left:6px"></i>Glassdoor</div>
+                        <div style="font-size:0.78rem;color:#1a1a2e;line-height:1.6">Glassdoor بيدور على المرتبات المتوقعة والخبرة السابقة — اجعل قسم الخبرة مفصل وواضح.</div>
+                    </div>
+                </div>
             </div>
 
             <!-- External Job Sites References -->
@@ -743,37 +787,51 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
             btn.disabled = true;
 
             try {
+                var jdText = document.getElementById('jdInput').value.trim();
+                var hasJD = jdText.length > 30;
+
                 var prompt = 'You are a senior ATS (Applicant Tracking System) analyst with 15 years of experience at top recruitment firms.\n\n' +
                     'Analyze this CV and return ONLY a JSON object (no markdown, no code blocks, no explanation) with this exact structure:\n' +
-                    '{"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","section":"summary|experience|skills|education|contact","fix":"Arabic fix suggestion with +points"}],"verdict":"Arabic verdict in 1-2 sentences","keywords":{"missing":["keyword1","keyword2"],"found":["keyword3"]},"jobTips":{"linkedin":"tip for LinkedIn optimization","wuzzuf":"tip for Wuzzuf/Forasna optimization","glassdoor":"tip for Glassdoor optimization"}}\n\n' +
-                    'Scoring criteria:\n' +
-                    '- Contact: email, phone, LinkedIn, professional title presence\n' +
-                    '- Content: summary quality (80+ words), experience depth, bullet points, education\n' +
-                    '- ATS: keyword density, standard formatting, no special chars, proper sections\n' +
-                    '- Skills: relevance, count (8-12 optimal), mix of technical + soft\n' +
-                    '- Impact: action verbs, quantified achievements (numbers/%), power statements\n\n' +
-                    'Generate 8-12 issues with severity levels. Be specific and actionable.\n' +
+                    '{"overall":0-100,"categories":{"contact":{"score":0-100,"name":"معلومات الاتصال"},"content":{"score":0-100,"name":"محتوى السيرة الذاتية"},"ats":{"score":0-100,"name":"التوافق مع ATS"},"skills":{"score":0-100,"name":"المهارات"},"impact":{"score":0-100,"name":"التأثير المهني"}},"issues":[{"type":"critical|warning|info|pass","text":"Arabic description","section":"summary|experience|skills|education|contact","fix":"Arabic fix suggestion with +points"}],"verdict":"Arabic verdict in 1-2 sentences","keywords":{"missing":["keyword1","keyword2"],"found":["keyword3"],"match_pct":0},"jobTips":{"linkedin":"tip for LinkedIn optimization","wuzzuf":"tip for Wuzzuf/Forasna optimization","glassdoor":"tip for Glassdoor optimization"' +
+                    (hasJD ? ',"jd_match":{"matched":["kw1","kw2"],"missing":["kw3","kw4"],"score":0}' : '') +
+                    '}\n\n' +
+                    'SCORING RULES (IMPORTANT — be generous for good CVs):\n' +
+                    '- A CV with name, email, phone, LinkedIn, summary, 2+ jobs with bullet points, 6+ skills, education = 90-100 overall\n' +
+                    '- A CV missing 1-2 items = 80-89\n' +
+                    '- A CV missing 3+ items = 60-79\n' +
+                    '- A CV with major gaps = below 60\n\n' +
+                    'Category scoring:\n' +
+                    '- Contact (15%): email=25, phone=25, LinkedIn=25, title=25\n' +
+                    '- Content (25%): summary present=25, 2+ jobs=25, bullet points=25, education=25\n' +
+                    '- ATS (25%): clean format=25, proper sections=25, keywords present=25, no special chars=25\n' +
+                    '- Skills (20%): 6+ skills=50, 3-5 skills=35, technical mix=25, soft skills=25\n' +
+                    '- Impact (15%): action verbs=25, quantified results=25, leadership=25, education impact=25\n\n' +
+                    'IMPORTANT: If a CV has all required elements, give 95+ overall. Do NOT be overly critical.\n' +
+                    (hasJD ? '\nAlso match the CV keywords/terms against this job description and return jd_match with matched, missing keywords and a match score 0-100.\nJob Description:\n' + jdText + '\n\n' : '') +
+                    'Generate 6-10 issues with severity levels. Be specific and actionable.\n' +
                     'All text MUST be in Arabic.\n\nCV:\n' + text;
 
                 var aiResult = null;
-                // Try QCVAI first (uses POST to Pollinations)
+                // Try QCVAI first
                 if (window.QCVAI) {
-                    try { aiResult = await QCVAI.callJSON(prompt, null, { timeout: 20000, maxRetries: 2 }); } catch (e) { }
+                    try { aiResult = await QCVAI.callJSON(prompt, null, { timeout: 25000, maxRetries: 1 }); } catch (e) { }
                 }
-                // Fallback: direct POST to OpenRouter
+                // Fallback: BluesMinds
                 if (!aiResult || !aiResult.ok) {
                     try {
-                        var response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                        var bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+                        var bluesmindsEndpoint = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
+                        var response = await fetch(bluesmindsEndpoint + '/chat/completions', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ((window.QCVConfig && window.QCVConfig.openrouterKey) || '') },
+                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
                             body: JSON.stringify({
-                                model: 'google/gemini-2.5-flash',
+                                model: 'meta/llama-3.3-70b-instruct',
                                 messages: [
                                     { role: 'system', content: 'You are an ATS expert. Return ONLY valid JSON, no markdown, no code blocks.' },
                                     { role: 'user', content: prompt }
                                 ],
                                 temperature: 0.3,
-                                max_tokens: 2000
+                                max_tokens: 3000
                             })
                         });
                         if (!response.ok) throw new Error('HTTP ' + response.status);
@@ -785,20 +843,132 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
                 }
 
                 if (aiResult && aiResult.ok && aiResult.json) {
+                    // Add JD keyword match locally as well
+                    if (hasJD && !aiResult.json.jd_match) {
+                        aiResult.json.jd_match = extractKeywordMatch(text, jdText);
+                    }
                     displayResults(aiResult.json);
+                } else if (window.CVAnalyzer) {
+                    // Use CVAnalyzer as fallback
+                    var dummyData = parseCvToData(text);
+                    var scores = CVAnalyzer.analyze(dummyData);
+                    var jdMatch = hasJD ? extractKeywordMatch(text, jdText) : null;
+                    displayResults(formatCVAnalyzerResult(scores, text, jdMatch));
                 } else {
-                    const result = localAnalyze(text);
+                    var result = localAnalyze(text);
+                    if (hasJD) result.jd_match = extractKeywordMatch(text, jdText);
                     displayResults(result);
                 }
 
             } catch (err) {
                 console.error('ATS analysis error:', err);
-                const result = localAnalyze(text);
+                var result = localAnalyze(text);
+                var jdText2 = document.getElementById('jdInput').value.trim();
+                if (jdText2.length > 30) result.jd_match = extractKeywordMatch(text, jdText2);
                 displayResults(result);
             }
 
             btn.classList.remove('loading');
             btn.disabled = false;
+        }
+
+        function parseCvToData(text) {
+            var lines = text.split('\n').filter(function(l) { return l.trim(); });
+            var data = { name: '', title: '', email: '', phone: '', location: '', linkedin: '', summary: '', experience: [], education: [], skills: [] };
+            data.name = lines[0] || '';
+            // Extract contact info
+            lines.forEach(function(l) {
+                var lt = l.toLowerCase();
+                if (lt.includes('@')) data.email = l.split(/[:：]/).pop().trim();
+                if (lt.match(/0[0-9]{9,}/)) data.phone = l.match(/0[0-9]{9,}/)[0];
+                if (lt.includes('linkedin')) data.linkedin = l;
+                if (lt.includes('summary') || lt.includes('ملخص')) { /* handled below */ }
+            });
+            // Find summary section
+            for (var i = 0; i < lines.length; i++) {
+                if (lines[i].match(/summary|ملخص|profile/i) && i + 1 < lines.length) {
+                    data.summary = lines[i + 1];
+                    break;
+                }
+            }
+            // Skills
+            var inSkills = false;
+            for (var j = 0; j < lines.length; j++) {
+                if (lines[j].match(/skills|مهارات/i)) { inSkills = true; continue; }
+                if (inSkills && lines[j].match(/experience|خبرة|education|تعليم|language|لغة/i)) break;
+                if (inSkills) {
+                    var parts = lines[j].split(/[,،•·-]+/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 1; });
+                    parts.forEach(function(p) { if (p.length > 1 && p.length < 40) data.skills.push(p); });
+                }
+            }
+            return data;
+        }
+
+        function formatCVAnalyzerResult(scores, text, jdMatch) {
+            var cats = {
+                contact: { score: scores.contact.total, name: 'معلومات الاتصال' },
+                content: { score: scores.content.total, name: 'محتوى السيرة الذاتية' },
+                ats: { score: scores.ats.total, name: 'التوافق مع ATS' },
+                skills: { score: scores.skills.total, name: 'المهارات' },
+                impact: { score: scores.impact.total, name: 'التأثير المهني' }
+            };
+            var issues = [];
+            scores.recommendations.forEach(function(r) {
+                issues.push({ type: r.type, text: r.title, fix: r.fix ? 'أضف' + r.fix : '', section: r.section });
+            });
+            var grade = CVAnalyzer.getGrade(scores.overall);
+            var result = {
+                overall: scores.overall,
+                categories: cats,
+                issues: issues.slice(0, 12),
+                verdict: grade.grade + '! ' + grade.label,
+                keywords: extractKeywords(text),
+                jobTips: {
+                    linkedin: 'استخدم كلمات مفتاحية من الوظائف اللي بتقدم عليها.',
+                    wuzzuf: 'Wuzzuf بيفضل السيرة الذاتية بالعربي مع قسم خبرة واضح.',
+                    glassdoor: 'اجعل قسم الخبرة مفصل وواضح.'
+                }
+            };
+            if (jdMatch) result.jd_match = jdMatch;
+            return result;
+        }
+
+        function extractKeywords(text) {
+            var tech = ['JavaScript', 'Python', 'React', 'Node', 'SQL', 'HTML', 'CSS', 'Java', 'C++', 'PHP', 'TypeScript', 'Angular', 'Vue', 'Docker', 'AWS', 'Git', 'Firebase', 'MongoDB', 'REST', 'API', 'Linux', 'Nginx', 'Figma', 'Photoshop', 'Kubernetes', 'Redis', 'GraphQL', 'Next.js', 'Tailwind', 'Bootstrap', 'Sass', 'Redux', 'Jest', 'Cypress'];
+            var found = tech.filter(function(t) { return text.toLowerCase().includes(t.toLowerCase()); });
+            var missing = tech.filter(function(t) { return !text.toLowerCase().includes(t.toLowerCase()); });
+            return { found: found, missing: missing.slice(0, 10) };
+        }
+
+        function extractKeywordMatch(cvText, jdText) {
+            var stopWords = ['the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'of', 'and', 'or', 'is', 'are', 'was', 'were', 'with', 'from', 'by', 'as', 'be', 'this', 'that', 'it', 'we', 'you', 'they', 'our', 'your', 'their', 'its', 'has', 'have', 'had', 'will', 'would', 'could', 'should', 'may', 'might', 'about', 'between', 'through', 'during', 'before', 'after', 'above', 'below', 'up', 'down', 'out', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'all', 'each', 'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very'];
+            
+            // Extract meaningful words from JD (2+ chars, not stop words)
+            var jdWords = jdText.toLowerCase().replace(/[^a-z\u0621-\u064A0-9\s]/g, ' ').split(/\s+/).filter(function(w) { 
+                return w.length > 2 && stopWords.indexOf(w) === -1 && isNaN(w);
+            });
+            var jdUnique = []; 
+            jdWords.forEach(function(w) { if (jdUnique.indexOf(w) === -1) jdUnique.push(w); });
+            
+            var cvLower = cvText.toLowerCase();
+            var matched = jdUnique.filter(function(w) { return cvLower.includes(w); });
+            var missing = jdUnique.filter(function(w) { return !cvLower.includes(w); }).slice(0, 15);
+            
+            // Demote very common words
+            var commonWords = ['experience', 'years', 'work', 'job', 'skills', 'team', 'including', 'ability', 'required', 'position', 'company', 'development', 'management'];
+            matched = matched.filter(function(w) { return commonWords.indexOf(w) === -1; });
+            
+            var score = jdUnique.length > 0 ? Math.round((matched.length / jdUnique.length) * 100) : 0;
+            // Also count tech-specific terms for better scoring
+            var techTerms = ['react', 'node', 'python', 'javascript', 'typescript', 'docker', 'aws', 'sql', 'mongodb', 'api', 'git', 'css', 'html', 'angular', 'vue', 'figma', 'firebase', 'rest', 'graphql'];
+            var techMatched = techTerms.filter(function(t) { return jdText.toLowerCase().includes(t) && cvText.toLowerCase().includes(t); });
+            var techInJD = techTerms.filter(function(t) { return jdText.toLowerCase().includes(t); });
+            if (techInJD.length > 0) {
+                var techScore = Math.round((techMatched.length / techInJD.length) * 50);
+                score = Math.min(100, Math.round((score * 0.6) + (techScore > 50 ? 50 : techScore)));
+            }
+            
+            return { matched: matched.slice(0, 20), missing: missing.slice(0, 15), score: score };
         }
 
         function localAnalyze(text) {
@@ -840,28 +1010,39 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
             if (!/[^\u0000-\u007F]{3,}/.test(text.split('\n')[0])) { atsScore += 25; issues.push({ type: 'pass', text: 'الاسم خالٍ من الرموز الخاصة', fix: '' }); }
             else issues.push({ type: 'warning', text: 'الاسم يحتوي على رموز خاصة', fix: 'تجنب الرموز في اسم السيرة الذاتية' });
 
-            const techSkills = ['JavaScript', 'Python', 'React', 'Node', 'SQL', 'HTML', 'CSS', 'Java', 'C++', 'PHP', 'TypeScript', 'Angular', 'Vue', 'Docker', 'AWS', 'Git'];
+            const techSkills = ['JavaScript', 'Python', 'React', 'Node', 'SQL', 'HTML', 'CSS', 'Java', 'C++', 'PHP', 'TypeScript', 'Angular', 'Vue', 'Docker', 'AWS', 'Git', 'Firebase', 'MongoDB', 'REST', 'API', 'Linux', 'Nginx', 'CI/CD', 'Figma', 'Photoshop', 'Kubernetes', 'GraphQL', 'Next.js', 'Tailwind', 'Bootstrap', 'Sass', 'Redux', 'Jest', 'Cypress', 'Redis', 'PostgreSQL', 'MySQL', 'Go', 'Rust', 'Swift', 'Flutter', 'Azure', 'GCP', 'Terraform', 'Ansible', 'Jenkins', 'GitLab'];
             const foundSkills = techSkills.filter(s => text.toLowerCase().includes(s.toLowerCase()));
-            if (foundSkills.length >= 3) { atsScore += 25; skillsScore += 40; issues.push({ type: 'pass', text: 'يوجد ' + foundSkills.length + ' مهارة تقنية محددة', fix: '' }); }
+            const softSkills = ['قيادة', 'تواصل', 'إدارة فريق', 'قيادة فريق', 'حل المشكلات', 'اتخاذ قرارات', 'تفاوض', 'إدارة وقت', 'تخطيط', 'إبداع', 'عمل تحت ضغط', 'مهارات تحليلية', 'قيادة', 'leadership', 'communication', 'team management', 'problem solving', 'decision making', 'negotiation', 'time management', 'planning', 'creativity'];
+            const foundSoft = softSkills.filter(s => text.toLowerCase().includes(s.toLowerCase()));
+            if (foundSkills.length >= 3) { atsScore += 25; skillsScore += 50; issues.push({ type: 'pass', text: 'يوجد ' + foundSkills.length + ' مهارة تقنية محددة', fix: '' }); }
             else { issues.push({ type: 'warning', text: 'عدد المهارات التقنية المحددة قليل (' + foundSkills.length + ')', fix: 'أضف مهارات تقنية محددة مثل: JavaScript, React, SQL' }); skillsScore += 15; }
 
-            atsScore += 25; // Formatting assumed OK for plain text
-            atsScore += 25; // Keywords assumed present
+            // Standard formatting assumed OK
+            atsScore += 25;
+            // Proper sections check
+            if (/(summary|ملخص|profile|experience|خبرة|skills|مهارات|education|تعليم)/i.test(text)) { atsScore += 25; }
+            else { atsScore += 10; }
 
-            // Skills
-            if (foundSkills.length < 3) skillsScore += 15;
-            else if (foundSkills.length < 6) skillsScore += 30;
-            else skillsScore += 50;
+            // Skills scoring (max 100)
+            if (foundSkills.length >= 6) skillsScore += 50;
+            else if (foundSkills.length >= 3) skillsScore += 35;
+            else skillsScore += 15;
+            // Soft skills bonus
+            if (foundSoft.length >= 3) skillsScore += 10;
+            else if (foundSoft.length > 0) skillsScore += 5;
 
-            // Impact
+            // Impact scoring
             if (/\d+%|\d+\+|\d+x/i.test(text)) { impactScore += 30; issues.push({ type: 'pass', text: 'يوجد نتائج محددة بأرقام', fix: '' }); }
             else { impactScore += 10; issues.push({ type: 'warning', text: 'أضف نتائج محددة بأرقام (نسبة %، عدد مستخدمين)', fix: 'مثال: "حسّنت أداء النظام بنسبة 40%"' }); }
 
-            if (/(Led|Managed|Directed|Supervised|قاد|أدار|شرّف)/i.test(text)) { impactScore += 25; issues.push({ type: 'pass', text: 'يوجد أفعال قيادية', fix: '' }); }
+            if (/(Led|Managed|Directed|Supervised|قاد|أدار|شرّف|developed|built|created|improved|increased|reduced|delivered)/i.test(text)) { impactScore += 25; issues.push({ type: 'pass', text: 'يوجد أفعال إجراء محترفة', fix: '' }); }
             else impactScore += 5;
 
-            if (/(Bachelor|Degree|University|بكالوريوس|جامعة)/i.test(text)) { impactScore += 20; }
-            impactScore += 25;
+            if (/(Bachelor|Degree|University|بكالوريوس|جامعة|college)/i.test(text)) { impactScore += 25; }
+            else impactScore += 10;
+
+            if (/(Senior|Lead|Manager|Director|Principal|كبير|مدير|قائد)/i.test(text)) { impactScore += 20; }
+            else impactScore += 10;
 
             const overall = Math.round(contactScore * 0.15 + contentScore * 0.25 + atsScore * 0.25 + skillsScore * 0.2 + impactScore * 0.15);
 
@@ -962,10 +1143,39 @@ JavaScript, TypeScript, React.js, Node.js, MongoDB, Git, HTML5, CSS3, Python`;
                 document.getElementById('issuesList').insertAdjacentHTML('afterbegin', kwHtml);
             }
 
+            // Show JD keyword match results
+            if (result.jd_match) {
+                var jdColor = result.jd_match.score >= 80 ? '#16a34a' : result.jd_match.score >= 60 ? '#d97706' : result.jd_match.score >= 40 ? '#f97316' : '#dc2626';
+                var jdHtml = '<div class="ats-cta" style="margin-top:20px"><h3><i class="fas fa-crosshairs" style="color:' + jdColor + ';margin-left:8px"></i> مطابقة مع الوصف الوظيفي</h3>' +
+                    '<div style="display:flex;align-items:center;gap:16px;margin:12px 0;flex-wrap:wrap"><div style="width:60px;height:60px;border-radius:50%;border:4px solid ' + jdColor + ';display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;color:' + jdColor + ';flex-shrink:0">' + result.jd_match.score + '%</div>' +
+                    '<div><div style="font-weight:700;font-size:0.9rem">' + (result.jd_match.score >= 70 ? 'توافق جيد مع الوظيفة' : result.jd_match.score >= 50 ? 'توافق متوسط — أضف المهارات الناقصة' : 'توافق ضعيف — راجع المهارات المطلوبة') + '</div></div></div>';
+                if (result.jd_match.matched && result.jd_match.matched.length) {
+                    jdHtml += '<div style="margin-top:8px"><div style="font-size:0.78rem;font-weight:700;color:#059669;margin-bottom:6px"><i class="fas fa-check-circle"></i> كلمات متطابقة (' + result.jd_match.matched.length + '):</div>' +
+                        result.jd_match.matched.map(function(k) { return '<span style="display:inline-block;background:rgba(5,150,105,0.1);color:#059669;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:600;margin:3px">' + k + '</span>'; }).join('') + '</div>';
+                }
+                if (result.jd_match.missing && result.jd_match.missing.length) {
+                    jdHtml += '<div style="margin-top:8px"><div style="font-size:0.78rem;font-weight:700;color:#dc2626;margin-bottom:6px"><i class="fas fa-exclamation-circle"></i> كلمات ناقصة (' + result.jd_match.missing.length + '):</div>' +
+                        result.jd_match.missing.map(function(k) { return '<span style="display:inline-block;background:rgba(239,68,68,0.08);color:#dc2626;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:600;margin:3px">' + k + '</span>'; }).join('') + '</div>';
+                }
+                jdHtml += '</div>';
+                document.getElementById('issuesList').insertAdjacentHTML('afterbegin', jdHtml);
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        });
+        setTimeout(function() {
+            var l = document.getElementById('pageLoader');
+            if (l) l.classList.add('hide');
+        }, 4000);
+    </script>
     <script defer src="js/animations.js"></script>
+<script defer src="js/site-settings.js"></script>
 
 </body>
 
