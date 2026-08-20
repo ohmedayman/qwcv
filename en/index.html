@@ -56,6 +56,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
     <script defer src="../js/theme.js"></script>
+<script defer src="../js/lang.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -1127,7 +1128,7 @@
             </button>
             <div class="lang-switch"
                 style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px">
-                <a href="../index.html" class="lang-ar"
+                <a href="../index.html" onclick="if(window.QCVLang){QCVLang.set('ar');return false;}" class="lang-ar"
                     style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:inherit;transition:all 0.2s;text-decoration:none">عربي</a>
                 <span class="lang-en"
                     style="background:var(--accent);color:#fff;padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:700;font-family:inherit">EN</span>
@@ -1227,7 +1228,7 @@
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-bullseye"></i></div>
                 <h3>Job Matching</h3>
                 <p>Compare your resume against a job description and boost it with the right keywords.</p>
-                <a href="../job-matcher.html" class="btn btn-ghost" style="margin-top:12px">Try Matching</a>
+                <a href="../ai-tools.html" class="btn btn-ghost" style="margin-top:12px">Try Matching</a>
             </article>
             <article class="feature-card reveal">
                 <div class="f-icon" aria-hidden="true"><i class="fas fa-globe"></i></div>
@@ -1850,7 +1851,7 @@
                 <h4><i class="fas fa-headset" style="margin-right:4px"></i> Support</h4>
                 <ul>
                     <li><a href="help.html"><i class="fas fa-life-ring" style="font-size:0.7rem;margin-right:4px"></i> Help Center</a></li>
-                    <li><a href="../support.html"><i class="fas fa-ticket-alt" style="font-size:0.7rem;margin-right:4px"></i> Tickets &amp; Support</a></li>
+                    <li><a href="../help.html"><i class="fas fa-ticket-alt" style="font-size:0.7rem;margin-right:4px"></i> Tickets &amp; Support</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope" style="font-size:0.7rem;margin-right:4px"></i> Contact Us</a></li>
                     <li><a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer"><i
                                 class="fab fa-whatsapp" style="color:#25D366"></i> <span>WhatsApp</span></a></li>

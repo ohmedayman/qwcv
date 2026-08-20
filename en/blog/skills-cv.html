@@ -27,16 +27,17 @@
     <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0003c9">
-    <link rel="stylesheet" href="../components.css">
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../mobile.css">
+    <link rel="stylesheet" href="../../components.css">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../mobile.css">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         crossorigin="anonymous" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
-    <script defer src="../js/theme.js"></script>
+    <script defer src="../../js/theme.js"></script>
+<script defer src="../../js/lang.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -286,13 +287,13 @@
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
-        <a href="index.html" class="nav-logo">Q<span>CV</span></a>
+        <a href="../index.html" class="nav-logo">Q<span>CV</span></a>
         <ul class="nav-center">
-            <li><a href="index.html"><i class="fas fa-home" style="font-size:0.7rem;margin-right:4px"></i> Home</a></li>
-            <li><a href="pricing.html"><i class="fas fa-tag" style="font-size:0.7rem;margin-right:4px"></i> Pricing</a></li>
-            <li><a href="careers.html"><i class="fas fa-briefcase" style="font-size:0.7rem;margin-right:4px"></i> Careers</a></li>
-            <li><a href="help.html"><i class="fas fa-question-circle" style="font-size:0.7rem;margin-right:4px"></i> Help</a></li>
-            <li><a href="blog.html"><i class="fas fa-blog" style="font-size:0.7rem;margin-right:4px"></i> Blog</a></li>
+            <li><a href="../index.html"><i class="fas fa-home" style="font-size:0.7rem;margin-right:4px"></i> Home</a></li>
+            <li><a href="../pricing.html"><i class="fas fa-tag" style="font-size:0.7rem;margin-right:4px"></i> Pricing</a></li>
+            <li><a href="../careers.html"><i class="fas fa-briefcase" style="font-size:0.7rem;margin-right:4px"></i> Careers</a></li>
+            <li><a href="../help.html"><i class="fas fa-question-circle" style="font-size:0.7rem;margin-right:4px"></i> Help</a></li>
+            <li><a href="../blog.html"><i class="fas fa-blog" style="font-size:0.7rem;margin-right:4px"></i> Blog</a></li>
         </ul>
         <div class="nav-right">
             <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="Toggle dark mode">
@@ -300,11 +301,11 @@
                 <span class="icon-moon" style="display:none">&#9790;</span>
             </button>
             <div class="lang-switch">
-                <a href="../index.html" class="lang-ar">عربي</a>
+                <a href="../../index.html" onclick="if(window.QCVLang){QCVLang.set('ar');return false;}" class="lang-ar">عربي</a>
                 <span class="lang-en">EN</span>
             </div>
-            <a href="../login.html" class="login"><i class="fas fa-sign-in-alt" style="font-size:0.75rem;margin-right:4px"></i> Login</a>
-            <a href="../login.html" class="btn-cta"><i class="fas fa-rocket" style="font-size:0.75rem;margin-right:4px"></i> Start Free</a>
+            <a href="../../login.html" class="login"><i class="fas fa-sign-in-alt" style="font-size:0.75rem;margin-right:4px"></i> Login</a>
+            <a href="../../login.html" class="btn-cta"><i class="fas fa-rocket" style="font-size:0.75rem;margin-right:4px"></i> Start Free</a>
         </div>
         <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-center').classList.toggle('show')" aria-label="Menu">&#9776;</button>
     </nav>
@@ -530,7 +531,7 @@
         <div class="card" style="text-align:center;max-width:640px;margin:0 auto;background:linear-gradient(135deg, rgba(0,3,201,0.04), rgba(6,182,212,0.04));">
             <h3 style="font-size:1.4rem;"><i class="fas fa-rocket" style="color:var(--accent);margin-right:8px;"></i> Ready to Build Your Resume?</h3>
             <p style="text-align:center;color:var(--muted);margin-bottom:20px;">Use the QCV editor to create a resume that highlights your skills creatively and grabs employers' attention for the job you want.</p>
-            <a href="../login.html" class="btn btn-primary"><i class="fas fa-edit" style="font-size:0.8rem;"></i> Start Free Now</a>
+            <a href="../../login.html" class="btn btn-primary"><i class="fas fa-edit" style="font-size:0.8rem;"></i> Start Free Now</a>
         </div>
         <div style="text-align:center;margin-top:40px;">
             <a href="../blog.html" class="btn btn-ghost"><i class="fas fa-arrow-left" style="margin-right:8px;"></i> Back to Blog</a>
@@ -547,28 +548,28 @@
             <div class="footer-links">
                 <h4><i class="fas fa-cube" style="margin-right:4px"></i> Product</h4>
                 <ul>
-                    <li><a href="../editor.html"><i class="fas fa-edit" style="font-size:0.7rem;margin-right:4px"></i> Resume Builder</a></li>
-                    <li><a href="templates.html"><i class="fas fa-palette" style="font-size:0.7rem;margin-right:4px"></i> Templates</a></li>
+                    <li><a href="../../editor.html"><i class="fas fa-edit" style="font-size:0.7rem;margin-right:4px"></i> Resume Builder</a></li>
+                    <li><a href="../templates.html"><i class="fas fa-palette" style="font-size:0.7rem;margin-right:4px"></i> Templates</a></li>
                     <li><a href="../ai-tools.html"><i class="fas fa-brain" style="font-size:0.7rem;margin-right:4px"></i> Free AI Tools</a></li>
-                    <li><a href="pricing.html"><i class="fas fa-tags" style="font-size:0.7rem;margin-right:4px"></i> Pricing</a></li>
+                    <li><a href="../pricing.html"><i class="fas fa-tags" style="font-size:0.7rem;margin-right:4px"></i> Pricing</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4><i class="fas fa-headset" style="margin-right:4px"></i> Support</h4>
                 <ul>
-                    <li><a href="help.html"><i class="fas fa-life-ring" style="font-size:0.7rem;margin-right:4px"></i> Help Center</a></li>
-                    <li><a href="contact.html"><i class="fas fa-envelope" style="font-size:0.7rem;margin-right:4px"></i> Contact Us</a></li>
+                    <li><a href="../help.html"><i class="fas fa-life-ring" style="font-size:0.7rem;margin-right:4px"></i> Help Center</a></li>
+                    <li><a href="../contact.html"><i class="fas fa-envelope" style="font-size:0.7rem;margin-right:4px"></i> Contact Us</a></li>
                     <li><a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" style="color:#25D366"></i> <span>WhatsApp</span></a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4><i class="fas fa-building" style="margin-right:4px"></i> Company</h4>
                 <ul>
-                    <li><a href="about.html"><i class="fas fa-info-circle" style="font-size:0.7rem;margin-right:4px"></i> About Us</a></li>
-                    <li><a href="careers.html"><i class="fas fa-briefcase" style="font-size:0.7rem;margin-right:4px"></i> Careers</a></li>
-                    <li><a href="blog.html"><i class="fas fa-blog" style="font-size:0.7rem;margin-right:4px"></i> Blog</a></li>
-                    <li><a href="privacy.html"><i class="fas fa-shield-alt" style="font-size:0.7rem;margin-right:4px"></i> Privacy Policy</a></li>
-                    <li><a href="terms.html"><i class="fas fa-file-contract" style="font-size:0.7rem;margin-right:4px"></i> Terms of Service</a></li>
+                    <li><a href="../about.html"><i class="fas fa-info-circle" style="font-size:0.7rem;margin-right:4px"></i> About Us</a></li>
+                    <li><a href="../careers.html"><i class="fas fa-briefcase" style="font-size:0.7rem;margin-right:4px"></i> Careers</a></li>
+                    <li><a href="../blog.html"><i class="fas fa-blog" style="font-size:0.7rem;margin-right:4px"></i> Blog</a></li>
+                    <li><a href="../privacy.html"><i class="fas fa-shield-alt" style="font-size:0.7rem;margin-right:4px"></i> Privacy Policy</a></li>
+                    <li><a href="../terms.html"><i class="fas fa-file-contract" style="font-size:0.7rem;margin-right:4px"></i> Terms of Service</a></li>
                 </ul>
             </div>
         </div>
@@ -578,14 +579,14 @@
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/201028707543" target="_blank" rel="noopener" class="whatsapp-btn" aria-label="Contact us on WhatsApp"><i class="fab fa-whatsapp"></i></a>
 
-    <script defer src="../js/config.js"></script>
-    <script defer src="../js/ai-service.js"></script>
-    <script defer src="../js/maintenance.js"></script>
-    <script defer src="../js/site-settings.js"></script>
-    <script defer src="../js/auto-reload.js"></script>
-    <script defer src="../js/animations.js"></script>
-    <script defer src="../js/analytics.js"></script>
-    <script defer src="../js/notify-sounds.js"></script>
+    <script defer src="../../js/config.js"></script>
+    <script defer src="../../js/ai-service.js"></script>
+    <script defer src="../../js/maintenance.js"></script>
+    <script defer src="../../js/site-settings.js"></script>
+    <script defer src="../../js/auto-reload.js"></script>
+    <script defer src="../../js/animations.js"></script>
+    <script defer src="../../js/analytics.js"></script>
+    <script defer src="../../js/notify-sounds.js"></script>
 
     <script>
         (function () {

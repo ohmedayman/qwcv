@@ -37,6 +37,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
     <script defer src="../../js/theme.js"></script>
+<script defer src="../../js/lang.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -313,7 +314,7 @@
                 <span class="icon-moon" style="display:none">&#9790;</span>
             </button>
             <div class="lang-switch">
-                <a href="../../index.html" class="lang-ar">عربي</a>
+                <a href="../../index.html" onclick="if(window.QCVLang){QCVLang.set('ar');return false;}" class="lang-ar">عربي</a>
                 <span class="lang-en">EN</span>
             </div>
             <a href="../../login.html" class="login"><i class="fas fa-sign-in-alt" style="font-size:0.75rem;margin-right:4px"></i> Login</a>
@@ -416,7 +417,7 @@
             <div class="card" style="margin:40px 0 0;text-align:center">
                 <h3>Ready to Build Your Resume?</h3>
                 <p>Before the interview, you need a resume that earns it. Create a professional one in minutes with QCV.</p>
-                <a href="../login.html" class="btn btn-primary" style="margin-top:14px"><i class="fas fa-rocket"></i> Start Free</a>
+                <a href="../../login.html" class="btn btn-primary" style="margin-top:14px"><i class="fas fa-rocket"></i> Start Free</a>
             </div>
 
             <div style="text-align:center;margin:36px 0 0">

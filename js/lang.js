@@ -311,8 +311,23 @@
         try { localStorage.setItem(STORAGE_KEY, v); } catch(e) {}
     }
 
+    function currentPage() {
+        var p = (window.location.pathname || '').replace(/^\/+/, '').split('?')[0].split('#')[0];
+        if (!p) return 'index.html';
+        if (p.slice(-1) === '/') p += 'index.html';
+        return p;
+    }
+
+    function isEnPage() {
+        return currentPage().indexOf('en/') === 0;
+    }
+
+    function effectiveLang() {
+        return isEnPage() ? 'en' : (getStored() || DEFAULT_LANG);
+    }
+
     function current() {
-        return getStored() || DEFAULT_LANG;
+        return effectiveLang();
     }
 
     function t(key) {
@@ -321,9 +336,61 @@
         return dict[current()] || dict[DEFAULT_LANG] || key;
     }
 
+    // ===== Language navigation (ar <-> en) =====
+    const PAGE_MAP = {
+        'index.html': 'en/index.html',
+        'pay.html': 'en/pricing.html',
+        'about.html': 'en/about.html',
+        'contact.html': 'en/contact.html',
+        'compare.html': 'en/compare.html',
+        'careers.html': 'en/careers.html',
+        'templates.html': 'en/templates.html',
+        'summary.html': 'en/summary.html',
+        'help.html': 'en/help.html',
+        'privacy.html': 'en/privacy.html',
+        'terms.html': 'en/terms.html',
+        '404.html': 'en/404.html',
+        'ai-tools.html': 'en/ai-tools.html',
+        'ats-checker.html': 'en/ats-checker.html',
+        'cover-letter.html': 'en/cover-letter.html',
+        'email-signature.html': 'en/email-signature.html',
+        'blog.html': 'en/blog.html'
+    };
+
+    function depthPrefix() {
+        var depth = currentPage().split('/').length - 1;
+        var pre = '';
+        while (depth > 0) { pre += '../'; depth--; }
+        return pre;
+    }
+
+    function langTarget(lang) {
+        var page = currentPage();
+        var en = isEnPage();
+        var prefix = depthPrefix();
+        if (lang === 'en' && !en) {
+            var t = PAGE_MAP[page];
+            if (!t && page.indexOf('blog/') === 0) t = 'en/' + page;
+            if (!t) return null;
+            return prefix + t;
+        }
+        if (lang === 'ar' && en) {
+            var ar = page.substring(3);
+            if (ar === 'pricing.html') ar = 'pay.html';
+            if (!ar) ar = 'index.html';
+            return prefix + ar;
+        }
+        return null;
+    }
+
     function set(lang) {
         if (lang !== 'ar' && lang !== 'en') return;
         setStored(lang);
+        var target = langTarget(lang);
+        if (target) {
+            window.location.href = target;
+            return;
+        }
         apply(lang);
     }
 
