@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>QCV - CV Editor</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
@@ -5357,6 +5357,45 @@
         /* ── Elements hidden by default, shown only on mobile ── */
         .phone-bottom-nav { display: none; }
         .phone-notch, .phone-status-bar { display: none !important; }
+
+        /* ===== MOBILE SAFE-AREA + POLISH ===== */
+        @media (max-width: 768px) {
+            .phone-bottom-nav {
+                height: calc(64px + env(safe-area-inset-bottom, 0px));
+            }
+            .editor-forms,
+            .preview-zone,
+            .section-modal-content,
+            .upgrade-overlay .upgrade-box,
+            .notif-panel,
+            .profile-dropdown,
+            .nav-tab-menu,
+            .template-panel {
+                bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .ai-menu,
+            .ai-result-panel {
+                bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .ai-assist-btn,
+            .mobile-fab {
+                bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .ai-result-panel {
+                max-height: 50dvh !important;
+            }
+            .editor-forms {
+                overscroll-behavior: contain;
+            }
+            .phone-nav-item {
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
+        @media (max-width: 400px) {
+            .ai-menu {
+                bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+        }
     </style>
 </head>
 
@@ -9190,7 +9229,7 @@
                 body.innerHTML = '<div style="padding:12px">' +
                     '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">اسأل أي شيء عن سيرتك الذاتية:</label>' +
                     '<textarea id="aiCustomInput" rows="3" placeholder="مثال: كيف يمكنني تحسين الملخص؟ ما المهارات التي يجب أن أضيفها؟..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;resize:vertical;font-family:inherit"></textarea></div>' +
-                    '<button onclick="sendCustomAi()" style="width:100%;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem">إرسال</button></div>';
+                    '<button onclick="sendCustomAi()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem">إرسال</button></div>';
                 setAiLoading(false);
                 setTimeout(function () { var inp = document.getElementById('aiCustomInput'); if (inp) inp.focus(); }, 100);
                 return;

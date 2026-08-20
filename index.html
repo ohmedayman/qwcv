@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>QCV | منشئ سير ذاتية بالذكاء الاصطناعي - بناء CV احترافي ATS مجاني</title>
     <meta name="description"
         content="QCV هو أفضل منشئ سير ذاتية بالذكاء الاصطناعي في مصر والعالم العربي. ابنِ سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق معدودة. جرّب مجاناً الآن واحصل على وظيفة أحلامك. مميزات: تحليل ATS مجاني، قوالب احترافية، تصدير PDF.">
@@ -2225,6 +2225,45 @@
                 font-size: 0.72rem
             }
         }
+
+        /* ===== MOBILE UX ENHANCEMENTS ===== */
+        html { -webkit-text-size-adjust: 100%; }
+        button, a, input, select, textarea { touch-action: manipulation; }
+        section[id] { scroll-margin-top: 88px; }
+
+        #navScrim {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease; z-index: 998;
+        }
+        body.nav-open #navScrim { opacity: 1; visibility: visible; }
+        body.nav-open { overflow: hidden; }
+        @media (min-width: 901px) { #navScrim { display: none; } }
+
+        @media (max-width: 900px) {
+            .navbar {
+                padding-top: env(safe-area-inset-top, 0px);
+                height: calc(68px + env(safe-area-inset-top, 0px));
+            }
+            .nav-center {
+                top: calc(60px + env(safe-area-inset-top, 0px));
+            }
+            input, select, textarea { font-size: 16px !important; }
+        }
+        @media (max-width: 768px) {
+            .footer { padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
+            .whatsapp-btn { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+        }
+        @media (max-width: 480px) {
+            .nav-right { gap: 8px; }
+            .nav-right .btn-cta { padding: 8px 14px; font-size: 0.74rem; white-space: nowrap; }
+            .lang-switch { padding: 2px 3px; }
+            .lang-switch button { padding: 4px 8px; font-size: 0.68rem; }
+            .hero-highlights { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+            .hero-highlight { padding: 10px 4px; text-align: center; }
+            .hero-highlight strong { font-size: 1rem; }
+            .hero-highlight span { font-size: 0.6rem; line-height: 1.3; }
+        }
     </style>
 </head>
 
@@ -2244,6 +2283,29 @@
         <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك. <a href="privacy.html">اعرف المزيد</a></p>
         <button class="cookie-btn" onclick="acceptCookies()">قبول</button>
     </div>
+
+    <!-- ===== MOBILE MENU SCRIM ===== -->
+    <div id="navScrim"></div>
+    <script>
+        function toggleNav() {
+            var nc = document.querySelector('.nav-center');
+            var open = nc.classList.toggle('show');
+            document.body.classList.toggle('nav-open', open);
+        }
+        function closeNav() {
+            var nc = document.querySelector('.nav-center');
+            if (nc.classList.contains('show')) {
+                nc.classList.remove('show');
+                document.body.classList.remove('nav-open');
+            }
+        }
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('#navScrim')) closeNav();
+        });
+        document.querySelectorAll('.nav-center a').forEach(function (a) {
+            a.addEventListener('click', closeNav);
+        });
+    </script>
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
@@ -2273,7 +2335,7 @@
             <a href="login.html" class="login" data-i18n="login"><i class="fas fa-sign-in-alt" style="font-size:0.75rem;margin-left:4px"></i> تسجيل الدخول</a>
             <a href="login.html" class="btn-cta" data-i18n="start_free"><i class="fas fa-rocket" style="font-size:0.75rem;margin-left:4px"></i> ابدأ مجاناً</a>
         </div>
-        <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-center').classList.toggle('show')"
+        <button class="nav-mobile-toggle" onclick="toggleNav()"
             aria-label="القائمة">&#9776;</button>
     </nav>
 
