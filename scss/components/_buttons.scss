@@ -17,6 +17,15 @@
         box-shadow: 0 8px 20px rgba(0, 3, 201, 0.25);
         background: darken($primary, 8%);
     }
+
+    &:active {
+        transform: translateY(0) scale(0.97);
+    }
+
+    &:focus-visible {
+        outline: 3px solid $primary;
+        outline-offset: 2px;
+    }
 }
 
 .btn-primary {
@@ -40,5 +49,14 @@
     &:hover {
         border-color: $primary;
         color: $primary;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+
+    &:focus-visible {
+        outline: 3px solid $primary;
+        outline-offset: 2px;
     }
 }

@@ -9,9 +9,14 @@
         var reveals = document.querySelectorAll('[data-reveal]');
         if (!reveals.length) {
             // Auto-add reveal to common elements
-            var selectors = '.feature-card, .step, .price-card, .test-card-new, .faq-item, .stat, .partner-card, .section-header';
+            var selectors = '.feature-card, .step, .price-card, .test-card-new, .faq-item, .stat, .partner-card, .section-header, .reveal, .reveal-left, .reveal-right, .reveal-scale';
             document.querySelectorAll(selectors).forEach(function(el, i) {
-                el.setAttribute('data-reveal', 'up');
+                var dir = 'up';
+                if (el.classList.contains('reveal-left')) dir = 'left';
+                else if (el.classList.contains('reveal-right')) dir = 'right';
+                else if (el.classList.contains('reveal-scale')) dir = 'scale';
+                else if (el.classList.contains('reveal')) dir = 'up';
+                el.setAttribute('data-reveal', dir);
                 el.style.transitionDelay = (i % 4) * 0.08 + 's';
             });
             reveals = document.querySelectorAll('[data-reveal]');

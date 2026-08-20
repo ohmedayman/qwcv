@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>QCV - CV Editor</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
@@ -31,13 +31,18 @@
             --accent: #0003c9;
             --sky: #2563eb;
             --glow: rgba(0, 3, 201, 0.25);
-            --green: #0003c9;
+            --green: #059669;
             --red: #ef4444;
             --yellow: #f59e0b;
             --text: #1a1a2e;
             --muted: #6b7280;
             --light: #9ca3af;
-            --input: #f9fafb
+            --input: #f9fafb;
+            --primary: #0003c9;
+            --primary-light: #0005a0;
+            --blue: #0ea5e9;
+            --purple: #8b5cf6;
+            --pink: #ec4899
         }
 
         * {
@@ -55,6 +60,7 @@
             color: var(--text);
             font-family: 'Inter', 'Cairo', sans-serif;
             height: 100vh;
+            height: 100dvh;
             overflow-y: hidden
         }
 
@@ -822,6 +828,83 @@
             margin: 2px 14px
         }
 
+        /* Dropdown Design Controls */
+        .dd-design-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .dd-design-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 7px 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--light)
+        }
+
+        .dd-design-row select {
+            flex: 1;
+            max-width: 160px;
+            padding: 7px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+            color: var(--text);
+            font-size: 0.75rem;
+            font-family: inherit;
+            direction: ltr
+        }
+
+        .dd-slider {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            max-width: 160px
+        }
+
+        .dd-slider input[type="range"] {
+            flex: 1;
+            accent-color: var(--accent)
+        }
+
+        .dd-slider span {
+            min-width: 24px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .dd-color {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .dd-color input[type="color"] {
+            width: 36px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+            cursor: pointer
+        }
+
+        .dd-color span {
+            font-size: 0.68rem;
+            color: var(--light)
+        }
+
         /* Affiliate Section */
         .dd-affiliate {
             padding: 12px 14px;
@@ -1141,7 +1224,7 @@
         /* ===== LAYOUT ===== */
         .editor-layout {
             display: flex;
-            height: calc(100vh - 56px);
+            height: calc(100vh - 48px);
             overflow: hidden
         }
 
@@ -3000,6 +3083,68 @@
             background: #059669
         }
 
+        .portfolio-share {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px
+        }
+
+        .portfolio-share .ps-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--muted);
+            white-space: nowrap
+        }
+
+        .portfolio-share .ps-btns {
+            display: flex;
+            gap: 5px;
+            flex: 1
+        }
+
+        .portfolio-share .ps-btn {
+            flex: 1;
+            height: 30px;
+            border: none;
+            border-radius: 7px;
+            color: #fff;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .portfolio-share .ps-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.88
+        }
+
+        .portfolio-share .ps-btn:active {
+            transform: scale(0.92)
+        }
+
+        .ps-btn.ps-wa { background: #25d366; }
+        .ps-btn.ps-tg { background: #0088cc; }
+        .ps-btn.ps-fb { background: #1877f2; }
+        .ps-btn.ps-tw { background: #0f1419; }
+        .ps-btn.ps-mail { background: #6b7280; }
+
+        body.dark-mode .ps-btn.ps-tw { background: #000; }
+        body.dark-mode .portfolio-link-box {
+            background: rgba(56, 189, 248, 0.08);
+            border-color: rgba(56, 189, 248, 0.2);
+        }
+        body.dark-mode .portfolio-url input {
+            background: #0f172a;
+            border-color: #1e293b;
+            color: #e2e8f0;
+        }
+        body.dark-mode .portfolio-share .ps-label { color: #94a3b8; }
+
         /* Right - Preview */
         .preview-zone {
             flex: 1;
@@ -4529,7 +4674,7 @@
 
             .editor-forms {
                 position: absolute;
-                top: 0; left: 0; right: 0; bottom: 56px;
+                top: 24px; left: 0; right: 0; bottom: 56px;
                 width: 100% !important;
                 min-width: auto !important;
                 max-width: none !important;
@@ -4551,7 +4696,7 @@
 
             .preview-zone {
                 position: absolute;
-                top: 0; left: 0; right: 0; bottom: 56px;
+                top: 24px; left: 0; right: 0; bottom: 56px;
                 width: 100% !important;
                 background: #1a1a2e !important;
                 z-index: 1;
@@ -4574,7 +4719,7 @@
             }
 
             .cv-page {
-                transform: scale(0.55) !important;
+                transform: scale(calc((100vw - 24px) / 794)) !important;
                 transform-origin: top center !important;
                 border-radius: 4px;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -4727,16 +4872,8 @@
                 border-radius: 10px !important;
             }
 
-            /* Template panel phone style */
-            .templates-overlay {
-                border-radius: 16px 16px 0 0 !important;
-                max-height: 85vh !important;
-                bottom: 56px !important;
-                top: auto !important;
-            }
-
             /* AI Menu phone style */
-            .ai-menu-popup {
+            .ai-menu {
                 bottom: 64px !important;
                 left: 8px !important;
                 right: 8px !important;
@@ -4820,6 +4957,58 @@
                 border-radius: 16px 16px 0 0 !important;
                 max-height: 80vh !important;
                 bottom: 56px !important;
+                top: auto !important;
+            }
+
+            /* Mobile Quick Actions Bar */
+            .mobile-quick-actions {
+                display: flex !important;
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                gap: 8px;
+                margin: -12px -12px 0;
+                padding: 12px 12px 14px;
+                background: var(--bg, #f9fafb);
+            }
+
+            .mq-btn {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                flex: 1;
+                padding: 10px 4px;
+                border: none;
+                border-radius: 12px;
+                background: var(--card, #fff);
+                box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+                font-family: inherit;
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: var(--text, #1a1a2e);
+                cursor: pointer;
+                min-height: 52px;
+                transition: transform 0.15s ease, box-shadow 0.15s ease;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .mq-btn i { font-size: 1.05rem; margin-bottom: 3px; }
+
+            .mq-btn.mq-save { color: var(--green, #059669); }
+            .mq-btn.mq-export { color: #dc2626; }
+            .mq-btn.mq-templates { color: var(--accent, #0003c9); }
+            .mq-btn.mq-more { color: var(--muted, #6b7280); }
+
+            .mq-btn:active {
+                transform: scale(0.94);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+
+            body.dark-mode .mq-btn {
+                background: #0f172a;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.4);
             }
 
             /* Dark mode adjustments */
@@ -4838,7 +5027,41 @@
         /* Elements hidden by default, shown only on mobile */
         .phone-bottom-nav,
         .phone-notch,
-        .phone-status-bar { display: none; }
+        .phone-status-bar,
+        .mobile-quick-actions { display: none; }
+
+        /* ===== MOBILE SAFE-AREA + POLISH ===== */
+        @media (max-width: 768px) {
+            .phone-bottom-nav {
+                height: calc(56px + env(safe-area-inset-bottom, 0px));
+            }
+            .editor-forms,
+            .preview-zone,
+            .section-modal-content,
+            .upgrade-overlay .upgrade-box,
+            .notif-panel,
+            .profile-dropdown,
+            .nav-tab-menu,
+            .template-panel {
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .ai-menu,
+            .ai-result-panel {
+                bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .ai-assist-btn {
+                bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .ai-result-panel {
+                max-height: 50dvh !important;
+            }
+            .editor-forms {
+                overscroll-behavior: contain;
+            }
+            .phone-nav-item {
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
     </style>
 </head>
 
@@ -4998,6 +5221,52 @@
                         <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> سلة المهملات <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
                         <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> الإعدادات</div>
                         <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-book-open"></i></span> الدليل الإرشادي</div>
+                        <div class="dd-divider"></div>
+                        <div class="dd-section">
+                            <div class="dd-item" onclick="saveToFirebase()"><span class="dd-icon"><i class="fas fa-save"></i></span> حفظ التغييرات</div>
+                            <div class="dd-item" onclick="exportPDF()"><span class="dd-icon"><i class="fas fa-file-pdf"></i></span> تصدير PDF</div>
+                            <div class="dd-item" onclick="createNewCV()"><span class="dd-icon"><i class="fas fa-plus"></i></span> سيرة ذاتية جديدة</div>
+                            <div class="dd-item" onclick="showVersionHistory()"><span class="dd-icon"><i class="fas fa-history"></i></span> سجل الإصدارات</div>
+                            <div class="dd-item" onclick="openUploadModal()"><span class="dd-icon"><i class="fas fa-cloud-upload-alt"></i></span> رفع سيرة ذاتية</div>
+                            <div class="dd-item" onclick="openSectionModal()"><span class="dd-icon"><i class="fas fa-layer-group"></i></span> إضافة قسم</div>
+                        </div>
+                        <div class="dd-divider"></div>
+                        <div class="dd-section">
+                            <div class="dd-design-header"><i class="fas fa-palette"></i> تنسيق السيرة</div>
+                            <div class="dd-design-row">
+                                <label>الخط</label>
+                                <select id="ddFontFamily" onchange="setFontFamily(this.value)">
+                                    <option value="Inter">Inter</option>
+                                    <option value="Cairo">Cairo</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Times New Roman">Times</option>
+                                    <option value="Courier New">Courier</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Verdana">Verdana</option>
+                                </select>
+                            </div>
+                            <div class="dd-design-row">
+                                <label>حجم الخط</label>
+                                <div class="dd-slider">
+                                    <input type="range" id="ddFontSize" min="9" max="16" value="11" oninput="setFontSize(this.value)">
+                                    <span id="ddFontSizeVal">11</span>
+                                </div>
+                            </div>
+                            <div class="dd-design-row">
+                                <label>تباعد الأسطر</label>
+                                <div class="dd-slider">
+                                    <input type="range" id="ddLineSpacing" min="10" max="25" value="15" oninput="setLineSpacing(this.value)">
+                                    <span id="ddLineSpacingVal">1.5</span>
+                                </div>
+                            </div>
+                            <div class="dd-design-row">
+                                <label>لون النص</label>
+                                <div class="dd-color">
+                                    <input type="color" id="ddFontColor" value="#111111" onchange="setFontColor(this.value)">
+                                    <span>اختيار لون</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="dd-divider"></div>
                     <div class="dd-section">
@@ -5196,6 +5465,16 @@
                             <button class="btn-open" onclick="openPortfolioLink()"><i
                                     class="fas fa-external-link-alt"></i> فتح</button>
                         </div>
+                        <div class="portfolio-share">
+                            <span class="ps-label"><i class="fas fa-share-alt"></i> شارك</span>
+                            <div class="ps-btns">
+                                <button class="ps-btn ps-wa" onclick="sharePortfolio('whatsapp')" title="واتساب"><i class="fab fa-whatsapp"></i></button>
+                                <button class="ps-btn ps-tg" onclick="sharePortfolio('telegram')" title="تيليجرام"><i class="fab fa-telegram-plane"></i></button>
+                                <button class="ps-btn ps-fb" onclick="sharePortfolio('facebook')" title="فيسبوك"><i class="fab fa-facebook-f"></i></button>
+                                <button class="ps-btn ps-tw" onclick="sharePortfolio('twitter')" title="إكس"><i class="fab fa-twitter"></i></button>
+                                <button class="ps-btn ps-mail" onclick="sharePortfolio('email')" title="البريد"><i class="fas fa-envelope"></i></button>
+                            </div>
+                        </div>
                     </div>
                     <div style="text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
                         <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px">رمز QR للمعرض الخاص بك</div>
@@ -5237,6 +5516,13 @@
 
         <!-- Forms -->
         <div class="editor-forms">
+            <!-- Mobile Quick Actions (shown on mobile only) -->
+            <div class="mobile-quick-actions">
+                <button class="mq-btn mq-save" onclick="saveToFirebase()"><i class="fas fa-save"></i><span>حفظ</span></button>
+                <button class="mq-btn mq-export" id="mqExportBtn" onclick="exportPDF()"><i class="fas fa-file-pdf"></i><span>تصدير PDF</span></button>
+                <button class="mq-btn mq-templates" onclick="phoneNav('templates')"><i class="fas fa-palette"></i><span>قوالب</span></button>
+                <button class="mq-btn mq-more" onclick="phoneNav('more')"><i class="fas fa-bars"></i><span>المزيد</span></button>
+            </div>
             <!-- Personal Info -->
             <div class="form-card active" id="tab-personal">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-user"></i></span>
@@ -5382,7 +5668,7 @@
                 <div class="field"><label>الملخص المهني <span class="char-count" id="summaryCount">0 /
                             100</span></label><textarea id="inputSummary"
                         oninput="updateCharCount('summary');renderCV()"
-                        placeholder="A passionate designer creating exceptional digital experiences..."
+                        placeholder="مصمم شغوف يصنع تجارب رقمية استثنائية..."
                         style="min-height:110px"></textarea><button type="button" class="btn-generate-summary"
                         onclick="generateProfessionalSummary()"><i class="fas fa-magic"></i> إنشاء ملخص</button>
                     <div class="field-hint">يُنصح بـ 50-100 كلمة</div>
@@ -5434,7 +5720,7 @@
                 </div>
                 <div class="field"><label>الصق إعلان الوظيفة هنا</label>
                     <textarea class="job-match-input" id="jobDescInput"
-                        placeholder="Paste the job posting here...\n\nExample: We are looking for a frontend developer with experience in React and Angular..."></textarea>
+                        placeholder="الصق إعلان الوظيفة هنا...\n\nمثال: نبحث عن مطور فرونت إند لديه خبرة في React و Angular..."></textarea>
                 </div>
                 <button class="btn-match" onclick="runJobMatch()">مطابقة الآن</button>
                 <div class="match-results" id="matchResults"></div>
@@ -5850,10 +6136,27 @@
 
         // ===== NEW CV =====
         window.createNewCV = function() {
-            if (!confirm('إنشاء سيرة ذاتية جديدة؟ البيانات الحالية ستُحفظ تلقائياً.')) return;
-            saveToFirebase();
-            localStorage.removeItem('qcv_editor_data');
-            location.reload();
+            if (!window.currentUid) {
+                // Not logged in: reset editor locally
+                if (!confirm('إنشاء سيرة ذاتية جديدة؟ البيانات الحالية ستُحفظ محلياً.')) return;
+                saveToFirebase();
+                localStorage.removeItem('qcv_editor_data');
+                location.reload();
+                return;
+            }
+            const paid = isPaidPlan();
+            if (!paid) {
+                closePanel();
+                window.location.href = 'pay.html';
+                return;
+            }
+            // Paid users: create a new CV entry in Firebase
+            const newRef = push(ref(db, 'users/' + window.currentUid + '/cvs'));
+            const cvId = newRef.key;
+            set(newRef, { name: 'New CV', createdAt: Date.now(), data: { name: '', title: '', email: '', phone: '', summary: '', skills: '', experience: [], education: [] } });
+            currentCvId = cvId;
+            window.currentCvId = cvId;
+            loadSavedData().then(closePanel);
         };
 
         // ===== DELETE ACCOUNT =====
@@ -6070,8 +6373,24 @@
                 });
             }
         }
-        window.toggleProfile = () => document.getElementById('profileDropdown').classList.toggle('show');
+        window.toggleProfile = () => { document.getElementById('profileDropdown').classList.toggle('show'); syncDropdownDesign(); };
         document.addEventListener('click', e => { if (!e.target.closest('.profile-area')) document.getElementById('profileDropdown').classList.remove('show') });
+
+        // Keep mobile dropdown design controls in sync with topbar controls
+        function syncDropdownDesign() {
+            var ddFf = document.getElementById('ddFontFamily');
+            var ddFs = document.getElementById('ddFontSize');
+            var ddLs = document.getElementById('ddLineSpacing');
+            var ddFc = document.getElementById('ddFontColor');
+            var topFf = document.getElementById('fontFamily');
+            var topFs = document.getElementById('fontSize');
+            var topLs = document.getElementById('lineSpacing');
+            var topFc = document.getElementById('fontColor');
+            if (ddFf && topFf) ddFf.value = topFf.value;
+            if (ddFs && topFs) { ddFs.value = topFs.value; var v1 = document.getElementById('ddFontSizeVal'); if (v1) v1.textContent = topFs.value; }
+            if (ddLs && topLs) { ddLs.value = topLs.value; var v2 = document.getElementById('ddLineSpacingVal'); if (v2) v2.textContent = topLs.value; }
+            if (ddFc && topFc) ddFc.value = topFc.value;
+        }
 
         window.openPanel = function (type) {
             document.getElementById('profileDropdown').classList.remove('show');
@@ -6091,24 +6410,7 @@
         window.closePanel = e => { if (e && e.target !== e.currentTarget) return; document.getElementById('panelOverlay').classList.remove('show') };
         window.saveProfile = () => { const n = document.getElementById('panelName').value.trim(); if (!n) return; if (window.currentUid) window._set(window._ref(window._db, 'users/' + window.currentUid + '/name'), n).catch(() => { }); if (userData) userData.name = n; if (window._userData) window._userData.name = n; const i = n[0].toUpperCase();['userAvatar', 'ddAvatar'].forEach(id => { if (document.getElementById(id)) document.getElementById(id).textContent = i });['userName', 'ddName'].forEach(id => { if (document.getElementById(id)) document.getElementById(id).textContent = n }) };
 
-        // Multiple CVs
-        window.createNewCV = async function () {
-            if (!window.currentUid) return;
-            const paid = isPaidPlan();
-            if (!paid) {
-                closePanel();
-                window.location.href = 'pay.html';
-                return;
-            }
-            const newRef = push(ref(db, 'users/' + window.currentUid + '/cvs'));
-            const cvId = newRef.key;
-            await set(newRef, { name: 'New CV', createdAt: Date.now(), data: { name: '', title: '', email: '', phone: '', summary: '', skills: '', experience: [], education: [] } });
-            currentCvId = cvId;
-            window.currentCvId = cvId;
-            await loadSavedData();
-            closePanel();
-        };
-
+        // Multiple CVs (createNewCV defined above in NEW CV section)
         window.loadCvsList = async function () {
             if (!window.currentUid) return;
             const snap = await get(ref(db, 'users/' + window.currentUid + '/cvs'));
@@ -6785,29 +7087,38 @@
         // Design Controls - all update state + apply immediately
         window.setFontSize = function (v) {
             designSettings.fontSize = parseInt(v);
-            document.getElementById('fontSizeVal').textContent = v;
+            var tv = document.getElementById('fontSizeVal'); if (tv) tv.textContent = v;
+            var dv = document.getElementById('ddFontSizeVal'); if (dv) dv.textContent = v;
+            var dr = document.getElementById('ddFontSize'); if (dr) dr.value = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setFontColor = function (v) {
             designSettings.fontColor = v;
+            var d = document.getElementById('ddFontColor'); if (d) d.value = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setFontFamily = function (v) {
             designSettings.fontFamily = v;
+            var t = document.getElementById('fontFamily'); if (t) t.value = v;
+            var d = document.getElementById('ddFontFamily'); if (d) d.value = v;
             applyDesignSettings();
             snapshotState();
         };
         window.setPageMargin = function (v) {
             designSettings.pageMargin = parseInt(v);
-            document.getElementById('pageMarginVal').textContent = v;
+            var el = document.getElementById('pageMarginVal');
+            if (el) el.textContent = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
         window.setLineSpacing = function (v) {
             designSettings.lineSpacing = (v / 10).toFixed(1);
-            document.getElementById('lineSpacingVal').textContent = (v / 10).toFixed(1);
+            var el = document.getElementById('lineSpacingVal');
+            if (el) el.textContent = (v / 10).toFixed(1);
+            var dv = document.getElementById('ddLineSpacingVal'); if (dv) dv.textContent = (v / 10).toFixed(1);
+            var dr = document.getElementById('ddLineSpacing'); if (dr) dr.value = v;
             applyDesignSettings();
             debouncedSnapshot();
         };
@@ -6860,6 +7171,46 @@
 
         // CV Score issues - keep in English
         function translateIssue(text) {
+            if (!text) return text;
+            var map = [
+                [/Add a professional summary \(2-3 lines about your experience\)/i, 'أضف ملخصاً مهنياً (2-3 أسطر عن خبراتك)'],
+                [/Summary too short \((\d+)\/100\+ chars\) — add more details about your achievements/i, 'الملخص قصير جداً ($1/100+) — أضف المزيد من التفاصيل عن إنجازاتك'],
+                [/Good summary — consider expanding to 100\+ chars for better score/i, 'ملخص جيد — فكر في التوسعة إلى أكثر من 100 حرفاً لتحسين النتيجة'],
+                [/Strong summary — add numbers\/results for even better impact/i, 'ملخص قوي — أضف أرقاماً ونتائج لزيادة التأثير'],
+                [/Add at least 1 work experience entry/i, 'أضف خبرة عملية واحدة على الأقل'],
+                [/Add 2\+ work experiences for stronger CV/i, 'أضف خبرتين عملية أو أكثر لتقوية السيرة الذاتية'],
+                [/Experience #(\d+) has no description — add 3-5 bullet points/i, 'الخبرة #$1 بلا وصف — أضف 3-5 نقاط إنجازات'],
+                [/Experience #(\d+): only (\d+) bullet\(s\) — add (\d+) more/i, 'الخبرة #$1: عدد النقاط $2 فقط — أضف $3 نقاط إضافية'],
+                [/Add your educational background/i, 'أضف خلفيتك التعليمية'],
+                [/Add your full name/i, 'أضف اسمك الكامل'],
+                [/Add your email address/i, 'أضف بريدك الإلكتروني'],
+                [/Add your phone number/i, 'أضف رقم هاتفك'],
+                [/Add your job title \(e\.g\. "Software Engineer"\)/i, 'أضف مسمى وظيفتك (مثال: "مهندس برمجيات")'],
+                [/Add a professional summary for ATS parsing/i, 'أضف ملخصاً مهنياً لتحسين قراءة أنظمة ATS'],
+                [/Only (\d+) skill\(s\) — ATS needs at least 3-5 relevant skills/i, 'عدد المهارات $1 فقط — تحتاج أنظمة ATS إلى 3-5 مهارات ذات صلة على الأقل'],
+                [/Add 5\+ skills to pass ATS keyword filters/i, 'أضف 5 مهارات أو أكثر لتجاوز فلاتر الكلمات المفتاحية لـ ATS'],
+                [/8\+ skills recommended for maximum ATS matching/i, 'يُنصح بـ 8 مهارات أو أكثر لأقصى توافق مع ATS'],
+                [/Experience #(\d+): missing job title/i, 'الخبرة #$1: المسمى الوظيفي مفقود'],
+                [/Experience #(\d+): missing company name/i, 'الخبرة #$1: اسم الشركة مفقود'],
+                [/Experience #(\d+): add work duration \(e\.g\. "2022 - Present"\)/i, 'الخبرة #$1: أضف مدة العمل (مثال: "2022 - حتى الآن")'],
+                [/Experience #(\d+): description too short — ATS needs 20\+ chars/i, 'الخبرة #$1: الوصف قصير جداً — تحتاج ATS إلى 20+ حرفاً'],
+                [/No skills listed — this is the #1 thing ATS systems look for/i, 'لا توجد مهارات — المهارات هي أول ما تبحث عنه أنظمة ATS'],
+                [/Only (\d+) skills — aim for 8-12 for best results/i, 'عدد المهارات $1 فقط — استهدف 8-12 مهارة لأفضل النتائج'],
+                [/Good \((\d+) skills\) — add 3\+ more to maximize ATS matching/i, 'جيد ($1 مهارة) — أضف 3 مهارات إضافية لتعظيم توافق ATS'],
+                [/(\d+) skill\(s\) longer than 15 chars — keep them concise for ATS/i, '$1 مهارة أطول من 15 حرفاً — اجعلها مختصرة لقراءة أفضل من ATS'],
+                [/No numbers\/metrics in experience — add quantifiable results \(e\.g\. "increased sales by 30%"\)/i, 'لا توجد أرقام أو مقاييس في الخبرات — أضف نتائج قابلة للقياس (مثال: "زدت المبيعات بنسبة 30%")'],
+                [/Only (\d+) number\(s\) found — add 3\+ metrics for stronger impact/i, 'تم العثور على $1 رقم فقط — أضف 3 مقاييس أو أكثر لتعزيز التأثير'],
+                [/No action verbs found — start each bullet with words like "Led", "Developed", "Achieved"/i, 'لا توجد أفعال فعلية — ابدأ كل نقطة بأفعال مثل "قاد"، "طوّر"، "حقّق"'],
+                [/Found (\d+) action verb\(s\) — use 3\+ different power verbs for maximum impact/i, 'تم العثور على $1 أفعال فعلية — استخدم 3 أفعال قوية مختلفة أو أكثر لتعظيم التأثير'],
+                [/No bullet points in experience — use line breaks to list achievements/i, 'لا توجد نقاط إنجازات في الخبرات — استخدم أسطراً منفصلة لسرد إنجازاتك'],
+                [/Only (\d+) bullet\(s\) — aim for 5\+ across all experiences/i, 'عدد النقاط $1 فقط — استهدف 5 نقاط أو أكثر في كل الخبرات'],
+                [/Add percentages or currency values to show measurable results/i, 'أضف نسباً مئوية أو قيماً نقدية لإظهار نتائج قابلة للقياس']
+            ];
+            for (var i = 0; i < map.length; i++) {
+                if (map[i][0].test(text)) {
+                    return text.replace(map[i][0], map[i][1]);
+                }
+            }
             return text;
         }
 
@@ -6897,7 +7248,7 @@
                             const icon = iss.type === 'critical' ? 'fa-exclamation-circle' : iss.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
                             const clr = iss.type === 'critical' ? '#ef4444' : iss.type === 'warning' ? '#f59e0b' : '#0ea5e9';
                             const arText = translateIssue(iss.text);
-                            return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g, "\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> Fix ${iss.fix}</span></div>`;
+                            return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g, "\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${iss.fix}</span></div>`;
                         }).join('') + '</div>';
                     }
                     return `<div class="ai-detail-row">
@@ -6948,7 +7299,7 @@
                         return `<div class="ai-rec ${r.type}" onclick="aiFixIssue('${r.section}','${arTitle.replace(/'/g, "\\'")}','${r.type}')">
                         <div class="rec-icon"><i class="fas ${r.type === 'critical' ? 'fa-exclamation-circle' : r.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i></div>
                         <div class="rec-body"><div class="rec-title">${arTitle}</div></div>
-                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> Fix ${r.fix}</span>
+                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${r.fix}</span>
                     </div>`;
                     }).join('');
                     if (scores.recommendations.length > 8) {
@@ -7001,12 +7352,13 @@
 
             // Track download count for ALL users
             console.log('ExportPDF: currentUid =', window.currentUid, 'paid =', paid);
+            let downloads = 0, plan = 'free';
             if (window.currentUid) {
                 try {
                     const userSnap = await _get(_ref(_db, 'users/' + window.currentUid));
                     const ud = userSnap.val() || {};
-                    const downloads = ud.downloads || 0;
-                    const plan = ud.plan || 'free';
+                    downloads = ud.downloads || 0;
+                    plan = ud.plan || 'free';
                     console.log('ExportPDF: current downloads =', downloads, 'plan =', plan);
 
                     const dlLimit = plan === 'unlimited' ? Infinity : plan === 'pro' ? 5 : 1;
@@ -7259,8 +7611,8 @@
                 document.getElementById('fontSizeVal').textContent = designSettings.fontSize;
                 document.getElementById('fontFamily').value = designSettings.fontFamily;
                 document.getElementById('fontColor').value = designSettings.fontColor;
-                document.getElementById('pageMargin').value = designSettings.pageMargin;
-                document.getElementById('lineSpacing').value = designSettings.lineSpacing * 10;
+                if (document.getElementById('pageMargin')) document.getElementById('pageMargin').value = designSettings.pageMargin;
+                if (document.getElementById('lineSpacing')) document.getElementById('lineSpacing').value = designSettings.lineSpacing * 10;
             }
 
             renderCV();
@@ -7346,27 +7698,56 @@
             if (!raw || raw === 'جاري التحميل...') return;
             const url = raw.startsWith('http') ? raw : 'https://' + raw;
             const btn = document.getElementById('copyPortBtn');
+            const done = function () {
+                if (btn) btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1600);
+            };
+            const fail = function () {
+                if (btn) btn.innerHTML = '<i class="fas fa-times"></i> فشل';
+                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1600);
+            };
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(done).catch(function () {
+                        legacyCopy(url, done, fail);
+                    });
+                } else {
+                    legacyCopy(url, done, fail);
+                }
+            } catch (e) { legacyCopy(url, done, fail); }
+        };
+        function legacyCopy(text, done, fail) {
             try {
                 const ta = document.createElement('textarea');
-                ta.value = url;
+                ta.value = text;
                 ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
                 document.body.appendChild(ta);
                 ta.focus();
                 ta.select();
                 document.execCommand('copy');
                 document.body.removeChild(ta);
-                if (btn) btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1500);
-            } catch (e) {
-                if (btn) btn.innerHTML = '<i class="fas fa-times"></i> فشل';
-                setTimeout(() => { if (btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1500);
-            }
-        };
+                done();
+            } catch (e) { fail(); }
+        }
         window.openPortfolioLink = function () {
             const raw = document.getElementById('portfolioUrl').value;
             if (!raw || raw === 'جاري التحميل...') return;
             const url = raw.startsWith('http') ? raw : 'https://' + raw;
             window.open(url, '_blank');
+        };
+        window.sharePortfolio = function (net) {
+            const raw = document.getElementById('portfolioUrl').value;
+            if (!raw || raw === 'جاري التحميل...') return;
+            const url = raw.startsWith('http') ? raw : 'https://' + raw;
+            const text = 'أهلاً! هذا هو معرض سيرتي الذاتية — تفضل بمشاهدته 👇 ' + url;
+            let link = '';
+            if (net === 'whatsapp') link = 'https://wa.me/?text=' + encodeURIComponent(text);
+            else if (net === 'telegram') link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
+            else if (net === 'facebook') link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+            else if (net === 'twitter') link = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
+            else if (net === 'email') link = 'mailto:?subject=' + encodeURIComponent('معرض سيرتي الذاتية - QCV') + '&body=' + encodeURIComponent(text);
+            if (link) window.open(link, '_blank', 'noopener,width=680,height=520');
+            if (typeof showToast === 'function') showToast('فتح نافذة المشاركة...', 'info');
         };
 
         // ---- Tab Menu (3-dots) ----
@@ -8428,10 +8809,10 @@
                 var body = document.getElementById('aiResultBody');
                 var actionLabels = { tailor: 'تخصيص السيرة للوظيفة', skillgap: 'تحليل فجوات المهارات', interview: 'تحضير المقابلة', coverletter: 'إنشاء خطاب تعريف' };
                 var placeholders = {
-                    tailor: 'Paste the job description here...\n\nThe AI will rewrite your summary and experience to match this job perfectly.',
-                    skillgap: 'Paste the job description here...\n\nThe AI will analyze what skills you\'re missing and create a learning roadmap.',
-                    interview: 'Paste the job description here...\n\nThe AI will simulate a hiring manager interview with tough questions based on this role.',
-                    coverletter: 'Paste the job description here...\n\nThe AI will generate a tailored cover letter for this position.'
+                    tailor: 'الصق وصف الوظيفة هنا...\n\nسيقوم الذكاء الاصطناعي بإعادة صياغة ملخصك وخبراتك لتتناسب مع هذه الوظيفة تماماً.',
+                    skillgap: 'الصق وصف الوظيفة هنا...\n\nسيحلل الذكاء الاصطناعي المهارات المفقودة لديك وينشئ خطة تعلم.',
+                    interview: 'الصق وصف الوظيفة هنا...\n\nسيحاكي الذكاء الاصطناعي مقابلة مع مدير توظيف بأسئلة صعبة مبنية على هذه الوظيفة.',
+                    coverletter: 'الصق وصف الوظيفة هنا...\n\nسينشئ الذكاء الاصطناعي خطاب تعريف مخصصاً لهذه الوظيفة.'
                 };
                 body.innerHTML = '<div style="padding:12px">' +
                     '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">وصف الوظيفة:</label>' +

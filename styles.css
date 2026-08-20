@@ -6,7 +6,7 @@
 
 body {
   font-family: "Cairo", sans-serif;
-  background: #f9fafb;
+  background: #f0f4ff;
   color: #1a1a2e;
   line-height: 1.6;
   overflow-x: hidden;
@@ -42,6 +42,13 @@ select {
   box-shadow: 0 8px 20px rgba(0, 3, 201, 0.25);
   background: rgb(0, 2.3910447761, 160.2);
 }
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+}
+.btn-primary:focus-visible {
+  outline: 3px solid #0003c9;
+  outline-offset: 2px;
+}
 
 .btn-ghost {
   display: inline-flex;
@@ -60,6 +67,13 @@ select {
 .btn-ghost:hover {
   border-color: #0003c9;
   color: #0003c9;
+}
+.btn-ghost:active {
+  transform: scale(0.97);
+}
+.btn-ghost:focus-visible {
+  outline: 3px solid #0003c9;
+  outline-offset: 2px;
 }
 
 .hero {

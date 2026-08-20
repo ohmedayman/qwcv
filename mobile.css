@@ -71,8 +71,16 @@ button, a, input, select, textarea { -webkit-appearance: none; }
     .hero-left { width: 100%; }
     .hero-visual { max-width: 100%; padding: 8px; }
     .hero-badge { font-size: 0.72rem; padding: 6px 14px; }
-    .hero-highlights { flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .hero-highlights {
+        grid-template-columns: 1fr 1fr 1fr;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
     .hero-highlight { font-size: 0.75rem; padding: 6px 12px; border-radius: 8px; }
+    .hero-highlight strong { font-size: 0.92rem; }
+    .hero-highlight span { font-size: 0.7rem; }
+    .hero-steps { justify-content: center; }
 
     /* --- Sections --- */
     .section { padding: 40px 16px; }
@@ -184,6 +192,7 @@ button, a, input, select, textarea { -webkit-appearance: none; }
 /* ===== SMALL MOBILE (max-width: 480px) ===== */
 @media(max-width:480px) {
     .hero-right h1 { font-size: 1.45rem; }
+    .hero-highlights { grid-template-columns: 1fr; gap: 8px; }
     .hero-btns .btn { font-size: 0.88rem; padding: 12px 18px; }
     .stat-num { font-size: 1.4rem; }
     .stats-bar { gap: 10px; padding: 20px 12px; }
