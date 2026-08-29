@@ -102,6 +102,7 @@ button, a, input, select, textarea { -webkit-appearance: none; }
     /* --- Steps --- */
     .steps-grid { grid-template-columns: 1fr; gap: 12px; }
     .step { text-align: center; padding: 16px; border-radius: 14px; }
+    .step::after { display: none; }
 
     .stat-num { font-size: 1.6rem; }
     .stat-label { font-size: 0.72rem; }
@@ -119,6 +120,12 @@ button, a, input, select, textarea { -webkit-appearance: none; }
     .cta-box { padding: 28px 20px; border-radius: 16px; margin: 0 8px; }
     .cta-box h2 { font-size: 1.25rem; }
     .cta-box p { font-size: 0.85rem; margin-bottom: 18px; }
+
+    /* --- Hero Particles --- */
+    .hero-particles span { display: none; }
+
+    /* --- Compare Grid --- */
+    #compareGrid { grid-template-columns: 1fr !important; }
 
     /* --- Footer --- */
     .footer { padding: 24px 16px 16px; }
