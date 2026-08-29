@@ -82,10 +82,23 @@
         @media(max-width:768px){.stats,.grid-3,.grid-4,.tech,.price,.tpl-grid{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
         @media(max-width:480px){.stats,.tech,.price,.tpl-grid{grid-template-columns:1fr}}
     </style>
+    <script defer src="js/theme.js"></script>
+    <script defer src="js/lang.js"></script>
 </head>
 <body>
+    <!-- NAVBAR -->
+    <nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid #e2e8f0;padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center">
+        <a href="index.html" style="font-size:1.6rem;font-weight:900;color:#0f172a;text-decoration:none">Q<span style="color:#0003c9">CV</span></a>
+        <div style="display:flex;align-items:center;gap:16px">
+            <a href="index.html" style="color:#64748b;text-decoration:none;font-weight:600;font-size:0.88rem">الرئيسية</a>
+            <a href="templates.html" style="color:#64748b;text-decoration:none;font-weight:600;font-size:0.88rem">القوالب</a>
+            <a href="ai-tools.html" style="color:#64748b;text-decoration:none;font-weight:600;font-size:0.88rem">أدوات AI</a>
+            <a href="help.html" style="color:#64748b;text-decoration:none;font-weight:600;font-size:0.88rem">المساعدة</a>
+            <a href="login.html" style="background:#0003c9;color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
+        </div>
+    </nav>
 
-<div class="hero">
+<div class="hero" style="margin-top:64px">
     <div class="hero-logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></div>
     <div class="hero-sub">التقرير الشامل — منصة بناء السيرة الذاتية بالذكاء الاصطناعي</div>
     <div class="hero-url">qcv.vexonet.online</div>

@@ -66,6 +66,24 @@
         .copy-btn:hover{background:#0002a0}
         @media(max-width:768px){.tools-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.hero h1{font-size:1.8rem}}
     </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border,#e2e8f0);padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center">
+        <a href="index.html" style="font-size:1.6rem;font-weight:900;color:var(--text);text-decoration:none">Q<span style="color:var(--primary)">CV</span></a>
+        <div style="display:flex;align-items:center;gap:16px">
+            <a href="index.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">الرئيسية</a>
+            <a href="templates.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">القوالب</a>
+            <a href="ai-tools.html" style="color:var(--text);text-decoration:none;font-weight:700;font-size:0.88rem">أدوات AI</a>
+            <a href="help.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">المساعدة</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border,#e2e8f0);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s">
+                <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
+            </button>
+            <a href="login.html" style="background:var(--primary);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
+        </div>
+    </nav>
+    <script defer src="js/theme.js"></script>
+    <script defer src="js/lang.js"></script>
     <script>
 function showLoading(id){document.getElementById(id).innerHTML='<div class="loading"><i class="fas fa-spinner fa-spin"></i>جاري الإنشاء...</div>'}
 function showResult(id,title,text){document.getElementById(id).innerHTML='<div class="result-box"><h4>'+title+'</h4>'+escHtml(text)+'</div><button class="copy-btn" onclick="copyResult(this)"><i class="fas fa-copy"></i> نسخ</button>'}

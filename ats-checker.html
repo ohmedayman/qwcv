@@ -543,6 +543,22 @@
             }
         }
     </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border,#e5e7eb);padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center">
+        <a href="index.html" style="font-size:1.6rem;font-weight:900;color:var(--text,#1a1a2e);text-decoration:none">Q<span style="color:var(--accent,#0003c9)">CV</span></a>
+        <div style="display:flex;align-items:center;gap:16px">
+            <a href="index.html" style="color:var(--muted,#6b7280);text-decoration:none;font-weight:600;font-size:0.88rem">الرئيسية</a>
+            <a href="templates.html" style="color:var(--muted,#6b7280);text-decoration:none;font-weight:600;font-size:0.88rem">القوالب</a>
+            <a href="ai-tools.html" style="color:var(--muted,#6b7280);text-decoration:none;font-weight:600;font-size:0.88rem">أدوات AI</a>
+            <a href="help.html" style="color:var(--muted,#6b7280);text-decoration:none;font-weight:600;font-size:0.88rem">المساعدة</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border,#e5e7eb);color:var(--text,#1a1a2e);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s">
+                <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
+            </button>
+            <a href="login.html" style="background:var(--accent,#0003c9);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
+        </div>
+    </nav>
     <style>
 
         function resetChecker() {

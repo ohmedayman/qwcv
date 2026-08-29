@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="mobile.css">
+    <script defer src="js/theme.js"></script>
+    <script defer src="js/lang.js"></script>
+    <script defer src="js/ai-service.js"></script>
+    <script defer src="js/site-settings.js"></script>
     <style>
         :root { --bg:#f9fafb; --card:#fff; --border:#e5e7eb; --primary:#0003c9; --green:#059669; --red:#ef4444; --yellow:#f59e0b; --blue:#0ea5e9; --text:#1a1a2e; --muted:#6b7280; --input:#f3f4f6 }
         * { box-sizing:border-box; margin:0; padding:0 }
@@ -18,17 +22,22 @@
         .logo { font-size:1.4rem; font-weight:800; letter-spacing:-0.5px }
         .logo span { color:var(--primary) }
         .container { max-width:1200px; margin:0 auto; padding:24px 20px }
+        .page-title { text-align:center; margin-bottom:24px; padding-top:80px }
+        .page-title h1 { font-size:1.6rem; font-weight:800 }
+        .page-title p { color:var(--muted); font-size:0.9rem; margin-top:6px }
         .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px }
         .compare-col { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px }
         .compare-col h3 { font-size:1rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px }
         .field-group { margin-bottom:12px }
         .field-group label { display:block; font-size:0.75rem; font-weight:600; color:var(--muted); margin-bottom:4px }
         .field-group input, .field-group textarea { width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-size:0.85rem; font-family:inherit; background:var(--input) }
+        .field-group textarea { min-height:90px; resize:vertical }
         .btn { padding:10px 20px; border:none; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer; font-family:inherit; transition:all 0.2s }
         .btn-primary { background:var(--primary); color:#fff }
         .btn-outline { background:transparent; border:1px solid var(--border); color:var(--text) }
         .btn-ai { background:#8b5cf6; color:#fff }
-        .result-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-top:20px }
+        .actions { display:flex; gap:12px; justify-content:center; margin-top:20px; flex-wrap:wrap }
+        .result-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-top:20px; display:none }
         .score-bar { height:8px; border-radius:4px; background:var(--input); overflow:hidden; margin-top:6px }
         .score-fill { height:100%; border-radius:4px; transition:width 0.5s }
         .diff-item { padding:10px; border-radius:8px; margin-bottom:8px; font-size:0.82rem }
@@ -38,86 +47,174 @@
         .empty { text-align:center; padding:30px; color:var(--muted); font-size:0.85rem }
         @media(max-width:768px) { .compare-grid { grid-template-columns:1fr } }
     </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center">
+        <a href="index.html" style="font-size:1.6rem;font-weight:900;color:var(--text);text-decoration:none">Q<span style="color:var(--primary)">CV</span></a>
+        <div style="display:flex;align-items:center;gap:16px">
+            <a href="index.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">الرئيسية</a>
+            <a href="templates.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">القوالب</a>
+            <a href="ai-tools.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">أدوات AI</a>
+            <a href="help.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">المساعدة</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s">
+                <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
+            </button>
+            <a href="login.html" style="background:var(--primary);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <div class="container">
+        <div class="page-title">
+            <h1>مقارنة السير الذاتية</h1>
+            <p>قارن بين نسختين من سيرتك الذاتية لمعرفة مدى التحسين</p>
+        </div>
+
+        <div class="compare-grid">
+            <!-- CV A -->
+            <div class="compare-col">
+                <h3><i class="fas fa-file-alt" style="color:var(--muted)"></i> النسخة الأولى (قبل)</h3>
+                <div class="field-group">
+                    <label>المسمى الوظيفي</label>
+                    <input type="text" id="cvA-title" placeholder="مثال: مطور واجهات أمامية">
+                </div>
+                <div class="field-group">
+                    <label>الملخص</label>
+                    <textarea id="cvA-summary" placeholder="ملخص عن خبراتك ومهاراتك..."></textarea>
+                </div>
+                <div class="field-group">
+                    <label>الخبرة</label>
+                    <textarea id="cvA-exp" placeholder="في كل سطر نقطة خبرة واحدة..."></textarea>
+                </div>
+                <div class="field-group">
+                    <label>المهارات (بفواصل)</label>
+                    <input type="text" id="cvA-skills" placeholder="JavaScript, React, Node.js">
+                </div>
+            </div>
+
+            <!-- CV B -->
+            <div class="compare-col">
+                <h3><i class="fas fa-file-alt" style="color:var(--primary)"></i> النسخة الثانية (بعد)</h3>
+                <div class="field-group">
+                    <label>المسمى الوظيفي</label>
+                    <input type="text" id="cvB-title" placeholder="مثال: مطور واجهات أمامية أول">
+                </div>
+                <div class="field-group">
+                    <label>الملخص</label>
+                    <textarea id="cvB-summary" placeholder="ملخص محسّن عن خبراتك ومهاراتك..."></textarea>
+                </div>
+                <div class="field-group">
+                    <label>الخبرة</label>
+                    <textarea id="cvB-exp" placeholder="في كل سطر نقطة خبرة واحدة..."></textarea>
+                </div>
+                <div class="field-group">
+                    <label>المهارات (بفواصل)</label>
+                    <input type="text" id="cvB-skills" placeholder="JavaScript, React, Node.js, TypeScript">
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="compareCVs()">
+                <i class="fas fa-code-compare" style="margin-right:6px"></i> مقارنة أساسية
+            </button>
+            <button class="btn btn-ai" onclick="aiCompare()">
+                <i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> تحليل عميق بالذكاء الاصطناعي
+            </button>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-card" id="resultCard">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px"><i class="fas fa-chart-bar" style="margin-right:6px"></i> نتيجة المقارنة</h3>
+            <div id="resultBody"></div>
+        </div>
+    </div>
+
     <script>
+        function getCvData(prefix) {
+            return {
+                title: (document.getElementById(prefix + '-title') || {}).value || '',
+                summary: (document.getElementById(prefix + '-summary') || {}).value || '',
+                exp: (document.getElementById(prefix + '-exp') || {}).value || '',
+                skills: (document.getElementById(prefix + '-skills') || {}).value || ''
+            };
+        }
+
         function compareCVs() {
-            const a = getCvData('cvA');
-            const b = getCvData('cvB');
+            var a = getCvData('cvA');
+            var b = getCvData('cvB');
             if (!a.summary && !b.summary && !a.exp && !b.exp) { alert('من فضلك أدخل سيرة ذاتية واحدة على الأقل'); return; }
 
-            const diffs = [];
+            var diffs = [];
 
-            // Title comparison
             if (a.title && b.title) {
-                if (a.title !== b.title) diffs.push({ type: 'same', text: 'Title: "' + a.title + '" → "' + b.title + '"' });
-                else diffs.push({ type: 'same', text: 'Title: No change (' + a.title + ')' });
+                if (a.title !== b.title) diffs.push({ type: 'same', text: 'المسمى: "' + a.title + '" ← "' + b.title + '"' });
+                else diffs.push({ type: 'same', text: 'المسمى: بدون تغيير (' + a.title + ')' });
             }
 
-            // Summary comparison
             if (a.summary && b.summary) {
-                const aWords = a.summary.split(/\s+/).length;
-                const bWords = b.summary.split(/\s+/).length;
-                if (bWords > aWords) diffs.push({ type: 'better', text: 'Summary: Expanded from ' + aWords + ' to ' + bWords + ' words' });
-                else if (bWords < aWords) diffs.push({ type: 'worse', text: 'Summary: Shrank from ' + aWords + ' to ' + bWords + ' words' });
-                else diffs.push({ type: 'same', text: 'Summary: Same length (' + aWords + ' words)' });
+                var aWords = a.summary.split(/\s+/).length;
+                var bWords = b.summary.split(/\s+/).length;
+                if (bWords > aWords) diffs.push({ type: 'better', text: 'الملخص: توسع من ' + aWords + ' إلى ' + bWords + ' كلمة' });
+                else if (bWords < aWords) diffs.push({ type: 'worse', text: 'الملخص: انحصار من ' + aWords + ' إلى ' + bWords + ' كلمة' });
+                else diffs.push({ type: 'same', text: 'الملخص: نفس الطول (' + aWords + ' كلمة)' });
 
-                // Check for power verbs
-                const powerVerbs = ['led', 'managed', 'achieved', 'delivered', 'optimized', 'spearheaded', 'drove', 'transformed', 'built', 'launched', 'increased', 'reduced'];
-                const aVerbs = powerVerbs.filter(v => a.summary.toLowerCase().includes(v));
-                const bVerbs = powerVerbs.filter(v => b.summary.toLowerCase().includes(v));
-                if (bVerbs.length > aVerbs.length) diffs.push({ type: 'better', text: 'Summary: More power verbs (' + bVerbs.length + ' vs ' + aVerbs.length + ')' });
+                var powerVerbs = ['leading', 'managed', 'achieved', 'delivered', 'optimized', 'built', 'launched', 'increased', 'reduced', 'improved', 'developed', 'implemented'];
+                var aVerbs = powerVerbs.filter(function(v) { return a.summary.toLowerCase().includes(v); });
+                var bVerbs = powerVerbs.filter(function(v) { return b.summary.toLowerCase().includes(v); });
+                if (bVerbs.length > aVerbs.length) diffs.push({ type: 'better', text: 'الملخص: أفعال أقوى (' + bVerbs.length + ' مقابل ' + aVerbs.length + ')' });
 
-                // Check for numbers/metrics
-                const aNums = (a.summary.match(/\d+/g) || []).length;
-                const bNums = (b.summary.match(/\d+/g) || []).length;
-                if (bNums > aNums) diffs.push({ type: 'better', text: 'Summary: More metrics/numbers (' + bNums + ' vs ' + aNums + ')' });
+                var aNums = (a.summary.match(/\d+/g) || []).length;
+                var bNums = (b.summary.match(/\d+/g) || []).length;
+                if (bNums > aNums) diffs.push({ type: 'better', text: 'الملخص: أرقام/قياسات أكثر (' + bNums + ' مقابل ' + aNums + ')' });
             }
 
-            // Skills comparison
-            const aSkills = a.skills.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-            const bSkills = b.skills.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-            const newSkills = bSkills.filter(s => !aSkills.includes(s));
-            const removedSkills = aSkills.filter(s => !bSkills.includes(s));
-            if (newSkills.length) diffs.push({ type: 'better', text: 'Skills added: ' + newSkills.join(', ') });
-            if (removedSkills.length) diffs.push({ type: 'worse', text: 'Skills removed: ' + removedSkills.join(', ') });
-            diffs.push({ type: 'same', text: 'Total skills: ' + aSkills.length + ' → ' + bSkills.length });
+            var aSkills = a.skills.split(',').map(function(s) { return s.trim().toLowerCase(); }).filter(Boolean);
+            var bSkills = b.skills.split(',').map(function(s) { return s.trim().toLowerCase(); }).filter(Boolean);
+            var newSkills = bSkills.filter(function(s) { return aSkills.indexOf(s) === -1; });
+            var removedSkills = aSkills.filter(function(s) { return bSkills.indexOf(s) === -1; });
+            if (newSkills.length) diffs.push({ type: 'better', text: 'مهارات مضافة: ' + newSkills.join(', ') });
+            if (removedSkills.length) diffs.push({ type: 'worse', text: 'مهارات محذوفة: ' + removedSkills.join(', ') });
+            diffs.push({ type: 'same', text: 'إجمالي المهارات: ' + aSkills.length + ' → ' + bSkills.length });
 
-            // Experience comparison
-            const aExpLines = a.exp.split('\n').filter(l => l.trim());
-            const bExpLines = b.exp.split('\n').filter(l => l.trim());
-            if (bExpLines.length > aExpLines.length) diffs.push({ type: 'better', text: 'Experience: More bullet points (' + bExpLines.length + ' vs ' + aExpLines.length + ')' });
+            var aExpLines = a.exp.split('\n').filter(function(l) { return l.trim(); });
+            var bExpLines = b.exp.split('\n').filter(function(l) { return l.trim(); });
+            if (bExpLines.length > aExpLines.length) diffs.push({ type: 'better', text: 'الخبرة: نقاط أكثر (' + bExpLines.length + ' مقابل ' + aExpLines.length + ')' });
 
-            const aExpNums = aExpLines.join(' ').match(/\d+/g) || [];
-            const bExpNums = bExpLines.join(' ').match(/\d+/g) || [];
-            if (bExpNums.length > aExpNums.length) diffs.push({ type: 'better', text: 'Experience: More quantified achievements (' + bExpNums.length + ' vs ' + aExpNums.length + ' numbers)' });
+            var aExpNums = aExpLines.join(' ').match(/\d+/g) || [];
+            var bExpNums = bExpLines.join(' ').match(/\d+/g) || [];
+            if (bExpNums.length > aExpNums.length) diffs.push({ type: 'better', text: 'الخبرة: إنجازات قياسية أكثر (' + bExpNums.length + ' مقابل ' + aExpNums.length + ')' });
 
-            // Overall score
-            let score = 50;
-            diffs.forEach(d => { if (d.type === 'better') score += 10; if (d.type === 'worse') score -= 5; });
+            var score = 50;
+            diffs.forEach(function(d) { if (d.type === 'better') score += 10; if (d.type === 'worse') score -= 5; });
             score = Math.max(0, Math.min(100, score));
 
-            const html = '<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600"><span>درجة التحسين</span><span style="color:' + (score >= 70 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)') + '">' + score + '%</span></div><div class="score-bar"><div class="score-fill" style="width:' + score + '%;background:' + (score >= 70 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)') + '"></div></div></div>' +
-                diffs.map(d => '<div class="diff-item diff-' + d.type + '">' + d.text + '</div>').join('');
+            var color = score >= 70 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)';
+            var html = '<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600"><span>درجة التحسين</span><span style="color:' + color + '">' + score + '%</span></div><div class="score-bar"><div class="score-fill" style="width:' + score + '%;background:' + color + '"></div></div></div>' +
+                diffs.map(function(d) { return '<div class="diff-item diff-' + d.type + '">' + d.text + '</div>'; }).join('');
 
             document.getElementById('resultBody').innerHTML = html;
             document.getElementById('resultCard').style.display = '';
         }
 
         async function aiCompare() {
-            const a = getCvData('cvA');
-            const b = getCvData('cvB');
+            var a = getCvData('cvA');
+            var b = getCvData('cvB');
             if (!a.summary && !b.summary && !a.exp && !b.exp) { alert('من فضلك أدخل سيرة ذاتية واحدة على الأقل'); return; }
 
-            const btn = event.target;
+            var btn = event.target;
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحليل...';
 
             try {
-                const prompt = 'Compare these two CV versions and provide a detailed analysis.\n\n' +
+                var prompt = 'Compare these two CV versions and provide a detailed analysis.\n\n' +
                     '=== VERSION A (Before) ===\nTitle: ' + a.title + '\nSummary: ' + a.summary + '\nExperience: ' + a.exp + '\nSkills: ' + a.skills + '\n\n' +
                     '=== VERSION B (After) ===\nTitle: ' + b.title + '\nSummary: ' + b.summary + '\nExperience: ' + b.exp + '\nSkills: ' + b.skills + '\n\n' +
                     'Provide:\n1. Overall improvement score (0-100)\n2. What improved (list specific improvements)\n3. What got worse (if anything)\n4. Suggestions for further improvement\n\nKeep response under 300 words.';
 
-                const res = await QCVAI.call(prompt, null, { maxRetries: 1, timeout: 15000 });
+                var res = await QCVAI.call(prompt, null, { maxRetries: 1, timeout: 15000 });
                 document.getElementById('resultBody').innerHTML = '<div style="font-size:0.85rem;line-height:1.7;white-space:pre-wrap">' + (res.ok ? res.text : 'الذكاء الاصطناعي غير متاح. استخدم المقارنة الأساسية.') + '</div>';
                 document.getElementById('resultCard').style.display = '';
             } catch (e) {
@@ -128,6 +225,5 @@
             btn.innerHTML = '<i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> تحليل عميق بالذكاء الاصطناعي';
         }
     </script>
-<script src="js/site-settings.js"></script>
 </body>
 </html>

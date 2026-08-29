@@ -205,7 +205,21 @@
     <script src="js/pwa.js" defer></script>
 </head>
 <body>
-    <div class="portfolio-header">
+    <!-- NAVBAR -->
+    <nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center">
+        <a href="index.html" style="font-size:1.6rem;font-weight:900;color:var(--text);text-decoration:none">Q<span style="color:var(--accent)">CV</span></a>
+        <div style="display:flex;align-items:center;gap:16px">
+            <a href="index.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">الرئيسية</a>
+            <a href="templates.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">القوالب</a>
+            <a href="ai-tools.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">أدوات AI</a>
+            <a href="help.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">المساعدة</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s">
+                <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
+            </button>
+            <a href="login.html" style="background:var(--accent);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
+        </div>
+    </nav>
+    <div class="portfolio-header" style="margin-top:64px">
         <a href="index.html" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
         <div class="header-right">
             <a href="index.html" class="btn-outline"><i class="fas fa-home"></i> Home</a>
