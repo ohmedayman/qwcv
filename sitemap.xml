@@ -2,224 +2,387 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://qcv.vexonet.online/</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/editor.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/mobile-editor.html</loc>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/pay.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/ats-checker.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/templates.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/blog.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/about.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/help.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/careers.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/login.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/privacy.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/terms.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/verify.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/portfolio.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://qcv.vexonet.online/blog/ats-cv-2025.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/cv-fresh-graduates.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/cv-design-trends.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/cover-letter.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/cv-mistakes.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/interview-tips.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/job-search-egypt.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/kataba-sira-dhatia.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/linkedin-profile.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/remote-jobs.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/salary-negotiation.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/blog/skills-cv.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
         <loc>https://qcv.vexonet.online/contact.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/ai-tools.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/compare.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/tracker.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/report.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/summary.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/ai.html</loc>
-        <lastmod>2026-07-11</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://qcv.vexonet.online/job-matcher.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://qcv.vexonet.online/dashboard.html</loc>
-        <lastmod>2026-07-11</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
         <loc>https://qcv.vexonet.online/email-signature.html</loc>
-        <lastmod>2026-07-26</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://qcv.vexonet.online/cover-letter.html</loc>
-        <lastmod>2026-07-26</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/ats-cv-2025.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/cv-fresh-graduates.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/cv-design-trends.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/cover-letter.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/cv-mistakes.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/interview-tips.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/job-search-egypt.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/kataba-sira-dhatia.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/linkedin-profile.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/remote-jobs.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/salary-negotiation.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/blog/skills-cv.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <!-- English Pages -->
+    <url>
+        <loc>https://qcv.vexonet.online/en/index.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/about.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/help.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/pricing.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/careers.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/contact.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/templates.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/ai-tools.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/ats-checker.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/compare.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/summary.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/cover-letter.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/email-signature.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/privacy.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/terms.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/404.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/ats-cv-2025.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/cv-fresh-graduates.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/cv-design-trends.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/cover-letter.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/cv-mistakes.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/interview-tips.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/job-search-egypt.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/linkedin-profile.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/remote-jobs.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/salary-negotiation.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://qcv.vexonet.online/en/blog/skills-cv.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
     </url>
 </urlset>
