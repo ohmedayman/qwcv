@@ -243,6 +243,30 @@
     <script src="js/pwa.js" defer></script>
 </head>
 <body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="index.html" class="nav-logo">Q<span>CV</span></a>
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home" style="font-size:0.7rem;margin-left:4px"></i> الرئيسية</a></li>
+        <li><a href="ai-tools.html"><i class="fas fa-brain" style="font-size:0.7rem;margin-left:4px"></i> أدوات AI</a></li>
+        <li><a href="templates.html"><i class="fas fa-palette" style="font-size:0.7rem;margin-left:4px"></i> القوالب</a></li>
+        <li><a href="blog.html"><i class="fas fa-blog" style="font-size:0.7rem;margin-left:4px"></i> المدونة</a></li>
+        <li><a href="help.html"><i class="fas fa-question-circle" style="font-size:0.7rem;margin-left:4px"></i> المساعدة</a></li>
+    </ul>
+    <div class="nav-right">
+        <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s">
+            <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
+        </button>
+        <a href="login.html" class="nav-cta" style="background:var(--accent);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.2s"><i class="fas fa-rocket" style="font-size:0.75rem;margin-left:4px"></i> ابدأ مجاناً</a>
+    </div>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<section style="padding:140px 20px 60px;text-align:center;background:linear-gradient(180deg,rgba(0,3,201,0.02),transparent)">
+    <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:14px">مركز <span style="color:var(--accent)">المساعدة</span></h1>
+    <p style="color:var(--muted);font-size:1rem;max-width:600px;margin:0 auto;line-height:1.8">ابحث عن إجابة سؤالك أو تواصل مع فريق الدعم</p>
 </section>
 
 <!-- ===== FAQ ===== -->

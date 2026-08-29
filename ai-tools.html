@@ -66,7 +66,7 @@
         .copy-btn:hover{background:#0002a0}
         @media(max-width:768px){.tools-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.hero h1{font-size:1.8rem}}
     </style>
-    <style>
+    <script>
 function showLoading(id){document.getElementById(id).innerHTML='<div class="loading"><i class="fas fa-spinner fa-spin"></i>جاري الإنشاء...</div>'}
 function showResult(id,title,text){document.getElementById(id).innerHTML='<div class="result-box"><h4>'+title+'</h4>'+escHtml(text)+'</div><button class="copy-btn" onclick="copyResult(this)"><i class="fas fa-copy"></i> نسخ</button>'}
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
