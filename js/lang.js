@@ -357,6 +357,133 @@
         'blog.html': 'en/blog.html'
     };
 
+    var ALL_PAGES = {
+        ar: [
+            { path: 'index.html', label: 'الرئيسية', icon: 'fas fa-home' },
+            { path: 'editor.html', label: 'المحرر', icon: 'fas fa-edit' },
+            { path: 'mobile-editor.html', label: 'محرر الموبايل', icon: 'fas fa-mobile-alt' },
+            { path: 'templates.html', label: 'القوالب', icon: 'fas fa-palette' },
+            { path: 'ai-tools.html', label: 'أدوات AI المجانية', icon: 'fas fa-brain' },
+            { path: 'ats-checker.html', label: 'فحص ATS', icon: 'fas fa-search' },
+            { path: 'compare.html', label: 'مقارنة السيرة', icon: 'fas fa-not-equal' },
+            { path: 'cover-letter.html', label: 'خطاب تعريف', icon: 'fas fa-envelope-open-text' },
+            { path: 'email-signature.html', label: 'توقيع بريد', icon: 'fas fa-pen-nib' },
+            { path: 'summary.html', label: 'ملخص مهني', icon: 'fas fa-align-left' },
+            { path: 'portfolio.html', label: 'البورتفوليو', icon: 'fas fa-briefcase' },
+            { path: 'tracker.html', label: 'تتبع الطلبات', icon: 'fas fa-chart-line' },
+            { path: 'blog.html', label: 'المدونة', icon: 'fas fa-blog' },
+            { path: 'about.html', label: 'من نحن', icon: 'fas fa-info-circle' },
+            { path: 'careers.html', label: 'الوظائف', icon: 'fas fa-user-tie' },
+            { path: 'help.html', label: 'المساعدة', icon: 'fas fa-question-circle' },
+            { path: 'contact.html', label: 'تواصل معنا', icon: 'fas fa-envelope' },
+            { path: 'pay.html', label: 'التسعير', icon: 'fas fa-tags' }
+        ],
+        en: [
+            { path: 'en/index.html', label: 'Home', icon: 'fas fa-home' },
+            { path: 'editor.html', label: 'CV Editor', icon: 'fas fa-edit' },
+            { path: 'mobile-editor.html', label: 'Mobile Editor', icon: 'fas fa-mobile-alt' },
+            { path: 'en/templates.html', label: 'Templates', icon: 'fas fa-palette' },
+            { path: 'en/ai-tools.html', label: 'Free AI Tools', icon: 'fas fa-brain' },
+            { path: 'en/ats-checker.html', label: 'ATS Checker', icon: 'fas fa-search' },
+            { path: 'en/compare.html', label: 'Compare CVs', icon: 'fas fa-not-equal' },
+            { path: 'en/cover-letter.html', label: 'Cover Letter', icon: 'fas fa-envelope-open-text' },
+            { path: 'en/email-signature.html', label: 'Email Signature', icon: 'fas fa-pen-nib' },
+            { path: 'en/summary.html', label: 'CV Summary', icon: 'fas fa-align-left' },
+            { path: 'portfolio.html', label: 'Portfolio', icon: 'fas fa-briefcase' },
+            { path: 'tracker.html', label: 'Job Tracker', icon: 'fas fa-chart-line' },
+            { path: 'en/blog.html', label: 'Blog', icon: 'fas fa-blog' },
+            { path: 'en/about.html', label: 'About Us', icon: 'fas fa-info-circle' },
+            { path: 'en/careers.html', label: 'Careers', icon: 'fas fa-user-tie' },
+            { path: 'en/help.html', label: 'Help Center', icon: 'fas fa-question-circle' },
+            { path: 'en/contact.html', label: 'Contact Us', icon: 'fas fa-envelope' },
+            { path: 'en/pricing.html', label: 'Pricing', icon: 'fas fa-tags' }
+        ]
+    };
+
+    var _dropdownOpen = false;
+    var _dropdownEl = null;
+
+    function ensureDropdownStyles() {
+        if (document.getElementById('qcv-lang-dropdown-css')) return;
+        var style = document.createElement('style');
+        style.id = 'qcv-lang-dropdown-css';
+        style.textContent = '\
+            .lang-dropdown-overlay{position:fixed;inset:0;z-index:9998;display:none;backdrop-filter:blur(4px);background:rgba(0,0,0,0.3)}\
+            .lang-dropdown-overlay.show{display:block}\
+            .lang-dropdown{position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:9999;background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:20px;padding:16px;min-width:320px;max-width:420px;max-height:70vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.15);display:none;animation:langDropIn 0.25s ease}\
+            .lang-dropdown.show{display:block}\
+            @keyframes langDropIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}\
+            .lang-dropdown-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 4px}\
+            .lang-dropdown-header h3{font-size:0.9rem;font-weight:800;margin:0}\
+            .lang-dropdown-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg2,#f3f4f6);color:var(--text,#1a1a2e);font-size:0.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center}\
+            .lang-dropdown-close:active{opacity:0.7}\
+            .lang-dropdown-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;cursor:pointer;text-decoration:none;color:var(--text,#1a1a2e);transition:all 0.15s;border:1px solid transparent}\
+            .lang-dropdown-item:active{background:var(--bg2,#f3f4f6);transform:scale(0.98)}\
+            .lang-dropdown-item.active{background:rgba(0,3,201,0.06);border-color:rgba(0,3,201,0.12)}\
+            .lang-dropdown-item .ldi-icon{width:36px;height:36px;border-radius:10px;background:var(--bg2,#f3f4f6);display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:var(--accent,#0003c9);flex-shrink:0}\
+            .lang-dropdown-item.active .ldi-icon{background:var(--accent,#0003c9);color:#fff}\
+            .lang-dropdown-item .ldi-label{font-size:0.88rem;font-weight:600}\
+            body.dark-mode .lang-dropdown{background:#1e293b;border-color:#334155}\
+            body.dark-mode .lang-dropdown-close{background:#334155;color:#f1f5f9}\
+            body.dark-mode .lang-dropdown-item{color:#f1f5f9}\
+            body.dark-mode .lang-dropdown-item:active{background:#334155}\
+            body.dark-mode .lang-dropdown-item.active{background:rgba(79,95,255,0.15);border-color:rgba(79,95,255,0.3)}\
+            body.dark-mode .lang-dropdown-item .ldi-icon{background:#334155;color:#818cf8}\
+            body.dark-mode .lang-dropdown-item.active .ldi-icon{background:#4f46e5;color:#fff}';
+        document.head.appendChild(style);
+    }
+
+    function toggleDropdown() {
+        ensureDropdownStyles();
+        _dropdownOpen = !_dropdownOpen;
+
+        if (!_dropdownEl) {
+            var overlay = document.createElement('div');
+            overlay.className = 'lang-dropdown-overlay';
+            overlay.onclick = function() { toggleDropdown(); };
+            document.body.appendChild(overlay);
+
+            var dd = document.createElement('div');
+            dd.className = 'lang-dropdown';
+            dd.id = 'qcvLangDropdown';
+            document.body.appendChild(dd);
+
+            _dropdownEl = { overlay: overlay, dd: dd };
+        }
+
+        if (_dropdownOpen) {
+            renderDropdown();
+            _dropdownEl.overlay.classList.add('show');
+            _dropdownEl.dd.classList.add('show');
+        } else {
+            _dropdownEl.overlay.classList.remove('show');
+            _dropdownEl.dd.classList.remove('show');
+        }
+    }
+
+    function renderDropdown() {
+        var lang = current();
+        var pages = ALL_PAGES[lang] || ALL_PAGES.ar;
+        var cp = currentPage();
+        var prefix = depthPrefix();
+
+        var targetLang = lang === 'ar' ? 'en' : 'ar';
+        var targetLabel = lang === 'ar' ? 'English Pages' : 'الصفحات العربية';
+        var targetIcon = lang === 'ar' ? 'fas fa-globe' : 'fas fa-globe';
+
+        var html = '<div class="lang-dropdown-header"><h3>' + (lang === 'ar' ? 'جميع الصفحات' : 'All Pages') + '</h3><button class="lang-dropdown-close" onclick="QCVLang.toggleDropdown()"><i class="fas fa-xmark"></i></button></div>';
+
+        html += '<div class="lang-dropdown-item" onclick="QCVLang.set(\'' + targetLang + '\')" style="margin-bottom:8px;background:rgba(0,3,201,0.04);border:1px dashed rgba(0,3,201,0.15)"><div class="ldi-icon"><i class="' + targetIcon + '"></i></div><div class="ldi-label">' + targetLabel + '</div></div>';
+
+        pages.forEach(function(p) {
+            var full = prefix + p.path;
+            var isActive = cp === p.path || cp === p.path.replace(/^\.\.\//, '');
+            html += '<a href="' + full + '" class="lang-dropdown-item' + (isActive ? ' active' : '') + '"><div class="ldi-icon"><i class="' + p.icon + '"></i></div><div class="ldi-label">' + p.label + '</div></a>';
+        });
+
+        _dropdownEl.dd.innerHTML = html;
+    }
+
     function depthPrefix() {
         var depth = currentPage().split('/').length - 1;
         var pre = '';
@@ -438,7 +565,7 @@
         return next;
     }
 
-    window.QCVLang = { set: set, current: current, t: t, toggle: toggleLang, pageTranslations: pageTranslations };
+    window.QCVLang = { set: set, current: current, t: t, toggle: toggleLang, toggleDropdown: toggleDropdown, pageTranslations: pageTranslations };
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() { apply(current()); });
