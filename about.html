@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -91,76 +91,6 @@
     <script src="js/pwa.js" defer></script>
 </head>
 <body>
-    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div><div class="loader-text">جاري التحميل...</div></div>
-    <nav class="navbar">
-        <a href="index.html" class="nav-logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
-        <ul class="nav-links">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="pay.html">التسعير</a></li>
-            <li><a href="careers.html">الوظائف</a></li>
-            <li><a href="help.html">المساعدة</a></li>
-            <li><a href="blog.html">المدونة</a></li>
-        </ul>
-        <div class="nav-right">
-            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button>
-            <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div>
-            <a href="login.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">تسجيل الدخول</a>
-            <a href="login.html" class="nav-cta">ابدأ مجاناً</a>
-        </div>
-        <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
-    </nav>
-
-    <section class="hero-section">
-        <h1>من <span class="hl">نحن</span></h1>
-        <p>نحن فريق شغوف بمساعدة الناس في تحقيق أحلامهم الوظيفية من خلال بناء سير ذاتية احترافية بالذكاء الاصطناعي</p>
-    </section>
-
-    <section class="section">
-        <div class="section-title"><h2>رسالتنا</h2><p>تمكين كل شخص من تقديم أفضل نسخة من نفسه أمام أصحاب العمل من خلال سير ذاتية احترافية ومتوافقة مع أنظمة ATS</p></div>
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,var(--accent),#3b5de7)"><i class="fas fa-bullseye"></i></div>
-                <h3>مهمتنا</h3>
-                <p>نوفر أدوات ذكية تساعد الباحثين عن عمل على بناء سير ذاتية احترافية في دقائق، مما يزيد فرصهم في الحصول على مقابلة عمل.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,var(--purple),#a855f7)"><i class="fas fa-eye"></i></div>
-                <h3>رؤيتنا</h3>
-                <p>أن نكون المنصة الأولى في العالم العربي لبناء السير الذاتية، ونساعد ملايين الأشخاص في تحسين مسيرتهم المهنية.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,var(--green),#34d399)"><i class="fas fa-heart"></i></div>
-                <h3>قيمنا</h3>
-                <p>الجودة والابتكار والمصداقية. نؤمن بأن كل شخص يستحق فرصة عادلة للتألق في سوق العمل.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" style="background:var(--bg2)">
-        <div class="section-title"><h2>لماذا QCV؟</h2></div>
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,var(--yellow),#f97316)"><i class="fas fa-robot"></i></div>
-                <h3>ذكاء اصطناعي متقدم</h3>
-                <p>نستخدم أحدث تقنيات الذكاء الاصطناعي لتحليل وتحسين سيرتك الذاتية وجعلها متوافقة مع أنظمة ATS.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,var(--accent2),#06b6d4)"><i class="fas fa-file-alt"></i></div>
-                <h3>قوالب احترافية</h3>
-                <p>أكثر من 15 قالباً احترافياً مصمماً خصيصاً لت脱颖而出 في سوق العمل مع مراعاة المعايير الدولية.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)"><i class="fas fa-bolt"></i></div>
-                <h3>سرعة وسهولة</h3>
-                <p>أدخل بياناتك مرة واحدة واحصل على سيرة ذاتية احترافية جاهزة للتصدير والمشاركة في دقائق معدودة.</p>
-            </div>
-        </div>
-        <div class="stats-row">
-            <div class="stat-box"><div class="num">+50</div><div class="label"><i class="fas fa-users" style="margin-left:4px;color:var(--accent)"></i> مستخدم نشط</div></div>
-            <div class="stat-box"><div class="num">15</div><div class="label"><i class="fas fa-file-alt" style="margin-left:4px;color:var(--purple)"></i> قالب احترافي</div></div>
-            <div class="stat-box"><div class="num">4.8</div><div class="label"><i class="fas fa-star" style="margin-left:4px;color:#d97706"></i> تقييم المستخدمين</div></div>
-            <div class="stat-box"><div class="num">+200</div><div class="label"><i class="fas fa-check-circle" style="margin-left:4px;color:var(--green)"></i> سيرة ذاتية تم إنشاؤها</div></div>
-        </div>
     </section>
 
     <section class="cta-section">
@@ -197,6 +127,6 @@
     <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
 </div>
 </body>
-    <script>setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');},4000);document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');});</script>
+    
 </html>
 

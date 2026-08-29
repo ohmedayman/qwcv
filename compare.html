@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -39,64 +39,6 @@
         @media(max-width:768px) { .compare-grid { grid-template-columns:1fr } }
     </style>
     <style>
-        .page-loader{position:fixed;top:0;left:0;right:0;bottom:0;background:#f0f4ff;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity 0.5s ease,visibility 0.5s ease}
-        .page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-        body.dark-mode .page-loader{background:#0b1120}
-        .loader-spinner{width:48px;height:48px;border:4px solid #e0e7f7;border-top-color:#0003c9;border-radius:50%;animation:loadSpin .8s linear infinite}
-        @keyframes loadSpin{to{transform:rotate(360deg)}}
-        .loader-text{color:#64748b;font-size:14px;font-weight:500}
-    </style>
-</head>
-<body>
-    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div><div class="loader-text">جاري التحميل...</div></div>
-    <div class="topbar">
-        <a href="index.html" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
-        <div style="display:flex;gap:10px;align-items:center">
-            <a href="editor.html" class="btn" style="background:var(--input);color:var(--text);text-decoration:none;font-size:0.82rem"><i class="fas fa-edit"></i> المحرر</a>
-        </div>
-    </div>
-    <div class="container">
-        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:4px"><i class="fas fa-code-compare" style="color:var(--primary);margin-right:8px"></i>مقارنة السير الذاتية</h1>
-        <p style="color:var(--muted);font-size:0.88rem;margin-bottom:24px">قارن بين إصدارين من السيرة الذاتية وشاهد ما تحسن</p>
-
-        <div class="compare-grid">
-            <div class="compare-col">
-                <h3><i class="fas fa-file-alt" style="color:var(--blue)"></i> الإصدار A (قبل)</h3>
-                <div class="field-group"><label>المسمى الوظيفي</label><input id="cvA_title" placeholder="مهندس برمجيات"></div>
-                <div class="field-group"><label>الملخص</label><textarea id="cvA_summary" rows="3" placeholder="ملخص مهني..."></textarea></div>
-                <div class="field-group"><label>الخبرة (واحدة لكل سطر)</label><textarea id="cvA_exp" rows="4" placeholder="- قيادة فريق من 5&#10;- تحسين الأداء بنسبة 40%"></textarea></div>
-                <div class="field-group"><label>المهارات (مفصولة بفاصلة)</label><input id="cvA_skills" placeholder="JavaScript, React, Python"></div>
-            </div>
-            <div class="compare-col">
-                <h3><i class="fas fa-file-alt" style="color:var(--green)"></i> الإصدار B (بعد)</h3>
-                <div class="field-group"><label>المسمى الوظيفي</label><input id="cvB_title" placeholder="مهندس برمجيات أول"></div>
-                <div class="field-group"><label>الملخص</label><textarea id="cvB_summary" rows="3" placeholder="ملخص مهني محسّن..."></textarea></div>
-                <div class="field-group"><label>الخبرة (واحدة لكل سطر)</label><textarea id="cvB_exp" rows="4" placeholder="- قيادة فريق من 8&#10;- تحسين الأداء بنسبة 60%"></textarea></div>
-                <div class="field-group"><label>المهارات (مفصولة بفاصلة)</label><input id="cvB_skills" placeholder="JavaScript, React, Python, AWS, Docker"></div>
-            </div>
-        </div>
-
-        <div style="text-align:center;margin-top:20px;display:flex;gap:12px;justify-content:center">
-            <button class="btn btn-primary" onclick="compareCVs()"><i class="fas fa-code-compare" style="margin-right:6px"></i> مقارنة الآن</button>
-            <button class="btn btn-ai" onclick="aiCompare()"><i class="fas fa-wand-magic-sparkles" style="margin-right:6px"></i> تحليل عميق بالذكاء الاصطناعي</button>
-        </div>
-
-        <div class="result-card" id="resultCard" style="display:none">
-            <h3 style="margin-bottom:14px"><i class="fas fa-chart-bar" style="color:var(--primary);margin-right:6px"></i>نتائج المقارنة</h3>
-            <div id="resultBody"></div>
-        </div>
-    </div>
-
-    <script src="js/config.js"></script>
-    <script src="js/ai-service.js"></script>
-    <script>
-        function getCvData(prefix) {
-            return {
-                title: document.getElementById(prefix + '_title').value.trim(),
-                summary: document.getElementById(prefix + '_summary').value.trim(),
-                exp: document.getElementById(prefix + '_exp').value.trim(),
-                skills: document.getElementById(prefix + '_skills').value.trim()
-            };
         }
 
         function compareCVs() {
@@ -190,5 +132,4 @@
     </script>
 <script src="js/site-settings.js"></script>
 </body>
-    <script>setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');},4000);document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('pageLoader');if(l)l.classList.add('hide');});</script>
 </html>

@@ -313,32 +313,7 @@
         }
         .cookie-btn:hover { opacity: 0.9; transform: translateY(-1px) }
 
-        /* ===== LOADING SKELETON ===== */
-        .page-loader {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease
-        }
-        .page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none }
-        .page-loader .spinner {
-            width: 40px; height: 40px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: qcvSpin 0.8s linear infinite;
-            margin-bottom: 16px
-        }
-        .page-loader p {
-            font-size: 0.85rem;
-            color: var(--muted);
-            font-weight: 600
-        }
+        
 
         /* ===== PERFORMANCE ===== */
         .lazy-section { content-visibility: auto; contain-intrinsic-size: 500px }
@@ -2270,109 +2245,6 @@
 <body>
 
     <!-- ===== PAGE LOADER ===== -->
-    <div class="page-loader" id="pageLoader">
-        <div class="spinner"></div>
-        <p>QCV</p>
-    </div>
-
-    <!-- ===== SCROLL PROGRESS BAR ===== -->
-    <div id="scrollProgress"></div>
-
-    <!-- ===== COOKIE CONSENT ===== -->
-    <div class="cookie-bar" id="cookieBar">
-        <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك. <a href="privacy.html">اعرف المزيد</a></p>
-        <button class="cookie-btn" onclick="acceptCookies()">قبول</button>
-    </div>
-
-    <!-- ===== MOBILE MENU SCRIM ===== -->
-    <div id="navScrim"></div>
-    <script>
-        function toggleNav() {
-            var nc = document.querySelector('.nav-center');
-            var open = nc.classList.toggle('show');
-            document.body.classList.toggle('nav-open', open);
-        }
-        function closeNav() {
-            var nc = document.querySelector('.nav-center');
-            if (nc.classList.contains('show')) {
-                nc.classList.remove('show');
-                document.body.classList.remove('nav-open');
-            }
-        }
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('#navScrim')) closeNav();
-        });
-        document.querySelectorAll('.nav-center a').forEach(function (a) {
-            a.addEventListener('click', closeNav);
-        });
-    </script>
-
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
-        <a href="index.html" class="nav-logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" loading="eager" fetchpriority="high" decoding="async" style="height:44px;width:auto"></a>
-        <ul class="nav-center">
-            <li><a href="index.html" data-i18n="home"><i class="fas fa-home" style="font-size:0.7rem;margin-left:4px"></i> الرئيسية</a></li>
-            <li><a href="pay.html" data-i18n="pricing"><i class="fas fa-tag" style="font-size:0.7rem;margin-left:4px"></i> التسعير</a></li>
-            <li><a href="careers.html" data-i18n="careers"><i class="fas fa-briefcase" style="font-size:0.7rem;margin-left:4px"></i> الوظائف</a></li>
-            <li><a href="help.html" data-i18n="help"><i class="fas fa-question-circle" style="font-size:0.7rem;margin-left:4px"></i> المساعدة</a></li>
-            <li><a href="blog.html" data-i18n="blog"><i class="fas fa-blog" style="font-size:0.7rem;margin-left:4px"></i> المدونة</a></li>
-        </ul>
-        <div class="nav-right">
-            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي"
-                style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s"
-                onmouseover="this.style.borderColor='var(--accent)'"
-                onmouseout="this.style.borderColor='var(--border)'">
-                <span class="icon-sun">&#9728;</span>
-                <span class="icon-moon" style="display:none">&#9790;</span>
-            </button>
-            <div class="lang-switch"
-                style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px">
-                <button class="lang-ar" onclick="QCVLang.set('ar')"
-                    style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:'Cairo',sans-serif;transition:all 0.2s">عربي</button>
-                <button class="lang-en" onclick="QCVLang.set('en')"
-                    style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:'Cairo',sans-serif;transition:all 0.2s">EN</button>
-            </div>
-            <a href="login.html" class="login" data-i18n="login"><i class="fas fa-sign-in-alt" style="font-size:0.75rem;margin-left:4px"></i> تسجيل الدخول</a>
-            <a href="login.html" class="btn-cta" data-i18n="start_free"><i class="fas fa-rocket" style="font-size:0.75rem;margin-left:4px"></i> ابدأ مجاناً</a>
-        </div>
-        <button class="nav-mobile-toggle" onclick="toggleNav()"
-            aria-label="القائمة">&#9776;</button>
-    </nav>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="welcome" style="opacity:1;transform:none">
-        <div class="hero-right">
-            <div class="hero-badge"><i class="fas fa-robot"></i> <span data-i18n="hero_badge">منصة احترافية
-                    للوظائف</span></div>
-            <h1 data-i18n-html="hero_title">ابنِ سيرة ذاتية <span class="hl">مُجهزة للوظائف</span><br>ومُهيأة للـ ATS
-            </h1>
-            <p data-i18n="hero_sub">QCV يزوّدك بأدوات جاهزة لإنشاء سيرة ذاتية احترافية، تحليل ATS، مطابقة الوظائف،
-                وتصدير ملفات PDF بصياغة قوية ومناسبة لطلب العمل.</p>
-            <div class="hero-btns">
-                <a href="login.html" class="btn btn-primary" data-i18n="start_free">ابدأ بناء سيرتك الآن <i
-                        class="fas fa-arrow-left"></i></a>
-                <a href="ats-checker.html" class="btn btn-ghost" data-i18n="view_plans">جرّب فحص ATS مجاناً</a>
-            </div>
-            <div class="hero-highlights">
-                <div class="hero-highlight">
-                    <strong>15+</strong>
-                    <span>قالب احترافي</span>
-                </div>
-                <div class="hero-highlight">
-                    <strong>92/100</strong>
-                    <span>متوسط جودة السيرة</span>
-                </div>
-                <div class="hero-highlight">
-                    <strong>24/7</strong>
-                    <span>دعم ومساعدة</span>
-                </div>
-            </div>
-            <div class="hero-steps" style="margin-top:16px">
-                <div class="hero-step-pill"><i class="fas fa-bolt"></i> إنشاء سريع</div>
-                <div class="hero-step-pill"><i class="fas fa-chart-line"></i> تحليل ذكي</div>
-                <div class="hero-step-pill"><i class="fas fa-download"></i> تصدير PDF</div>
-            </div>
-        </div>
         <div class="hero-left">
             <div class="hero-visual" role="img" aria-label="معاينة سيرة ذاتية بالذكاء الاصطناعي">
                 <div class="hv-header">
@@ -3147,8 +3019,7 @@
         // ===== PAGE LOADER =====
         window.addEventListener('load', function () {
             setTimeout(function () {
-                var loader = document.getElementById('pageLoader');
-                if (loader) loader.classList.add('hide');
+                
             }, 300);
         });
 

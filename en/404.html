@@ -103,18 +103,7 @@
         img { max-width: 100%; }
         button { font-family: inherit; }
 
-        /* ===== LOADING SPLASH ===== */
-        #qcvLoader {
-            position: fixed; inset: 0; background: var(--bg); z-index: 99999;
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.4s ease, visibility 0.4s;
-        }
-        #qcvLoader.done { opacity: 0; visibility: hidden; }
-        .qcv-loader-logo { font-size: 2.4rem; font-weight: 900; letter-spacing: -1px; text-align: center; }
-        .qcv-loader-logo span { color: var(--accent); }
-        .qcv-loader-bar { width: 170px; height: 4px; background: var(--border); border-radius: 4px; margin: 14px auto 0; overflow: hidden; }
-        .qcv-loader-bar span { display: block; height: 100%; width: 40%; background: var(--gradient); border-radius: 4px; animation: qcvLoadBar 1.2s ease-in-out infinite; }
-        @keyframes qcvLoadBar { 0% { transform: translateX(-100%); } 50% { transform: translateX(100%); } 100% { transform: translateX(250%); } }
+         50% { transform: translateX(100%); } 100% { transform: translateX(250%); } }
 
         /* ===== NAVBAR ===== */
         .navbar {

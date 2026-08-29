@@ -170,32 +170,7 @@
         img { max-width: 100%; }
         button { font-family: inherit; }
 
-        /* ===== LOADING SPLASH ===== */
-        #qcvLoader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease, visibility 0.4s;
-        }
-        #qcvLoader.done { opacity: 0; visibility: hidden; }
-        .qcv-loader-inner { text-align: center; }
-        .qcv-loader-logo { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; }
-        .qcv-loader-logo span { color: var(--accent); }
-        .qcv-loader-bar {
-            width: 180px; height: 4px; background: var(--border);
-            border-radius: 4px; margin: 16px auto 0; overflow: hidden;
-        }
-        .qcv-loader-bar span {
-            display: block; height: 100%; width: 40%;
-            background: var(--gradient); border-radius: 4px;
-            animation: qcvLoadBar 1.2s ease-in-out infinite;
-        }
-        @keyframes qcvLoadBar {
-            0% { transform: translateX(-100%); }
+        
             50% { transform: translateX(100%); }
             100% { transform: translateX(250%); }
         }
@@ -1065,36 +1040,14 @@
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
-            .qcv-loader-bar span { animation: none; }
+            
             .hero-visual { animation: none; }
         }
     </style>
 </head>
 
 <body>
-
-    <!-- ===== LOADING SPLASH ===== -->
-    <div id="qcvLoader" aria-hidden="true">
-        <div class="qcv-loader-inner">
-            <div class="qcv-loader-logo">Q<span>CV</span></div>
-            <div class="qcv-loader-bar"><span></span></div>
-        </div>
-    </div>
-    <script>
-        (function () {
-            function hideLoader() {
-                var el = document.getElementById('qcvLoader');
-                if (!el) return;
-                el.classList.add('done');
-                setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 500);
-            }
-            if (document.readyState === 'complete') { hideLoader(); }
-            else {
-                window.addEventListener('load', hideLoader, { once: true });
-                setTimeout(hideLoader, 2500);
-            }
-        })();
-    </script>
+    
     <script>
         (function () {
             var nav = document.querySelector('.navbar');
