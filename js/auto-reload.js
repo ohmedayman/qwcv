@@ -7,6 +7,10 @@
     var CHECK_INTERVAL = 120000;
     var currentVersion = localStorage.getItem('qcv_site_version') || '0';
 
+    if (window.history && window.history.scrollRestoration) {
+        window.history.scrollRestoration = 'manual';
+    }
+
     function checkVersion(){
         fetch(DB + '/siteSettings/version.json?_=' + Date.now())
             .then(function(r){
