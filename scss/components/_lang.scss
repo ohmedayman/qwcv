@@ -1,0 +1,41 @@
+.lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba($bg2, 0.9);
+    border: 1px solid $border;
+    border-radius: 999px;
+    padding: 4px;
+}
+
+.lang-ar,
+.lang-en {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all $transition;
+}
+
+.lang-ar {
+    background: $primary;
+    color: #fff;
+}
+
+.lang-en {
+    color: $text;
+    background: transparent;
+}
+
+html[dir='rtl'] .lang-ar {
+    background: $primary;
+}
+
+html[dir='ltr'] .lang-en {
+    background: $primary;
+    color: #fff;
+}
