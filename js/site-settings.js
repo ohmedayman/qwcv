@@ -47,6 +47,7 @@
         attachListener();
 
         function applyAll() {
+            applyPerformanceOptimizations();
             applyColors();
             applyBanner();
             applySEO();
@@ -54,6 +55,39 @@
             applyHero();
             applyFooter();
             applyPricing();
+        }
+
+        function applyPerformanceOptimizations() {
+            const preconnects = [
+                'https://fonts.googleapis.com',
+                'https://fonts.gstatic.com',
+                'https://cdnjs.cloudflare.com',
+                'https://www.gstatic.com'
+            ];
+
+            preconnects.forEach((href) => {
+                if (document.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
+                const link = document.createElement('link');
+                link.rel = 'preconnect';
+                link.href = href;
+                if (href.includes('fonts.gstatic.com') || href.includes('cdnjs.cloudflare.com')) {
+                    link.crossOrigin = 'anonymous';
+                }
+                document.head.appendChild(link);
+            });
+
+            document.querySelectorAll('img:not([loading])').forEach((img) => {
+                const isHero = img.closest('header, .hero, .banner');
+                if (isHero) {
+                    img.setAttribute('fetchpriority', 'high');
+                    return;
+                }
+                img.loading = 'lazy';
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+                if (!img.getAttribute('decoding')) img.decoding = 'async';
+            });
         }
 
         // ===== COLORS =====
