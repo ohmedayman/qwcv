@@ -2,7 +2,9 @@
     "name": "qcv-sass-project",
     "private": true,
     "scripts": {
-        "sass": "sass scss/main.scss styles.css --style=expanded"
+        "sass": "sass scss/main.scss styles.css --style=expanded",
+        "build": "npm run sass",
+        "check": "node scripts/platform-check.js"
     },
     "devDependencies": {
         "sass": "^1.77.5"

@@ -4,7 +4,7 @@
  * Include this script in any page that should respect admin settings
  */
 (function(){
-    const CFG = {
+    const CFG = (window.QCVApp && window.QCVApp.firebaseConfig) || {
         apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
         authDomain: "qwcv-1cfad.firebaseapp.com",
         databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com",
@@ -113,13 +113,76 @@
             const enabled = (m === true || (m === true) || (m && typeof m === 'object' && m.enabled === true) || (m && m.enabled === 'true'));
             if(!enabled) return;
             const page = location.pathname.split('/').pop() || 'index.html';
-            const bypassPages = ['admin.html', 'admin-setup.html', 'login.html', 'editor.html', 'portfolio-view.html'];
+            const bypassPages = (window.QCVApp && window.QCVApp.maintenanceBypassPages) || ['admin.html', 'admin-setup.html', 'login.html', 'editor.html', 'portfolio-view.html'];
             if(bypassPages.includes(page)) return;
             const msg = m.message || 'الموقع تحت الصيانة حالياً. سنعود قريباً.';
             const bgColor = m.bgColor || '#f9fafb';
             const textColor = m.textColor || '#1a1a2e';
             const accentColor = m.accentColor || '#0003c9';
-            document.documentElement.innerHTML = '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>صيانة - QCV</title><link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:' + bgColor + ';color:' + textColor + ";font-family:'Inter','Cairo',sans-serif;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;position:relative;overflow:hidden}body::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%," + accentColor + "08 0%,transparent 50%),radial-gradient(circle at 70% 60%," + accentColor + "05 0%,transparent 50%);animation:bgFloat 20s ease-in-out infinite}@keyframes bgFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(-2%,2%)}}.box{max-width:520px;position:relative;z-index:1}.logo{font-size:2.2rem;font-weight:900;margin-bottom:24px;letter-spacing:-1px}.logo span{color:" + accentColor + ";}.icon-wrap{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg," + accentColor + "12," + accentColor + "06);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;border:2px solid " + accentColor + "15;position:relative}.icon-wrap::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px dashed " + accentColor + "20;animation:spin 30s linear infinite}.icon{font-size:3.5rem;opacity:0.8;animation:float 3s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes spin{to{transform:rotate(360deg)}}h1{font-size:1.8rem;font-weight:900;margin-bottom:12px;line-height:1.3}.timer{display:inline-flex;gap:12px;margin:20px 0}.timer-block{background:" + accentColor + "08;border:1px solid " + accentColor + "15;border-radius:12px;padding:12px 16px;min-width:70px}.timer-num{font-size:1.8rem;font-weight:900;color:" + accentColor + ";display:block;line-height:1}.timer-label{font-size:0.65rem;color:#6b7280;font-weight:600;text-transform:uppercase;margin-top:4px}p{color:#6b7280;font-size:1rem;line-height:1.8;max-width:400px;margin:0 auto 24px}.social{display:flex;gap:12px;justify-content:center;margin-top:8px}.social a{width:44px;height:44px;border-radius:12px;border:1px solid " + accentColor + "15;display:flex;align-items:center;justify-content:center;color:#6b7280;text-decoration:none;transition:all 0.2s;font-size:1.1rem}.social a:hover{background:" + accentColor + "08;color:" + accentColor + ";border-color:" + accentColor + "30}.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:" + accentColor + "08;border:1px solid " + accentColor + "15;font-size:0.75rem;font-weight:700;color:" + accentColor + ";margin-bottom:20px}.badge .dot{width:6px;height:6px;border-radius:50%;background:" + accentColor + ";animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}@media(max-width:480px){.timer{gap:8px}.timer-block{padding:10px 12px;min-width:60px}.timer-num{font-size:1.4rem}h1{font-size:1.4rem}}</style></head><body><div class=\"box\"><div class=\"logo\">Q<span>CV</span></div><div class=\"icon-wrap\"><div class=\"icon\">\u{1F527}</div></div><div class=\"badge\"><span class=\"dot\"></span>Under Maintenance</div><h1>\u0627\u0644\u0645\u0648\u0642\u0639 \u0642\u064A\u062F \u0627\u0644\u0635\u064A\u0627\u0646\u0629</h1><p>' + msg + '</p><div class=\"timer\"><div class=\"timer-block\"><span class=\"timer-num\" id=\"td\">--</span><span class=\"timer-label\">Days</span></div><div class=\"timer-block\"><span class=\"timer-num\" id=\"th\">--</span><span class=\"timer-label\">Hours</span></div><div class=\"timer-block\"><span class=\"timer-num\" id=\"tm\">--</span><span class=\"timer-label\">Mins</span></div><div class=\"timer-block\"><span class=\"timer-num\" id=\"ts\">--</span><span class=\"timer-label\">Secs</span></div></div><div class=\"social\"><a href=\"https://wa.me/201028707543\" title=\"WhatsApp\"><i class=\"fab fa-whatsapp\"></i></a><a href=\"mailto:support@qcv.vexonet.online\" title=\"Email\"><i class=\"fas fa-envelope\"></i></a><a href=\"https://qcv.vexonet.online\" title=\"Home\"><i class=\"fas fa-home\"></i></a></div></div><script>var end=(Date.now()+(m.estimatedHours||24)*3600000);function tick(){var d=Math.max(0,Math.floor((end-Date.now())/86400000));var h=Math.max(0,Math.floor(((end-Date.now())%86400000)/3600000));var m2=Math.max(0,Math.floor(((end-Date.now())%3600000)/60000));var s=Math.max(0,Math.floor(((end-Date.now())%60000)/1000));document.getElementById('td').textContent=d;document.getElementById('th').textContent=h;document.getElementById('tm').textContent=m2;document.getElementById('ts').textContent=s}tick();setInterval(tick,1000)</script></body>'; 
+
+            const maintenanceHtml = [
+                '<!DOCTYPE html>',
+                '<html lang="ar" dir="rtl">',
+                '<head>',
+                '<meta charset="UTF-8">',
+                '<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+                '<title>صيانة - QCV</title>',
+                '<link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">',
+                '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">',
+                '<style>',
+                '*{box-sizing:border-box;margin:0;padding:0}',
+                'body{background:' + bgColor + ';color:' + textColor + ';font-family:\'Inter\',\'Cairo\',sans-serif;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;position:relative;overflow:hidden}',
+                'body::before{content:\'\';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,' + accentColor + '14 0%,transparent 50%),radial-gradient(circle at 70% 60%,' + accentColor + '10 0%,transparent 50%);animation:bgFloat 20s ease-in-out infinite}',
+                '@keyframes bgFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(-2%,2%)}}',
+                '.box{max-width:520px;position:relative;z-index:1}',
+                '.logo{font-size:2.2rem;font-weight:900;margin-bottom:24px;letter-spacing:-1px}.logo span{color:' + accentColor + '}',
+                '.icon-wrap{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,' + accentColor + '22,' + accentColor + '08);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;border:2px solid ' + accentColor + '20;position:relative}',
+                '.icon-wrap::after{content:\'\';position:absolute;inset:-8px;border-radius:50%;border:1px dashed ' + accentColor + '20;animation:spin 30s linear infinite}',
+                '.icon{font-size:3.5rem;opacity:0.8;animation:float 3s ease-in-out infinite}',
+                '@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}',
+                '@keyframes spin{to{transform:rotate(360deg)}}',
+                'h1{font-size:1.8rem;font-weight:900;margin-bottom:10px}',
+                'p{font-size:0.95rem;opacity:.7;line-height:1.8;margin-bottom:24px}',
+                '.timer{display:flex;gap:10px;justify-content:center}',
+                '.timer div{background:' + accentColor + '15;border:1px solid ' + accentColor + '30;border-radius:12px;padding:12px 16px;min-width:70px}',
+                '.timer strong{display:block;font-size:1.6rem;font-weight:900;color:' + accentColor + '}',
+                '.timer small{font-size:0.65rem;opacity:.7}',
+                '.meta{margin-top:18px;padding:12px 20px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid rgba(15,23,42,.06);font-size:0.75rem;color:rgba(15,23,42,.8);font-weight:700}',
+                '</style>',
+                '</head>',
+                '<body>',
+                '<div class="box">',
+                '<div class="icon-wrap"><span class="icon">🔧</span></div>',
+                '<div class="logo">Q<span>CV</span></div>',
+                '<h1>الموقع تحت الصيانة</h1>',
+                '<p>' + msg + '</p>',
+                '<div class="timer">',
+                '<div><strong id="mh">00</strong><small>ساعة</small></div>',
+                '<div><strong id="mm">00</strong><small>دقيقة</small></div>',
+                '<div><strong id="ms">00</strong><small>ثانية</small></div>',
+                '</div>',
+                '<div class="meta">سنعود خلال وقت قصير</div>',
+                '</div>',
+                '<script>',
+                'var start = new Date();',
+                'setInterval(function(){',
+                'var now = new Date();',
+                'var diff = Math.max(0, Math.floor((now - start) / 1000));',
+                'var h = Math.floor(diff / 3600);',
+                'var m = Math.floor((diff % 3600) / 60);',
+                'var s = diff % 60;',
+                'document.getElementById(\'mh\').textContent = String(h).padStart(2, \'0\');',
+                'document.getElementById(\'mm\').textContent = String(m).padStart(2, \'0\');',
+                'document.getElementById(\'ms\').textContent = String(s).padStart(2, \'0\');',
+                '}, 1000);',
+                '</script>',
+                '</body>',
+                '</html>'
+            ].join('');
+
+            document.open();
+            document.write(maintenanceHtml);
+            document.close();
         }
 
         // ===== HERO =====
@@ -188,7 +251,8 @@
             get naraKey() { return adminSettings.naraKey || ''; },
             get: function() { return { ...siteData, ...adminSettings }; },
             forceRefresh: function() {
-                fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/siteSettings.json')
+                const databaseUrl = (window.QCVApp && window.QCVApp.firebaseConfig && window.QCVApp.firebaseConfig.databaseURL) || 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
+                fetch(databaseUrl + '/siteSettings.json')
                     .then(r => r.json())
                     .then(data => { siteData = data || {}; applyAll(); })
                     .catch(() => {});
@@ -197,3 +261,4 @@
     `;
     document.head.appendChild(script);
 })();
+

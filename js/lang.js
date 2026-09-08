@@ -354,7 +354,12 @@
         'ats-checker.html': 'en/ats-checker.html',
         'cover-letter.html': 'en/cover-letter.html',
         'email-signature.html': 'en/email-signature.html',
-        'blog.html': 'en/blog.html'
+        'blog.html': 'en/blog.html',
+        'portfolio.html': 'portfolio.html',
+        'tracker.html': 'tracker.html',
+        'editor.html': 'editor.html',
+        'mobile-editor.html': 'mobile-editor.html',
+        'report.html': 'report.html'
     };
 
     var ALL_PAGES = {

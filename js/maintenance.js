@@ -1,7 +1,8 @@
 ﻿// QCV Maintenance Check
 (function(){
-    var DB = 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
-    var EXEMPT = ['admin.html','admin-setup.html','login.html','editor.html','portfolio-view.html'];
+    var config = (window.QCVApp && window.QCVApp.firebaseConfig) || { databaseURL: 'https://qwcv-1cfad-default-rtdb.firebaseio.com' };
+    var DB = config.databaseURL;
+    var EXEMPT = (window.QCVApp && window.QCVApp.maintenanceBypassPages) || ['admin.html','admin-setup.html','login.html','editor.html','portfolio-view.html'];
 
     var page = location.pathname.split('/').pop() || 'index.html';
     if(EXEMPT.indexOf(page) !== -1) return;
