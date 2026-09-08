@@ -9558,13 +9558,25 @@
                     if (onError) onError('AI request failed');
                 });
             } else {
-                var bk = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+                var bk = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
                 var be = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-                fetch(be + '/chat/completions', {
+                var requestUrl = bk ? be + '/chat/completions' : 'https://text.pollinations.ai/' + encodeURIComponent(prompt);
+                var requestOptions = bk ? {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bk },
                     body: JSON.stringify({ model: 'meta/llama-3.3-70b-instruct', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
-                }).then(function(r){return r.json()}).then(function(d){var t=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'';if(t.length>5)onSuccess(t.trim());else onError('Empty response')}).catch(function(){onError('AI unavailable')});
+                } : {
+                    method: 'GET',
+                    headers: { 'Accept': 'text/plain' }
+                };
+                fetch(requestUrl, requestOptions)
+                    .then(function(r){ return bk ? r.json() : r.text(); })
+                    .then(function(d){
+                        var t = bk ? (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content || '') : d;
+                        if (typeof t === 'string' && t.length > 5) onSuccess(t.trim());
+                        else onError('Empty response');
+                    })
+                    .catch(function(){ onError('AI unavailable'); });
             }
         }
 

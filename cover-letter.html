@@ -400,20 +400,31 @@ async function generateWithAI() {
             const result = await window.QCVAI.call(prompt, 'You are a professional cover letter writer. Write in the same language as the user prompt. Keep it under 250 words. No markdown.', { timeout: 15000 });
             generatedText = result.ok ? result.text : '';
         } else {
-            const bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+            const bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
             const bluesmindsEndpoint = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-            const resp = await fetch(bluesmindsEndpoint + '/chat/completions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
-                body: JSON.stringify({
-                    model: 'meta/llama-3.3-70b-instruct',
-                    messages: [{ role: 'system', content: 'You are a professional cover letter writer. Write in the same language as the user prompt. Keep it under 250 words. No markdown.' }, { role: 'user', content: prompt }],
-                    temperature: 0.7,
-                    max_tokens: 1500
-                })
-            });
-            const data = await resp.json();
-            generatedText = data.choices?.[0]?.message?.content || '';
+            const pollinationsUrl = 'https://text.pollinations.ai/' + encodeURIComponent(prompt);
+            const resp = bluesmindsKey
+                ? await fetch(bluesmindsEndpoint + '/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
+                    body: JSON.stringify({
+                        model: 'meta/llama-3.3-70b-instruct',
+                        messages: [{ role: 'system', content: 'You are a professional cover letter writer. Write in the same language as the user prompt. Keep it under 250 words. No markdown.' }, { role: 'user', content: prompt }],
+                        temperature: 0.7,
+                        max_tokens: 1500
+                    })
+                  })
+                : await fetch(pollinationsUrl, {
+                    method: 'GET',
+                    headers: { 'Accept': 'text/plain' }
+                  });
+
+            if (bluesmindsKey) {
+                const data = await resp.json();
+                generatedText = data.choices?.[0]?.message?.content || '';
+            } else {
+                generatedText = await resp.text();
+            }
         }
         renderLetter(generatedText);
     } catch (e) {

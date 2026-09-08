@@ -3,10 +3,18 @@
  * OpenAI-compatible endpoints with Gemini REST API fallback + CORS proxy
  */
 const QCVAI = {
-    get _bluesmindsKey() { return (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6'; },
+    get _openaiKey() {
+        const fromSettings = (window.QCVSettings && (window.QCVSettings.aiApiKey || window.QCVSettings.openaiKey || window.QCVSettings.apiKey)) || '';
+        const fromConfig = (window.QCVConfig && (window.QCVConfig.aiApiKey || window.QCVConfig.openaiKey || window.QCVConfig.apiKey)) || '';
+        const fromLocal = (typeof localStorage !== 'undefined') ? (localStorage.getItem('qcv_ai_key') || localStorage.getItem('openai_api_key') || '') : '';
+        return fromSettings || fromConfig || fromLocal || '';
+    },
+    get _openaiEndpoint() { return (window.QCVConfig && window.QCVConfig.openaiEndpoint) || 'https://api.openai.com/v1'; },
+    _openaiModels: ['gpt-4o-mini', 'gpt-4o', 'gpt-4.1-mini'],
+    get _bluesmindsKey() { return (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || ''; },
     get _bluesmindsEndpoint() { return (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1'; },
     _bluesmindsModels: ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'],
-    get _openrouterKey() { return (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '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'; },
+    get _openrouterKey() { return (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || ''; },
     get _openrouterEndpoint() { return (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1'; },
     _openrouterModels: ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'],
     get _geminiKey() { return (window.QCVSettings && window.QCVSettings.geminiKey) || (window.QCVConfig && window.QCVConfig.geminiKey) || ''; },
@@ -147,6 +155,68 @@ const QCVAI = {
         }
     },
 
+    async _callOpenAI(prompt, systemPrompt, model, timeout) {
+        const messages = [];
+        if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
+        messages.push({ role: 'user', content: prompt });
+        const body = { model, messages, temperature: 0.7, max_tokens: 2000 };
+        const url = this._openaiEndpoint + '/chat/completions';
+
+        try {
+            const res = await this._fetch(url, body, {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this._openaiKey
+            }, timeout);
+            if (!res.ok) {
+                const err = await res.text().catch(() => '');
+                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
+            }
+            const data = await res.json();
+            let text = '';
+            if (data.choices && data.choices[0] && data.choices[0].message) {
+                text = data.choices[0].message.content || '';
+            }
+            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
+            if (text.length > 3000) text = text.substring(0, 3000);
+            const tokens = data.usage?.total_tokens || data.usage?.completion_tokens || 0;
+            this._usageLog.push({ model, tokens, time: Date.now(), provider: 'openai' });
+            return { ok: true, text, provider: 'openai-' + model };
+        } catch (e) {
+            console.error('[QCV AI] OpenAI ' + model + ' failed:', e.message);
+            return { ok: false, error: e.message };
+        }
+    },
+
+    async _callPollinations(prompt, systemPrompt, model, timeout) {
+        const finalPrompt = [systemPrompt, prompt].filter(Boolean).join('\n\n').trim();
+        const url = 'https://text.pollinations.ai/' + encodeURIComponent(finalPrompt);
+
+        try {
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), timeout || 20000);
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: { 'Accept': 'text/plain' },
+                signal: ctrl.signal
+            });
+            clearTimeout(timer);
+
+            if (!res.ok) {
+                const err = await res.text().catch(() => '');
+                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
+            }
+
+            const text = (await res.text()).trim();
+            if (!text) throw new Error('Empty response');
+
+            this._usageLog.push({ model: model || 'pollinations', tokens: 0, time: Date.now(), provider: 'pollinations' });
+            return { ok: true, text, provider: 'pollinations-' + (model || 'text') };
+        } catch (e) {
+            console.error('[QCV AI] Pollinations failed:', e.message);
+            return { ok: false, error: e.message };
+        }
+    },
+
     async call(prompt, systemPrompt, opts) {
         opts = opts || {};
         const useCache = opts.useCache !== false;
@@ -157,8 +227,10 @@ const QCVAI = {
 
         let lastError = null;
 
-        // Try providers in order — one model at a time, no retries (fast fail)
+        // Try providers in order — Pollinations first because it is free and verified working.
         const attempts = [
+            { provider: 'pollinations', models: ['text'], key: 'pollinations', fn: this._callPollinations, timeout: 20000 },
+            { provider: 'openai', models: this._openaiModels, key: this._openaiKey, fn: this._callOpenAI, timeout: 20000 },
             { provider: 'openrouter', models: this._openrouterModels, key: this._openrouterKey, fn: this._callOpenRouter, timeout: 15000 },
             { provider: 'bluesminds', models: this._bluesmindsModels, key: this._bluesmindsKey, fn: this._callBluesminds, timeout: 15000 },
             { provider: 'gemini', models: this._geminiModels, key: this._geminiKey, fn: this._callGemini, timeout: 10000 }

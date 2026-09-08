@@ -612,24 +612,30 @@
                 // Fallback: BluesMinds
                 if (!aiResult || !aiResult.ok) {
                     try {
-                        var bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
+                        var bluesmindsKey = (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
                         var bluesmindsEndpoint = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-                        var response = await fetch(bluesmindsEndpoint + '/chat/completions', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
-                            body: JSON.stringify({
-                                model: 'meta/llama-3.3-70b-instruct',
-                                messages: [
-                                    { role: 'system', content: 'You are an ATS expert. Return ONLY valid JSON, no markdown, no code blocks.' },
-                                    { role: 'user', content: prompt }
-                                ],
-                                temperature: 0.3,
-                                max_tokens: 3000
-                            })
-                        });
+                        var response = bluesmindsKey
+                            ? await fetch(bluesmindsEndpoint + '/chat/completions', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + bluesmindsKey },
+                                body: JSON.stringify({
+                                    model: 'meta/llama-3.3-70b-instruct',
+                                    messages: [
+                                        { role: 'system', content: 'You are an ATS expert. Return ONLY valid JSON, no markdown, no code blocks.' },
+                                        { role: 'user', content: prompt }
+                                    ],
+                                    temperature: 0.3,
+                                    max_tokens: 3000
+                                })
+                              })
+                            : await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt), {
+                                method: 'GET',
+                                headers: { 'Accept': 'text/plain' }
+                              });
+
                         if (!response.ok) throw new Error('HTTP ' + response.status);
-                        var data = await response.json();
-                        var content = data.choices?.[0]?.message?.content || '';
+
+                        var content = bluesmindsKey ? (await response.json()).choices?.[0]?.message?.content || '' : await response.text();
                         content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
                         aiResult = { ok: true, json: JSON.parse(content) };
                     } catch (e) { }

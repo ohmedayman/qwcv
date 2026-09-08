@@ -1445,8 +1445,8 @@
 
         /* ===== Send / Receive via AI ===== */
         const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-        const BLUESMINDS_KEY = (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || 'sk-3YmULTcojsbSud2Gcz1QfGXVQi7eZ2oB7UepdKEYcG3wm0U6';
-        const OPENROUTER_KEY = (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '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';
+        const BLUESMINDS_KEY = (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
+        const OPENROUTER_KEY = (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '';
         const OR_MODELS = ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'];
         const BM_MODELS = ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'];
         const AI_MODELS = OPENROUTER_KEY ? OR_MODELS : BM_MODELS;
