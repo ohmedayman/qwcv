@@ -5,13 +5,28 @@
 
 // Global utility classes
 .container {
-    width: min(1200px, calc(100% - 32px));
-    margin: 0 auto;
+    @include container;
 }
 
 .card {
-    background: $card;
-    border: 1px solid $border;
-    border-radius: $radius;
-    box-shadow: $shadow;
+    @include card-surface;
+}
+
+body {
+    background: $bg;
+    color: $text;
+    font-family: 'Cairo', sans-serif;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.d-none {
+    display: none !important;
 }

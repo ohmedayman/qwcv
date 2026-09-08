@@ -89,9 +89,47 @@
         return next;
     }
 
+    function initLoader() {
+        if (document.querySelector('.page-loader')) return;
+
+        const loader = document.createElement('div');
+        loader.className = 'page-loader';
+        loader.id = 'pageLoader';
+        loader.setAttribute('aria-live', 'polite');
+        loader.setAttribute('aria-label', 'جاري التحميل');
+
+        const spinner = document.createElement('div');
+        spinner.className = 'loader-spinner';
+
+        const text = document.createElement('div');
+        text.className = 'loader-text';
+        text.textContent = 'جاري التحميل...';
+
+        loader.appendChild(spinner);
+        loader.appendChild(text);
+        document.body.appendChild(loader);
+
+        const hideLoader = function () {
+            if (!loader) return;
+            loader.classList.add('hide');
+            setTimeout(function () {
+                loader.remove();
+            }, 500);
+        };
+
+        if (document.readyState === 'complete') {
+            setTimeout(hideLoader, 250);
+        } else {
+            window.addEventListener('load', function () {
+                setTimeout(hideLoader, 250);
+            }, { once: true });
+        }
+    }
+
     function init() {
         const saved = getStored() || LIGHT;
         apply(saved);
+        initLoader();
     }
 
     window.QCVTheme = { toggle: toggle, current: current };
