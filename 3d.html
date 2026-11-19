@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QCV | Build. Connect. Transform.</title>
+<meta name="description" content="QCV is the platform where resumes, portfolios and career tools are engineered as one connected system.">
+<meta name="theme-color" content="#121412">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#121412;--g2:#1a1d1b;--ow:#ece7db;--mut:#9a978c;--em:#2a8a66;--emd:#14523d;--cu:#b87333;--sand:#cdbb94;--lime:#c6d66b}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:var(--g);color:var(--ow);font-family:Manrope,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,.nav,footer{position:relative;z-index:1}
+.nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:34px;padding:22px clamp(20px,5vw,64px);font-size:.92rem;background:linear-gradient(var(--g),transparent)}
+.logo{font-weight:800;font-size:1.35rem;letter-spacing:.04em;margin-right:auto}.nav a:not(.logo):not(.btn){color:var(--mut);transition:color .25s}.nav a:not(.logo):not(.btn):hover{color:var(--ow)}
+.btn{display:inline-block;padding:14px 30px;border-radius:999px;font-weight:700;border:1px solid var(--cu);transition:background .3s,color .3s,transform .25s}
+.btn-p{background:var(--em);border-color:var(--em);color:#fff}.btn-p:hover{background:var(--lime);border-color:var(--lime);color:var(--g)}.btn-o:hover{background:var(--cu);color:var(--g)}
+.nav .btn{padding:10px 22px}
+.sec{min-height:100vh;padding:130px clamp(20px,5vw,64px) 90px;display:flex;flex-direction:column;justify-content:center}
+.hero{max-width:none}.hero .in{max-width:640px}
+.hero h1{font-size:clamp(4.5rem,13vw,10rem);font-weight:800;letter-spacing:-.04em;line-height:.9;color:var(--ow)}
+.hero h2{font-size:clamp(1.4rem,3vw,2.3rem);font-weight:300;margin:24px 0 18px;letter-spacing:-.01em}
+.hero p{color:var(--mut);max-width:30em;margin-bottom:34px}.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.l{display:block}.k{color:var(--cu);font-size:.85rem;font-weight:700;margin-bottom:18px}
+h3.big{font-size:clamp(2.2rem,6vw,5rem);font-weight:800;letter-spacing:-.03em;line-height:1.02;max-width:12em}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:56px}
+.card{background:rgba(26,29,27,.82);border:1px solid #2b2f2c;border-radius:6px;padding:26px;transition:border-color .3s,transform .3s}.card:hover{border-color:var(--cu);transform:translateY(-6px)}
+.card h4{font-size:1.1rem;margin-bottom:6px}.card p{color:var(--mut);font-size:.92rem}
+.cube{--w:46px;--h:46px;--d:46px;width:var(--w);height:var(--h);position:relative;transform-style:preserve-3d;animation:sp 14s linear infinite;margin:22px 0 34px 8px}
+.cube i{position:absolute;left:50%;top:50%;background:linear-gradient(135deg,var(--em),var(--emd));border:1px solid #ffffff22}
+.cube i:nth-child(1){width:var(--w);height:var(--h);margin:calc(var(--h)/-2) 0 0 calc(var(--w)/-2);transform:translateZ(calc(var(--d)/2))}
+.cube i:nth-child(2){width:var(--w);height:var(--h);margin:calc(var(--h)/-2) 0 0 calc(var(--w)/-2);transform:rotateY(180deg) translateZ(calc(var(--d)/2));filter:brightness(.6)}
+.cube i:nth-child(3){width:var(--d);height:var(--h);margin:calc(var(--h)/-2) 0 0 calc(var(--d)/-2);transform:rotateY(90deg) translateZ(calc(var(--w)/2));filter:brightness(.8)}
+.cube i:nth-child(4){width:var(--d);height:var(--h);margin:calc(var(--h)/-2) 0 0 calc(var(--d)/-2);transform:rotateY(-90deg) translateZ(calc(var(--w)/2));filter:brightness(.7)}
+.cube i:nth-child(5){width:var(--w);height:var(--d);margin:calc(var(--d)/-2) 0 0 calc(var(--w)/-2);transform:rotateX(90deg) translateZ(calc(var(--h)/2));background:linear-gradient(135deg,var(--cu),#7a4a20)}
+.cube i:nth-child(6){width:var(--w);height:var(--d);margin:calc(var(--d)/-2) 0 0 calc(var(--w)/-2);transform:rotateX(-90deg) translateZ(calc(var(--h)/2));filter:brightness(.5)}
+@keyframes sp{from{transform:rotateX(-24deg) rotateY(0)}to{transform:rotateX(-24deg) rotateY(360deg)}}
+#eco{touch-action:pan-y;cursor:grab;justify-content:flex-end}#eco p{color:var(--mut);max-width:26em}
+.why{display:grid;gap:0;margin-top:40px}.why div{display:flex;align-items:baseline;gap:28px;border-top:1px solid #2b2f2c;padding:22px 0;flex-wrap:wrap}
+.why b{color:var(--cu);font-weight:700;width:2.2em}.why strong{font-size:clamp(2.4rem,7.5vw,6.5rem);font-weight:800;letter-spacing:-.04em;line-height:1}.why span{color:var(--mut);max-width:22em;margin-left:auto}
+#tech .in{margin-left:auto;max-width:520px}.layer{border-left:2px solid var(--em);padding:6px 0 6px 20px;margin-top:22px}.layer b{display:block}.layer span{color:var(--mut);font-size:.94rem}
+#preview{align-items:center;text-align:center}.mock{margin-top:48px;width:min(920px,94vw);aspect-ratio:16/10;background:#0d0f0e;border:1px solid #2c302d;border-radius:12px;position:relative;overflow:hidden;display:grid;grid-template-columns:150px 1fr 220px;text-align:left;transform:perspective(1500px) rotateX(var(--rx,7deg)) rotateY(var(--ry,-9deg));transition:transform .25s;box-shadow:0 70px 90px -40px #000}
+.mock:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.07),transparent 40%);pointer-events:none}
+.mock .sb{background:#141715;padding:18px;display:grid;gap:10px;align-content:start}.mock .sb i{height:9px;background:#2a2e2b;border-radius:3px}.mock .sb i:first-child{background:var(--cu);width:50%}
+.mock .pg{margin:22px;background:#ece7db;border-radius:3px;padding:22px;display:grid;gap:9px;align-content:start}.mock .pg i{height:8px;background:#c9c3b3;border-radius:2px}.mock .pg i:first-child{height:22px;width:60%;background:var(--emd)}
+.mock .rp{padding:22px;display:grid;gap:14px;align-content:start;justify-items:center}.ring{width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--em) 0 92%,#2a2d2b 0);display:grid;place-items:center}.ring:after{content:"92";width:84px;height:84px;border-radius:50%;background:#0d0f0e;display:grid;place-items:center;font-weight:800;font-size:1.6rem}
+.mock small{color:var(--mut)}
+.cta{align-items:center;text-align:center}.cta h3{margin:0 auto 18px;max-width:11em}.cta p{color:var(--mut);margin-bottom:34px}
+footer{padding:28px clamp(20px,5vw,64px);color:var(--mut);font-size:.85rem;display:flex;justify-content:space-between;border-top:1px solid #222522;background:var(--g)}
+@media(max-width:860px){.nav a:not(.logo):not(.btn){display:none}.cards{grid-template-columns:1fr 1fr}.mock{grid-template-columns:1fr}.mock .sb,.mock .rp{display:none}.why span{margin-left:0}#tech .in{margin-left:0}.sec{padding-top:110px}}
+@media(max-width:520px){.cards{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cube{animation:none}.btn,.card,.mock{transition:none}}
+</style></head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="nav"><a class="logo" href="#top">QCV</a><a href="#top">Home</a><a href="#platform">Platform</a><a href="#eco">Solutions</a><a href="#tech">Technology</a><a href="about.html">About</a><a class="btn btn-p mag" href="login.html?mode=signup">Get Started</a></header>
+<main>
+<section class="sec hero" id="top"><div class="in"><h1>QCV</h1><h2><span class="l">Build. Connect. Transform.</span></h2>
+<p>QCV engineers resumes, portfolios and career tools as one connected system: write with AI, verify against ATS, publish everywhere.</p>
+<div class="cta-row"><a class="btn btn-o mag" href="#platform">Explore QCV</a><a class="btn btn-p mag" href="login.html?mode=signup">Get Started</a></div></div></section>
+<section class="sec" id="platform"><div><p class="k">What is QCV?</p><h3 class="big"><span class="l">One Platform.</span><span class="l">Multiple Possibilities.</span></h3>
+<div class="cards">
+<div class="card rv"><div class="cube" style="--w:46px;--h:58px;--d:36px"><i></i><i></i><i></i><i></i><i></i><i></i></div><h4>Resume Builder</h4><p>15+ ATS-ready templates, edited live and exported as clean PDF.</p></div>
+<div class="card rv"><div class="cube" style="--w:70px;--h:16px;--d:50px"><i></i><i></i><i></i><i></i><i></i><i></i></div><h4>ATS Scoring</h4><p>Instant strength score with concrete suggestions to improve it.</p></div>
+<div class="card rv"><div class="cube" style="--w:30px;--h:64px;--d:30px"><i></i><i></i><i></i><i></i><i></i><i></i></div><h4>AI Writing</h4><p>Summaries and skills drafted with you, in Arabic or English.</p></div>
+<div class="card rv"><div class="cube" style="--w:56px;--h:40px;--d:56px"><i></i><i></i><i></i><i></i><i></i><i></i></div><h4>Portfolio Pages</h4><p>A personal page with its own link, ready to share with employers.</p></div>
+</div></div></section>
+<section class="sec" id="eco"><p class="k">Ecosystem</p><h3 class="big"><span class="l">Every module,</span><span class="l">one core.</span></h3><p class="rv" style="margin-top:18px">Drag to rotate the system. Templates, AI, scoring, storage and export all connect to a single account.</p></section>
+<section class="sec" id="why"><p class="k">Why QCV</p>
+<div class="why"><div class="rv"><b>01</b><strong>Intelligent</strong><span>AI that drafts and scores, so you decide instead of start from zero.</span></div>
+<div class="rv"><b>02</b><strong>Connected</strong><span>One profile feeds your CV, cover letter, portfolio and tracker.</span></div>
+<div class="rv"><b>03</b><strong>Scalable</strong><span>From a single free CV to unlimited CVs for teams.</span></div>
+<div class="rv"><b>04</b><strong>Future Ready</strong><span>Built on cloud sync, so it works from any device.</span></div></div></section>
+<section class="sec" id="tech"><div class="in"><p class="k">Technology</p><h3 class="big"><span class="l">Four layers,</span><span class="l">one stack.</span></h3>
+<div class="layer rv"><b>Interface</b><span>Templates and the live editor.</span></div><div class="layer rv"><b>Intelligence</b><span>Writing assistance and ATS scoring.</span></div><div class="layer rv"><b>Data</b><span>Cloud storage and sync per account.</span></div><div class="layer rv"><b>Delivery</b><span>PDF export and public portfolio links.</span></div></div></section>
+<section class="sec" id="preview"><p class="k">Platform</p><h3 class="big"><span class="l">Clean by design.</span></h3>
+<div class="mock" id="mock"><div class="sb"><i></i><i></i><i></i><i></i><i></i></div><div class="pg"><i></i><i></i><i></i><i></i><i></i><i></i><i style="width:70%"></i></div><div class="rp"><div class="ring"></div><small>ATS score</small></div></div></section>
+<section class="sec cta" id="cta"><h3 class="big"><span class="l">Ready to Build What's Next?</span></h3><p class="rv">Discover what QCV can create for your next digital experience.</p><a class="btn btn-p mag" href="login.html?mode=signup">Start with QCV →</a></section>
+</main>
+<footer><span>© QCV</span><span><a href="privacy.html">Privacy</a> &nbsp; <a href="terms.html">Terms</a> &nbsp; <a href="/">العربية</a></span></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+var mob=innerWidth<820,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(window.gsap&&!still){gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll('.l').forEach(function(e){gsap.fromTo(e,{y:46,opacity:0,clipPath:'inset(0 0 100% 0)'},{y:0,opacity:1,clipPath:'inset(0 0 0% 0)',duration:1,ease:'power3.out',scrollTrigger:{trigger:e,start:'top 90%'}})});
+document.querySelectorAll('.rv').forEach(function(e){gsap.from(e,{y:30,opacity:0,duration:.9,ease:'power2.out',scrollTrigger:{trigger:e,start:'top 92%'}})})}
+document.querySelectorAll('.mag').forEach(function(b){b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+(e.clientX-r.left-r.width/2)*.22+'px,'+(e.clientY-r.top-r.height/2)*.3+'px)'});b.addEventListener('pointerleave',function(){b.style.transform=''})});
+var mk=document.getElementById('mock');mk.addEventListener('pointermove',function(e){var r=mk.getBoundingClientRect();mk.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*-20+'deg');mk.style.setProperty('--rx',((e.clientY-r.top)/r.height-.5)*-14+'deg')});mk.addEventListener('pointerleave',function(){mk.style.removeProperty('--ry');mk.style.removeProperty('--rx')});
+if(!window.THREE)return;
+var cv=document.getElementById('gl'),R;try{R=new THREE.WebGLRenderer({canvas:cv,antialias:!mob,alpha:true})}catch(e){return}
+R.setPixelRatio(Math.min(devicePixelRatio,mob?1.5:2));R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.1;R.outputEncoding=THREE.sRGBEncoding;
+var S=new THREE.Scene(),C=new THREE.PerspectiveCamera(32,1,.1,60);C.position.set(0,0,11);
+var es=new THREE.Scene();es.background=new THREE.Color(0x151715);
+[[0,7,0,9,.3,9,3],[-7,1,2,.3,6,7,1.6],[7,-1,-3,.3,6,7,1.2],[0,-5,0,9,.3,9,.35]].forEach(function(a){var m=new THREE.Mesh(new THREE.BoxGeometry(a[3],a[4],a[5]),new THREE.MeshBasicMaterial({color:new THREE.Color(a[6],a[6]*.97,a[6]*.9)}));m.position.set(a[0],a[1],a[2]);es.add(m)});
+S.environment=new THREE.PMREMGenerator(R).fromScene(es,.04).texture;
+var key=new THREE.DirectionalLight(0xfff1dc,.9);key.position.set(-4,5,6);S.add(key);
+var gr=new THREE.MeshStandardMaterial({color:0x232624,metalness:.85,roughness:.3}),cu=new THREE.MeshStandardMaterial({color:0xb87333,metalness:1,roughness:.26}),em=new THREE.MeshStandardMaterial({color:0x2a8a66,metalness:.35,roughness:.22,emissive:0x0b3a2b,emissiveIntensity:.9,flatShading:true});
+var G=new THREE.Group(),core=new THREE.Group();S.add(G);G.add(core);
+core.add(new THREE.Mesh(new THREE.IcosahedronGeometry(.8,0),em));
+var rA=new THREE.Mesh(new THREE.TorusGeometry(1.3,.03,12,120),cu),rB=new THREE.Mesh(new THREE.TorusGeometry(1.65,.02,12,120),cu);rA.rotation.x=1.2;rB.rotation.y=1.1;core.add(rA,rB);
+var N=mob?6:8,L=Math.ceil(N/2),mods=[];
+for(var i=0;i<N;i++){var g=new THREE.Group(),w=1.3+(i%3)*.2;
+g.add(new THREE.Mesh(new THREE.BoxGeometry(w,.9,.1),gr));var bar=new THREE.Mesh(new THREE.BoxGeometry(w,.035,.13),cu);bar.position.y=.46;g.add(bar);
+var dot=new THREE.Mesh(new THREE.BoxGeometry(.16,.16,.13),i%4==0?new THREE.MeshStandardMaterial({color:0xc6d66b,roughness:.4}):em);dot.position.set(-w/2+.2,-.25,0);g.add(dot);G.add(g);mods.push(g)}
+var lp=new Float32Array(N*6),lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(lp,3));
+var lm=new THREE.LineBasicMaterial({color:0xb87333,transparent:true,opacity:.4}),lines=new THREE.LineSegments(lg,lm);lines.frustumCulled=false;G.add(lines);
+var ids=['top','platform','eco','why','tech','preview','cta'],A=[];
+var P=[[2.7,0,2.3,1,1,1],[3,0,2.6,.7,.3,1],[3.8,0,0,1,1,1],[4.6,0,0,.8,.18,1],[3,1,-2.5,1,1,.4],[3,0,0,.6,.15,1],[3.4,0,0,1.5,.5,1.5]],cur=P[0].slice();
+function measure(){A=ids.map(function(d){var e=document.getElementById(d);return{c:e.offsetTop+e.offsetHeight/2}})}
+function target(){var mid=scrollY+innerHeight*.5,k=0;for(var i=0;i<A.length;i++)if(mid>=A[i].c)k=i;if(k>=A.length-1)return P[k];var a=A[k],b=A[k+1],f=Math.min(Math.max((mid-a.c)/(b.c-a.c),0),1);f=f*f*(3-2*f);return P[k].map(function(v,j){return v+(P[k+1][j]-v)*f})}
+function rs(){R.setSize(innerWidth,innerHeight,false);C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();measure()}
+var px=0,py=0,spin=0,sv=0,dn=false,x0=0,eco=document.getElementById('eco');
+addEventListener('pointermove',function(e){px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5});
+eco.addEventListener('pointerdown',function(e){dn=true;x0=e.clientX});addEventListener('pointerup',function(){dn=false});
+eco.addEventListener('pointermove',function(e){if(dn){sv+=(e.clientX-x0)*.0006;x0=e.clientX}});
+function frame(ms){var t=ms/1000,tg=target();for(var j=0;j<6;j++)cur[j]+=(tg[j]-cur[j])*(still?1:.07);
+var r=cur[0],fl=cur[1];spin+=sv;sv*=.94;
+G.position.x=mob?0:cur[2];G.scale.setScalar(cur[3]*(mob?.8:1));cv.style.opacity=mob?Math.min(cur[4],.5):cur[4];
+core.scale.setScalar(cur[5]);core.rotation.y=t*.4;rA.rotation.z=t*.3;rB.rotation.x=t*.22;lm.opacity=.4*(1-fl);
+for(var i=0;i<N;i++){var m=mods[i],a=i/N*6.2832+(still?0:t*.1)+spin,rx=Math.cos(a)*r,ry=Math.sin(a*2+i)*.8,rz=Math.sin(a)*r*.55,lx=(i%2?1:-1)*.95,ly=((L-1)/2-(i>>1))*1.3;
+m.position.set(rx+(lx-rx)*fl,ry+(ly-ry)*fl,rz*(1-fl));m.rotation.set(.15*(1-fl)-.9*fl,((-a+1.5708)%6.2832)*(1-fl)+.5*fl,0);
+lp[i*6+3]=m.position.x;lp[i*6+4]=m.position.y;lp[i*6+5]=m.position.z}
+lg.attributes.position.needsUpdate=true;
+G.rotation.y+=(px*.5-G.rotation.y)*.05;G.rotation.x+=(py*.25-G.rotation.x)*.05;R.render(S,C)}
+function loop(ms){frame(ms);if(!still)requestAnimationFrame(loop)}
+addEventListener('resize',function(){rs();if(still)frame(0)});addEventListener('load',function(){measure();if(still)frame(0)});
+if(still)addEventListener('scroll',function(){frame(0)});
+rs();requestAnimationFrame(loop);
+})();
+</script>
+</body></html>
