@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>حسابي | QCV</title>
+  <meta name="description" content="إدارة حساب المستخدم، السير الذاتية، الملف الشخصي، الأمان، والاشتراك.">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/qcv-ui.css">
+  <style>
+    body {
+      background-color: var(--qcv-bg);
+      font-family: var(--font-arabic);
+      color: var(--qcv-text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .account-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* USER PROFILE HERO HEADER (Page 25 Specification) */
+    .profile-hero-card {
+      background: var(--qcv-card);
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .profile-user-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .user-avatar-large {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--qcv-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(27, 77, 228, 0.25);
+      flex-shrink: 0;
+    }
+    .user-details h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--qcv-text-main);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .user-subtitle {
+      font-size: 0.95rem;
+      color: var(--qcv-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .profile-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* TOP STATS STRIP (Page 25: 2 سير · 84 ATS · 5 طلبات) */
+    .account-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .acc-stat-card {
+      background: var(--qcv-card);
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .acc-stat-val {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--qcv-primary);
+      font-family: var(--font-latin), var(--font-arabic);
+    }
+    .acc-stat-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--qcv-text-muted);
+      margin-top: 2px;
+    }
+
+    /* MAIN ACCOUNT LAYOUT (2 Columns) */
+    .account-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* MAIN TABS CARD */
+    .tabs-card {
+      background: var(--qcv-card);
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* TABS NAV (Page 25: سيري الذاتية · المعلومات · الأمان · الاشتراك · الإشعارات · الشراكة) */
+    .account-tabs-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--qcv-border);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .acc-tab-btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--qcv-text-muted);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+    .acc-tab-btn:hover {
+      background: var(--qcv-primary-light);
+      color: var(--qcv-primary);
+    }
+    .acc-tab-btn.active {
+      background: var(--qcv-primary);
+      color: #ffffff;
+    }
+
+    /* TAB PANES */
+    .acc-pane {
+      display: none;
+    }
+    .acc-pane.active {
+      display: block;
+    }
+
+    /* FORM STYLING */
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--qcv-text-main);
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      background: #ffffff;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--qcv-primary);
+      box-shadow: 0 0 0 3px rgba(27, 77, 228, 0.12);
+    }
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .form-buttons-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    /* SIDEBAR WIDGETS (Page 25 Specification) */
+    .side-widget {
+      background: var(--qcv-card);
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+    .side-widget-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--qcv-text-main);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .progress-bar-wrap {
+      background: #e2e8f0;
+      border-radius: var(--radius-pill);
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .progress-bar-fill {
+      background: var(--qcv-primary);
+      height: 100%;
+      width: 75%;
+      border-radius: var(--radius-pill);
+    }
+    .account-link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--qcv-border);
+      font-size: 0.9rem;
+    }
+    .account-link-item:last-child {
+      border-bottom: none;
+    }
+    .status-dot-active {
+      color: var(--qcv-emerald);
+      font-weight: 700;
+    }
+    .status-dot-inactive {
+      color: var(--qcv-text-muted);
+      font-weight: 600;
+    }
+
+    /* CVS LIST INSIDE ACCOUNT */
+    .account-cv-card {
+      background: #f8fafc;
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .cv-info-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--qcv-text-main);
+    }
+    .cv-info-meta {
+      font-size: 0.82rem;
+      color: var(--qcv-text-muted);
+      margin-top: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .account-layout {
+        grid-template-columns: 1fr;
+      }
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+      .profile-hero-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGGED-IN NAVBAR (Page 26 Specification) -->
+  <header class="qcv-navbar">
+    <div class="qcv-nav-inner">
+      <a href="/account.html" class="qcv-logo" aria-label="QCV Home">
+        <span class="qcv-logo-text">QCV</span>
+        <span class="qcv-logo-badge">Q</span>
+      </a>
+
+      <nav class="qcv-nav-links">
+        <a href="/account.html" class="qcv-nav-link active">حسابي</a>
+        <a href="/account.html#cvs" class="qcv-nav-link" onclick="switchAccountTab('cvs')">سيري الذاتية</a>
+        <a href="/templates.html" class="qcv-nav-link">القوالب</a>
+        <a href="/ats-checker.html" class="qcv-nav-link">فاحص ATS</a>
+        <a href="/tracker.html" class="qcv-nav-link">متتبع الطلبات</a>
+        <a href="/ai-tools.html" class="qcv-nav-link">أدوات AI</a>
+      </nav>
+
+      <div class="qcv-nav-actions">
+        <a href="/en/" class="qcv-btn qcv-btn-secondary" style="padding: 6px 12px; font-weight: 700;">EN</a>
+        <a href="/pricing.html" class="qcv-badge-pro">Pro</a>
+        <a href="/account.html" class="qcv-avatar" id="navAvatar" aria-label="الملف الشخصي">أ</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="account-container">
+
+    <!-- USER PROFILE HERO (Exact Page 25 Layout) -->
+    <section class="profile-hero-card">
+      <div class="profile-user-info">
+        <div class="user-avatar-large" id="profileAvatarLarge">أ</div>
+        <div class="user-details">
+          <h1 id="profileNameDisplay">
+            <span id="userNameText">أحمد مصطفى</span>
+            <span class="qcv-badge-pro">Pro</span>
+          </h1>
+          <div class="user-subtitle" id="profileSubtitleDisplay">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="userCityTitle">القاهرة · مصمم واجهات أول</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-header-actions">
+        <a href="/builder.html" class="qcv-btn qcv-btn-primary">
+          <i class="fas fa-plus" style="margin-left:6px;"></i> + سيرة جديدة
+        </a>
+        <button class="qcv-btn qcv-btn-secondary" onclick="signOutUser()" style="color:#ef4444; border-color:#fecaca;">
+          <i class="fas fa-sign-out-alt" style="margin-left:6px;"></i> تسجيل الخروج
+        </button>
+      </div>
+    </section>
+
+    <!-- TOP STATS COUNTERS (Page 25: 2 سير · 84 ATS · 5 طلبات) -->
+    <div class="account-stats-row">
+      <div class="acc-stat-card">
+        <div class="acc-stat-val" id="statCvsCount">2</div>
+        <div class="acc-stat-label">سير ذاتية نشطة</div>
+      </div>
+      <div class="acc-stat-card">
+        <div class="acc-stat-val" id="statAtsAverage">84</div>
+        <div class="acc-stat-label">متوسط تقييم ATS</div>
+      </div>
+      <div class="acc-stat-card">
+        <div class="acc-stat-val" id="statTrackerCount">5</div>
+        <div class="acc-stat-label">طلبات توظيف مُتتبعة</div>
+      </div>
+    </div>
+
+    <!-- MAIN 2-COLUMN LAYOUT -->
+    <div class="account-layout">
+
+      <!-- MAIN TABS CONTAINER -->
+      <section class="tabs-card">
+        <nav class="account-tabs-nav">
+          <button class="acc-tab-btn active" data-tab="cvs" onclick="switchAccountTab('cvs')">سيري الذاتية</button>
+          <button class="acc-tab-btn" data-tab="info" onclick="switchAccountTab('info')">المعلومات</button>
+          <button class="acc-tab-btn" data-tab="security" onclick="switchAccountTab('security')">الأمان</button>
+          <button class="acc-tab-btn" data-tab="subscription" onclick="switchAccountTab('subscription')">الاشتراك</button>
+          <button class="acc-tab-btn" data-tab="notifications" onclick="switchAccountTab('notifications')">الإشعارات</button>
+          <button class="acc-tab-btn" data-tab="affiliate" onclick="switchAccountTab('affiliate')">الشراكة</button>
+        </nav>
+
+        <!-- TAB 1: CVS & ACTIONS -->
+        <div class="acc-pane active" id="pane-cvs">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-weight:800; font-size:1.1rem;">السير الذاتية المحفوظة</h3>
+            <a href="/builder.html" class="qcv-btn qcv-btn-primary" style="padding:8px 18px; font-size:0.88rem;">
+              <i class="fas fa-plus" style="margin-left:6px;"></i> إنشاء سيرة
+            </a>
+          </div>
+
+          <div id="cvsList">
+            <div class="account-cv-card">
+              <div>
+                <div class="cv-info-title" id="cardCvTitle">سيرتي الرئيسية – مصمم واجهات</div>
+                <div class="cv-info-meta">آخر تعديل: منذ قليل · قالب: كلاسيك · التقييم: <strong style="color:var(--qcv-emerald);">84 ATS</strong></div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <a href="/editor.html" class="qcv-btn qcv-btn-secondary" style="padding:6px 14px; font-size:0.85rem;">المحرر</a>
+                <a href="/portfolio-view.html" target="_blank" class="qcv-btn qcv-btn-secondary" style="padding:6px 14px; font-size:0.85rem;">معاينة</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: PERSONAL INFO (Page 25 Exact Form) -->
+        <div class="acc-pane" id="pane-info">
+          <form onsubmit="saveProfileInfo(event)">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="accFullName">الاسم الكامل</label>
+                <input type="text" id="accFullName" value="أحمد مصطفى" required>
+              </div>
+              <div class="form-group">
+                <label for="accJobTitle">المسمى الوظيفي</label>
+                <input type="text" id="accJobTitle" value="مصمم واجهات أول" required>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="accEmail">البريد الإلكتروني</label>
+                <input type="email" id="accEmail" value="ahmad@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="accPhone">الهاتف</label>
+                <input type="tel" id="accPhone" value="01000000000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="accBio">نبذة قصيرة</label>
+              <textarea id="accBio" placeholder="اكتب نبذة مختصرة عن مسارك المهني…">مصمم واجهات بخبرة 6 سنوات متخصص في أنظمة التصميم وتطبيقات الويب والموبايل.</textarea>
+            </div>
+
+            <div class="form-buttons-row">
+              <button type="submit" id="saveProfileBtn" class="qcv-btn qcv-btn-primary" style="padding:10px 28px;">حفظ التغييرات</button>
+              <button type="reset" class="qcv-btn qcv-btn-secondary" style="padding:10px 24px;">إلغاء</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 3: SECURITY (Page 25) -->
+        <div class="acc-pane" id="pane-security">
+          <h3 style="font-weight:800; font-size:1.1rem; margin-bottom:16px;">إعدادات الأمان وحماية الحساب</h3>
+          <div class="account-link-item">
+            <div>
+              <strong>التحقق بخطوتين (2FA)</strong>
+              <div style="font-size:0.82rem; color:var(--qcv-text-muted);">حماية إضافية لحسابك عند تسجيل الدخول من جهاز جديد</div>
+            </div>
+            <span class="status-dot-active">مفعّل ✓</span>
+          </div>
+          <div class="account-link-item">
+            <div>
+              <strong>تنبيه عند دخول جديد</strong>
+              <div style="font-size:0.82rem; color:var(--qcv-text-muted);">إرسال إشعار بريدي عند تسجيل الدخول من متصفح غير مألوف</div>
+            </div>
+            <span class="status-dot-active">مفعّل ✓</span>
+          </div>
+          <div style="margin-top:24px;">
+            <button class="qcv-btn qcv-btn-secondary" onclick="sendPasswordReset()">
+              <i class="fas fa-key" style="margin-left:6px;"></i> إعادة تعيين كلمة المرور
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 4: SUBSCRIPTION -->
+        <div class="acc-pane" id="pane-subscription">
+          <h3 style="font-weight:800; font-size:1.1rem; margin-bottom:14px;">باقتك الحالية</h3>
+          <div style="background:#f8fafc; border:1px solid var(--qcv-border); border-radius:12px; padding:20px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="qcv-badge-pro" style="font-size:0.85rem; padding:4px 12px;">باقة Pro – سنوي</span>
+                <div style="font-size:0.88rem; color:var(--qcv-text-muted); margin-top:8px;">تنتهي في: 19 نوفمبر 2027 · تجديد تلقائي</div>
+              </div>
+              <a href="/pricing.html" class="qcv-btn qcv-btn-primary" style="padding:8px 18px; font-size:0.88rem;">ترقية / تغيير</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: NOTIFICATIONS -->
+        <div class="acc-pane" id="pane-notifications">
+          <h3 style="font-weight:800; font-size:1.1rem; margin-bottom:14px;">تفضيلات الإشعارات</h3>
+          <div class="account-link-item">
+            <span>إشعارات فحص الـ ATS وتحديثات السيرة</span>
+            <span class="status-dot-active">مفعّل</span>
+          </div>
+          <div class="account-link-item">
+            <span>تذكيرات متتبع الطلبات ومواعيد المقابلات</span>
+            <span class="status-dot-active">مفعّل</span>
+          </div>
+        </div>
+
+        <!-- TAB 6: AFFILIATE (Page 25: الشراكة) -->
+        <div class="acc-pane" id="pane-affiliate">
+          <h3 style="font-weight:800; font-size:1.1rem; margin-bottom:14px;">برنامج الشراكة ومشاركة الأرباح</h3>
+          <p style="color:var(--qcv-text-muted); font-size:0.92rem; margin-bottom:20px;">شارك رابطك الخاص مع أصدقائك واكسب 5 نقاط لكل مستخدم يسجل من خلالك.</p>
+          <div style="display:flex; gap:10px; max-width:480px;">
+            <input type="text" id="affLinkInput" value="https://qcv.vexonet.online/ref?u=ahmad" readonly style="flex:1; padding:10px 14px; border:1px solid var(--qcv-border); border-radius:10px; font-size:0.9rem;">
+            <button class="qcv-btn qcv-btn-primary" onclick="copyAffLink()">نسخ الرابط</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR WIDGETS (Page 25 Specification) -->
+      <aside>
+        <!-- PROFILE COMPLETENESS WIDGET (Page 25: اكتمال الملف 75%) -->
+        <div class="side-widget">
+          <div class="side-widget-title">
+            <span>اكتمال الملف</span>
+            <span style="color:var(--qcv-primary);">75%</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill"></div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--qcv-text-muted);">أضف روابط أعمالك وحساب لينكدإن للوصول إلى 100%.</p>
+        </div>
+
+        <!-- LINKED ACCOUNTS WIDGET (Page 25: Google متصل · Microsoft غير متصل) -->
+        <div class="side-widget">
+          <div class="side-widget-title">الحسابات المرتبطة</div>
+          <div class="account-link-item">
+            <span><i class="fab fa-google" style="margin-left:8px; color:#ea4335;"></i> Google</span>
+            <span class="status-dot-active">متصل ·</span>
+          </div>
+          <div class="account-link-item">
+            <span><i class="fab fa-microsoft" style="margin-left:8px; color:#00a4ef;"></i> Microsoft</span>
+            <span class="status-dot-inactive">غير متصل ·</span>
+          </div>
+        </div>
+
+        <!-- QUICK SECURITY WIDGET (Page 25) -->
+        <div class="side-widget">
+          <div class="side-widget-title">الأمان السريع</div>
+          <div class="account-link-item">
+            <span>التحقق بخطوتين</span>
+            <span class="status-dot-active">نشط</span>
+          </div>
+          <div class="account-link-item">
+            <span>تنبيه عند دخول جديد</span>
+            <span class="status-dot-active">نشط</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer style="padding: 24px; text-align: center; border-top: 1px solid var(--qcv-border); font-size: 0.88rem; color: var(--qcv-text-muted);">
+    &copy; 2026 QCV. جميع الحقوق محفوظة. حساب المستخدم المعتمد.
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script>
+    (function() {
+      var firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      var auth = firebase.auth();
+      var db = firebase.database();
+
+      // STRICT AUTH PROTECTION: If user is not authenticated, redirect to /login immediately
+      auth.onAuthStateChanged(function(user) {
+        if (!user) {
+          window.location.replace("/login.html?redirect=account.html");
+          return;
+        }
+
+        var name = user.displayName || user.email.split('@')[0] || "أحمد مصطفى";
+        var initial = name.trim().charAt(0) || "أ";
+        document.getElementById('navAvatar').textContent = initial;
+        document.getElementById('profileAvatarLarge').textContent = initial;
+        document.getElementById('userNameText').textContent = name;
+        document.getElementById('accFullName').value = name;
+        document.getElementById('accEmail').value = user.email || "";
+
+        // Load CV Data
+        db.ref('users/' + user.uid + '/cvData').once('value').then(function(snap) {
+          var cv = snap.val();
+          if (cv) {
+            if (cv.name) {
+              document.getElementById('userNameText').textContent = cv.name;
+              document.getElementById('accFullName').value = cv.name;
+              document.getElementById('profileAvatarLarge').textContent = cv.name.trim().charAt(0);
+            }
+            if (cv.title) {
+              document.getElementById('accJobTitle').value = cv.title;
+              document.getElementById('userCityTitle').textContent = (cv.city || 'القاهرة') + ' · ' + cv.title;
+            }
+            if (cv.phone) document.getElementById('accPhone').value = cv.phone;
+            if (cv.summary) document.getElementById('accBio').value = cv.summary;
+          }
+        });
+
+        // Load applications count for tracker
+        db.ref('users/' + user.uid + '/applications').once('value').then(function(snap) {
+          var apps = snap.val();
+          if (apps) {
+            var count = Object.keys(apps).length;
+            document.getElementById('statTrackerCount').textContent = count;
+          }
+        });
+      });
+
+      // Switch Account Tabs
+      window.switchAccountTab = function(tabId) {
+        var btns = document.querySelectorAll('.acc-tab-btn');
+        btns.forEach(function(b) {
+          if (b.getAttribute('data-tab') === tabId) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+
+        var panes = document.querySelectorAll('.acc-pane');
+        panes.forEach(function(p) {
+          if (p.id === 'pane-' + tabId) p.classList.add('active');
+          else p.classList.remove('active');
+        });
+      };
+
+      // Save Profile Info to Firebase
+      window.saveProfileInfo = function(e) {
+        e.preventDefault();
+        var user = auth.currentUser;
+        if (!user) return;
+
+        var name = document.getElementById('accFullName').value.trim();
+        var title = document.getElementById('accJobTitle').value.trim();
+        var phone = document.getElementById('accPhone').value.trim();
+        var bio = document.getElementById('accBio').value.trim();
+        var btn = document.getElementById('saveProfileBtn');
+
+        btn.disabled = true;
+        btn.textContent = 'جاري الحفظ...';
+
+        db.ref('users/' + user.uid + '/cvData').update({
+          name: name,
+          title: title,
+          phone: phone,
+          summary: bio
+        }).then(function() {
+          btn.disabled = false;
+          btn.textContent = 'تم الحفظ بنجاح ✓';
+          setTimeout(function() { btn.textContent = 'حفظ التغييرات'; }, 2000);
+          document.getElementById('userNameText').textContent = name;
+          document.getElementById('userCityTitle').textContent = 'القاهرة · ' + title;
+          document.getElementById('profileAvatarLarge').textContent = name.trim().charAt(0);
+        }).catch(function(err) {
+          btn.disabled = false;
+          btn.textContent = 'حفظ التغييرات';
+          alert('حدث خطأ أثناء الحفظ.');
+        });
+      };
+
+      // Sign out
+      window.signOutUser = function() {
+        auth.signOut().then(function() {
+          window.location.replace("/login.html");
+        });
+      };
+
+      // Password reset
+      window.sendPasswordReset = function() {
+        var user = auth.currentUser;
+        if (user && user.email) {
+          auth.sendPasswordResetEmail(user.email).then(function() {
+            alert('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك: ' + user.email);
+          });
+        }
+      };
+
+      // Copy Affiliate link
+      window.copyAffLink = function() {
+        var input = document.getElementById('affLinkInput');
+        navigator.clipboard.writeText(input.value).then(function() {
+          alert('تم نسخ رابط الشراكة بنجاح!');
+        });
+      };
+    })();
+  </script>
+</body>
+</html>

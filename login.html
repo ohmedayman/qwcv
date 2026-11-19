@@ -1888,7 +1888,7 @@
             const p = new URLSearchParams(window.location.search);
             const r = p.get('redirect');
             if (r && /^[a-z0-9_/-]+(\.html)?$/i.test(r)) return r;
-            return 'dashboard.html';
+            return 'account.html';
         }
 
         onAuthStateChanged(auth, (user) => {
