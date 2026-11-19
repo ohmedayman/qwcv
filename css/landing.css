@@ -4,11 +4,11 @@
  */
 
 :root {
-  --primary: #1d4ed8;
-  --primary-hover: #1e40af;
-  --primary-rgb: 29, 78, 216;
-  --primary-light: #eff6ff;
-  --primary-subtle: rgba(29, 78, 216, 0.08);
+  --primary: #1b4de4;
+  --primary-hover: #153ec0;
+  --primary-rgb: 27, 77, 228;
+  --primary-light: #eff4ff;
+  --primary-subtle: rgba(27, 77, 228, 0.08);
   
   --secondary: #0ea5e9;
   --secondary-hover: #0284c7;

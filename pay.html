@@ -6,6 +6,7 @@
     <title>QCV - اشترك الآن</title>
     <meta name="description" content="اشترك في QCV: Pro بـ49 ج.م/شهر (خصم 50%) أو غير محدود بـ299 ج.م/شهر. باقة 48 ساعة بـ30 ج.م.">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
+    <link rel="stylesheet" href="css/qcv-ui.css">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
@@ -661,19 +662,28 @@
     <script defer src="app-navigation.js" data-page="billing"></script>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
-        <div class="nav-right">
-            <ul class="nav-links">
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="pay.html" class="active">التسعير</a></li>
-                <li><a href="editor.html">المحرر</a></li>
-                <li><a href="login.html" class="btn-nav">ابدأ مجاناً</a></li>
+    <!-- QCV NAVBAR (Page 26 / Page 10) -->
+    <nav class="qcv-navbar">
+        <div class="qcv-nav-container">
+            <a href="/" class="qcv-brand">
+                <span class="qcv-brand-text">QCV</span>
+                <span class="qcv-brand-badge">Q</span>
+            </a>
+            <ul class="qcv-nav-menu">
+                <li><a href="/dashboard.html" class="qcv-nav-link"><i class="fas fa-th-large" style="font-size:0.8rem"></i> لوحة التحكم</a></li>
+                <li><a href="/editor.html" class="qcv-nav-link"><i class="fas fa-file-alt" style="font-size:0.8rem"></i> سيري الذاتية</a></li>
+                <li><a href="/templates.html" class="qcv-nav-link"><i class="fas fa-layer-group" style="font-size:0.8rem"></i> القوالب</a></li>
+                <li><a href="/ats-checker.html" class="qcv-nav-link"><i class="fas fa-search" style="font-size:0.8rem"></i> فاحص ATS</a></li>
+                <li><a href="/tracker.html" class="qcv-nav-link"><i class="fas fa-briefcase" style="font-size:0.8rem"></i> متتبع الطلبات</a></li>
             </ul>
-            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل المظهر">
-                <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
-            </button>
-            <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
+            <div class="qcv-nav-actions">
+                <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع" style="background:none;border:1px solid var(--card-border);color:var(--text-main);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center">
+                    <span class="icon-sun">&#9728;</span><span class="icon-moon" style="display:none">&#9790;</span>
+                </button>
+                <a href="/en/pricing.html" style="font-size:0.82rem;font-weight:700;color:var(--text-muted);text-decoration:none">EN</a>
+                <span class="qcv-user-badge">Pro</span>
+                <button class="qcv-user-avatar-btn" title="حسابي">أ</button>
+            </div>
         </div>
     </nav>
     <div class="spacer"></div>
@@ -789,12 +799,12 @@
         <!-- STEP 2: PAYMENT -->
         <div class="step-section" id="step2">
             <div class="header">
-                <h1>بيانات <span class="hl">الدفع</span></h1>
-                <p id="planLabel">اختر طريقة الدفع وأكمل البيانات</p>
+                <h1>إتمام <span class="hl">الاشتراك</span></h1>
+                <p id="planLabel">1. اختر طريقة الدفع · 2. حوّل المبلغ ثم ارفع إثبات الدفع</p>
             </div>
             <div class="pay-grid">
                 <div class="card">
-                    <div class="card-title"><i class="fas fa-wallet"></i> طريقة الدفع</div>
+                    <div class="card-title"><i class="fas fa-wallet"></i> 1. اختر طريقة الدفع</div>
                     <div class="method sel" onclick="pickMethod(this,'vodafone')">
                         <div class="method-icon"><img src="assets/images/payments/vodafone.png" alt="فودافون كاش" loading="lazy"></div>
                         <div class="method-info">
@@ -820,21 +830,36 @@
                         <div class="method-ok">&#10003;</div>
                     </div>
 
+                    <div class="card-title" style="margin-top:20px"><i class="fas fa-receipt"></i> 2. حوّل المبلغ ثم ارفع إثبات الدفع</div>
                     <div class="wallet-box">
                         <div class="wallet-label">قم بالتحويل على هذا الرقم</div>
                         <div class="wallet-number" id="walletNum">01028707543</div>
                         <div class="wallet-name">محمد ايمن</div>
                         <button class="btn-copy" onclick="copyNum()"><i class="fas fa-copy"></i> نسخ الرقم</button>
                     </div>
-                    <button class="btn-wa" onclick="sendProof()"><i class="fab fa-whatsapp"></i> إرسال إثبات الدفع واتساب</button>
+
+                    <!-- Receipt Upload Zone (Page 10) -->
+                    <div style="border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;background:var(--input);margin-top:14px;cursor:pointer" onclick="document.getElementById('receiptFileInput').click()">
+                        <input type="file" id="receiptFileInput" accept="image/*" style="display:none" onchange="handleReceiptFile(event)">
+                        <i class="fas fa-camera" style="font-size:1.8rem;color:var(--primary);margin-bottom:8px"></i>
+                        <div style="font-weight:700;font-size:0.88rem;color:var(--text)">ارفع صورة الإيصال</div>
+                        <div style="font-size:0.75rem;color:var(--muted)">PNG, JPG أو لقطة شاشة للتحويل</div>
+                        <div id="receiptFilePreview" style="display:none;margin-top:10px;font-weight:700;color:var(--green);font-size:0.8rem"></div>
+                    </div>
+
+                    <button class="btn-wa" style="margin-top:12px" onclick="sendProof()"><i class="fab fa-whatsapp"></i> أو إرسال الإثبات عبر واتساب</button>
                 </div>
 
                 <div class="card">
-                    <div class="card-title"><i class="fas fa-user"></i> بياناتك</div>
-                    <div class="fg">
-                        <label>الباقة المختارة</label>
-                        <input type="text" id="planField" readonly style="opacity:0.6;cursor:default;font-weight:700">
+                    <div class="card-title"><i class="fas fa-receipt"></i> ملخص الطلب</div>
+                    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:18px">
+                        <div style="font-size:1.05rem;font-weight:800;color:var(--text)" id="summaryPlanName">باقة Pro – شهري 99 ج.م</div>
+                        <div style="font-size:1.4rem;font-weight:900;color:var(--primary);margin-top:6px" id="summaryTotal">الإجمالي 99 ج.م</div>
+                        <div style="font-size:0.82rem;color:var(--muted);margin-top:10px;line-height:1.6">
+                            <i class="fas fa-clock" style="color:var(--primary);margin-left:4px"></i> يتم التفعيل بعد مراجعة الدفع، وستصلك إشعارات بالحالة.
+                        </div>
                     </div>
+
                     <div class="fg">
                         <label>الاسم الكامل <span class="req">*</span></label>
                         <input type="text" id="userName" placeholder="اسمك كما يظهر في الحساب" autocomplete="name">
@@ -847,12 +872,8 @@
                         <label>رقم المحفظة المرسل منه (اختياري)</label>
                         <input type="text" id="walletIn" placeholder="الرقم اللي حولت منه">
                     </div>
-                    <div class="fg">
-                        <label>ملاحظات إضافية (اختياري)</label>
-                        <textarea id="userNotes" placeholder="أي تفاصيل تريد إضافتها..."></textarea>
-                    </div>
                     <button class="btn-submit" id="btnSubmit" onclick="submitPay()">
-                        <span class="txt"><i class="fas fa-check-circle"></i> تأكيد الاشتراك</span>
+                        <span class="txt"><i class="fas fa-check-circle"></i> أرسلت الدفع</span>
                         <div class="spinner"></div>
                     </button>
                     <button class="btn-back-form" onclick="goBack()"><i class="fas fa-arrow-right" style="margin-left:6px"></i> العودة لاختيار الباقة</button>
@@ -1006,8 +1027,10 @@
             updateProgress(2);
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').classList.add('show');
-            document.getElementById('planField').value = labels[plan] || '';
-            document.getElementById('planLabel').textContent = 'الباقة: ' + (labels[plan] || '');
+            if (document.getElementById('planField')) document.getElementById('planField').value = labels[plan] || '';
+            if (document.getElementById('planLabel')) document.getElementById('planLabel').textContent = 'الباقة: ' + (labels[plan] || '');
+            if (document.getElementById('summaryPlanName')) document.getElementById('summaryPlanName').textContent = 'باقة ' + (labels[plan] || plan);
+            if (document.getElementById('summaryTotal')) document.getElementById('summaryTotal').textContent = 'الإجمالي ' + (pricesText[plan] || '99 ج.م');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
@@ -1041,6 +1064,16 @@
                 document.body.removeChild(ta);
                 toast('تم نسخ الرقم', 'ok');
             });
+        };
+
+        window.handleReceiptFile = function(e) {
+            var file = e.target.files && e.target.files[0];
+            if (!file) return;
+            var prev = document.getElementById('receiptFilePreview');
+            if (prev) {
+                prev.style.display = 'block';
+                prev.textContent = 'تم اختيار صورة الإيصال: ' + file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+            }
         };
 
         window.sendProof = function() {

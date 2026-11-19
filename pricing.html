@@ -272,112 +272,165 @@
     <!-- ===== HERO ===== -->
     <section class="hero-mini">
         <span class="badge"><i class="fas fa-tag" style="margin-left:4px"></i> تسعير واضح وبسيط للجميع</span>
-        <h1>خطط أسعار <span class="hl">مرنة وشفافة</span></h1>
-        <p>ابدأ مجاناً تماماً، أو رقِّ حسابك عندما تحتاج لأدوات الذكاء الاصطناعي المتقدمة. مصممة لتصل بك للمقابلة الشخصية أسرع وبأقل تكلفة.</p>
+        <h1>باقات تناسب <span class="hl">كل مرحلة</span></h1>
+        <p>ألغِ في أي وقت · ادفع بفودافون كاش أو فوري أو إنستا باي · أسعار بالجنيه المصري</p>
     </section>
 
     <!-- ===== PRICING SECTION ===== -->
     <section class="section">
-        <div class="section-title">
-            <h2>اختر الباقة المناسبة لمرحلتك المهنية</h2>
-            <p>جميع الباقات بالجنيه المصري ويمكن ترقيتها في أي وقت. اختر الدفع الشهري أو وفّر 20% مع الاشتراك السنوي.</p>
-        </div>
-
         <!-- Billing Toggle -->
         <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:34px">
-            <span id="monthlyLabel" style="font-weight:700;font-size:0.95rem;color:var(--accent)">اشتراك شهري</span>
+            <span id="monthlyLabel" style="font-weight:700;font-size:0.95rem;color:var(--accent)">شهري</span>
             <div onclick="togglePricing()" id="pricingToggle"
                 style="width:52px;height:28px;border-radius:14px;background:var(--accent);cursor:pointer;position:relative;transition:background 0.3s">
                 <div id="pricingDot"
                     style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;right:3px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 2px 6px rgba(0,0,0,0.15)">
                 </div>
             </div>
-            <span id="yearlyLabel" style="font-weight:700;font-size:0.95rem;color:var(--muted)">اشتراك سنوي <span
-                    style="background:var(--green);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.7rem;margin-right:4px">وفّر 20%</span></span>
+            <span id="yearlyLabel" style="font-weight:700;font-size:0.95rem;color:var(--muted)">سنوي <span
+                    style="background:var(--green);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.7rem;margin-right:4px">وفّر حتى 20%</span></span>
         </div>
 
-        <!-- Plans Grid -->
-        <div class="grid grid-3">
+        <!-- 4 Plans Grid (Page 21) -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">
 
-            <!-- FREE PLAN -->
+            <!-- 1. FREE PLAN -->
             <div class="card price-card">
                 <div class="value-icon" style="background:var(--green)"><i class="fas fa-gift"></i></div>
                 <h3>مجاني</h3>
-                <p class="desc">للطلاب والمبتدئين في سوق العمل</p>
+                <p class="desc">للباحثين الجدد والطلاب</p>
                 <div style="text-align:center;margin:18px 0 4px">
                     <span class="val" data-monthly="0" data-yearly="0" style="font-size:2.4rem;font-weight:900;color:var(--green)">0</span>
-                    <span class="period" style="color:var(--muted);font-size:0.9rem"> ج.م / للأبد</span>
+                    <span class="period" style="color:var(--muted);font-size:0.9rem"> ج.م</span>
                 </div>
-                <p style="text-align:center;color:var(--green);font-weight:700;font-size:0.85rem">بدون بطاقة ائتمان — مجاناً دائماً</p>
                 <ul style="list-style:none;margin:20px 0 24px">
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>سيرة ذاتية واحدة احترافية</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>قالب كلاسيكي متوافق مع ATS</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>تصدير PDF قياسي</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--muted);padding:8px 0;opacity:0.4;text-decoration:line-through"><i class="fas fa-times" style="color:var(--muted);font-size:0.75rem;width:18px"></i><span>30+ قالب متقدم</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--muted);padding:8px 0;opacity:0.4;text-decoration:line-through"><i class="fas fa-times" style="color:var(--muted);font-size:0.75rem;width:18px"></i><span>بورتفوليو برابط ويب خاص</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--muted);padding:8px 0;opacity:0.4;text-decoration:line-through"><i class="fas fa-times" style="color:var(--muted);font-size:0.75rem;width:18px"></i><span>أدوات الذكاء الاصطناعي الكاملة</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>سيرة واحدة</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>قالب Classic</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>تصدير PDF قياسي</span></li>
                 </ul>
-                <a href="/login.html" class="btn btn-primary btn-block"><i class="fas fa-gift"></i> ابدأ مجاناً الآن</a>
+                <a href="/login.html" class="btn btn-primary btn-block">اختر الباقة</a>
             </div>
 
-            <!-- PRO PLAN -->
-            <div class="card price-card featured">
-                <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:3px 14px;border-radius:50px;font-size:0.75rem;font-weight:800"><i class="fas fa-fire"></i> الأكثر شعبية — خصم 50%</div>
-                <div class="value-icon" style="background:var(--accent)"><i class="fas fa-rocket"></i></div>
-                <h3>المحترف (Pro)</h3>
-                <p class="desc">للباحثين الجادين عن فرص عمل ممتازة</p>
+            <!-- 2. PASS 48 HOURS -->
+            <div class="card price-card">
+                <div class="value-icon" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)"><i class="fas fa-bolt"></i></div>
+                <h3>Pass 48 ساعة</h3>
+                <p class="desc">وصول كامل ومباشر</p>
                 <div style="text-align:center;margin:18px 0 4px">
-                    <span style="text-decoration:line-through;color:var(--light);font-size:1.1rem;font-weight:600;margin-left:8px">99</span>
-                    <span class="val" data-monthly="49" data-yearly="39" style="font-size:2.4rem;font-weight:900;color:var(--accent)">49</span>
+                    <span class="val" data-monthly="30" data-yearly="30" style="font-size:2.4rem;font-weight:900;color:var(--purple)">30</span>
+                    <span class="period" style="color:var(--muted);font-size:0.9rem"> ج.م مرة واحدة</span>
+                </div>
+                <ul style="list-style:none;margin:20px 0 24px">
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>وصول كامل 48 ساعة</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>كل القوالب</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>الذكاء الاصطناعي</span></li>
+                </ul>
+                <a href="/pay.html?plan=pass_48h" class="btn btn-primary btn-block">اختر الباقة</a>
+            </div>
+
+            <!-- 3. PRO PLAN -->
+            <div class="card price-card featured">
+                <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:3px 14px;border-radius:50px;font-size:0.75rem;font-weight:800"><i class="fas fa-fire"></i> الأشهر</div>
+                <div class="value-icon" style="background:var(--accent)"><i class="fas fa-rocket"></i></div>
+                <h3>Pro</h3>
+                <p class="desc">الخيار المثالي للتقديم</p>
+                <div style="text-align:center;margin:18px 0 4px">
+                    <span class="val" data-monthly="99" data-yearly="79" style="font-size:2.4rem;font-weight:900;color:var(--accent)">99</span>
                     <span class="period" style="color:var(--muted);font-size:0.9rem"> ج.م / شهر</span>
                 </div>
-                <p style="text-align:center;color:var(--green);font-weight:700;font-size:0.85rem"><i class="fas fa-bolt" style="margin-left:4px"></i> تفعيل فوري مع إنستاباي وفودافون كاش</p>
                 <ul style="list-style:none;margin:20px 0 24px">
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>حتى 10 سير ذاتية احترافية</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>30+ قالب متوافق 100% مع ATS</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>تصدير PDF غير محدود وبدون علامة مائية</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>معرض أعمال (بورتفوليو) برابط فريد ومشفّر</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>تخصيص السيرة للوظيفة وفحص الفجوات بالذكاء الاصطناعي</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>مولد خطابات التعريف (Cover Letter) الذكي</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>5 سير ذاتية</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>كل القوالب</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>5 تحميلات AI</span></li>
                 </ul>
-                <a href="/pay.html?plan=pro" class="btn btn-primary btn-block"><i class="fas fa-rocket"></i> اشترك في Pro الآن</a>
+                <a href="/pay.html?plan=pro" class="btn btn-primary btn-block">اختر الباقة</a>
             </div>
 
-            <!-- UNLIMITED PLAN -->
+            <!-- 4. UNLIMITED PLAN -->
             <div class="card price-card">
-                <div class="value-icon" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)"><i class="fas fa-crown"></i></div>
-                <h3>غير المحدودة (VIP)</h3>
-                <p class="desc">للشركات والمحترفين الذين يريدون كل شيء</p>
+                <div class="value-icon" style="background:linear-gradient(135deg,#0f172a,#1e293b)"><i class="fas fa-crown"></i></div>
+                <h3>Unlimited</h3>
+                <p class="desc">كل شيء بلا أي قيود</p>
                 <div style="text-align:center;margin:18px 0 4px">
                     <span class="val" data-monthly="299" data-yearly="239" style="font-size:2.4rem;font-weight:900;color:var(--accent)">299</span>
                     <span class="period" style="color:var(--muted);font-size:0.9rem"> ج.م / شهر</span>
                 </div>
-                <p style="text-align:center;color:var(--purple);font-weight:700;font-size:0.85rem"><i class="fas fa-infinity" style="margin-left:4px"></i> وصول غير محدود لكافة الميزات</p>
                 <ul style="list-style:none;margin:20px 0 24px">
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>عدد سير ذاتية غير محدود إطلاقاً</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>كافة القوالب الحديثة والمستقبلية</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>تحضير المقابلات الشخصية بالذكاء الاصطناعي</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>نظام متابعة طلبات التوظيف (Job Tracker)</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>أدوات AI غير محدودة الاستخدام وبأعلى سرعة</span></li>
-                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text);padding:8px 0"><i class="fas fa-check" style="color:var(--green);font-size:0.75rem;width:18px"></i><span>أولوية الدعم الفني المباشر على واتساب VIP</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>كل شيء بلا حدود</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>سير وتحميلات غير محدودة</span></li>
+                    <li style="display:flex;align-items:center;gap:8px;font-size:0.88rem;padding:8px 0"><i class="fas fa-check" style="color:var(--green)"></i><span>دعم أولوية</span></li>
                 </ul>
-                <a href="/pay.html?plan=unlimited" class="btn btn-primary btn-block"><i class="fas fa-crown"></i> اشترك في Unlimited</a>
+                <a href="/pay.html?plan=unlimited" class="btn btn-primary btn-block">اختر الباقة</a>
             </div>
 
         </div>
 
-        <!-- Quick Pass (48 Hours) -->
-        <div class="card" style="max-width:760px;margin:38px auto 0;text-align:center;background:linear-gradient(135deg,rgba(139,92,246,0.06),rgba(56,189,248,0.06));border-color:rgba(139,92,246,0.25)">
-            <div class="value-icon" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)"><i class="fas fa-bolt"></i></div>
-            <h3>باقة التجربة السريعة — 48 ساعة</h3>
-            <p class="desc" style="max-width:540px;margin:0 auto 12px">لا تريد التزاماً شهرياً؟ احصل على وصول كامل لميزات الذكاء الاصطناعي وقوالب ATS لمدة 48 ساعة فقط.</p>
-            <div style="margin:16px 0 6px;font-size:2.2rem;font-weight:900;color:var(--accent)">
-                <span class="val">30</span>
-                <span style="font-size:1rem;font-weight:600;color:var(--muted)"> ج.م فقط (دفعة واحدة)</span>
-            </div>
-            <p style="color:var(--green);font-weight:700;font-size:0.85rem"><i class="fas fa-shield-halved" style="margin-left:4px"></i> بدون تجديد تلقائي — تدفع 30 جنيه فقط وتستمتع بـ 48 ساعة كاملة</p>
-            <div style="margin-top:20px">
-                <a href="/pay.html?plan=quick48" class="btn btn-primary"><i class="fas fa-bolt"></i> تفعيل باقة 48 ساعة بـ 30 ج.م</a>
+        <!-- Feature Comparison Table (Page 21) -->
+        <div style="margin-top:60px">
+            <h3 style="font-size:1.4rem;font-weight:900;text-align:center;margin-bottom:24px">المقارنة الشاملة بين الباقات</h3>
+            <div style="overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm)">
+                <table style="width:100%;border-collapse:collapse;text-align:center;font-size:0.92rem">
+                    <thead>
+                        <tr style="background:#f8fafc;border-bottom:2px solid var(--border)">
+                            <th style="padding:16px 20px;text-align:right;font-weight:900">المقارنة</th>
+                            <th style="padding:16px 20px;font-weight:900">مجاني</th>
+                            <th style="padding:16px 20px;font-weight:900">Pass 48 ساعة</th>
+                            <th style="padding:16px 20px;font-weight:900;color:var(--accent)">Pro</th>
+                            <th style="padding:16px 20px;font-weight:900">Unlimited</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">عدد السير</td>
+                            <td style="padding:14px 20px">1</td>
+                            <td style="padding:14px 20px">1</td>
+                            <td style="padding:14px 20px;font-weight:800;color:var(--accent)">5</td>
+                            <td style="padding:14px 20px;font-weight:900">∞</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">القوالب</td>
+                            <td style="padding:14px 20px">Classic</td>
+                            <td style="padding:14px 20px">الكل</td>
+                            <td style="padding:14px 20px;font-weight:800;color:var(--accent)">الكل</td>
+                            <td style="padding:14px 20px">الكل</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">تحميلات PDF</td>
+                            <td style="padding:14px 20px">1</td>
+                            <td style="padding:14px 20px">—</td>
+                            <td style="padding:14px 20px;font-weight:800;color:var(--accent)">5</td>
+                            <td style="padding:14px 20px;font-weight:900">∞</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">الذكاء الاصطناعي</td>
+                            <td style="padding:14px 20px;color:var(--muted)">—</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:900">✓</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:900">✓</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:900">✓</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">علامة مائية</td>
+                            <td style="padding:14px 20px;color:#ef4444;font-weight:700">نعم</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:700">لا</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:800">لا</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:800">لا</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">المعرض الشخصي</td>
+                            <td style="padding:14px 20px;color:var(--muted)">—</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:900">✓</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:900">✓</td>
+                            <td style="padding:14px 20px;color:#10b981;font-weight:900">✓</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:14px 20px;text-align:right;font-weight:700">الدعم</td>
+                            <td style="padding:14px 20px">عادي</td>
+                            <td style="padding:14px 20px">عادي</td>
+                            <td style="padding:14px 20px">عادي</td>
+                            <td style="padding:14px 20px;font-weight:900;color:var(--accent)">أولوية</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 

@@ -1,0 +1,438 @@
+/* ============================================================
+   QCV Design System & UI Specification
+   Matches the 26-Page Figma/UI Specification 100%
+   Color Palette: Royal Electric Blue (#1b4de4) + Clean Slate (#f8fafc / #ffffff)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --primary: #1b4de4;
+  --primary-hover: #143ec2;
+  --primary-light: #eff4ff;
+  --primary-glow: rgba(27, 77, 228, 0.16);
+  --emerald: #10b981;
+  --emerald-light: #ecfdf5;
+  --amber: #f59e0b;
+  --amber-light: #fffbeb;
+  --rose: #ef4444;
+  --rose-light: #fef2f2;
+  --purple: #8b5cf6;
+  
+  --bg-page: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-border-subtle: #f1f5f9;
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 32px rgba(27, 77, 228, 0.08);
+
+  --font-ar: 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-en: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Dark Mode Tokens */
+body.dark-mode {
+  --bg-page: #0b101e;
+  --card-bg: #111827;
+  --card-border: #1e293b;
+  --card-border-subtle: #162032;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --primary-light: rgba(27, 77, 228, 0.15);
+}
+
+/* Base Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ar);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[dir="ltr"], html[dir="ltr"] body {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--font-en), var(--font-ar);
+}
+
+/* Brand Logo (QCV [Q]) */
+.qcv-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: var(--font-en), var(--font-ar);
+  font-weight: 900;
+  font-size: 1.45rem;
+  color: var(--text-main);
+  user-select: none;
+}
+.qcv-brand-text {
+  letter-spacing: -0.5px;
+}
+.qcv-brand-badge {
+  width: 32px;
+  height: 32px;
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 900;
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+/* Unified Topbar / Navbar (Page 26 of UI Specs) */
+.qcv-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--card-border);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+body.dark-mode .qcv-navbar {
+  background: rgba(17, 24, 39, 0.94);
+}
+.qcv-nav-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qcv-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+}
+.qcv-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+.qcv-nav-link:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+.qcv-nav-link.active {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.qcv-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* User Pill & Tier Badges */
+.qcv-user-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.qcv-user-avatar-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+/* Buttons */
+.qcv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.qcv-btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+.qcv-btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.qcv-btn-secondary {
+  background: transparent;
+  color: var(--text-main);
+  border-color: var(--card-border);
+}
+.qcv-btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+.qcv-btn-white {
+  background: #ffffff;
+  color: var(--primary);
+  border-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+.qcv-btn-white:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+.qcv-btn-pill {
+  border-radius: var(--radius-full);
+}
+
+/* Cards */
+.qcv-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+}
+.qcv-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(27, 77, 228, 0.2);
+}
+
+/* Pills & Badges */
+.qcv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.qcv-badge-blue {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+.qcv-badge-green {
+  background: var(--emerald-light);
+  color: var(--emerald);
+}
+.qcv-badge-amber {
+  background: var(--amber-light);
+  color: var(--amber);
+}
+
+/* Form Controls */
+.qcv-input-group {
+  margin-bottom: 16px;
+  text-align: right;
+}
+body[dir="ltr"] .qcv-input-group {
+  text-align: left;
+}
+.qcv-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+.qcv-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1.5px solid var(--card-border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.2s ease;
+}
+.qcv-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Split Login Screen (Page 2) */
+.qcv-login-split {
+  min-height: 100vh;
+  display: flex;
+}
+.qcv-login-banner {
+  flex: 1;
+  background: linear-gradient(135deg, #1b4de4 0%, #153ec2 100%);
+  color: #ffffff;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.qcv-login-form-side {
+  flex: 1.1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--bg-page);
+}
+@media (max-width: 900px) {
+  .qcv-login-split {
+    flex-direction: column-reverse;
+  }
+  .qcv-login-banner {
+    display: none;
+  }
+  .qcv-login-form-side {
+    padding: 24px 16px;
+  }
+}
+
+/* Kanban / Tracker Board (Page 11) */
+.qcv-kanban {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) {
+  .qcv-kanban {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .qcv-kanban {
+    grid-template-columns: 1fr;
+  }
+}
+.qcv-kanban-col {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  min-height: 500px;
+}
+.qcv-kanban-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--card-border-subtle);
+  margin-bottom: 14px;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.qcv-kanban-card {
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.2s ease;
+}
+.qcv-kanban-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--primary);
+}
+
+/* ATS Donut Score Gauge (Pages 4, 5, 6) */
+.qcv-donut-container {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+}
+.qcv-donut-container svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+.qcv-donut-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: var(--emerald);
+}
+
+/* Admin Sidebar Layout (Page 13) */
+.qcv-admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.qcv-admin-sidebar {
+  width: 260px;
+  background: #0d1322;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+.qcv-admin-main {
+  flex: 1;
+  background: var(--bg-page);
+  padding: 32px;
+  overflow-y: auto;
+}

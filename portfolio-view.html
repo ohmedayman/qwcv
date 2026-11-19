@@ -21,6 +21,7 @@
     <link rel="apple-touch-icon" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="css/qcv-ui.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <script src="js/theme.js"></script>
@@ -85,14 +86,36 @@
     <script src="js/pwa.js" defer></script>
 </head>
 <body>
-    <div class="portfolio-header">
-        <div class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></div>
-        <div class="header-actions">
-            <a href="index.html" class="btn-outline">الرئيسية</a>
-            <a href="blog.html" class="btn-outline">المدونة</a>
-            <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px;cursor:pointer" onclick="QCVLang.toggleDropdown()"><span class="lang-ar" style="background:var(--accent);color:#fff;padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:700;font-family:inherit">عربي</span><span class="lang-en" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:700;font-family:inherit">EN</span></div>
-            <button class="btn-whatsapp" id="whatsappBtn" style="display:none"><i class="fab fa-whatsapp"></i> واتساب</button>
-            <button class="btn-accent" id="downloadBtn" onclick="downloadPDF()"><i class="fas fa-download"></i> تحميل PDF</button>
+    <header class="qcv-navbar" style="width:100%;">
+        <div class="qcv-nav-inner">
+            <a href="/" class="qcv-logo" aria-label="QCV Home">
+                <span class="qcv-logo-text">QCV</span>
+                <span class="qcv-logo-badge">Q</span>
+            </a>
+
+            <div class="qcv-nav-actions">
+                <button class="qcv-btn qcv-btn-secondary" id="qrBtn" onclick="toggleQRModal()" style="display:inline-flex; align-items:center; gap:6px;">
+                    <i class="fas fa-qrcode"></i> رمز QR للمعرض
+                </button>
+                <button class="qcv-btn qcv-btn-secondary" id="whatsappBtn" style="display:none; color:#16a34a; border-color:#bbf7d0; background:#f0fdf4; align-items:center; gap:6px;">
+                    <i class="fab fa-whatsapp"></i> تواصل معي
+                </button>
+                <button class="qcv-btn qcv-btn-primary" id="downloadBtn" onclick="downloadPDF()" style="display:inline-flex; align-items:center; gap:6px;">
+                    <i class="fas fa-download"></i> تحميل PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- QR Code Modal (Page 14 Specification) -->
+    <div id="qrModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+        <div style="background:#fff; border-radius:16px; padding:32px; text-align:center; max-width:320px; width:90%; box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+            <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:16px; color:#0f172a;">رمز QR للمعرض</h3>
+            <div id="qrContainer" style="display:flex; justify-content:center; margin-bottom:16px;">
+                <img id="qrImage" src="" alt="QR Code" style="width:180px; height:180px; border-radius:8px; border:1px solid #e2e8f0; padding:6px;">
+            </div>
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:20px;">امسح الرمز لفتح المعرض الشخصي مباشرة على هاتفك</p>
+            <button class="qcv-btn qcv-btn-secondary" onclick="toggleQRModal()" style="width:100%; justify-content:center;">إغلاق</button>
         </div>
     </div>
 
@@ -150,6 +173,18 @@
                 btn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
                 btn.disabled = false;
             });
+        };
+
+        // QR Code Modal
+        window.toggleQRModal = function() {
+            var modal = document.getElementById('qrModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                var currentUrl = window.location.href;
+                document.getElementById('qrImage').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(currentUrl);
+                modal.style.display = 'flex';
+            }
         };
 
         // Make phone/email/LinkedIn clickable

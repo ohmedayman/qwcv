@@ -1,168 +1,355 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تواصل معنا - QCV</title>
-    <meta name="description" content="تواصل مع فريق QCV للأسئلة الدعم أو الشراكات أو أي استفسار آخر.">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
-    <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="mobile.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root{--accent:#0003c9;--green:#059669;--purple:#8b5cf6;--orange:#ea580c;--red:#ef4444}
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Cairo',sans-serif;background:var(--bg,#f8fafc);color:var(--text,#1a1a2e);min-height:100vh}
-        .hero{background:linear-gradient(135deg,#0003c9,#0005a0,#1a0533);color:#fff;padding:60px 20px 50px;text-align:center;position:relative;overflow:hidden}
-        .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(39,255,237,0.06) 0%,transparent 50%)}
-        .hero h1{font-size:2.2rem;font-weight:900;position:relative;margin-bottom:10px}
-        .hero p{font-size:1rem;opacity:0.8;position:relative;max-width:500px;margin:0 auto}
-        .container{max-width:1000px;margin:0 auto;padding:40px 20px}
-        .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-        .form-card{background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:20px;padding:32px}
-        .form-card h2{font-size:1.2rem;font-weight:900;margin-bottom:20px}
-        .field{margin-bottom:16px}
-        .field label{display:block;font-size:0.82rem;font-weight:700;margin-bottom:6px}
-        .field input,.field textarea,.field select{width:100%;padding:12px 16px;border:2px solid var(--border,#e5e7eb);border-radius:12px;font-size:0.9rem;font-family:'Cairo',sans-serif;outline:none;transition:border-color 0.2s;background:var(--bg2,#f9fafb);color:var(--text,#1a1a2e)}
-        .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}
-        .field textarea{min-height:120px;resize:vertical}
-        .btn{padding:12px 28px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:0.9rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:8px}
-        .btn:hover{background:#0002a3;transform:translateY(-1px)}
-        .info-card{background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:20px;padding:32px}
-        .info-card h2{font-size:1.2rem;font-weight:900;margin-bottom:20px}
-        .contact-item{display:flex;align-items:start;gap:14px;padding:16px 0;border-bottom:1px solid var(--border,#e5e7eb)}
-        .contact-item:last-child{border-bottom:none}
-        .contact-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-        .contact-item h3{font-size:0.9rem;font-weight:700;margin-bottom:2px}
-        .contact-item p{font-size:0.82rem;color:var(--muted,#6b7280)}
-        .contact-item a{color:var(--accent);text-decoration:none;font-weight:600}
-        .contact-item a:hover{text-decoration:underline}
-        .social-links{display:flex;gap:10px;margin-top:20px}
-        .social-link{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none;color:#fff;transition:all 0.2s}
-        .social-link:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.2)}
-        .msg{padding:12px 16px;border-radius:12px;font-size:0.85rem;font-weight:600;display:none;margin-top:16px}
-        .msg.success{display:block;background:rgba(5,150,105,0.1);color:var(--green);border:1px solid rgba(5,150,105,0.2)}
-        .msg.error{display:block;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2)}
-        .map-box{width:100%;height:200px;border-radius:12px;background:linear-gradient(135deg,#e0e7ff,#c7d2fe);display:flex;align-items:center;justify-content:center;margin-top:20px;color:var(--accent);font-size:0.85rem;font-weight:600}
-        @media(max-width:768px){.grid{grid-template-columns:1fr}.hero h1{font-size:1.6rem}.hero{padding:50px 16px 40px}.form-card{padding:24px 18px}.btn{width:100%;justify-content:center}.field input,.field textarea,.field select{font-size:16px}}
-@media(max-width:400px){.hero h1{font-size:1.4rem}.hero p{font-size:0.88rem}.form-card{padding:20px 14px}.info-card{padding:24px 14px}}
-    </style>
-    <script defer src="js/theme.js"></script>
-    <script defer src="js/lang.js"></script>
-<link rel=stylesheet href=/app-shell.css>
-    <script defer src=/app-navigation.js></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>تواصل معنا | QCV</title>
+  <meta name="description" content="تواصل مع فريق دعم QCV. فريق الدعم يرد خلال 24 ساعة عمل.">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/qcv-ui.css">
+  <style>
+    body {
+      background-color: var(--qcv-bg);
+      font-family: var(--font-arabic);
+      color: var(--qcv-text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+      width: 100%;
+    }
+    .contact-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .contact-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--qcv-text-main);
+      margin-bottom: 8px;
+    }
+    .contact-header p {
+      font-size: 1.05rem;
+      color: var(--qcv-text-muted);
+    }
+    .channels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .channel-card {
+      background: var(--qcv-card);
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .channel-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--qcv-primary);
+      box-shadow: var(--shadow-md);
+    }
+    .channel-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--qcv-primary-light);
+      color: var(--qcv-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+    .channel-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--qcv-text-muted);
+      margin-bottom: 4px;
+    }
+    .channel-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--qcv-primary);
+      direction: ltr;
+    }
+    .form-card {
+      background: var(--qcv-card);
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--qcv-text-main);
+    }
+    .field input, .field textarea {
+      width: 100%;
+      border: 1px solid var(--qcv-border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #ffffff;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .field input:focus, .field textarea:focus {
+      border-color: var(--qcv-primary);
+      box-shadow: 0 0 0 3px rgba(27, 77, 228, 0.12);
+    }
+    .field textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    .topic-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .topic-pill {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--qcv-border);
+      background: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    .topic-pill.active {
+      background: var(--qcv-primary);
+      color: #ffffff;
+      border-color: var(--qcv-primary);
+    }
+    .msg-banner {
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: none;
+      margin-top: 16px;
+    }
+    .msg-banner.success {
+      display: block;
+      background: #ecfdf5;
+      color: var(--qcv-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .msg-banner.error {
+      display: block;
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    @media (max-width: 768px) {
+      .channels-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .form-card {
+        padding: 24px 18px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center">
-    <a href="/" style="font-size:1.6rem;font-weight:900;color:var(--text);text-decoration:none">Q<span style="color:var(--accent)">CV</span></a>
-    <div style="display:flex;align-items:center;gap:16px">
-        <a href="help.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.88rem">المساعدة</a>
-        <a href="login.html" style="background:var(--accent);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
+  <!-- VISITOR NAVBAR (PDF Specification Page 26) -->
+  <header class="qcv-navbar">
+    <div class="qcv-nav-inner">
+      <a href="/" class="qcv-logo" aria-label="QCV Home">
+        <span class="qcv-logo-text">QCV</span>
+        <span class="qcv-logo-badge">Q</span>
+      </a>
+
+      <nav class="qcv-nav-links">
+        <a href="/#features" class="qcv-nav-link">المميزات</a>
+        <a href="/templates.html" class="qcv-nav-link">القوالب</a>
+        <a href="/pricing.html" class="qcv-nav-link">الأسعار</a>
+        <a href="/blog.html" class="qcv-nav-link">المدونة</a>
+        <a href="/help.html" class="qcv-nav-link">المساعدة</a>
+        <a href="/ats-checker.html" class="qcv-nav-link">فاحص ATS</a>
+      </nav>
+
+      <div class="qcv-nav-actions">
+        <a href="/en/" class="qcv-btn qcv-btn-secondary" style="padding: 6px 12px; font-weight: 700;">EN</a>
+        <a href="/login.html" class="qcv-btn qcv-btn-secondary">تسجيل الدخول</a>
+        <a href="/login.html?mode=register" class="qcv-btn qcv-btn-primary">ابدأ مجانًا</a>
+      </div>
     </div>
-</nav>
+  </header>
 
-<header class="hero" style="margin-top:64px">
-    <h1>تواصل معنا</h1>
-    <p>عندك سؤال أو استفسار؟ ابعتلنا وهنرد عليك في أسرع وقت</p>
-</header>
+  <main class="contact-container">
+    <div class="contact-header">
+      <h1>تواصل معنا</h1>
+      <p>فريق الدعم يرد خلال 24 ساعة عمل</p>
+    </div>
 
-<div class="container">
-    <div class="grid">
-        <!-- Contact Form -->
-        <div class="form-card">
-            <h2><i class="fas fa-paper-plane" style="color:var(--accent);margin-left:8px"></i>أرسل رسالة</h2>
-            <form id="contactForm" onsubmit="sendContact(event)">
-                <div class="field">
-                    <label>الاسم الكامل</label>
-                    <input type="text" id="cName" placeholder="محمد أحمد" required>
-                </div>
-                <div class="field">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="cEmail" placeholder="email@example.com" required>
-                </div>
-                <div class="field">
-                    <label>الموضوع</label>
-                    <select id="cSubject">
-                        <option value="دعم فني">دعم فني</option>
-                        <option value="سؤال عام">سؤال عام</option>
-                        <option value="شراكة">شراكة / تعاون</option>
-                        <option value="إبلاغ عن مشكلة">إبلاغ عن مشكلة</option>
-                        <option value="اقتراح ميزة">اقتراح ميزة جديدة</option>
-                        <option value="أخرى">أخرى</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label>الرسالة</label>
-                    <textarea id="cMessage" placeholder="اكتب رسالتك هنا..." required></textarea>
-                </div>
-                <button type="submit" class="btn"><i class="fas fa-paper-plane"></i>إرسال الرسالة</button>
-                <div id="contactMsg" class="msg"></div>
-            </form>
+    <!-- 3 DIRECT CHANNELS (Page 24) -->
+    <div class="channels-grid">
+      <a href="https://wa.me/201028707543" target="_blank" rel="noopener" class="channel-card">
+        <div class="channel-icon" style="background:#dcfce7; color:#16a34a;">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="channel-title">واتساب</div>
+        <div class="channel-val">+201028707543</div>
+      </a>
+
+      <a href="mailto:support@qcv.com" class="channel-card">
+        <div class="channel-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="channel-title">البريد</div>
+        <div class="channel-val" style="font-size:0.95rem;">support@qcv.com</div>
+      </a>
+
+      <a href="/help.html" class="channel-card">
+        <div class="channel-icon" style="background:#ede9fe; color:#7c3aed;">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="channel-title">مركز المساعدة</div>
+        <div class="channel-val" style="direction:rtl; font-size:0.95rem;">ابدأ بالمساعد الذكي</div>
+      </a>
+    </div>
+
+    <!-- CONTACT FORM (Page 24) -->
+    <div class="form-card">
+      <form id="contactForm" onsubmit="sendContact(event)">
+        <div class="form-row">
+          <div class="field" style="margin-bottom:0;">
+            <label for="cName">الاسم</label>
+            <input type="text" id="cName" placeholder="أحمد مصطفى" required>
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="cEmail">البريد</label>
+            <input type="email" id="cEmail" placeholder="name@example.com" required>
+          </div>
         </div>
 
-        <!-- Contact Info -->
-        <div>
-            <div class="info-card">
-                <h2><i class="fas fa-info-circle" style="color:var(--accent);margin-left:8px"></i>معلومات التواصل</h2>
-
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:rgba(5,150,105,0.1);color:var(--green)"><i class="fab fa-whatsapp"></i></div>
-                    <div><h3>واتساب</h3><p>الرد السريع على الأسئلة</p><a href="https://wa.me/201028707543" target="_blank">01028707543</a></div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:rgba(0,3,201,0.1);color:var(--accent)"><i class="fas fa-envelope"></i></div>
-                    <div><h3>البريد الإلكتروني</h3><p>للأسئلة الفنية والدعم</p><a href="mailto:support@qcv.vexonet.online">support@qcv.vexonet.online</a></div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:rgba(139,92,246,0.1);color:var(--purple)"><i class="fas fa-headset"></i></div>
-                    <div><h3>الدعم الفني</h3><p>متاح يومياً من 9 صباحاً لـ 12 مساءً</p><a href="help.html">فتح تذاكر الدعم</a></div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:rgba(234,88,12,0.1);color:var(--orange)"><i class="fas fa-briefcase"></i></div>
-                    <div><h3>الشراكات</h3><p>للتعاون والشراكات التجارية</p><a href="mailto:business@qcv.vexonet.online">business@qcv.vexonet.online</a></div>
-                </div>
-
-                <div class="social-links">
-                    <a href="https://wa.me/201028707543" target="_blank" class="social-link" style="background:#25D366"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://facebook.com/qcv" target="_blank" class="social-link" style="background:#1877F2"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://linkedin.com/company/qcv" target="_blank" class="social-link" style="background:#0077B5"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://twitter.com/qcv" target="_blank" class="social-link" style="background:#1DA1F2"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
+        <div class="field" style="margin-top:20px;">
+          <label>موضوع الرسالة</label>
+          <div class="topic-pills" id="topicPills">
+            <span class="topic-pill active" data-val="مشكلة تقنية">مشكلة تقنية</span>
+            <span class="topic-pill" data-val="الدفع والاشتراك">الدفع والاشتراك</span>
+            <span class="topic-pill" data-val="اقتراح">اقتراح</span>
+            <span class="topic-pill" data-val="أخرى">أخرى</span>
+          </div>
+          <input type="hidden" id="cSubject" value="مشكلة تقنية">
         </div>
-    </div>
-</div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-<script>
-if(!firebase.apps.length){firebase.initializeApp({apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"})}
-function sendContact(e){
-    e.preventDefault();
-    var name=document.getElementById('cName').value.trim();
-    var email=document.getElementById('cEmail').value.trim();
-    var subject=document.getElementById('cSubject').value;
-    var message=document.getElementById('cMessage').value.trim();
-    var msg=document.getElementById('contactMsg');
-    if(!name||!email||!message){msg.className='msg error';msg.textContent='من فضلك ملأ كل الحقول';return}
-    msg.className='msg';msg.style.display='block';msg.style.background='rgba(0,3,201,0.05)';msg.style.color='var(--accent)';msg.innerHTML='<div style="width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;margin-left:8px"></div> جاري الإرسال...';
-    var data={name:name,email:email,subject:subject,message:message,date:Date.now(),status:'new'};
-    firebase.database().ref('contact/'+Date.now()).set(data).then(function(){
-        msg.className='msg success';msg.innerHTML='<i class="fas fa-check-circle" style="margin-left:6px"></i>تم إرسال رسالتك بنجاح! هنرد عليك في أقرب وقت.';
-        document.getElementById('contactForm').reset();
-    }).catch(function(err){
-        msg.className='msg error';msg.innerHTML='<i class="fas fa-exclamation-circle" style="margin-left:6px"></i>حصلت مشكلة. جرّب تاني أو تواصل معنا واتساب.';
-    });
-}
-</script>
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+        <div class="field">
+          <label for="cMessage">رسالتك</label>
+          <textarea id="cMessage" placeholder="اكتب تفاصيل استفسارك أو المشكلة التي تواجهها هنا..." required></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="qcv-btn qcv-btn-primary" style="padding: 12px 36px; font-size: 1rem;">
+          إرسال الرسالة
+        </button>
+
+        <div id="contactMsg" class="msg-banner"></div>
+      </form>
+    </div>
+  </main>
+
+  <footer style="padding: 24px; text-align: center; border-top: 1px solid var(--qcv-border); font-size: 0.88rem; color: var(--qcv-text-muted);">
+    &copy; 2026 QCV. جميع الحقوق محفوظة. منصة بناء السير الذاتية بالذكاء الاصطناعي.
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script>
+    (function() {
+      var firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+      // Topic pills toggle
+      var pills = document.querySelectorAll('.topic-pill');
+      var hiddenSubject = document.getElementById('cSubject');
+      pills.forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          pills.forEach(function(p) { p.classList.remove('active'); });
+          pill.classList.add('active');
+          hiddenSubject.value = pill.getAttribute('data-val');
+        });
+      });
+
+      window.sendContact = function(e) {
+        e.preventDefault();
+        var name = document.getElementById('cName').value.trim();
+        var email = document.getElementById('cEmail').value.trim();
+        var subject = hiddenSubject.value;
+        var message = document.getElementById('cMessage').value.trim();
+        var msg = document.getElementById('contactMsg');
+        var btn = document.getElementById('submitBtn');
+
+        if (!name || !email || !message) {
+          msg.className = 'msg-banner error';
+          msg.textContent = 'من فضلك املأ جميع الحقول المطلوبة.';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'جاري الإرسال...';
+
+        var data = {
+          name: name,
+          email: email,
+          subject: subject,
+          message: message,
+          date: Date.now(),
+          status: 'new'
+        };
+
+        firebase.database().ref('contact/' + Date.now()).set(data).then(function() {
+          msg.className = 'msg-banner success';
+          msg.innerHTML = '<i class="fas fa-check-circle" style="margin-left:6px;"></i> تم إرسال رسالتك بنجاح! سيرد عليك فريق الدعم خلال 24 ساعة.';
+          document.getElementById('contactForm').reset();
+          btn.disabled = false;
+          btn.textContent = 'إرسال الرسالة';
+        }).catch(function(err) {
+          msg.className = 'msg-banner error';
+          msg.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-left:6px;"></i> حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى أو مراسلتنا عبر واتساب.';
+          btn.disabled = false;
+          btn.textContent = 'إرسال الرسالة';
+        });
+      };
+    })();
+  </script>
+
+  <script defer src="js/site-settings.js"></script>
 </body>
 </html>

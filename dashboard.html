@@ -1,17 +1,686 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html">
-    <title>QCV - جاري التحويل إلى الصفحة الرئيسية...</title>
-    <script>
-        window.location.replace('index.html');
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>لوحة التحكم - QCV | إدارة السير الذاتية وتتبع الوظائف</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/qcv-ui.css">
+    <style>
+        :root {
+            --sidebar-w: 260px;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ===== SIDEBAR (Page 5) ===== */
+        .dash-sidebar {
+            width: var(--sidebar-w);
+            background: #ffffff;
+            border-left: 1px solid #e2e8f0;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            overflow-y: auto;
+        }
+
+        .dash-brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px 24px;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 20px;
+        }
+
+        .dash-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .dash-nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.92rem;
+            transition: all 0.2s ease;
+        }
+
+        .dash-nav-item a:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .dash-nav-item.active a {
+            color: var(--primary);
+            background: var(--primary-light);
+            font-weight: 800;
+        }
+
+        .dash-nav-item a i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* User Tier Card (Bottom of Sidebar) */
+        .dash-tier-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: auto;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+        }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .tier-name {
+            font-weight: 900;
+            font-size: 1.05rem;
+            color: var(--primary);
+        }
+
+        .tier-quota {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tier-progress {
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .tier-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 40%;
+            border-radius: 3px;
+        }
+
+        .btn-upgrade {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 9px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-upgrade:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .dash-main {
+            flex: 1;
+            margin-right: var(--sidebar-w);
+            padding: 32px 40px;
+            max-width: 1240px;
+        }
+
+        /* Greeting & Header */
+        .dash-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .greeting-title {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .greeting-sub {
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Quick Action Cards Row */
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .action-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(27, 77, 228, 0.08);
+        }
+
+        .action-card-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #0f172a;
+        }
+
+        .action-card-sub {
+            font-size: 0.82rem;
+            color: #94a3b8;
+        }
+
+        /* Two-Column Body Grid */
+        .dash-content-grid {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 24px;
+        }
+
+        .section-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+        }
+
+        .section-box-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-box-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        /* CV Cards Grid */
+        .cv-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .cv-card {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px 16px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .cv-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px rgba(27, 77, 228, 0.09);
+            transform: translateY(-2px);
+        }
+
+        .cv-wireframe {
+            height: 110px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #f1f5f9;
+            padding: 12px;
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .wf-line {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+
+        .cv-card-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .cv-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cv-date {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Tracker Stats Row */
+        .tracker-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .tracker-stat-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .tracker-stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .tracker-stat-num {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .tracker-stat-box.applied .tracker-stat-num { color: #1b4de4; }
+        .tracker-stat-box.interview .tracker-stat-num { color: #2563eb; }
+        .tracker-stat-box.offer .tracker-stat-num { color: #10b981; }
+        .tracker-stat-box.rejected .tracker-stat-num { color: #ef4444; }
+
+        /* Donut Widget Card */
+        .score-donut-box {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .score-donut-chart {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 14px;
+        }
+
+        .score-donut-chart svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .score-num {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        .score-box-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .score-box-hint {
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+
+        /* Recent Activity List */
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.86rem;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .dash-sidebar {
+                display: none;
+            }
+            .dash-main {
+                margin-right: 0;
+                padding: 20px;
+            }
+            .quick-actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dash-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#0f172a;color:#fff;">
-    <div style="text-align:center;">
-        <h2 style="font-weight:700;margin-bottom:8px">QCV</h2>
-        <p style="color:#94a3b8">جاري نقلك إلى الصفحة الرئيسية...</p>
-    </div>
+
+<body>
+
+    <!-- ===== RIGHT SIDEBAR (Page 5) ===== -->
+    <aside class="dash-sidebar">
+        <div class="dash-brand">
+            <a href="/" class="qcv-brand">
+                <span class="qcv-brand-text">QCV</span>
+                <span class="qcv-brand-badge">Q</span>
+            </a>
+        </div>
+
+        <ul class="dash-nav">
+            <li class="dash-nav-item active">
+                <a href="/dashboard.html"><i class="fas fa-th-large"></i> لوحة التحكم</a>
+            </li>
+            <li class="dash-nav-item">
+                <a href="/editor.html"><i class="fas fa-file-alt"></i> سيري الذاتية</a>
+            </li>
+            <li class="dash-nav-item">
+                <a href="/ats-checker.html"><i class="fas fa-search"></i> فاحص ATS</a>
+            </li>
+            <li class="dash-nav-item">
+                <a href="/ai-tools.html"><i class="fas fa-magic"></i> أدوات الذكاء الاصطناعي</a>
+            </li>
+            <li class="dash-nav-item">
+                <a href="/cover-letter.html"><i class="fas fa-envelope-open-text"></i> خطاب التعريف</a>
+            </li>
+            <li class="dash-nav-item">
+                <a href="/tracker.html"><i class="fas fa-briefcase"></i> متتبع الطلبات</a>
+            </li>
+            <li class="dash-nav-item">
+                <a href="/portfolio.html"><i class="fas fa-globe"></i> المعرض الشخصي</a>
+            </li>
+        </ul>
+
+        <!-- Bottom Tier Status Card -->
+        <div class="dash-tier-card">
+            <div class="tier-header">
+                <span class="tier-name" id="userPlanBadge">Pro</span>
+                <i class="fas fa-crown" style="color:#f59e0b;font-size:0.9rem"></i>
+            </div>
+            <div class="tier-quota" id="userDownloadsQuota">2 من 5 تحميلات</div>
+            <div class="tier-progress">
+                <div class="tier-progress-fill" id="tierProgressFill" style="width: 40%;"></div>
+            </div>
+            <a href="/pay.html" class="btn-upgrade">ترقية</a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN DASHBOARD ===== -->
+    <main class="dash-main">
+        <!-- Top Header & Greeting -->
+        <div class="dash-header-row">
+            <div>
+                <h1 class="greeting-title" id="userNameGreeting">أهلًا بك</h1>
+                <p class="greeting-sub" id="cvCompletionText">سيرتك جاهزة بنسبة 68%، كمّلها واحصل على مقابلات أكثر</p>
+            </div>
+            <a href="/editor.html?new=1" class="qcv-btn qcv-btn-primary">
+                <i class="fas fa-plus"></i>
+                <span>سيرة جديدة</span>
+            </a>
+        </div>
+
+        <!-- 4 Quick Actions (Row) -->
+        <div class="quick-actions-grid">
+            <a href="/templates.html" class="action-card">
+                <div class="action-card-title">+ سيرة جديدة</div>
+                <div class="action-card-sub">ابدأ من قالب</div>
+            </a>
+            <a href="/editor.html?import=1" class="action-card">
+                <div class="action-card-title">استيراد سيرة</div>
+                <div class="action-card-sub">Word أو PDF</div>
+            </a>
+            <a href="/ats-checker.html" class="action-card">
+                <div class="action-card-title">فحص ATS</div>
+                <div class="action-card-sub">تقييم فوري</div>
+            </a>
+            <a href="/cover-letter.html" class="action-card">
+                <div class="action-card-title">خطاب تعريف</div>
+                <div class="action-card-sub">بالذكاء الاصطناعي</div>
+            </a>
+        </div>
+
+        <!-- Content Grid (2 Columns) -->
+        <div class="dash-content-grid">
+            <!-- Left / Resumes & Tracker Area -->
+            <div>
+                <!-- Resumes Section -->
+                <div class="section-box">
+                    <div class="section-box-header">
+                        <h2 class="section-box-title">سيري الذاتية</h2>
+                        <a href="/editor.html" style="color:var(--primary);font-size:0.88rem;font-weight:700;text-decoration:none">عرض الكل</a>
+                    </div>
+                    
+                    <div class="cv-cards-grid" id="resumesGrid">
+                        <!-- Card 1 -->
+                        <a href="/editor.html" class="cv-card">
+                            <div class="cv-wireframe">
+                                <div class="wf-line" style="width: 60%; background:#1b4de4;"></div>
+                                <div class="wf-line" style="width: 90%;"></div>
+                                <div class="wf-line" style="width: 75%;"></div>
+                                <div class="wf-line" style="width: 40%; margin-top: auto;"></div>
+                            </div>
+                            <div class="cv-card-info">
+                                <span class="cv-title">مصمم واجهات</span>
+                                <span class="qcv-badge qcv-badge-green">ATS 84</span>
+                            </div>
+                            <span class="cv-date">آخر تعديل: منذ ساعتين</span>
+                        </a>
+
+                        <!-- Card 2 -->
+                        <a href="/editor.html" class="cv-card">
+                            <div class="cv-wireframe">
+                                <div class="wf-line" style="width: 50%;"></div>
+                                <div class="wf-line" style="width: 85%;"></div>
+                                <div class="wf-line" style="width: 65%;"></div>
+                                <div class="wf-line" style="width: 35%; margin-top: auto;"></div>
+                            </div>
+                            <div class="cv-card-info">
+                                <span class="cv-title">نسخة إنجليزية</span>
+                                <span class="qcv-badge qcv-badge-amber">ATS 71</span>
+                            </div>
+                            <span class="cv-date">آخر تعديل: بالأمس</span>
+                        </a>
+
+                        <!-- Card 3 -->
+                        <a href="/editor.html" class="cv-card">
+                            <div class="cv-wireframe">
+                                <div class="wf-line" style="width: 40%;"></div>
+                                <div class="wf-line" style="width: 70%;"></div>
+                                <div class="wf-line" style="width: 55%;"></div>
+                                <div class="wf-line" style="width: 30%; margin-top: auto;"></div>
+                            </div>
+                            <div class="cv-card-info">
+                                <span class="cv-title">خريج جديد</span>
+                                <span class="qcv-badge" style="background:#fee2e2;color:#ef4444">ATS 58</span>
+                            </div>
+                            <span class="cv-date">آخر تعديل: منذ 4 أيام</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tracker Summary Section -->
+                <div class="section-box">
+                    <div class="section-box-header">
+                        <h2 class="section-box-title">متتبع الطلبات</h2>
+                        <a href="/tracker.html" style="color:var(--primary);font-size:0.88rem;font-weight:700;text-decoration:none">فتح المتتبع <i class="fas fa-arrow-left" style="margin-right:4px"></i></a>
+                    </div>
+                    <div class="tracker-stats-grid">
+                        <div class="tracker-stat-box applied">
+                            <div class="tracker-stat-label">تم التقديم</div>
+                            <div class="tracker-stat-num" id="statApplied">3</div>
+                        </div>
+                        <div class="tracker-stat-box interview">
+                            <div class="tracker-stat-label">مقابلة</div>
+                            <div class="tracker-stat-num" id="statInterview">2</div>
+                        </div>
+                        <div class="tracker-stat-box offer">
+                            <div class="tracker-stat-label">عرض</div>
+                            <div class="tracker-stat-num" id="statOffer">1</div>
+                        </div>
+                        <div class="tracker-stat-box rejected">
+                            <div class="tracker-stat-label">مرفوض</div>
+                            <div class="tracker-stat-num" id="statRejected">1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right / Stats & Activity Area -->
+            <div>
+                <!-- ATS Donut Widget -->
+                <div class="section-box score-donut-box">
+                    <div class="score-donut-chart">
+                        <svg viewBox="0 0 36 36">
+                            <path fill="none" stroke="#e2e8f0" stroke-width="3.5" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path fill="none" stroke="#10b981" stroke-width="3.5" stroke-dasharray="84, 100" stroke-linecap="round" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="score-num">84</div>
+                    </div>
+                    <h3 class="score-box-title">متوسط تقييم ATS</h3>
+                    <p class="score-box-hint">أضف أرقامًا لإنجازاتك لزيادة التقييم</p>
+                </div>
+
+                <!-- Recent Activity Box -->
+                <div class="section-box">
+                    <div class="section-box-header">
+                        <h3 class="section-box-title" style="font-size:1.05rem;">النشاط الأخير</h3>
+                    </div>
+                    <div id="recentActivityList">
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div>تم حفظ سيرة "مصمم واجهات"</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background:#10b981;"></div>
+                            <div>تقييم ATS ارتفع إلى 84</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background:#f59e0b;"></div>
+                            <div>طلب جديد: شركة أ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/site-settings.js"></script>
+    <script src="components.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = (window.QCVApp && window.QCVApp.firebaseConfig) || {
+            apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
+            authDomain: "qwcv-1cfad.firebaseapp.com",
+            databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com",
+            projectId: "qwcv-1cfad"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                // If not authenticated, check local cache or redirect to login
+                const cached = window.QCV && window.QCV.auth ? window.QCV.auth.getUser() : null;
+                if (!cached) {
+                    window.location.replace("/login.html?redirect=dashboard.html");
+                    return;
+                }
+            } else {
+                if (window.QCV && window.QCV.auth) window.QCV.auth.setUser(user);
+                const name = user.displayName || user.email.split('@')[0] || "أحمد";
+                document.getElementById('userNameGreeting').textContent = `أهلًا ${name}`;
+
+                // Fetch real user data from RTDB
+                const userRef = ref(db, `users/${user.uid}`);
+                onValue(userRef, (snapshot) => {
+                    const data = snapshot.val() || {};
+                    if (data.plan) {
+                        const badge = document.getElementById('userPlanBadge');
+                        if (badge) badge.textContent = data.plan.toUpperCase();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
