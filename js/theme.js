@@ -90,39 +90,43 @@
     }
 
     function initLoader() {
-        if (document.querySelector('.page-loader')) return;
+        // Disable the global page-loading overlay by default to keep navigation smooth
+        // and avoid flash screens between page transitions.
+        if (window.QCVApp && window.QCVApp.enablePageLoader) {
+            if (document.querySelector('.page-loader')) return;
 
-        const loader = document.createElement('div');
-        loader.className = 'page-loader';
-        loader.id = 'pageLoader';
-        loader.setAttribute('aria-live', 'polite');
-        loader.setAttribute('aria-label', 'جاري التحميل');
+            const loader = document.createElement('div');
+            loader.className = 'page-loader';
+            loader.id = 'pageLoader';
+            loader.setAttribute('aria-live', 'polite');
+            loader.setAttribute('aria-label', 'جاري التحميل');
 
-        const spinner = document.createElement('div');
-        spinner.className = 'loader-spinner';
+            const spinner = document.createElement('div');
+            spinner.className = 'loader-spinner';
 
-        const text = document.createElement('div');
-        text.className = 'loader-text';
-        text.textContent = 'جاري التحميل...';
+            const text = document.createElement('div');
+            text.className = 'loader-text';
+            text.textContent = 'جاري التحميل...';
 
-        loader.appendChild(spinner);
-        loader.appendChild(text);
-        document.body.appendChild(loader);
+            loader.appendChild(spinner);
+            loader.appendChild(text);
+            document.body.appendChild(loader);
 
-        const hideLoader = function () {
-            if (!loader) return;
-            loader.classList.add('hide');
-            setTimeout(function () {
-                loader.remove();
-            }, 500);
-        };
+            const hideLoader = function () {
+                if (!loader) return;
+                loader.classList.add('hide');
+                setTimeout(function () {
+                    loader.remove();
+                }, 500);
+            };
 
-        if (document.readyState === 'complete') {
-            setTimeout(hideLoader, 250);
-        } else {
-            window.addEventListener('load', function () {
+            if (document.readyState === 'complete') {
                 setTimeout(hideLoader, 250);
-            }, { once: true });
+            } else {
+                window.addEventListener('load', function () {
+                    setTimeout(hideLoader, 250);
+                }, { once: true });
+            }
         }
     }
 

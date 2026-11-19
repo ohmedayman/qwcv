@@ -14,82 +14,65 @@
       {
         "source": "**/*.@(css|js)",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=0, must-revalidate"
-          }
+          { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
         ]
       },
       {
         "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|ico)",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=2592000"
-          }
+          { "key": "Cache-Control", "value": "public, max-age=2592000" }
         ]
       },
       {
         "source": "fonts.googleapis.com/**",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=2592000"
-          }
+          { "key": "Cache-Control", "value": "public, max-age=2592000" }
         ]
       },
       {
         "source": "**/*.html",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          },
-          {
-            "key": "Pragma",
-            "value": "no-cache"
-          },
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "SAMEORIGIN"
-          }
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+          { "key": "Pragma", "value": "no-cache" },
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
         ]
       },
       {
         "source": "service-worker.js",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          },
-          {
-            "key": "Service-Worker-Allowed",
-            "value": "/"
-          }
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+          { "key": "Service-Worker-Allowed", "value": "/" }
         ]
       },
       {
         "source": "manifest.json",
         "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/manifest+json"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, must-revalidate"
-          }
+          { "key": "Content-Type", "value": "application/manifest+json" },
+          { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
         ]
       }
     ],
     "rewrites": [
       {
+        "source": "/platform",
+        "destination": "/platform.html"
+      },
+      {
+        "source": "/solutions",
+        "destination": "/solutions.html"
+      },
+      {
+        "source": "/technology",
+        "destination": "/technology.html"
+      },
+      {
+        "source": "/dashboard",
+        "destination": "/dashboard.html"
+      },
+      {
         "source": "/app",
-        "destination": "/index.html"
+        "destination": "/dashboard.html"
       },
       {
         "source": "/portfolio/:code",
@@ -180,14 +163,6 @@
         "destination": "/blog.html"
       },
       {
-        "source": "/ai",
-        "destination": "/ai.html"
-      },
-      {
-        "source": "/templates",
-        "destination": "/templates.html"
-      },
-      {
         "source": "/support",
         "destination": "/support.html"
       },
@@ -214,18 +189,18 @@
       {
         "source": "/cover-letter",
         "destination": "/cover-letter.html"
-      }
-    ],
-    "redirects": [
-      {
-        "source": "/app",
-        "destination": "/",
-        "type": 301
       },
       {
-        "source": "/app/**",
-        "destination": "/",
-        "type": 301
+        "source": "/api/ai",
+        "function": "openaiProxy"
+      },
+      {
+        "source": "/api/openai",
+        "function": "openaiProxy"
+      },
+      {
+        "source": "/api/gemini",
+        "function": "geminiProxy"
       }
     ]
   },

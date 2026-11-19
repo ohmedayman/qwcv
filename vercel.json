@@ -1,68 +1,32 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "redirects": [
-    {
-      "source": "/app",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/app/(.*)",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/dashboard/(.*)",
-      "destination": "/",
-      "permanent": true
-    }
-  ],
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/app",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/editor",
-      "destination": "/editor.html"
-    },
-    {
-      "source": "/login",
-      "destination": "/login.html"
-    },
-    {
-      "source": "/ats-checker",
-      "destination": "/ats-checker.html"
-    },
-    {
-      "source": "/ai-tools",
-      "destination": "/ai-tools.html"
-    },
-    {
-      "source": "/templates",
-      "destination": "/templates.html"
-    },
-    {
-      "source": "/pay",
-      "destination": "/pay.html"
-    },
-    {
-      "source": "/admin",
-      "destination": "/admin.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/platform", "destination": "/platform.html" },
+    { "source": "/solutions", "destination": "/solutions.html" },
+    { "source": "/technology", "destination": "/technology.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/app", "destination": "/dashboard.html" },
+    { "source": "/editor", "destination": "/editor.html" },
+    { "source": "/ats-checker", "destination": "/ats-checker.html" },
+    { "source": "/ai-tools", "destination": "/ai-tools.html" },
+    { "source": "/ai", "destination": "/ai.html" },
+    { "source": "/templates", "destination": "/templates.html" },
+    { "source": "/pay", "destination": "/pay.html" },
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/careers", "destination": "/careers.html" },
+    { "source": "/help", "destination": "/help.html" },
+    { "source": "/tracker", "destination": "/tracker.html" },
+    { "source": "/verify", "destination": "/verify.html" },
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/api/ai", "destination": "/api/ai.js" },
+    { "source": "/api/openai", "destination": "/api/ai.js" }
   ]
 }

@@ -1,163 +1,111 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="الصفحة التي تبحث عنها غير موجودة. العودة إلى الرئيسية للبدء في بناء سيرتك الذاتية.">
-    <title>404 - الصفحة غير موجودة | QCV</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="mobile.css">
-    <script src="js/theme.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root{--bg:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af}
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
-
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center}
-        .nav-logo{font-size:1.8rem;font-weight:900;color:var(--text);text-decoration:none}
-        .nav-logo span{color:var(--accent)}
-        .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
-        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem;transition:color 0.2s}
-        .nav-links a:hover{color:var(--text)}
-        .nav-cta{background:var(--accent);color:#fff !important;padding:10px 22px;border-radius:50px;font-weight:700 !important;transition:all 0.2s !important}
-        .nav-cta:hover{background:#0005e6;transform:translateY(-2px)}
-
-        .main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 20px 40px;text-align:center}
-
-        .bg-glow{position:fixed;width:500px;height:500px;border-radius:50%;filter:blur(120px);opacity:0.08;pointer-events:none}
-        .glow-1{background:var(--accent);top:-15%;right:-10%;animation:float1 8s ease-in-out infinite}
-        .glow-2{background:var(--sky);bottom:-15%;left:-10%;animation:float2 10s ease-in-out infinite}
-        @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
-        @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
-
-        .robot{font-size:5rem;margin-bottom:20px;animation:wave 2s ease-in-out infinite}
-        @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
-
-        .error-code{font-size:8rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:10px;animation:popIn 0.5s cubic-bezier(0.16,1,0.3,1)}
-        @keyframes popIn{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
-
-        .error-title{font-size:1.6rem;font-weight:800;margin-bottom:10px}
-        .error-msg{color:var(--muted);font-size:1rem;margin-bottom:35px;max-width:450px;line-height:1.7}
-
-        .btn-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-        .btn{padding:13px 28px;border-radius:50px;font-weight:700;font-size:0.9rem;cursor:pointer;font-family:'Cairo',sans-serif;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s}
-        .btn-primary{background:var(--accent);color:#fff}
-        .btn-primary:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,3,201,0.2)}
-        .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
-        .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-
-        .links{display:flex;gap:25px;justify-content:center;flex-wrap:wrap}
-        .links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:600;transition:color 0.2s;display:flex;align-items:center;gap:6px}
-        .links a:hover{color:var(--accent)}
-
-        .footer{border-top:1px solid var(--border);padding:30px 60px;text-align:center;color:var(--muted);font-size:0.82rem}
-        .footer a{color:var(--accent);text-decoration:none}
-
-        .nav-mobile-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;font-size:1.3rem;color:var(--text);cursor:pointer;border-radius:10px;flex-shrink:0}
-        @media(max-width:768px){
-            .navbar{padding:0 20px}
-            .nav-links{display:none}
-            .nav-links.show{display:flex !important;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:16px 20px;gap:12px;z-index:999;box-shadow:0 8px 25px rgba(0,0,0,0.1)}
-            .nav-links.show li{width:100%}
-            .nav-links.show li a,.nav-links.show li button{width:100%;text-align:center;padding:12px !important}
-            .nav-mobile-toggle{display:flex !important}
-            .theme-toggle{width:44px!important;height:44px!important}
-            .lang-switch button{padding:8px 12px!important}
-            .error-code{font-size:5rem}
-            .links{gap:15px}
-        }
-
-        /* ===== DARK MODE ===== */
-        body.dark-mode .navbar{background:rgba(10,14,26,0.95);border-bottom-color:#1e293b}
-        body.dark-mode .nav-links a{color:#94a3b8}
-        body.dark-mode .nav-links a:hover{color:#f1f5f9}
-        body.dark-mode .error-code{color:#27ffed}
-        body.dark-mode .error-text{color:#f1f5f9}
-        body.dark-mode .links a{color:#27ffed}
-        body.dark-mode .footer{border-color:#1e293b}
-        body.dark-mode a{color:#27ffed}
-
-    </style>
-    <script src="js/lang.js"></script>
-    <script src="js/pwa.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>404 — Page Not Found | QCV</title>
+  <meta name="description" content="The page you are looking for does not exist or has been relocated within the QCV platform.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" href="qcv_app_icon_final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/corporate.css">
+  <style>
+    .error-container {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .error-code {
+      font-family: var(--font-mono);
+      font-size: clamp(5rem, 12vw, 8.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: var(--color-emerald-light);
+      margin-bottom: 12px;
+      text-shadow: 0 0 30px rgba(42, 138, 102, 0.25);
+    }
+  </style>
 </head>
+
 <body>
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
 
-<nav class="navbar">
-    <a href="index.html" class="nav-logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
-    <ul class="nav-links">
-        <li><a href="index.html" data-i18n="home">الرئيسية</a></li>
-        <li><a href="pay.html" data-i18n="pricing">التسعير</a></li>
-        <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
-        <li><a href="help.html" data-i18n="help">المساعدة</a></li>
-        <li><a href="blog.html" data-i18n="blog">المدونة</a></li>
-        <li><a href="login.html" class="nav-cta" data-i18n="login">ابدأ مجاناً</a></li>
-        <li><button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button></li>
-        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px;cursor:pointer" onclick="QCVLang.toggleDropdown()"><span class="lang-ar" style="background:var(--accent);color:#fff;padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:700;font-family:inherit">عربي</span><span class="lang-en" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:700;font-family:inherit">EN</span></div></li>
-    </ul>
-    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
-</nav>
+  <!-- NAVIGATION -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="QCV Homepage">
+        <div class="nav-brand-symbol" aria-hidden="true"></div>
+        <span>QCV</span>
+      </a>
 
-<div class="bg-glow glow-1"></div>
-<div class="bg-glow glow-2"></div>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/platform" class="nav-link">Platform</a></li>
+          <li><a href="/solutions" class="nav-link">Solutions</a></li>
+          <li><a href="/technology" class="nav-link">Technology</a></li>
+          <li><a href="/about" class="nav-link">About</a></li>
+          <li><a href="/contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
 
-<div class="main">
-    <div class="robot"><i class="fas fa-robot"></i></div>
+      <div class="nav-actions">
+        <a href="/login" class="nav-link" style="padding: 6px 12px; font-weight: 600;">Sign in</a>
+        <a href="/" class="btn btn-primary">
+          <span>Back to QCV</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="error-container">
+    <div class="section-tag copper" style="margin-bottom: 16px;">ERROR 404 // NOT_FOUND</div>
     <div class="error-code">404</div>
-    <div class="error-title" data-i18n="error_title">الصفحة غير موجودة!</div>
-    <div class="error-msg" data-i18n="error_msg">يبدو إنك وصلت لصفحة مش موجودة أو اتغير رابطها. تأكد من صحة الرابط أو رجع للصفحة الرئيسية.</div>
-    <div class="btn-group">
-        <a href="index.html" class="btn btn-primary" data-i18n="error_home"><i class="fas fa-home"></i> الصفحة الرئيسية</a>
-        <a href="javascript:history.back()" class="btn btn-ghost" data-i18n="error_back"><i class="fas fa-arrow-right"></i> رجوع</a>
-    </div>
-    <div class="links">
-        <a href="index.html#features" data-i18n="features"><i class="fas fa-star"></i> المميزات</a>
-        <a href="index.html#pricing" data-i18n="pricing"><i class="fas fa-tag"></i> التسعير</a>
-        <a href="help.html" data-i18n="help"><i class="fas fa-headset"></i> المساعدة</a>
-        <a href="login.html" data-i18n="login"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
-        <a href="templates.html" data-i18n="templates"><i class="fas fa-file-alt"></i> القوالب</a>
-        <a href="careers.html" data-i18n="careers"><i class="fas fa-briefcase"></i> الوظائف</a>
-    </div>
-</div>
+    <h1 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; margin-bottom: 16px;">
+      Page Not Found
+    </h1>
+    <p style="font-size: 1.1rem; color: var(--color-softgray); max-width: 520px; margin-bottom: 32px; line-height: 1.6;">
+      The requested route does not exist or has been relocated within the QCV architecture.
+    </p>
 
-<div class="footer">
-    <div class="footer-links" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
-        <a href="about.html">من نحن</a>
-        <a href="careers.html">الوظائف</a>
-        <a href="terms.html">شروط الاستخدام</a>
-        <a href="privacy.html">سياسة الخصوصية</a>
-        <a href="help.html">مركز المساعدة</a>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+      <a href="/" class="btn btn-primary">
+        <span>Back to QCV</span>
+        <svg class="btn-icon-arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="/platform" class="btn btn-secondary">
+        <span>Explore Platform</span>
+      </a>
+      <a href="/contact" class="btn btn-copper">
+        <span>Contact Support</span>
+      </a>
     </div>
-    <p data-i18n="copyright">QCV &copy; 2026 - جميع الحقوق محفوظة | منتج من <a href="https://vexonet.online" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:700">Vexonet</a> | <a href="index.html">الصفحة الرئيسية</a></p>
-</div>
+  </main>
 
-<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" style="position:fixed;bottom:24px;left:24px;width:56px;height:56px;background:#25d366;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 20px rgba(37,211,102,0.35);z-index:9999;text-decoration:none;transition:all 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
-    <script defer src="js/maintenance.js"></script>
-    <script defer src="js/site-settings.js"></script>
-    <script defer src="js/auto-reload.js"></script>
-    <script defer src="js/animations.js"></script>
-    <script defer src="js/analytics.js"></script>
-<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
-    <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="width:44px;height:44px;border-radius:10px">
-    <div style="flex:1;text-align:right">
-        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
-        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <div>&copy; 2026 QCV. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="/">Home</a>
+          <a href="/platform">Platform</a>
+          <a href="/solutions">Solutions</a>
+          <a href="/contact">Contact</a>
+        </div>
+      </div>
     </div>
-    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
-    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
-</div>
+  </footer>
+
+  <script src="js/site-settings.js"></script>
+  <script src="js/corporate.js"></script>
 </body>
-    
-</html>
 
+</html>

@@ -1,0 +1,147 @@
+<!-- Component: Hero -->
+<section class="hero-section" id="home">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        <span>Enterprise Platform v2.8 • Zero Downtime Architecture</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Build. Connect. <span class="accent-emerald">Transform.</span>
+      </h1>
+
+      <p class="hero-subheadline">
+        A smarter platform for building connected digital experiences.
+      </p>
+
+      <p class="hero-description">
+        QCV brings technology, digital solutions, and intelligent systems together through a scalable platform designed for modern businesses.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="/platform" class="btn btn-primary">
+          <span>Explore QCV</span>
+          <svg class="btn-icon-arrow" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="/contact" class="btn btn-secondary">
+          <span>Contact Us</span>
+        </a>
+      </div>
+
+      <div class="hero-trust-bar">
+        <div class="hero-trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Enterprise-Grade Security</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          <span>99.99% Availability Benchmark</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+            <line x1="6" y1="6" x2="6.01" y2="6"/>
+            <line x1="6" y1="18" x2="6.01" y2="18"/>
+          </svg>
+          <span>Multi-Region Mesh</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2D Interface-Based Platform Visualization (Right Column) -->
+    <div class="hero-visual-card" aria-label="QCV Connected Platform Architecture Visual">
+      <div class="visual-header">
+        <div class="visual-header-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>ARCHITECTURE_OVERVIEW // MESH_01</span>
+        </div>
+        <span class="visual-status-pill">ALL SYSTEMS SYNCED</span>
+      </div>
+
+      <div class="platform-canvas">
+        <div class="platform-grid-bg"></div>
+
+        <!-- Clean 2D SVG Line Network -->
+        <svg class="platform-svg-network" viewBox="0 0 460 380" preserveAspectRatio="none">
+          <path class="network-line active" d="M 100 60 L 230 180" stroke-width="1.5" />
+          <path class="network-line active" d="M 360 60 L 230 180" stroke-width="1.5" />
+          <path class="network-line active" d="M 230 180 L 100 320" stroke-width="1.5" />
+          <path class="network-line active" d="M 230 180 L 360 320" stroke-width="1.5" />
+          <path class="network-line" d="M 100 60 L 360 60" stroke-width="1" />
+          <path class="network-line" d="M 100 320 L 360 320" stroke-width="1" />
+          <circle class="network-pulse" cx="230" cy="180" r="4" />
+        </svg>
+
+        <div class="canvas-nodes-layer">
+          <!-- Top Row: Ingest & Edge -->
+          <div class="canvas-row">
+            <div class="canvas-node" data-node="gateway">
+              <div class="canvas-node-label">INLET // 01</div>
+              <div class="canvas-node-title">
+                <span>API Gateway</span>
+                <span class="canvas-node-val">12ms</span>
+              </div>
+            </div>
+            <div class="canvas-node" data-node="auth">
+              <div class="canvas-node-label">SECURITY // 02</div>
+              <div class="canvas-node-title">
+                <span>Auth &amp; SSO</span>
+                <span class="canvas-node-val">mTLS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Row: Core Processing Hub -->
+          <div class="canvas-row center">
+            <div class="canvas-node hub" data-node="hub">
+              <div class="canvas-node-label" style="color: var(--color-copper-light);">CORE PLATFORM ENGINE</div>
+              <div class="canvas-node-title">
+                <span>Distributed Pipeline</span>
+                <span class="canvas-node-val" style="color: var(--color-copper-light);">2.4M req/s</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Storage & Analytics -->
+          <div class="canvas-row">
+            <div class="canvas-node" data-node="stream">
+              <div class="canvas-node-label">STORAGE // 03</div>
+              <div class="canvas-node-title">
+                <span>Data Lakehouse</span>
+                <span class="canvas-node-val">Zero-Loss</span>
+              </div>
+            </div>
+            <div class="canvas-node" data-node="clients">
+              <div class="canvas-node-label">INTERFACE // 04</div>
+              <div class="canvas-node-title">
+                <span>Connected Apps</span>
+                <span class="canvas-node-val">Live Webhooks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-footer">
+        <div class="visual-footer-stats">
+          <span>THROUGHPUT: <b>2.41M/s</b></span>
+          <span>LATENCY: <b>12ms p99</b></span>
+          <span>NODES: <b>1,284</b></span>
+        </div>
+        <span class="live-timestamp">11:45:00</span>
+      </div>
+    </div>
+  </div>
+</section>

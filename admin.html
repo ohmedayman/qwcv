@@ -11,7 +11,7 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     <script defer src="js/config.js"></script>
     <style>
-:root{--bg:#f4f6f9;--sidebar:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--accent2:#27ffed;--green:#059669;--red:#ef4444;--yellow:#f59e0b;--purple:#8b5cf6;--text:#111827;--muted:#6b7280;--light:#9ca3af;--sidebar-w:260px;--topbar-h:60px}
+:root{--bg:#f4f6f9;--sidebar:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#4f46e5;--accent2:#2563eb;--green:#059669;--red:#ef4444;--yellow:#f59e0b;--purple:#0f766e;--text:#111827;--muted:#6b7280;--light:#9ca3af;--sidebar-w:260px;--topbar-h:60px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
@@ -284,6 +284,43 @@ tr:hover td{background:rgba(0,3,201,.02)}
 @keyframes popupSlideDown{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .block-screen p{color:var(--muted);font-weight:700;font-size:.9rem}
 
+/* Admin workspace refinements */
+.sidebar{box-shadow:-8px 0 28px rgba(15,23,42,.035)}
+.sidebar-brand{display:flex;align-items:center;justify-content:center;gap:9px;padding:17px 18px;font-size:1.16rem;letter-spacing:0;border-bottom-color:#eef0f4}
+.sidebar-brand img{width:34px;height:34px;object-fit:contain}
+.admin-nav-search{display:flex;align-items:center;gap:9px;margin:12px 14px 2px;padding:0 10px;height:38px;border:1px solid var(--border);border-radius:9px;background:#f8fafc;color:#8b95a5;transition:border-color .18s,box-shadow .18s}
+.admin-nav-search:focus-within{border-color:rgba(79,70,229,.55);box-shadow:0 0 0 3px rgba(79,70,229,.08);background:#fff}
+.admin-nav-search>i{font-size:.76rem}
+.admin-nav-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--text);font-size:.73rem}
+.admin-nav-search input::placeholder{color:#9aa3b1}
+.admin-nav-search kbd{padding:2px 5px;border:1px solid #e0e4eb;border-radius:4px;background:#fff;color:#8a93a1;font:600 .57rem 'Cairo',sans-serif;white-space:nowrap}
+.admin-nav-empty{padding:9px 14px;color:var(--light);font-size:.7rem;text-align:center}
+.admin-nav-empty[hidden]{display:none}
+.sidebar-nav{padding-top:9px}
+.nav-item{min-height:40px;padding:9px 12px;border-radius:8px;font-size:.77rem}
+.nav-item.active{box-shadow:inset -2px 0 0 var(--accent)}
+.nav-item .icon{font-size:.95rem}
+.main-content{background:#f4f6f9}
+.topbar{box-shadow:0 1px 4px rgba(15,23,42,.035);padding-inline:24px}
+.topbar h1{font-size:1rem}
+.admin-sync-status{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #e7ebf1;border-radius:7px;background:#fff;color:var(--muted);font-size:.64rem;font-weight:700;white-space:nowrap}
+.admin-sync-status i{color:#9aa3b1;font-size:.5rem}
+.admin-sync-status[data-state="ready"] i{color:var(--green)}
+.admin-sync-status[data-state="error"] i{color:var(--red)}
+.content{padding:24px 26px 40px}
+.stat-card,.chart-card,.table-wrap,.settings-card{box-shadow:0 2px 8px rgba(15,23,42,.025)}
+.stat-card,.table-wrap{border-radius:11px}
+th{position:sticky;top:0;z-index:1}
+.login-screen{background:radial-gradient(ellipse at 20% 15%,rgba(79,70,229,.09),transparent 38%),radial-gradient(ellipse at 85% 90%,rgba(14,165,233,.08),transparent 34%),var(--bg)}
+.login-box{border-radius:14px;padding:34px 32px;box-shadow:0 22px 65px rgba(15,23,42,.09)}
+.login-box .logo{font-size:1.8rem}
+.login-box .sub{margin-bottom:24px}
+.login-box input[type="text"],.login-box input[type="password"],.login-box input[type="email"]{border-radius:9px}
+.login-box .btn-primary{border-radius:9px;background:#4f46e5}
+.login-box .btn-primary:hover{background:#4338ca}
+body.admin-nav-filtered .sidebar-nav .nav-item.admin-filter-hidden{display:none!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(79,70,229,.3);outline-offset:2px}
+
 /* ===== AUDIT LOG ===== */
 .audit-filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .audit-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);align-items:flex-start}
@@ -434,6 +471,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
     .search-box input{width:160px}
     .settings-row{grid-template-columns:1fr}
     .donut-chart{flex-direction:column;align-items:flex-start}
+    .admin-sync-status{display:none}
 }
 @media(max-width:600px){
     .stats-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -449,8 +487,8 @@ tr:hover td{background:rgba(0,3,201,.02)}
     table{min-width:500px}
 }
 @media(max-width:480px){
-    .stats-grid{grid-template-columns:1fr}
-    .analytics-grid{grid-template-columns:1fr}
+    .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .analytics-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
     .content{padding:12px}
     .topbar{height:50px;padding:0 12px}
     .stat-card{padding:12px}
@@ -460,6 +498,8 @@ tr:hover td{background:rgba(0,3,201,.02)}
     .modal-header{padding:16px}
     .login-box{padding:28px 22px}
     .login-box .logo{font-size:1.8rem}
+    .content{padding:10px 10px 24px}
+    .admin-nav-search{margin-inline:12px}
 }
     </style>
 </head>
@@ -525,6 +565,8 @@ tr:hover td{background:rgba(0,3,201,.02)}
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"> Admin</div>
+        <label class="admin-nav-search"><i class="fas fa-search" aria-hidden="true"></i><input id="adminNavSearch" type="search" placeholder="ابحث عن قسم..." aria-label="ابحث عن قسم في لوحة الإدارة" oninput="filterAdminNavigation(this.value)"><kbd>Ctrl K</kbd></label>
+        <div id="adminNavNoResults" class="admin-nav-empty" hidden>لا توجد أقسام مطابقة</div>
         <nav class="sidebar-nav">
             <div class="nav-item active" onclick="switchPanel('dashboard')"><span class="icon"><i class="fas fa-chart-pie"></i></span>الرئيسية</div>
             <div class="nav-item" onclick="switchPanel('users')"><span class="icon"><i class="fas fa-users"></i></span>المستخدمين</div>
@@ -559,6 +601,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
             <div style="display:flex;align-items:center;gap:12px">
                 <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
                 <h1 id="pageTitle">الرئيسية</h1>
+                <span class="admin-sync-status" id="adminSyncStatus" data-state="loading"><i class="fas fa-circle"></i><span>جاري المزامنة</span></span>
             </div>
             <div class="topbar-right" style="position:relative">
                 <div id="notifBell" style="position:relative;cursor:pointer;margin-left:12px" onclick="toggleNotifPanel()">
@@ -1243,6 +1286,50 @@ function renderPagination(section, total) {
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('show'); }
 function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); }
 
+window.filterAdminNavigation = function(query) {
+    var term = String(query || '').trim().toLocaleLowerCase('ar');
+    var items = document.querySelectorAll('.sidebar-nav .nav-item');
+    var visible = 0;
+    items.forEach(function(item) {
+        if (item.dataset.permissionHidden === 'true') { item.classList.add('admin-filter-hidden'); return; }
+        var match = !term || item.textContent.toLocaleLowerCase('ar').includes(term);
+        item.classList.toggle('admin-filter-hidden', !match);
+        if (match) visible++;
+    });
+    document.body.classList.toggle('admin-nav-filtered', !!term);
+    var empty = document.getElementById('adminNavNoResults');
+    if (empty) empty.hidden = visible > 0;
+};
+
+document.getElementById('adminNavSearch').addEventListener('keydown', function(event) {
+    if (event.key !== 'Enter') return;
+    var first = Array.from(document.querySelectorAll('.sidebar-nav .nav-item')).find(function(item) {
+        return item.style.display !== 'none' && !item.classList.contains('admin-filter-hidden');
+    });
+    if (first) { event.preventDefault(); first.click(); this.value = ''; filterAdminNavigation(''); }
+});
+
+document.addEventListener('keydown', function(event) {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        var search = document.getElementById('adminNavSearch');
+        if (search) { search.focus(); search.select(); if (window.innerWidth <= 900 && !document.getElementById('sidebar').classList.contains('open')) toggleSidebar(); }
+    }
+    if (event.key === 'Escape') {
+        var search = document.getElementById('adminNavSearch');
+        if (search && document.activeElement === search) { search.value = ''; filterAdminNavigation(''); search.blur(); }
+    }
+});
+
+function setAdminSyncStatus(state, message) {
+    var status = document.getElementById('adminSyncStatus');
+    if (!status) return;
+    status.dataset.state = state;
+    var text = status.querySelector('span');
+    if (text) text.textContent = message;
+    status.title = message;
+}
+
 // ===== MODAL =====
 function closeModal() { document.getElementById('modal').classList.remove('show'); }
 
@@ -1358,6 +1445,9 @@ function initAdmin() {
             if (perms.indexOf('manage_settings') === -1 && txt.indexOf('الإعدادات') !== -1) n.style.display = 'none';
             if (perms.indexOf('manage_settings') === -1 && txt.indexOf('قوالب الإشعارات') !== -1) n.style.display = 'none';
         });
+        document.querySelectorAll('.sidebar-nav .nav-item').forEach(function(n) {
+            n.dataset.permissionHidden = n.style.display === 'none' ? 'true' : 'false';
+        });
     } else {
         document.getElementById('adminDisplayName').textContent = 'المدير';
         document.getElementById('adminAvatar').textContent = 'A';
@@ -1403,6 +1493,7 @@ function restGetTimeout(path, timeout) {
 function checkAndLoad() {
     if (window._adminLoading) return Promise.resolve();
     window._adminLoading = true;
+    setAdminSyncStatus('loading', 'جاري تحديث بيانات اللوحة');
     console.log('[QCV Admin] Loading data...');
     return Promise.all([
         restGetTimeout('/users.json', 15000), restGetTimeout('/subscriptions.json'), restGetTimeout('/jobs.json'),
@@ -1668,9 +1759,10 @@ function checkAndLoad() {
         }
 
         console.log('[QCV Admin] Data loaded');
+        setAdminSyncStatus('ready', 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }));
         window._adminLoading = false;
         scheduleAdminRefresh();
-    }).catch(function(e) { console.error('[QCV Admin] Load error:', e); window._adminLoading = false; scheduleAdminRefresh(); });
+    }).catch(function(e) { console.error('[QCV Admin] Load error:', e); setAdminSyncStatus('error', 'تعذر تحديث بعض البيانات'); window._adminLoading = false; scheduleAdminRefresh(); });
 }
 var loadAllData = checkAndLoad;
 

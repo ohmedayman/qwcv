@@ -1,7 +1,9 @@
-﻿const CACHE_NAME = 'qcv-v7';
+﻿const CACHE_NAME = 'qcv-v8';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
+    '/app',
+    '/dashboard.html',
     '/editor.html',
     '/login.html',
     '/pay.html',
@@ -11,6 +13,11 @@ const STATIC_ASSETS = [
     '/privacy.html',
     '/careers.html',
     '/templates.html',
+    '/ats-checker.html',
+    '/tracker.html',
+    '/compare.html',
+    '/app-shell.css',
+    '/app-navigation.js',
     '/ai.html',
     '/ai-tools.html',
     '/portfolio.html',

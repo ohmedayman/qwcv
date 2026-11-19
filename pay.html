@@ -657,10 +657,12 @@
         }
     </style>
     <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="app-shell.css">
+    <script defer src="app-navigation.js" data-page="billing"></script>
 </head>
 <body>
     <nav class="nav">
-        <a href="index.html" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
+        <a href="/" class="logo"><img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto"></a>
         <div class="nav-right">
             <ul class="nav-links">
                 <li><a href="index.html">الرئيسية</a></li>
@@ -909,7 +911,8 @@
 
     <script id="payScript">
         window.hideLoader = function () {
-            if (l) l.classList.add('hide');
+            var loader = document.getElementById('pageLoader');
+            if (loader) loader.classList.add('hide');
         };
 
         var _fb = { user: null, userData: null, db: null, auth: null };
@@ -1343,7 +1346,8 @@
 
     <script>
         setTimeout(function() {
-            if (l) l.classList.add('hide');
+            var loader = document.getElementById('pageLoader');
+            if (loader) loader.classList.add('hide');
         }, 5000);
     </script>
 

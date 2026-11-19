@@ -1151,22 +1151,54 @@
         .editor-layout {
             display: flex;
             height: calc(100vh - 56px);
-            overflow: hidden
+            overflow: hidden;
+            direction: ltr
         }
 
         /* Left Sidebar */
         .sidebar-nav {
-            width: 250px;
-            min-width: 250px;
+            width: 284px;
+            min-width: 284px;
             background: var(--sidebar);
-            border-right: 1px solid var(--border);
+            border-right: 1px solid #e2e8f0;
+            border-left: 0;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
             order: 1;
+            padding: 14px 12px 12px;
             scrollbar-width: thin;
             scrollbar-color: var(--border) transparent
         }
+
+        .editor-sidebar-heading { display:flex;align-items:center;justify-content:space-between;padding:2px 5px 12px; }
+        .editor-sidebar-heading strong { color:#172033;font-size:.8rem;font-weight:800; }
+        .editor-sidebar-heading span { color:#8791a1;font-size:.64rem; }
+        .editor-progress-card { margin:0 0 12px;padding:13px;border:1px solid #e5e9f0;border-radius:10px;background:#f8fafc; }
+        .editor-progress-top { display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px; }
+        .editor-progress-top strong { color:#334155;font-size:.7rem; }
+        .editor-progress-top span { color:#4f46e5;font-size:.72rem;font-weight:800; }
+        .editor-progress-track { height:5px;overflow:hidden;border-radius:8px;background:#e7eaf0; }
+        .editor-progress-fill { width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#4f46e5,#2563eb);transition:width .25s ease; }
+        .editor-progress-hint { margin-top:8px;color:#788396;font-size:.62rem;line-height:1.5; }
+        .nav-tab { min-height:43px;padding:7px 9px;margin-bottom:4px;border:1px solid transparent;border-radius:8px; }
+        .nav-tab.active { border-color:#dcdafe;background:#f0efff;color:#4338ca;box-shadow:0 2px 6px rgba(79,70,229,.06); }
+        .nav-tab .tab-label { font-size:.73rem; }
+        .section-completion { display:inline-flex;align-items:center;gap:4px;min-width:28px;justify-content:center;margin-inline-start:auto;color:#9aa3b1;font-size:.59rem;font-weight:700; }
+        .section-completion i { font-size:.62rem; }
+        .nav-tab[data-complete="true"] .section-completion { color:#168465; }
+        .nav-tab.active .section-completion { color:#4f46e5; }
+        .nav-tab .tab-dots { opacity:.45; }
+        .nav-tab:hover .tab-dots,.nav-tab:focus-within .tab-dots { opacity:1; }
+        .editor-mobile-summary { display:none; }
+        .editor-mobile-summary-head { display:flex;align-items:center;justify-content:space-between;gap:12px; }
+        .editor-mobile-summary-title { color:#334155;font-size:.76rem;font-weight:800; }
+        .editor-mobile-summary-score { color:#4f46e5;font-size:.72rem;font-weight:800; }
+        .editor-mobile-summary-track { height:5px;margin:8px 0;border-radius:8px;background:#e7eaf0;overflow:hidden; }
+        .editor-mobile-summary-fill { width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#4f46e5,#2563eb);transition:width .25s ease; }
+        .editor-mobile-summary-foot { display:flex;align-items:center;justify-content:space-between;gap:8px;color:#788396;font-size:.64rem; }
+        .editor-mobile-summary-foot button { display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 10px;border:1px solid #dcdafe;border-radius:7px;background:#f0efff;color:#4338ca;font:700 .67rem 'Inter','Cairo',sans-serif; }
+        .editor-mobile-summary-foot button:disabled { opacity:.6; }
 
         .btn-upgrade {
             width: 100%;
@@ -3126,7 +3158,13 @@
             align-items: center;
             overflow: hidden;
             min-width: 0;
+            order: 3;
             border-left: 1px solid rgba(148,163,184,0.18);
+            border-right: 0;
+        }
+
+        .editor-forms {
+            order: 2;
         }
 
         .preview-container {
@@ -3212,10 +3250,10 @@
         .add-page-btn {
             width: 48px;
             height: 48px;
-            border-radius: 50%;
+                order: 3;
             background: var(--accent);
-            color: #000;
-            display: flex;
+                border-right: 0;
+                border-left: 1px solid var(--border);
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -3224,14 +3262,17 @@
             box-shadow: 0 4px 15px var(--glow);
             position: relative
         }
+                order: 2;
 
-        .add-page-btn:hover {
+                border-right: 0;
             transform: scale(1.1);
             box-shadow: 0 6px 25px var(--glow)
         }
 
         /* Add Section Modal */
         .section-modal-overlay {
+                order: 1;
+                border-right: 1px solid var(--border);
             position: fixed;
             top: 0;
             left: 0;
@@ -3605,6 +3646,7 @@
                 width: 100%;
                 max-height: none;
                 min-width: auto;
+                order: 0;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
                 overflow-x: auto;
@@ -3657,12 +3699,14 @@
                 min-width: auto;
                 max-height: none;
                 overflow-y: auto;
-                flex: 1
+                flex: 1;
+                order: 1
             }
 
             .preview-zone {
                 min-height: 0;
-                flex: 1
+                flex: 1;
+                order: 2
             }
 
             .preview-container {
@@ -5417,13 +5461,295 @@
                 bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
             }
         }
+
+        :root {
+            --accent: #4f46e5;
+            --sky: #2563eb;
+            --bg: #f1f5f9;
+            --border: #e2e8f0;
+            --text: #172033;
+            --muted: #64748b;
+            --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.05);
+        }
+
+        .preview-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            width: 100%;
+            min-height: 72px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.94);
+            border-bottom: 1px solid var(--border);
+            direction: ltr;
+            z-index: 8;
+        }
+
+        .preview-doc-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            color: var(--text);
+        }
+
+        .preview-doc-title input {
+            width: min(220px, 24vw);
+            padding: 7px 8px;
+            border: 1px solid transparent;
+            border-radius: 7px;
+            background: transparent;
+            color: inherit;
+            font: 700 0.86rem 'Inter', 'Cairo', sans-serif;
+        }
+
+        .preview-doc-title input:hover,
+        .preview-doc-title input:focus {
+            border-color: var(--border);
+            outline: none;
+            background: #fff;
+        }
+
+        .preview-toolbar-actions,
+        .template-swatches {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .template-style-label {
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .template-swatch {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px #cbd5e1;
+            cursor: pointer;
+            transition: transform 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        .template-swatch:hover,
+        .template-swatch:focus-visible {
+            transform: scale(1.12);
+            box-shadow: 0 0 0 2px var(--text);
+            outline: none;
+        }
+
+        .preview-action {
+            min-height: 38px;
+            padding: 0 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            color: #334155;
+            font: 700 0.75rem 'Inter', 'Cairo', sans-serif;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .preview-action:hover {
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+        }
+
+        .preview-action-primary {
+            border-color: #4f46e5;
+            background: #4f46e5;
+            color: #fff;
+            box-shadow: 0 5px 12px rgba(79,70,229,0.2);
+        }
+
+        .preview-action-primary:hover {
+            border-color: #4338ca;
+            background: #4338ca;
+        }
+
+        @media (min-width: 1100px) {
+            body {
+                background: #f1f5f9;
+            }
+
+            .topbar {
+                height: 64px;
+                background: rgba(255,255,255,0.96);
+                box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+            }
+
+            .topbar-nav {
+                display: none;
+            }
+
+            .editor-layout {
+                height: calc(100vh - 64px);
+                direction: ltr;
+            }
+
+            .sidebar-nav {
+                width: 200px;
+                min-width: 200px;
+                order: 1;
+                direction: rtl;
+                border-right: 1px solid var(--border);
+                border-left: 0;
+                background: #fff;
+            }
+
+            .editor-forms {
+                flex: 0 0 clamp(320px, calc(40vw - 200px), 440px);
+                width: auto;
+                min-width: 320px;
+                direction: rtl;
+                order: 2;
+                padding: 22px 20px;
+                border-left: 1px solid var(--border);
+                border-right: 0;
+                background: #f8fafc;
+            }
+
+            .form-card {
+                border-color: #e2e8f0;
+                border-radius: 12px;
+                background: #fff;
+                box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+            }
+
+            .preview-zone {
+                direction: ltr;
+                border: 0;
+                order: 3;
+                border-left: 1px solid var(--border);
+                background-color: #eef2f7;
+                background-image: radial-gradient(#cbd5e1 0.7px, transparent 0.7px);
+                background-size: 18px 18px;
+            }
+
+            .preview-container {
+                padding: 34px 24px;
+                align-items: flex-start;
+            }
+
+            .zoom-controls {
+                background: rgba(255,255,255,0.96);
+                border-top-color: #e2e8f0;
+            }
+
+            .topbar-left {
+                gap: 7px;
+            }
+        }
+
+        @media (max-width: 1099px) {
+            .preview-toolbar {
+                min-height: 62px;
+                padding: 10px 14px;
+                gap: 10px;
+            }
+
+            .template-style-label {
+                display: none;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .preview-toolbar {
+                flex-wrap: wrap;
+                justify-content: center;
+                min-height: 0;
+                padding: 9px 10px;
+            }
+
+            .preview-doc-title {
+                flex: 1 1 100%;
+                justify-content: center;
+            }
+
+            .preview-doc-title input {
+                width: 190px;
+                text-align: center;
+            }
+
+            .preview-toolbar-actions {
+                gap: 6px;
+            }
+
+            .preview-action {
+                min-height: 34px;
+                padding: 0 9px;
+                font-size: 0.68rem;
+            }
+        }
+
+        @media(max-width:768px) {
+            .editor-mobile-summary { display:block;margin:0 0 12px;padding:13px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;box-shadow:0 1px 3px rgba(15,23,42,.04); }
+            body.dark-mode .editor-mobile-summary { border-color:#273044;background:#171d2b; }
+            body.dark-mode .editor-mobile-summary-title { color:#e7eaf1; }
+            body.dark-mode .editor-mobile-summary-track { background:#273044; }
+            body.dark-mode .editor-mobile-summary-foot { color:#a1aaba; }
+            body.dark-mode .editor-mobile-summary-foot button { border-color:#3a3865;background:#28254b;color:#c9c6ff; }
+        }
+
+        body.dark-mode .preview-toolbar {
+            background: rgba(17,21,40,0.96);
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .preview-doc-title input,
+        body.dark-mode .preview-action {
+            background: #111528;
+            color: #e8ecf4;
+            border-color: #293247;
+        }
+
+        body.dark-mode .preview-action-primary {
+            background: #4f46e5;
+            border-color: #4f46e5;
+            color: #fff;
+        }
+
+        body.dark-mode .preview-zone {
+            background-color: #0d1322;
+            background-image: radial-gradient(#263247 0.7px, transparent 0.7px);
+        }
+
+        .editor-section-picker-backdrop { display:none; }
+        .editor-section-picker { display:none; }
+        @media(max-width:768px) {
+            .editor-section-picker-backdrop { position:fixed;inset:0;z-index:10020;background:rgba(15,23,42,.42);backdrop-filter:blur(3px); }
+            .editor-section-picker-backdrop.show { display:block; }
+            .editor-section-picker { position:fixed;inset:auto 0 calc(64px + env(safe-area-inset-bottom,0px));z-index:10021;display:none;max-height:min(66dvh,560px);overflow:auto;padding:10px 14px 16px;border:1px solid #e2e8f0;border-radius:16px 16px 0 0;background:#fff;box-shadow:0 -12px 40px rgba(15,23,42,.15);direction:rtl; }
+            .editor-section-picker.show { display:block;animation:sectionPickerIn .18s ease-out; }
+            @keyframes sectionPickerIn { from { transform:translateY(12px);opacity:0; } to { transform:translateY(0);opacity:1; } }
+            .section-picker-grip { width:38px;height:4px;margin:2px auto 13px;border-radius:8px;background:#cbd5e1; }
+            .section-picker-heading { display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;color:#172033;font-size:.8rem;font-weight:800; }
+            .section-picker-heading button { width:30px;height:30px;border:0;border-radius:7px;background:#f1f3f7;color:#64748b; }
+            .editor-section-picker .nav-tab { min-height:46px;margin:0 0 5px;border-color:#edf0f5;background:#fff; }
+            .editor-section-picker .nav-tab.active { border-color:#dcdafe;background:#f0efff; }
+            .editor-section-picker .nav-tab .tab-dots { opacity:.7; }
+            body.dark-mode .editor-section-picker { background:#171d2b;border-color:#273044; }
+            body.dark-mode .section-picker-heading { color:#e7eaf1; }
+            body.dark-mode .editor-section-picker .nav-tab { background:#171d2b;border-color:#273044; }
+            body.dark-mode .editor-section-picker .nav-tab.active { background:#28254b;border-color:#4f46e5; }
+        }
     </style>
 </head>
 
 <body>
 
     <!-- ===== EDITOR LOADING SKELETON ===== -->
-    <div class="editor-loader" id="editorLoader">
+    <div class="editor-loader" id="editorLoader" style="display:none !important;">
         <div class="el-spinner"><div class="el-ring"></div></div>
         <div class="el-text">جاري تجهيز المحرر...</div>
         <div class="el-progress"><div class="el-bar" id="elBar"></div></div>
@@ -5475,7 +5801,7 @@
 
     <!-- ===== TOP BAR ===== -->
     <div class="topbar">
-        <div class="topbar-logo">Q<span>CV</span></div>
+        <a class="topbar-logo" href="/" aria-label="العودة إلى QCV" style="text-decoration:none">Q<span>CV</span></a>
         <div class="topbar-nav">
             <a href="editor.html" class="active"><i class="fas fa-edit" style="font-size:0.65rem;margin-right:3px"></i> المحرر</a>
             <a href="portfolio-view.html" target="_blank" rel="noopener noreferrer" id="myPageLink"><i class="fas fa-user-circle" style="font-size:0.65rem;margin-right:3px"></i> صفي</a>
@@ -5698,25 +6024,16 @@
                 </button>
             </div>
 
-            <!-- AI Score Widget (paid only) -->
-            <div class="ai-score-widget" id="aiScoreWidget">
-                <div class="ai-score-header">
-                    <h3><i class="fas fa-bolt"></i> تقييم السيرة الذاتية</h3>
-                </div>
-                <div class="ai-score-ring">
-                    <svg viewBox="0 0 100 100">
-                        <circle class="ring-bg" cx="50" cy="50" r="42" />
-                        <circle class="ring-fill" id="scoreRing" cx="50" cy="50" r="42" stroke-dasharray="264"
-                            stroke-dashoffset="264" />
-                    </svg>
-                    <div class="ai-score-value" id="scoreValue">0</div>
-                </div>
-                <div class="ai-score-label" id="scoreLabel">جاري التحليل...</div>
-                <div class="ai-score-details" id="scoreDetails"></div>
-                <div class="ai-score-summary" id="scoreSummary"></div>
-                <div class="ai-recs" id="scoreRecs"></div>
-            </div>
+            <section class="editor-progress-card" aria-label="تقدم إنشاء السيرة الذاتية">
+                <div class="editor-progress-top"><strong>اكتمال السيرة</strong><span id="editorProgressPercent">0%</span></div>
+                <div class="editor-progress-track" role="progressbar" aria-label="نسبة اكتمال السيرة" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="editor-progress-fill" id="editorProgressFill"></div></div>
+                <div class="editor-progress-hint" id="editorProgressHint">أضف معلوماتك الأساسية للبدء.</div>
+            </section>
 
+            <div class="editor-sidebar-heading">
+                <strong>أقسام السيرة الذاتية</strong>
+                <span id="editorSectionCount">0 أقسام</span>
+            </div>
             <div class="nav-tabs" id="navTabs">
                 <div class="nav-tab active" data-section="personal" onclick="switchTab('personal',this)">
                     <span class="icon"><i class="fas fa-user"></i></span><span class="tab-label">المعلومات الشخصية</span>
@@ -5795,6 +6112,21 @@
             </div>
             <button class="add-section-btn" onclick="openSectionModal()">+ إضافة قسم</button>
 
+            <div class="ai-score-widget" id="aiScoreWidget">
+                <div class="ai-score-header"><h3><i class="fas fa-bolt"></i> تقييم السيرة الذاتية</h3></div>
+                <div class="ai-score-ring">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="ring-bg" cx="50" cy="50" r="42" />
+                        <circle class="ring-fill" id="scoreRing" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264" />
+                    </svg>
+                    <div class="ai-score-value" id="scoreValue">0</div>
+                </div>
+                <div class="ai-score-label" id="scoreLabel">جاري التحليل...</div>
+                <div class="ai-score-details" id="scoreDetails"></div>
+                <div class="ai-score-summary" id="scoreSummary"></div>
+                <div class="ai-recs" id="scoreRecs"></div>
+            </div>
+
             <!-- Portfolio Link -->
             <div id="portfolioLinkWrap" style="padding:8px 10px;border-top:1px solid var(--border);flex-shrink:0">
                 <div class="portfolio-link-box">
@@ -5848,6 +6180,12 @@
 
         <!-- Forms -->
         <div class="editor-forms">
+            <section class="editor-mobile-summary" aria-label="ملخص تقدم السيرة الذاتية">
+                <div class="editor-mobile-summary-head"><span class="editor-mobile-summary-title">تقدم السيرة الذاتية</span><span class="editor-mobile-summary-score" id="mobileEditorProgressPercent">0%</span></div>
+                <div class="editor-mobile-summary-track"><div class="editor-mobile-summary-fill" id="mobileEditorProgressFill"></div></div>
+                <div class="editor-mobile-summary-foot"><span id="mobileEditorProgressHint">أضف معلوماتك الأساسية للبدء.</span><button type="button" onclick="runMobileAtsReview()"><i class="fas fa-chart-simple"></i> تحليل ATS</button></div>
+                <div id="mobileAtsReviewResult" aria-live="polite" style="display:none;margin-top:10px;padding-top:9px;border-top:1px solid var(--border);font-size:.72rem;font-weight:700"></div>
+            </section>
             <!-- Personal Info -->
             <div class="form-card active" id="tab-personal">
                 <div class="form-card-header"><span class="icon"><i class="fas fa-user"></i></span>
@@ -6081,6 +6419,23 @@
 
         <!-- Preview -->
         <div class="preview-zone">
+            <div class="preview-toolbar">
+                <label class="preview-doc-title">
+                    <input id="previewDocTitle" value="Software Engineer CV" aria-label="CV document title">
+                    <i class="fas fa-pen" aria-hidden="true" style="color:#94a3b8;font-size:0.7rem"></i>
+                </label>
+                <div class="preview-toolbar-actions">
+                    <div class="template-swatches" role="group" aria-label="Template style colors">
+                        <span class="template-style-label">Template style</span>
+                        <button class="template-swatch" type="button" style="background:#4f46e5" aria-label="Indigo" title="Indigo" onclick="setAccentColor('#4f46e5')"></button>
+                        <button class="template-swatch" type="button" style="background:#2563eb" aria-label="Blue" title="Blue" onclick="setAccentColor('#2563eb')"></button>
+                        <button class="template-swatch" type="button" style="background:#0f766e" aria-label="Teal" title="Teal" onclick="setAccentColor('#0f766e')"></button>
+                        <button class="template-swatch" type="button" style="background:#be123c" aria-label="Rose" title="Rose" onclick="setAccentColor('#be123c')"></button>
+                    </div>
+                    <button class="preview-action" type="button" onclick="copyPortfolioLink()"><i class="fas fa-link" aria-hidden="true"></i> Share link</button>
+                    <button class="preview-action preview-action-primary" type="button" onclick="exportPDF()"><i class="fas fa-download" aria-hidden="true"></i> Download PDF</button>
+                </div>
+            </div>
             <div class="preview-container" id="previewContainer">
                 <div class="ai-cv-badge" id="aiCvBadge" style="display:none"><i class="fas fa-magic"></i> مُحسّن بالذكاء الاصطناعي
                 </div>
@@ -6122,6 +6477,12 @@
             <span>الرئيسية</span>
         </button>
     </nav>
+    <div class="editor-section-picker-backdrop" id="editorSectionPickerBackdrop" onclick="closeEditorSectionPicker()" aria-hidden="true"></div>
+    <section class="editor-section-picker" id="editorSectionPicker" role="dialog" aria-modal="true" aria-labelledby="editorSectionPickerTitle">
+        <div class="section-picker-grip" aria-hidden="true"></div>
+        <div class="section-picker-heading"><span id="editorSectionPickerTitle">اختر قسمًا لتعديله</span><button type="button" onclick="closeEditorSectionPicker()" aria-label="إغلاق قائمة الأقسام"><i class="fas fa-xmark"></i></button></div>
+        <div id="editorSectionPickerList"></div>
+    </section>
 
     <!-- Template Gallery Panel -->
     <div class="template-panel" id="templatePanel">
@@ -6209,8 +6570,69 @@
         let currentCvId = 'default';
         window.currentCvId = currentCvId;
 
+        function hideEditorLoader() {
+            const el = document.getElementById('editorLoader');
+            if (!el) return;
+            el.style.display = 'none';
+            el.classList.add('hide');
+            el.setAttribute('aria-hidden', 'true');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(hideEditorLoader, 150);
+        }, { once: true });
+
+        window.addEventListener('load', function () {
+            setTimeout(hideEditorLoader, 150);
+        }, { once: true });
+
+        hideEditorLoader();
+
         onAuthStateChanged(auth, async (user) => {
-            if (!user) { location.replace("login.html"); return }
+            const allowGuestMode = location.search.includes('guest=1') || sessionStorage.getItem('qcv_guest_editor') === '1';
+            if (!user) {
+                if (!allowGuestMode) {
+                    location.replace("login.html");
+                    return;
+                }
+
+                const guestUser = {
+                    uid: 'guest_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now(),
+                    displayName: 'Guest',
+                    email: '',
+                    photoURL: ''
+                };
+                userData = {
+                    name: 'ضيف',
+                    email: '',
+                    plan: 'free',
+                    registeredAt: Date.now(),
+                    lastLogin: Date.now()
+                };
+                window._userData = userData;
+                window.currentUid = guestUser.uid;
+                window.currentUser = guestUser;
+
+                const initial = 'G';
+                ['userAvatar', 'ddAvatar'].forEach(id => { if (document.getElementById(id)) document.getElementById(id).textContent = initial });
+                ['userName', 'ddName'].forEach(id => { if (document.getElementById(id)) document.getElementById(id).textContent = 'ضيف' });
+                if (document.getElementById('ddEmail')) document.getElementById('ddEmail').textContent = 'Guest mode';
+                if (document.getElementById('ddPlan')) document.getElementById('ddPlan').textContent = 'Free';
+                if (document.getElementById('ddSubscription')) {
+                    const subEl = document.getElementById('ddSubscription');
+                    const dlEl = document.getElementById('ddDownloads');
+                    if (dlEl) dlEl.textContent = '0 / 1';
+                    const expEl = document.getElementById('ddExpiry');
+                    if (expEl) expEl.textContent = 'Guest';
+                    const upgBtn = subEl.querySelector('.dd-upgrade-btn');
+                    if (upgBtn) upgBtn.style.display = '';
+                }
+
+                hideEditorLoader();
+                loadSavedData();
+                return;
+            }
+
             const snap = await get(ref(db, 'users/' + user.uid));
             userData = snap.val() || {};
             window._userData = userData;
@@ -6458,9 +6880,7 @@
             } catch (e) { console.warn('QR generation failed:', e); }
 
             await loadSavedData();
-            // Hide editor loader
-            var el = document.getElementById('editorLoader');
-            if (el) { el.classList.add('hide'); setTimeout(function () { el.style.display = 'none'; }, 500); }
+            hideEditorLoader();
             togglePaidFeatures(userData.plan || 'free');
             loadAffiliateState();
             cleanExpiredTrash();
@@ -7263,7 +7683,14 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.form-card').forEach(c => c.classList.remove('active'));
             if (el) el.classList.add('active');
-            document.getElementById('tab-' + tab).classList.add('active');
+            var panel = document.getElementById('tab-' + tab);
+            if (!panel) return;
+            panel.classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(function (item) {
+                item.setAttribute('aria-expanded', String(item === el));
+                item.setAttribute('role', 'button');
+                item.setAttribute('tabindex', '0');
+            });
             if (typeof updateMobileTopTitle === 'function') updateMobileTopTitle(tab);
         };
 
@@ -7372,7 +7799,8 @@
         var _scoreDebounceTimer = null;
 
         window.renderCV = function () {
-            markDirty();
+            const shouldSave = arguments[0]?.save !== false;
+            if (shouldSave) markDirty();
             const data = collectData();
             const html = QCVTemplates.render(currentTemplate, data);
             document.getElementById('cvPage').innerHTML = html;
@@ -7382,7 +7810,7 @@
             // Debounce ATS score update — avoid heavy recalc on every keystroke
             if (_scoreDebounceTimer) clearTimeout(_scoreDebounceTimer);
             _scoreDebounceTimer = setTimeout(function () { updateAIScore(data); }, 600);
-            debouncedSave();
+            if (shouldSave) debouncedSave();
         };
 
         // --- Editor integration: run ATS & Matcher on the current CV and save reports ---
@@ -7915,52 +8343,62 @@
             sample.experience.forEach(e => addExp(e.role, e.company, e.duration, e.description));
             sample.education.forEach(e => addEdu(e.degree, e.school, e.duration, e.description));
             sample.languages.forEach(l => addLang(l.name, l.level));
-            renderCV();
+            renderCV({ save: false });
         }
 
+        loadSampleData();
+
         async function loadSavedData() {
-            // Check if coming from AI generation
-            const aiData = localStorage.getItem('qcv_ai_data');
-            if (aiData && window.location.search.includes('from=ai')) {
-                localStorage.removeItem('qcv_ai_data');
-                try {
-                    const d = JSON.parse(aiData);
-                    document.getElementById('inputName').value = d.name || '';
-                    document.getElementById('inputTitle').value = d.title || '';
-                    document.getElementById('inputEmail').value = d.email || '';
-                    document.getElementById('inputPhone').value = d.phone || '';
-                    document.getElementById('inputLocation').value = d.location || '';
-                    document.getElementById('inputLinkedin').value = d.linkedin || '';
-                    document.getElementById('inputSummary').value = d.summary || '';
-                    setSkillsData(Array.isArray(d.skills) ? d.skills : (d.skills ? [d.skills] : []), false);
-                    if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
-                    document.getElementById('expContainer').innerHTML = '';
-                    document.getElementById('eduContainer').innerHTML = '';
-                    document.getElementById('langContainer').innerHTML = '';
-                    if (d.experience) d.experience.forEach(e => addExp(e.role || '', e.company || '', e.duration || '', e.description || ''));
-                    if (d.education) d.education.forEach(e => addEdu(e.degree || '', e.school || '', e.duration || '', e.description || ''));
-                    if (d.languages) d.languages.forEach(l => addLang(l.name || '', l.level || 'Intermediate'));
-                    renderCV();
+            try {
+                // Check if coming from AI generation
+                const aiData = localStorage.getItem('qcv_ai_data');
+                if (aiData && window.location.search.includes('from=ai')) {
+                    localStorage.removeItem('qcv_ai_data');
+                    try {
+                        const d = JSON.parse(aiData);
+                        document.getElementById('inputName').value = d.name || '';
+                        document.getElementById('inputTitle').value = d.title || '';
+                        document.getElementById('inputEmail').value = d.email || '';
+                        document.getElementById('inputPhone').value = d.phone || '';
+                        document.getElementById('inputLocation').value = d.location || '';
+                        document.getElementById('inputLinkedin').value = d.linkedin || '';
+                        document.getElementById('inputSummary').value = d.summary || '';
+                        setSkillsData(Array.isArray(d.skills) ? d.skills : (d.skills ? [d.skills] : []), false);
+                        if (d._skillProficiency) { _skillProficiency = d._skillProficiency; renderSkillChips(); }
+                        document.getElementById('expContainer').innerHTML = '';
+                        document.getElementById('eduContainer').innerHTML = '';
+                        document.getElementById('langContainer').innerHTML = '';
+                        if (d.experience) d.experience.forEach(e => addExp(e.role || '', e.company || '', e.duration || '', e.description || ''));
+                        if (d.education) d.education.forEach(e => addEdu(e.degree || '', e.school || '', e.duration || '', e.description || ''));
+                        if (d.languages) d.languages.forEach(l => addLang(l.name || '', l.level || 'Intermediate'));
+                        renderCV();
+                        hideEditorLoader();
+                        return;
+                    } catch (e) { console.error('AI data parse error', e); }
+                }
+
+                // Always start with sample data so user sees a CV while loading
+                loadSampleData();
+
+                if (!window.currentUid || !window._db) {
+                    hideEditorLoader();
                     return;
-                } catch (e) { console.error('AI data parse error', e); }
-            }
+                }
+                let d;
+                if (window.currentCvId === 'default') {
+                    const snap = await window._get(window._ref(window._db, 'users/' + window.currentUid + '/cvData')).catch(() => ({ val: () => null }));
+                    d = snap.val();
+                } else {
+                    const snap = await window._get(window._ref(window._db, 'users/' + window.currentUid + '/cvs/' + window.currentCvId)).catch(() => ({ val: () => null }));
+                    const cv = snap.val();
+                    d = cv ? cv.data : null;
+                }
+                if (!d || !d.name) {
+                    hideEditorLoader();
+                    return; // Keep sample data
+                }
 
-            // Always start with sample data so user sees a CV while loading
-            loadSampleData();
-
-            if (!window.currentUid || !window._db) return;
-            let d;
-            if (window.currentCvId === 'default') {
-                const snap = await window._get(window._ref(window._db, 'users/' + window.currentUid + '/cvData'));
-                d = snap.val();
-            } else {
-                const snap = await window._get(window._ref(window._db, 'users/' + window.currentUid + '/cvs/' + window.currentCvId));
-                const cv = snap.val();
-                d = cv ? cv.data : null;
-            }
-            if (!d || !d.name) return; // Keep sample data
-
-            // Overwrite with saved data
+                // Overwrite with saved data
             document.getElementById('inputName').value = d.name || '';
             document.getElementById('inputTitle').value = d.title || '';
             document.getElementById('inputEmail').value = d.email || '';
@@ -8020,6 +8458,11 @@
             }
 
             renderCV();
+            hideEditorLoader();
+        } catch (e) {
+            console.error('loadSavedData error:', e);
+            hideEditorLoader();
+        }
         }
 
         // Template Gallery
@@ -9796,6 +10239,7 @@
                 forms.classList.remove('panel-hidden');
                 preview.classList.remove('panel-active');
                 document.getElementById('mobileFab').style.display = 'flex';
+                openEditorSectionPicker();
             } else if (section === 'dashboard') {
                 document.getElementById('phoneNavDashboard').classList.add('active');
                 forms.classList.add('panel-hidden');
@@ -9829,6 +10273,175 @@
             var dd = document.getElementById('profileDropdown');
             if (dd) dd.classList.toggle('show');
         }
+
+        function editorSectionProgress(sectionId) {
+            var value = function (id) { var el = document.getElementById(id); return !!(el && String(el.value || '').trim()); };
+            if (sectionId === 'personal') {
+                var fields = ['inputName', 'inputTitle', 'inputEmail', 'inputPhone', 'inputLocation', 'inputSummary'];
+                var filled = fields.filter(value).length;
+                return { done: filled, total: fields.length };
+            }
+            var containerIds = { experience: 'expContainer', education: 'eduContainer', languages: 'langContainer' };
+            if (containerIds[sectionId]) {
+                var container = document.getElementById(containerIds[sectionId]);
+                var blocks = container ? Array.from(container.querySelectorAll('.repeater-block')) : [];
+                var done = blocks.filter(function (block) {
+                    var controls = Array.from(block.querySelectorAll('input:not([type="hidden"]),textarea,select'));
+                    return controls.length > 0 && controls.some(function (control) { return String(control.value || '').trim(); });
+                }).length;
+                return { done: done, total: Math.max(1, blocks.length) };
+            }
+            if (sectionId === 'skills') {
+                var skills = (document.getElementById('inputSkills')?.value || '').split(/[\n,]+/).filter(function (item) { return item.trim(); });
+                return { done: skills.length, total: Math.max(1, skills.length) };
+            }
+            var panel = document.getElementById('tab-' + sectionId);
+            if (!panel) return { done: 0, total: 1 };
+            var controls = Array.from(panel.querySelectorAll('input:not([type="hidden"]),textarea,select'));
+            var filled = controls.filter(function (control) { return String(control.value || '').trim(); }).length;
+            return { done: filled, total: Math.max(1, controls.length) };
+        }
+
+        function updateEditorProgress() {
+            var nav = document.getElementById('navTabs');
+            if (!nav) return;
+            var tabs = Array.from(nav.querySelectorAll('.nav-tab'));
+            var doneSections = 0;
+            var totalSections = 0;
+            tabs.forEach(function (tab) {
+                var sectionId = tab.getAttribute('data-section');
+                if (!sectionId) return;
+                tab.setAttribute('role', 'button');
+                tab.setAttribute('tabindex', '0');
+                tab.setAttribute('aria-expanded', String(tab.classList.contains('active')));
+                var progress = editorSectionProgress(sectionId);
+                var indicator = tab.querySelector('.section-completion');
+                if (!indicator) {
+                    indicator = document.createElement('span');
+                    indicator.className = 'section-completion';
+                    indicator.setAttribute('aria-hidden', 'true');
+                    tab.appendChild(indicator);
+                }
+                var complete = progress.done >= progress.total && progress.done > 0;
+                tab.dataset.complete = String(complete);
+                indicator.innerHTML = complete ? '<i class="fas fa-circle-check"></i>' : '<span>' + progress.done + '/' + progress.total + '</span>';
+                if (sectionId !== 'jobmatch' && sectionId !== 'followups') {
+                    totalSections++;
+                    if (complete) doneSections++;
+                }
+            });
+            var percent = totalSections ? Math.round(doneSections / totalSections * 100) : 0;
+            var label = document.getElementById('editorProgressPercent');
+            var fill = document.getElementById('editorProgressFill');
+            var track = fill && fill.parentElement;
+            var hint = document.getElementById('editorProgressHint');
+            var count = document.getElementById('editorSectionCount');
+            var mobileLabel = document.getElementById('mobileEditorProgressPercent');
+            var mobileFill = document.getElementById('mobileEditorProgressFill');
+            var mobileHint = document.getElementById('mobileEditorProgressHint');
+            if (label) label.textContent = percent + '%';
+            if (fill) fill.style.width = percent + '%';
+            if (track) track.setAttribute('aria-valuenow', String(percent));
+            if (count) count.textContent = tabs.length + ' أقسام';
+            if (hint) hint.textContent = doneSections + ' من ' + totalSections + ' أقسام مكتملة. أكمل البيانات لتحسين سيرتك.';
+            if (mobileLabel) mobileLabel.textContent = percent + '%';
+            if (mobileFill) mobileFill.style.width = percent + '%';
+            if (mobileHint) mobileHint.textContent = doneSections + ' من ' + totalSections + ' أقسام مكتملة';
+            refreshMobileSectionPicker();
+        }
+
+        window.runMobileAtsReview = function () {
+            var result = document.getElementById('mobileAtsReviewResult');
+            var button = document.querySelector('.editor-mobile-summary-foot button');
+            if (button) button.disabled = true;
+            try {
+                var analysis = window.runAtsFromEditor ? window.runAtsFromEditor() : null;
+                if (!analysis || typeof analysis.overall !== 'number') throw new Error('ATS analysis is unavailable');
+                if (result) {
+                    result.style.display = 'block';
+                    result.style.color = analysis.overall >= 70 ? '#168465' : '#b7791f';
+                    result.textContent = 'تقييم ATS: ' + analysis.overall + '/100 · ' + (analysis.verdict || 'تم تحليل بيانات السيرة');
+                }
+            } catch (error) {
+                if (result) {
+                    result.style.display = 'block';
+                    result.style.color = '#b45309';
+                    result.textContent = 'أكمل بيانات السيرة أولًا ثم أعد التحليل.';
+                }
+            } finally {
+                if (button) button.disabled = false;
+            }
+        };
+
+        function refreshMobileSectionPicker() {
+            var source = document.getElementById('navTabs');
+            var target = document.getElementById('editorSectionPickerList');
+            if (!source || !target) return;
+            target.innerHTML = '';
+            source.querySelectorAll('.nav-tab').forEach(function (tab) {
+                if (tab.style.display === 'none' || tab.classList.contains('paid-only') && getComputedStyle(tab).display === 'none') return;
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'nav-tab' + (tab.classList.contains('active') ? ' active' : '');
+                button.dataset.section = tab.dataset.section;
+                button.setAttribute('aria-current', tab.classList.contains('active') ? 'true' : 'false');
+                var icon = tab.querySelector('.icon');
+                var label = tab.querySelector('.tab-label');
+                var completion = tab.querySelector('.section-completion');
+                button.innerHTML = (icon ? icon.outerHTML : '') + '<span class="tab-label"></span>' + (completion ? completion.outerHTML : '');
+                button.querySelector('.tab-label').textContent = label ? label.textContent.trim() : tab.dataset.section;
+                button.addEventListener('click', function () {
+                    var original = source.querySelector('.nav-tab[data-section="' + CSS.escape(button.dataset.section) + '"]');
+                    if (original) original.click();
+                    closeEditorSectionPicker();
+                    phoneNav('edit');
+                });
+                target.appendChild(button);
+            });
+        }
+
+        function openEditorSectionPicker() {
+            var picker = document.getElementById('editorSectionPicker');
+            var backdrop = document.getElementById('editorSectionPickerBackdrop');
+            if (!picker || !backdrop) return;
+            refreshMobileSectionPicker();
+            picker.classList.add('show');
+            backdrop.classList.add('show');
+            document.getElementById('phoneNavSection').setAttribute('aria-expanded', 'true');
+        }
+
+        function closeEditorSectionPicker() {
+            var picker = document.getElementById('editorSectionPicker');
+            var backdrop = document.getElementById('editorSectionPickerBackdrop');
+            if (picker) picker.classList.remove('show');
+            if (backdrop) backdrop.classList.remove('show');
+            var trigger = document.getElementById('phoneNavSection');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        }
+
+        (function initEditorProgress() {
+            var nav = document.getElementById('navTabs');
+            var forms = document.querySelector('.editor-forms');
+            if (!nav || !forms) return;
+            nav.querySelectorAll('.nav-tab').forEach(function (tab) {
+                tab.setAttribute('role', 'button');
+                tab.setAttribute('tabindex', '0');
+                tab.setAttribute('aria-expanded', String(tab.classList.contains('active')));
+            });
+            forms.addEventListener('input', updateEditorProgress);
+            forms.addEventListener('change', updateEditorProgress);
+            nav.addEventListener('keydown', function (event) {
+                var tab = event.target.closest('.nav-tab');
+                if (!tab || event.target.closest('.nav-tab-menu') || event.target.closest('.tab-dots')) return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    tab.click();
+                }
+            });
+            new MutationObserver(updateEditorProgress).observe(nav, { childList: true });
+            new MutationObserver(updateEditorProgress).observe(forms, { childList: true, subtree: true });
+            updateEditorProgress();
+        })();
 
     </script>
 </body>

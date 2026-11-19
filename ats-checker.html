@@ -24,13 +24,6 @@
     <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
-    <script defer src="js/theme.js"></script>
-    <script defer src="js/lang.js"></script>
-    <script defer src="js/config.js"></script>
-    <script defer src="js/ai-service.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -543,6 +536,8 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="app-shell.css">
+    <script defer src="app-navigation.js" data-page="ats"></script>
 </head>
 <body>
     <!-- NAVBAR -->
@@ -559,7 +554,36 @@
             <a href="login.html" style="background:var(--accent,#0003c9);color:#fff;padding:8px 20px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none">ابدأ مجاناً</a>
         </div>
     </nav>
-    <style>
+    <section class="ats-hero">
+        <h1>حلّل سيرتك الذاتية مع ATS</h1>
+        <p>الصق محتوى سيرتك الذاتية للحصول على تقييم واضح لنقاط القوة وما يحتاج إلى تحسين، ويمكنك إضافة وصف الوظيفة لمقارنة المهارات.</p>
+    </section>
+    <main class="ats-container">
+        <section class="ats-input-section" id="inputSection">
+            <h2><i class="fas fa-file-lines" style="color:var(--accent);margin-left:8px"></i>محتوى السيرة الذاتية</h2>
+            <label for="cvInput" style="display:block;margin-bottom:8px;font-size:.8rem;font-weight:700;color:var(--muted)">الصق النص الكامل للسيرة الذاتية</label>
+            <textarea id="cvInput" class="ats-textarea" dir="auto" placeholder="الاسم والمسمى الوظيفي، الملخص، الخبرات، التعليم والمهارات..." aria-describedby="atsInputHint"></textarea>
+            <p id="atsInputHint" style="margin:8px 2px 18px;color:var(--muted);font-size:.72rem">لن يبدأ التحليل قبل إدخال 50 حرفًا على الأقل.</p>
+            <label for="jdInput" style="display:block;margin-bottom:8px;font-size:.8rem;font-weight:700;color:var(--muted)">وصف الوظيفة (اختياري)</label>
+            <textarea id="jdInput" class="ats-textarea" dir="auto" style="min-height:120px;margin-bottom:16px" placeholder="أضف وصف الوظيفة لمقارنة متطلباتها بسيرتك الذاتية..."></textarea>
+            <button class="ats-btn" id="analyzeBtn" type="button" onclick="analyzeCV()"><span class="btn-label"><i class="fas fa-wand-magic-sparkles"></i> تحليل السيرة الذاتية</span><span class="spinner" aria-hidden="true"></span></button>
+        </section>
+        <section class="ats-result" id="atsResult" aria-live="polite">
+            <div class="ats-score-card">
+                <div class="ats-score-circle">
+                    <svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="60" fill="none" stroke="var(--border)" stroke-width="8"></circle><circle id="scoreArc" cx="70" cy="70" r="60" fill="none" stroke="#4f46e5" stroke-width="8" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"></circle></svg>
+                    <span class="ats-score-number" id="scoreNumber">0</span><span class="ats-score-label">من 100</span>
+                </div>
+                <div class="ats-score-verdict" id="scoreVerdict"></div>
+            </div>
+            <div class="ats-categories" id="catsGrid"></div>
+            <section class="ats-issues"><h3><i class="fas fa-list-check" style="color:var(--accent);margin-left:7px"></i>ملاحظات قابلة للتنفيذ</h3><div id="issuesList"></div></section>
+            <section class="ats-issues" id="jobTipsSection" style="display:none"><h3><i class="fas fa-compass" style="color:var(--accent);margin-left:7px"></i>نصائح للتقديم</h3><div class="job-tips-grid" id="jobTipsList"></div></section>
+            <div class="ats-cta"><h3>حوّل الملاحظات إلى سيرة جاهزة</h3><p>افتح المحرر لتعديل الأقسام وتصدير نسخة محدّثة.</p><a href="editor.html">افتح محرر السيرة <i class="fas fa-arrow-left" style="margin-right:6px"></i></a></div>
+            <button class="ats-btn" type="button" style="margin-top:16px" onclick="resetChecker()"><i class="fas fa-rotate-right"></i> فحص سيرة أخرى</button>
+        </section>
+    </main>
+    <script>
 
         function resetChecker() {
             document.getElementById('atsResult').style.display = 'none';
@@ -965,10 +989,12 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (l) l.classList.add('hide');
+            var loader = document.getElementById('pageLoader');
+            if (loader) loader.classList.add('hide');
         });
         setTimeout(function() {
-            if (l) l.classList.add('hide');
+            var loader = document.getElementById('pageLoader');
+            if (loader) loader.classList.add('hide');
         }, 4000);
     </script>
     <script defer src="js/animations.js"></script>

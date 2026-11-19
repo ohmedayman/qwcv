@@ -1,303 +1,422 @@
 /**
- * QCV AI Service — BluesMinds (primary) + OpenRouter (secondary) + Gemini (fallback)
- * OpenAI-compatible endpoints with Gemini REST API fallback + CORS proxy
+ * QCV AI Client Service — Enterprise OpenAI Integration
+ * 
+ * Communicates exclusively with the secure server-side endpoint (/api/ai).
+ * NEVER includes, stores, or requests API keys on the client.
+ * Features:
+ * - Firebase Auth Bearer token verification
+ * - Responds in the resume's active language (Arabic or English)
+ * - Clean outputs with zero conversational filler ready for 1-click "Apply"
+ * - 5-minute client-side caching
+ * - Clear, user-friendly error alerts (Plan upgrade, Rate limits, Auth)
  */
-const QCVAI = {
-    get _openaiKey() {
-        const fromSettings = (window.QCVSettings && (window.QCVSettings.aiApiKey || window.QCVSettings.openaiKey || window.QCVSettings.apiKey)) || '';
-        const fromConfig = (window.QCVConfig && (window.QCVConfig.aiApiKey || window.QCVConfig.openaiKey || window.QCVConfig.apiKey)) || '';
-        const fromLocal = (typeof localStorage !== 'undefined') ? (localStorage.getItem('qcv_ai_key') || localStorage.getItem('openai_api_key') || '') : '';
-        return fromSettings || fromConfig || fromLocal || '';
-    },
-    get _openaiEndpoint() { return (window.QCVConfig && window.QCVConfig.openaiEndpoint) || 'https://api.openai.com/v1'; },
-    _openaiModels: ['gpt-4o-mini', 'gpt-4o', 'gpt-4.1-mini'],
-    get _bluesmindsKey() { return (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || ''; },
-    get _bluesmindsEndpoint() { return (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1'; },
-    _bluesmindsModels: ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'],
-    get _openrouterKey() { return (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || ''; },
-    get _openrouterEndpoint() { return (window.QCVConfig && window.QCVConfig.openrouterEndpoint) || 'https://openrouter.ai/api/v1'; },
-    _openrouterModels: ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'],
-    get _geminiKey() { return (window.QCVSettings && window.QCVSettings.geminiKey) || (window.QCVConfig && window.QCVConfig.geminiKey) || ''; },
-    _geminiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models',
-    _proxyEndpoint: 'https://corsproxy.io/?url=',
-    _geminiModels: ['gemini-2.5-flash', 'gemini-2.0-flash-001', 'gemini-2.0-flash-lite-001'],
-    _cache: new Map(),
-    _cacheExpiry: 5 * 60 * 1000,
-    _usageLog: [],
-    _useProxy: false,
 
-    _hash(prompt) {
-        let h = 0;
-        for (let i = 0; i < prompt.length; i++) { h = ((h << 5) - h) + prompt.charCodeAt(i); h = h & h; }
-        return h.toString(36);
-    },
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    root.QCVAI = factory();
+  }
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
 
-    _getCached(prompt) {
-        const c = this._cache.get(this._hash(prompt));
-        if (c && Date.now() - c.time < this._cacheExpiry) return c;
-        this._cache.delete(this._hash(prompt));
-        return null;
-    },
+  const CACHE_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
+  const clientCache = new Map();
 
-    _setCache(prompt, data) {
-        this._cache.set(this._hash(prompt), { ...data, time: Date.now() });
-    },
+  function hashKey(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+      h = (h << 5) - h + str.charCodeAt(i);
+      h |= 0;
+    }
+    return h.toString(36);
+  }
 
-    async _fetch(url, body, headers, timeout) {
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), timeout || 20000);
-        try {
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: headers || { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-                signal: ctrl.signal
-            });
-            clearTimeout(timer);
-            return res;
-        } catch (e) {
-            clearTimeout(timer);
-            throw e;
-        }
-    },
+  function detectLanguage(text) {
+    if (!text) return 'ar';
+    const rtlRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/;
+    return rtlRegex.test(text) ? 'ar' : 'en';
+  }
 
-    async _callBluesminds(prompt, systemPrompt, model, timeout) {
-        const messages = [];
-        if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
-        messages.push({ role: 'user', content: prompt });
-        const body = { model, messages, temperature: 0.7, max_tokens: 2000 };
-        const url = this._bluesmindsEndpoint + '/chat/completions';
+  async function getAuthToken() {
+    try {
+      if (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) {
+        return await firebase.auth().currentUser.getIdToken(true);
+      }
+      if (window._firebaseAuth && window._firebaseAuth.currentUser) {
+        return await window._firebaseAuth.currentUser.getIdToken(true);
+      }
+    } catch (e) {
+      console.warn('[QCV AI] Error retrieving auth token:', e.message);
+    }
+    return null;
+  }
 
-        try {
-            const res = await this._fetch(url, body, {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this._bluesmindsKey
-            }, timeout);
-            if (!res.ok) {
-                const err = await res.text().catch(() => '');
-                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
-            }
-            const data = await res.json();
-            let text = '';
-            if (data.choices && data.choices[0] && data.choices[0].message) {
-                text = data.choices[0].message.content || '';
-            }
-            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
-            if (text.length > 3000) text = text.substring(0, 3000);
-            const tokens = data.usage?.total_tokens || data.usage?.completion_tokens || 0;
-            this._usageLog.push({ model, tokens, time: Date.now(), provider: 'bluesminds' });
-            return { ok: true, text, provider: 'bluesminds-' + model };
-        } catch (e) {
-            console.error('[QCV AI] BluesMinds ' + model + ' failed:', e.message);
-            return { ok: false, error: e.message };
-        }
-    },
+  function notifyUser(message, type = 'error') {
+    if (window.QCVNotify && typeof window.QCVNotify[type] === 'function') {
+      window.QCVNotify[type](message);
+    } else {
+      console.warn(`[QCV AI ${type}]`, message);
+      if (type === 'error' && typeof alert === 'function') {
+        alert(message);
+      }
+    }
+  }
 
-    async _callGemini(prompt, systemPrompt, model, timeout) {
-        const fullPrompt = systemPrompt ? systemPrompt + '\n\n' + prompt : prompt;
-        const body = {
-            contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
-            generationConfig: { temperature: 0.7, maxOutputTokens: 2000 }
-        };
-        const base = this._useProxy ? this._proxyEndpoint : '';
-        const url = base + this._geminiEndpoint + '/' + model + ':generateContent?key=' + this._geminiKey;
+  function triggerUpgradeModal(reason) {
+    const modal = document.getElementById('upgradeModal') || document.getElementById('pricingModal');
+    if (modal) {
+      modal.style.display = 'flex';
+      const reasonEl = document.getElementById('upgradeReason');
+      if (reasonEl) reasonEl.textContent = reason;
+    } else {
+      notifyUser(reason || 'هذه الميزة متاحة لمشتركي باقات Pro و Unlimited فقط. يرجى الترقية للمتابعة.');
+    }
+  }
 
-        try {
-            const res = await this._fetch(url, body, null, timeout);
-            if (!res.ok) {
-                const err = await res.text().catch(() => '');
-                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
-            }
-            const data = await res.json();
-            let text = '';
-            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
-                text = data.candidates[0].content.parts.map(p => p.text || '').join('');
-            }
-            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
-            if (text.length > 3000) text = text.substring(0, 3000);
-            this._usageLog.push({ model, tokens: data.usageMetadata?.totalTokenCount || 0, time: Date.now(), provider: 'gemini' });
-            return { ok: true, text, provider: 'gemini-' + model };
-        } catch (e) {
-            console.error('[QCV AI] Gemini ' + model + ' failed:', e.message);
-            return { ok: false, error: e.message };
-        }
-    },
+  async function executeRequest({ task, prompt, systemPrompt = '', language = 'ar', modelOverride = null }) {
+    // 1. Language normalization
+    const lang = language === 'en' ? 'en' : 'ar';
 
-    async _callOpenRouter(prompt, systemPrompt, model, timeout) {
-        const messages = [];
-        if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
-        messages.push({ role: 'user', content: prompt });
-        const body = { model, messages, temperature: 0.7, max_tokens: 2000 };
-        const url = this._openrouterEndpoint + '/chat/completions';
+    // 2. Client-side Cache lookup
+    const cacheId = `${task}_${lang}_${hashKey(prompt)}`;
+    const cached = clientCache.get(cacheId);
+    if (cached && Date.now() - cached.timestamp < CACHE_EXPIRY_MS) {
+      return { ok: true, text: cached.text, cached: true, model: cached.model };
+    }
 
-        try {
-            const res = await this._fetch(url, body, {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this._openrouterKey
-            }, timeout);
-            if (!res.ok) {
-                const err = await res.text().catch(() => '');
-                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
-            }
-            const data = await res.json();
-            let text = '';
-            if (data.choices && data.choices[0] && data.choices[0].message) {
-                text = data.choices[0].message.content || '';
-            }
-            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
-            if (text.length > 3000) text = text.substring(0, 3000);
-            const tokens = data.usage?.total_tokens || data.usage?.completion_tokens || 0;
-            this._usageLog.push({ model, tokens, time: Date.now(), provider: 'openrouter' });
-            return { ok: true, text, provider: 'openrouter-' + model };
-        } catch (e) {
-            console.error('[QCV AI] OpenRouter ' + model + ' failed:', e.message);
-            return { ok: false, error: e.message };
-        }
-    },
+    // 3. Retrieve Auth ID Token
+    const idToken = await getAuthToken();
+    if (!idToken) {
+      const err = lang === 'ar'
+        ? 'يرجى تسجيل الدخول أولاً لاستخدام ميزات الذكاء الاصطناعي.'
+        : 'Please sign in to use QCV AI features.';
+      notifyUser(err, 'warning');
+      return { ok: false, error: err, code: 'AUTH_REQUIRED' };
+    }
 
-    async _callOpenAI(prompt, systemPrompt, model, timeout) {
-        const messages = [];
-        if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
-        messages.push({ role: 'user', content: prompt });
-        const body = { model, messages, temperature: 0.7, max_tokens: 2000 };
-        const url = this._openaiEndpoint + '/chat/completions';
+    // 4. Send request to server endpoint
+    try {
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
+        },
+        body: JSON.stringify({
+          task,
+          prompt,
+          systemPrompt,
+          language: lang,
+          modelOverride
+        })
+      });
 
-        try {
-            const res = await this._fetch(url, body, {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this._openaiKey
-            }, timeout);
-            if (!res.ok) {
-                const err = await res.text().catch(() => '');
-                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
-            }
-            const data = await res.json();
-            let text = '';
-            if (data.choices && data.choices[0] && data.choices[0].message) {
-                text = data.choices[0].message.content || '';
-            }
-            text = text.replace(/```(?:html)?\s*([\s\S]*?)```/g, '$1').trim();
-            if (text.length > 3000) text = text.substring(0, 3000);
-            const tokens = data.usage?.total_tokens || data.usage?.completion_tokens || 0;
-            this._usageLog.push({ model, tokens, time: Date.now(), provider: 'openai' });
-            return { ok: true, text, provider: 'openai-' + model };
-        } catch (e) {
-            console.error('[QCV AI] OpenAI ' + model + ' failed:', e.message);
-            return { ok: false, error: e.message };
-        }
-    },
+      const data = await response.json().catch(() => ({}));
 
-    async _callPollinations(prompt, systemPrompt, model, timeout) {
-        const finalPrompt = [systemPrompt, prompt].filter(Boolean).join('\n\n').trim();
-        const url = 'https://text.pollinations.ai/' + encodeURIComponent(finalPrompt);
+      if (!response.ok || !data.ok) {
+        const errorCode = data.code || 'UNKNOWN_ERROR';
+        const errorMsg = data.error || (lang === 'ar' ? 'تعذر الاتصال بمزود الذكاء الاصطناعي.' : 'AI request failed.');
 
-        try {
-            const ctrl = new AbortController();
-            const timer = setTimeout(() => ctrl.abort(), timeout || 20000);
-            const res = await fetch(url, {
-                method: 'GET',
-                headers: { 'Accept': 'text/plain' },
-                signal: ctrl.signal
-            });
-            clearTimeout(timer);
-
-            if (!res.ok) {
-                const err = await res.text().catch(() => '');
-                throw new Error('HTTP ' + res.status + ': ' + err.substring(0, 200));
-            }
-
-            const text = (await res.text()).trim();
-            if (!text) throw new Error('Empty response');
-
-            this._usageLog.push({ model: model || 'pollinations', tokens: 0, time: Date.now(), provider: 'pollinations' });
-            return { ok: true, text, provider: 'pollinations-' + (model || 'text') };
-        } catch (e) {
-            console.error('[QCV AI] Pollinations failed:', e.message);
-            return { ok: false, error: e.message };
-        }
-    },
-
-    async call(prompt, systemPrompt, opts) {
-        opts = opts || {};
-        const useCache = opts.useCache !== false;
-        if (useCache) {
-            const c = this._getCached(prompt);
-            if (c) return c;
+        if (errorCode === 'UPGRADE_REQUIRED' || errorCode === 'PRO_REQUIRED') {
+          triggerUpgradeModal(errorMsg);
+        } else {
+          notifyUser(errorMsg, 'error');
         }
 
-        let lastError = null;
+        return { ok: false, error: errorMsg, code: errorCode };
+      }
 
-        // Try providers in order — Pollinations first because it is free and verified working.
-        const attempts = [
-            { provider: 'pollinations', models: ['text'], key: 'pollinations', fn: this._callPollinations, timeout: 20000 },
-            { provider: 'openai', models: this._openaiModels, key: this._openaiKey, fn: this._callOpenAI, timeout: 20000 },
-            { provider: 'openrouter', models: this._openrouterModels, key: this._openrouterKey, fn: this._callOpenRouter, timeout: 15000 },
-            { provider: 'bluesminds', models: this._bluesmindsModels, key: this._bluesmindsKey, fn: this._callBluesminds, timeout: 15000 },
-            { provider: 'gemini', models: this._geminiModels, key: this._geminiKey, fn: this._callGemini, timeout: 10000 }
-        ];
-        for (const a of attempts) {
-            if (!a.key) continue;
-            for (const model of a.models) {
-                const res = await a.fn.call(this, prompt, systemPrompt, model, opts.timeout || a.timeout);
-                if (res.ok) {
-                    if (useCache) this._setCache(prompt, res);
-                    return res;
-                }
-                lastError = res.error;
-            }
-        }
+      // Store in client-side cache
+      clientCache.set(cacheId, {
+        text: data.text,
+        model: data.model,
+        timestamp: Date.now()
+      });
 
-        // 3) Try Gemini via CORS proxy if fetch failed
-        if (!this._useProxy && this._geminiKey && lastError && lastError.includes('Failed to fetch')) {
-            console.log('[QCV AI] Retrying Gemini with CORS proxy...');
-            this._useProxy = true;
-            return this.call(prompt, systemPrompt, opts);
-        }
+      return {
+        ok: true,
+        text: data.text,
+        model: data.model,
+        cached: false,
+        tokenCount: data.tokenCount || 0
+      };
+    } catch (netErr) {
+      const netError = lang === 'ar'
+        ? 'حدث خطأ في شبكة الاتصال بخادم الذكاء الاصطناعي. يرجى التحقق من اتصالك.'
+        : 'Network connection error with the AI server. Please check your connection.';
+      notifyUser(netError, 'error');
+      return { ok: false, error: netError, code: 'NETWORK_ERROR' };
+    }
+  }
 
-        return { ok: false, error: lastError || 'AI service unavailable' };
+  const QCVAI = {
+    detectLanguage,
+
+    /**
+     * 1. Professional Summary (50-100 words, action-oriented, zero filler)
+     */
+    async generateSummary(cvData, langOverride) {
+      const lang = langOverride || (detectLanguage(cvData.name + ' ' + (cvData.title || '')) === 'ar' ? 'ar' : 'en');
+      const experiences = (cvData.experience || [])
+        .map(e => `${e.role || ''} at ${e.company || ''}: ${e.description || ''}`)
+        .join('\n');
+      const skills = Array.isArray(cvData.skills) ? cvData.skills.join(', ') : '';
+
+      const prompt = lang === 'ar'
+        ? `المسمى الوظيفي: ${cvData.title || 'غير محدد'}\nالخبرات:\n${experiences || 'مبتدئ'}\nالمهارات: ${skills}\n\nاكتب ملخصاً مهنياً قوياً وموجزاً (بين 50 إلى 100 كلمة) يبرز القيمة المهنية ونقاط القوة، دون أي عبارات ترحيب أو مقدمات.`
+        : `Job Title: ${cvData.title || 'Professional'}\nExperience:\n${experiences || 'Entry Level'}\nSkills: ${skills}\n\nWrite a compelling, concise professional resume summary (50-100 words) highlighting impact and strengths. Output ONLY the summary text.`;
+
+      return executeRequest({
+        task: 'summary',
+        prompt,
+        language: lang
+      });
     },
 
-    async callJSON(prompt, systemPrompt, opts) {
-        const res = await this.call(prompt, systemPrompt, Object.assign({}, opts, { useCache: false }));
-        if (!res.ok) return res;
-        try {
-            return { ok: true, text: res.text, json: JSON.parse(res.text), provider: res.provider };
-        } catch (e) {
-            const m = res.text.match(/```(?:json)?\s*([\s\S]*?)```/);
-            if (m) { try { return { ok: true, text: res.text, json: JSON.parse(m[1].trim()), provider: res.provider }; } catch (e2) { } }
-            return { ok: false, error: 'Failed to parse JSON', provider: res.provider };
-        }
+    /**
+     * 2. Proofreading (Grammar, spelling, professional vocabulary)
+     */
+    async proofread(text, langOverride) {
+      if (!text || !text.trim()) return { ok: false, error: 'النص فارغ' };
+      const lang = langOverride || detectLanguage(text);
+
+      const prompt = lang === 'ar'
+        ? `قم بالتدقيق اللغوي والإملائي والتحسين الصياغي للنص التالي مع الحفاظ الكامل على المعنى المهني، وأخرج النص المصحح فقط بدون أي تعليقات:\n\n${text}`
+        : `Proofread and polish the following resume text for grammar, punctuation, and professional phrasing. Return ONLY the corrected text:\n\n${text}`;
+
+      return executeRequest({
+        task: 'proofread',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 3. Content Enhancer (Convert descriptions into strong action-verb bullet points)
+     */
+    async enhanceContent(text, langOverride) {
+      if (!text || !text.trim()) return { ok: false, error: 'النص فارغ' };
+      const lang = langOverride || detectLanguage(text);
+
+      const prompt = lang === 'ar'
+        ? `أعد صياغة الخبرات والمهام التالية بأسلوب إنجازات احترافي يبدأ بأفعال قوية، ويستخدم صياغة نتائج قابلة للقياس إن أمكن. كل إنجاز في نقطة تبدأ بعلامة (-). أخرج النقاط فقط:\n\n${text}`
+        : `Rewrite the following job responsibilities into high-impact, results-oriented bullet points starting with strong action verbs. Each bullet must start with (-). Return ONLY the bullet points:\n\n${text}`;
+
+      return executeRequest({
+        task: 'enhance',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 4. Suggest 12 Skills (60% Technical / 40% Soft)
+     */
+    async suggestSkills(jobTitle, experienceSummary, langOverride) {
+      const lang = langOverride || detectLanguage(jobTitle + ' ' + (experienceSummary || ''));
+
+      const prompt = lang === 'ar'
+        ? `المسمى الوظيفي: ${jobTitle}\nنبذة عن الخبرة: ${experienceSummary || ''}\n\nاقترح قائمة من 12 مهارة مطلوبة ومهمة لسوق العمل (7 أو 8 مهارات تقنية وفنية + 4 أو 5 مهارات شخصية وإدارية).\nأخرج النتيجة كقائمة نقية سطر بسطر فقط (اسم المهارة في كل سطر دون ترقيم أو علامات).`
+        : `Job Title: ${jobTitle}\nExperience Context: ${experienceSummary || ''}\n\nSuggest exactly 12 relevant in-demand skills (7-8 technical/hard skills and 4-5 soft/interpersonal skills).\nReturn ONLY a plain list with one skill per line, without numbering or bullets.`;
+
+      const res = await executeRequest({
+        task: 'skills',
+        prompt,
+        language: lang
+      });
+
+      if (res.ok && res.text) {
+        const skillsArray = res.text
+          .split('\n')
+          .map(s => s.replace(/^[-*•\d.)\s]+/, '').trim())
+          .filter(Boolean);
+        return { ...res, skills: skillsArray };
+      }
+      return res;
+    },
+
+    /**
+     * 5. Optimize for ATS
+     */
+    async improveForATS(cvData, langOverride) {
+      const lang = langOverride || (detectLanguage(cvData.name + ' ' + (cvData.title || '')) === 'ar' ? 'ar' : 'en');
+      const text = [
+        cvData.title,
+        cvData.summary,
+        (cvData.skills || []).join(', '),
+        (cvData.experience || []).map(e => e.role + ' ' + e.description).join('\n')
+      ].join('\n\n');
+
+      const prompt = lang === 'ar'
+        ? `حلل محتوى السيرة الذاتية التالي وأعد صياغته ليتوافق مع أنظمة الفرز الآلي (ATS)، مع التركيز على تضمين الكلمات المفتاحية المهنية والمعيارية للمجال. أخرج النص المحسن مباشرة:\n\n${text}`
+        : `Optimize the following resume text for Applicant Tracking Systems (ATS) by infusing industry-standard keywords and clear phrasing. Return ONLY the optimized text:\n\n${text}`;
+
+      return executeRequest({
+        task: 'ats',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 6. Translate CV (Arabic <-> English)
+     */
+    async translateCV(text, targetLang = 'en') {
+      const prompt = targetLang === 'en'
+        ? `Translate the following professional resume content into fluent, industry-standard English. Maintain professional corporate terminology. Return ONLY the translated text:\n\n${text}`
+        : `ترجم محتوى السيرة الذاتية التالي إلى لغة عربية مهنية وفصيحة مع الحفاظ على المصطلحات التقنية المعيارية. أخرج النص المترجم فقط:\n\n${text}`;
+
+      return executeRequest({
+        task: 'translate',
+        prompt,
+        language: targetLang
+      });
+    },
+
+    /**
+     * 7. Cover Letter (3-4 paragraphs, max 300 words, zero cliché intros)
+     */
+    async generateCoverLetter(cvData, jobDescription, langOverride) {
+      const lang = langOverride || detectLanguage(jobDescription || cvData.title || '');
+
+      const prompt = lang === 'ar'
+        ? `بيانات المتقدم:\nالاسم: ${cvData.name}\nالمسمى: ${cvData.title}\nالخبرات: ${(cvData.experience || []).map(e => e.role + ' في ' + e.company).join(', ')}\nالمهارات: ${(cvData.skills || []).slice(0, 8).join(', ')}\n\nالوصف الوظيفي المستهدف:\n${jobDescription || 'وظيفة مناسبة للخبرات'}\n\nاكتب خطاب تعريف (Cover Letter) مخصصاً ومحترفاً يتكون من 3 إلى 4 فقرات وبحد أقصى 300 كلمة. تجنب المقدمات الروتينية والمبتذلة. أخرج نص الخطاب فقط.`
+        : `Candidate Profile:\nName: ${cvData.name}\nTitle: ${cvData.title}\nKey Experience: ${(cvData.experience || []).map(e => e.role + ' at ' + e.company).join(', ')}\nSkills: ${(cvData.skills || []).slice(0, 8).join(', ')}\n\nTarget Job Description:\n${jobDescription || 'Relevant Role'}\n\nWrite a tailored, high-converting cover letter consisting of 3 to 4 paragraphs, strictly under 300 words. Avoid cliché opening phrases. Return ONLY the letter text.`;
+
+      return executeRequest({
+        task: 'cover_letter',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 8. Ask AI (Free Career & Resume Advice)
+     */
+    async askAI(question, cvData, langOverride) {
+      const lang = langOverride || detectLanguage(question);
+      const cvContext = `المسمى: ${cvData.title || ''}\nالملخص: ${cvData.summary || ''}\nالمهارات: ${(cvData.skills || []).slice(0, 10).join(', ')}`;
+
+      const prompt = lang === 'ar'
+        ? `سياق السيرة الذاتية للمستخدم:\n${cvContext}\n\nسؤال المستخدم:\n${question}\n\nأجب بإيجاز واحترافية وبشكل عملي ومباشر.`
+        : `User Resume Context:\n${cvContext}\n\nUser Question:\n${question}\n\nAnswer concisely, professionally, and practically.`;
+
+      return executeRequest({
+        task: 'ask_ai',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 9. (PRO) Job Tailoring
+     */
+    async tailorForJob(cvData, jobDescription, langOverride) {
+      const lang = langOverride || detectLanguage(jobDescription);
+      const text = JSON.stringify({
+        title: cvData.title,
+        summary: cvData.summary,
+        skills: cvData.skills,
+        experience: cvData.experience
+      });
+
+      const prompt = lang === 'ar'
+        ? `الوصف الوظيفي المستهدف:\n${jobDescription}\n\nالسيرة الذاتية الحالية:\n${text}\n\nقم بتخصيص السيرة الذاتية وتعديل المسمى والملخص ونقاط الخبرات لتتطابق بدقة مع متطلبات هذه الوظيفة. أخرج النص المخصص والجاهز للتطبيق فقط.`
+        : `Target Job Description:\n${jobDescription}\n\nCurrent Resume:\n${text}\n\nTailor the title, summary, and experience bullet points specifically to match this target job requirements. Return ONLY the tailored content.`;
+
+      return executeRequest({
+        task: 'job_tailor',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 10. (PRO) Skills Gap Analysis
+     */
+    async skillsGapAnalysis(cvData, jobDescription, langOverride) {
+      const lang = langOverride || detectLanguage(jobDescription);
+      const candidateSkills = (cvData.skills || []).join(', ');
+
+      const prompt = lang === 'ar'
+        ? `مهارات المتقدم الحالية: ${candidateSkills}\n\nالوصف الوظيفي:\n${jobDescription}\n\nقدم تحليلاً دقيقاً لفجوة المهارات في 3 أقسام واضحة:\n1. المهارات المتطابقة\n2. المهارات المفقودة أو المطلوبة بإلحاح\n3. نصيحة عملية لسد الفجوة.`
+        : `Candidate Skills: ${candidateSkills}\n\nJob Description:\n${jobDescription}\n\nProvide a precise skills gap analysis in 3 clear sections:\n1. Matching Skills\n2. Missing / High-Priority Skills\n3. Actionable Advice to Bridge the Gap.`;
+
+      return executeRequest({
+        task: 'skills_gap',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * 11. (PRO) Interview Preparation
+     */
+    async interviewPrep(cvData, jobDescription, langOverride) {
+      const lang = langOverride || detectLanguage(jobDescription || cvData.title || '');
+
+      const prompt = lang === 'ar'
+        ? `المسمى والخبرة: ${cvData.title}\nالوصف الوظيفي: ${jobDescription || 'عام'}\n\nاقترح أهم 5 أسئلة مقابلة عمل متوقعة لهذه الوظيفة بدقة، مع نقاط إجابة استراتيجية لكل سؤال ترتكز على خبرات المتقدم.`
+        : `Role & Background: ${cvData.title}\nJob Description: ${jobDescription || 'General'}\n\nProvide the top 5 anticipated interview questions for this specific role, accompanied by strategic talking points based on the candidate's background.`;
+
+      return executeRequest({
+        task: 'interview_prep',
+        prompt,
+        language: lang
+      });
+    },
+
+    /**
+     * Compatibility Methods for Legacy Pages (ats-checker, compare, ai-tools, editor)
+     */
+    async call(prompt, systemPrompt, opts = {}) {
+      const lang = opts.language || detectLanguage(prompt);
+      return executeRequest({
+        task: opts.task || 'general',
+        prompt,
+        systemPrompt: systemPrompt || opts.systemPrompt || '',
+        language: lang,
+        modelOverride: opts.model || null
+      });
+    },
+
+    async callJSON(prompt, systemPrompt, opts = {}) {
+      const jsonSystem = (systemPrompt ? systemPrompt + '\n\n' : '') +
+        'Respond ONLY with a valid, raw JSON object. Do not wrap in markdown or backticks.';
+      const res = await this.call(prompt, jsonSystem, opts);
+      if (!res.ok) return res;
+      try {
+        let clean = (res.text || '').replace(/^```(?:json)?\s*([\s\S]*?)\s*```$/g, '$1').trim();
+        const parsed = JSON.parse(clean);
+        return { ok: true, data: parsed, text: clean, model: res.model };
+      } catch (e) {
+        return { ok: false, error: 'Failed to parse JSON: ' + e.message, rawText: res.text };
+      }
     },
 
     async analyzeCV(cvText) {
-        return this.callJSON('Analyze this CV:\n1. Strengths (3-5)\n2. Weaknesses (3-5)\n3. Score (0-10)\n4. ATS friendly?\n\nCV:\n' + cvText + '\n\nJSON: {"strengths":[],"weaknesses":[],"score":7,"ats_friendly":true}', 'Expert CV analyzer.', { timeout: 20000 });
+      const lang = detectLanguage(cvText);
+      const prompt = lang === 'ar'
+        ? `حلل السيرة الذاتية التالية تحليلاً دقيقاً شاملاً لنقاط القوة والضعف وفرص التحسين والتوافق مع ATS:\n\n${cvText}`
+        : `Analyze the following resume comprehensively for strengths, weaknesses, and ATS optimization opportunities:\n\n${cvText}`;
+      return this.call(prompt, null, { task: 'ats', language: lang });
     },
 
-    async matchJob(cvText, jd) {
-        return this.callJSON('Match CV to job:\nCV:\n' + cvText + '\n\nJob:\n' + jd + '\n\nJSON: {"match_percentage":75,"matched":[],"missing":[],"recommendations":[]}', 'Job matching expert.', { timeout: 20000 });
-    },
-
-    async generateCoverLetter(cvText, jd, company) {
-        return this.call('Write a cover letter (150-200 words) for ' + company + '.\nCV:\n' + cvText + '\nJob:\n' + jd, 'Professional cover letter writer. English.', { timeout: 20000 });
-    },
-
-    async generateInterviewQuestions(jobTitle, industry) {
-        return this.call('5 interview questions for ' + jobTitle + ' in ' + industry + ' with answer tips.', 'Interview coach. English.', { timeout: 20000 });
-    },
-
-    async generateEmailSignature(name, title, company, phone, email) {
-        return this.call('Create a professional email signature for:\nName: ' + name + '\nTitle: ' + title + '\nCompany: ' + company + '\nPhone: ' + phone + '\nEmail: ' + email + '\n\nProvide 3 different styles (Minimal, Professional, Creative). Clean HTML.', 'Email signature designer.', { timeout: 20000 });
-    },
-
-    async optimizeSkills(cvText, targetJob) {
-        return this.call('Optimize skills for: ' + (targetJob || 'general') + '\n\nCV:\n' + cvText + '\n\nProvide:\n1. Top 10 technical skills\n2. Top 5 soft skills\n3. Skills to remove\n4. ATS keywords', 'Skills optimization expert.', { timeout: 20000 });
+    async matchJob(cvText, jobDesc) {
+      const lang = detectLanguage(jobDesc || cvText);
+      const prompt = lang === 'ar'
+        ? `قارن السيرة الذاتية التالية بالوصف الوظيفي المحدد، واستخرج نسبة التوافق، والكلمات المفتاحية المتطابقة، والكلمات الناقصة:\n\nالوصف الوظيفي:\n${jobDesc}\n\nالسيرة الذاتية:\n${cvText}`
+        : `Compare this resume against the target job description. Identify match percentage, matched keywords, and missing critical skills:\n\nJob Description:\n${jobDesc}\n\nResume:\n${cvText}`;
+      return this.call(prompt, null, { task: 'job_tailor', language: lang });
     },
 
     getUsageStats() {
-        var now = Date.now();
-        var today = this._usageLog.filter(function(u) { return now - u.time < 86400000; });
-        return { total: this._usageLog.length, today: today.length, cacheSize: this._cache.size };
+      return { cacheSize: clientCache.size };
     }
-};
+  };
 
-window.QCVAI = QCVAI;
+  return QCVAI;
+});

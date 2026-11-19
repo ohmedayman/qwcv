@@ -19,6 +19,8 @@
     let adminSettings = {};
 
     function applyPerformanceOptimizations() {
+        if (!document || !document.head || !document.documentElement) return;
+
         const preconnects = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com', 'https://www.gstatic.com'];
         preconnects.forEach((href) => {
             if (document.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
@@ -31,8 +33,10 @@
             document.head.appendChild(link);
         });
 
+        if (!document.querySelectorAll) return;
+
         document.querySelectorAll('img:not([loading])').forEach((img) => {
-            const isHero = img.closest('header, .hero, .banner');
+            const isHero = img && img.closest && img.closest('header, .hero, .banner');
             if (isHero) {
                 img.setAttribute('fetchpriority', 'high');
                 return;
@@ -41,7 +45,7 @@
         });
 
         document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
-            if (!img.getAttribute('decoding')) img.decoding = 'async';
+            if (img && !img.getAttribute('decoding')) img.decoding = 'async';
         });
     }
 
@@ -63,6 +67,8 @@
     }
 
     function applyBanner() {
+        if (!document || !document.body || !document.getElementById || !document.createElement) return;
+
         const b = siteData.banner || {};
         if (!b.enabled || !b.text) return;
         const existing = document.getElementById('site-banner');
@@ -135,6 +141,7 @@
     }
 
     function applyAll() {
+        if (!document || !document.documentElement) return;
         applyPerformanceOptimizations();
         applyColors();
         applyBanner();
@@ -142,6 +149,16 @@
         applyHero();
         applyFooter();
         applyPricing();
+    }
+
+    function safeApplyAll() {
+        if (!document || !document.body) {
+            if (window && typeof window.addEventListener === 'function') {
+                window.addEventListener('DOMContentLoaded', applyAll, { once: true });
+            }
+            return;
+        }
+        applyAll();
     }
 
     function fetchJson(url) {
@@ -153,12 +170,12 @@
     function loadSettings() {
         fetchJson(databaseUrl + '/siteSettings.json').then((data) => {
             siteData = data || {};
-            applyAll();
+            safeApplyAll();
         });
 
         fetchJson(databaseUrl + '/settings.json').then((data) => {
             adminSettings = data || {};
-            applyAll();
+            safeApplyAll();
         });
     }
 

@@ -1251,6 +1251,8 @@
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>
     <script src="js/pwa.js" defer></script>
+<link rel=stylesheet href=/app-shell.css>
+    <script defer src=/app-navigation.js></script>
 </head>
 
 <body>
@@ -1259,7 +1261,7 @@
         <div class="loader-text">جاري التحميل...</div>
     </div>
     <nav class="navbar">
-            <a href="index.html" class="nav-logo">
+            <a href="/" class="nav-logo">
             <img src="https://i.postimg.cc/X7NnYC6c/APn63BX1YSOv0Hkb-H4UUXp-img-4-1785173240000-na1fn-c-WN2X2xv-Z29fb3B0a-W9u-NA-removebg-preview.png" alt="QCV" style="height:44px;width:auto">
         </a>
         <div class="nav-links">
@@ -1412,6 +1414,12 @@
                     <div class="spinner"></div>
                 </button>
 
+                <button type="button" class="btn-submit" id="guestBtn" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);margin-top:10px;border:1px solid rgba(148,163,184,0.4)">
+                    <i class="fas fa-user-clock" style="font-size:1rem"></i>
+                    <span class="btn-text">الدخول كضيف</span>
+                    <div class="spinner"></div>
+                </button>
+
                 <button type="button" class="btn-google" id="googleBtn">
                     <svg viewBox="0 0 48 48">
                         <path fill="#EA4335"
@@ -1424,6 +1432,16 @@
                             d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.37-5.72c-2.11 1.42-4.81 2.3-8.52 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
                     </svg>
                     <span data-i18n="google_login">تسجيل الدخول باستخدام جوجل</span>
+                </button>
+
+                <button type="button" class="btn-google" id="msBtn" style="margin-top:10px;border-color:rgba(148,163,184,0.3)">
+                    <svg viewBox="0 0 23 23" width="20" height="20" style="margin-left:8px;vertical-align:middle">
+                        <path fill="#f35325" d="M1 1h10v10H1z"/>
+                        <path fill="#81bc06" d="M12 1h10v10H12z"/>
+                        <path fill="#05a6f0" d="M1 12h10v10H1z"/>
+                        <path fill="#ffba08" d="M12 12h10v10H12z"/>
+                    </svg>
+                    <span>تسجيل الدخول عبر Microsoft / Entra ID</span>
                 </button>
 
                 <a href="editor.html" class="btn-guest" id="guestBtn" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;margin-top:12px;background:rgba(0,3,201,0.05);border:1px dashed var(--accent);border-radius:12px;color:var(--accent);text-decoration:none;font-weight:700;font-size:0.86rem;transition:all 0.25s">
@@ -1513,13 +1531,18 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signOut, updateProfile, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, OAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signOut, updateProfile, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
         import { getDatabase, ref, set, get, child, push } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
         const firebaseConfig = { apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I", authDomain: "qwcv-1cfad.firebaseapp.com", projectId: "qwcv-1cfad", storageBucket: "qwcv-1cfad.firebasestorage.app", messagingSenderId: "792471802122", appId: "1:792471802122:web:808e04099afc90315aaaf3", databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
+
+        document.getElementById('guestBtn')?.addEventListener('click', () => {
+            sessionStorage.setItem('qcv_guest_editor', '1');
+            window.location.href = 'editor.html?guest=1';
+        });
 
         let isSignUpMode = false, isResetting = false;
 
@@ -1637,8 +1660,8 @@
         function getRedirectPage() {
             const p = new URLSearchParams(window.location.search);
             const r = p.get('redirect');
-            if (r && /^[a-z0-9_-]+\.html$/i.test(r)) return r;
-            return 'editor.html';
+            if (r && /^[a-z0-9_/-]+(\.html)?$/i.test(r)) return r;
+            return 'dashboard.html';
         }
 
         onAuthStateChanged(auth, (user) => {
@@ -1838,6 +1861,20 @@
                 if (window.QCVNotify) QCVNotify.success();
                 location.replace(getRedirectPage());
             } catch (err) { showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ: ' + err.message, 'error'); }
+        });
+
+        document.getElementById('msBtn')?.addEventListener('click', async () => {
+            if (window.QCVNotify) QCVNotify.click();
+            try {
+                const msProvider = new OAuthProvider('microsoft.com');
+                msProvider.setCustomParameters({ prompt: 'select_account' });
+                const res = await signInWithPopup(auth, msProvider);
+                saveUserData(res.user, { name: res.user.displayName || res.user.email.split('@')[0] });
+                if (window.QCVNotify) QCVNotify.success();
+                location.replace(getRedirectPage());
+            } catch (err) {
+                showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ Microsoft: ' + err.message, 'error');
+            }
         });
 
         document.getElementById('resetForm').addEventListener('submit', async (e) => {

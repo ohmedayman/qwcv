@@ -12,12 +12,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="app-shell.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="js/config.js"></script>
     <style>
         :root {
-            --sidebar-bg: linear-gradient(180deg, #0a0f1e 0%, #111827 100%);
-            --sidebar-text: #94a3b8;
-            --sidebar-hover: rgba(79,95,255,0.1);
-            --sidebar-active: rgba(79,95,255,0.15);
+            --sidebar-bg: #ffffff;
+            --sidebar-text: #667085;
+            --sidebar-hover: #f4f5fa;
+            --sidebar-active: #eeedff;
             --bg: #f8fafc;
             --card: #ffffff;
             --border: #e2e8f0;
@@ -62,16 +66,7 @@
             position: relative;
             overflow: hidden;
         }
-        .sidebar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(135deg, rgba(79,70,229,0.15) 0%, rgba(124,58,237,0.1) 100%);
-            pointer-events: none;
-        }
+        .sidebar::before { display: none; }
         .sidebar-header {
             padding: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -81,23 +76,23 @@
         .sidebar-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .sidebar-logo .logo-icon {
             width: 44px; height: 44px; border-radius: 14px;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            background: #4f46e5;
             display: flex; align-items: center; justify-content: center;
             color: #fff; font-weight: 800; font-size: 1rem; font-family: 'Inter';
             box-shadow: 0 8px 24px rgba(79,70,229,0.4);
             transition: var(--transition);
         }
         .sidebar-logo:hover .logo-icon { transform: scale(1.05); box-shadow: 0 12px 32px rgba(79,70,229,0.5); }
-        .sidebar-logo .logo-text { color: #f1f5f9; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
-        .sidebar-logo .logo-sub { color: #64748b; font-size: 0.72rem; margin-top: 2px; }
+        .sidebar-logo .logo-text { color: #172033; font-weight: 800; font-size: 1.1rem; }
+        .sidebar-logo .logo-sub { color: #8a93a3; font-size: 0.68rem; margin-top: 2px; }
 
         .new-chat-btn {
             margin: 16px 20px;
             padding: 12px 16px;
-            background: linear-gradient(135deg, rgba(79,70,229,0.2) 0%, rgba(124,58,237,0.15) 100%);
-            border: 1px solid rgba(79,70,229,0.3);
-            border-radius: var(--radius-sm);
-            color: #e2e8f0;
+            background: #4f46e5;
+            border: 1px solid #4f46e5;
+            border-radius: 8px;
+            color: #fff;
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
@@ -114,7 +109,7 @@
             border-color: rgba(79,70,229,0.5);
             color: #fff;
             transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(79,70,229,0.3);
+            box-shadow: 0 5px 14px rgba(79,70,229,0.2);
         }
         .new-chat-btn:active { transform: translateY(0); }
         .new-chat-btn i { font-size: 0.9rem; }
@@ -156,7 +151,7 @@
             padding: 8px 20px;
             font-size: 0.68rem;
             font-weight: 700;
-            color: #64748b;
+            color: #8a93a3;
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
@@ -173,8 +168,8 @@
             transition: var(--transition);
             margin: 2px 12px;
         }
-        .nav-item:hover { background: var(--sidebar-hover); color: #f1f5f9; }
-        .nav-item.active { background: var(--sidebar-active); color: #fff; }
+        .nav-item:hover { background: var(--sidebar-hover); color: #172033; }
+        .nav-item.active { background: var(--sidebar-active); color: #4f46e5; }
         .nav-item i { width: 20px; text-align: center; font-size: 0.9rem; opacity: 0.8; }
         .nav-item:hover i { opacity: 1; }
         .chat-history-item {
@@ -214,7 +209,7 @@
 
         .sidebar-footer {
             padding: 16px 20px;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid var(--border);
             position: relative;
             z-index: 1;
         }
@@ -225,11 +220,11 @@
         }
         .sidebar-footer a {
             font-size: 0.72rem;
-            color: #64748b;
+            color: #8a93a3;
             text-decoration: none;
             transition: var(--transition);
         }
-        .sidebar-footer a:hover { color: #e2e8f0; }
+        .sidebar-footer a:hover { color: #4f46e5; }
 
         /* ===== MAIN ===== */
         .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
@@ -983,8 +978,94 @@
             .welcome-stats { flex-wrap: wrap; justify-content: center; gap: 16px; }
             .topbar-actions .tb-btn span { display: none; }
         }
+        .sidebar-nav .nav-section:first-child .nav-item { margin: 2px 4px; padding: 10px 12px; border-radius: 8px; }
+        .chat-area { display: flex; flex-direction: column; }
+        .chat-messages { width: 100%; }
+        .input-area { border-top: 1px solid var(--border); }
+        .ai-app-footer { padding: 8px 16px 12px; color: #8a93a3; font-size: .62rem; text-align: center; background: var(--card); }
+        .ai-app-footer a { color: inherit; text-decoration: none; }
+        .ai-app-footer a:hover { color: var(--accent); }
+        .auth-gate-card { width: min(420px,calc(100% - 32px)); padding: 28px; border-radius: 16px; background: #fff; box-shadow: 0 20px 60px rgba(15,23,42,.22); text-align: center; }
+        .auth-gate-card h2 { margin: 14px 0 7px; font-size: 1.1rem; }
+        .auth-gate-card p { margin: 0 0 18px; color: #64748b; font-size: .82rem; }
+        .auth-gate-actions { display: flex; justify-content: center; gap: 8px; }
+        .auth-gate-actions a { padding: 10px 14px; border-radius: 8px; background: #4f46e5; color: #fff; font-size: .78rem; font-weight: 700; text-decoration: none; }
+        .auth-gate-actions a.secondary { background: #f1f3f8; color: #334155; }
+        body.dark-mode .sidebar { background: #111827; }
+        body.dark-mode .sidebar-logo .logo-text { color: #f1f5f9; }
+        body.dark-mode .auth-gate-card { background: #1e293b; color: #f1f5f9; }
+        body.dark-mode .auth-gate-card p { color: #94a3b8; }
     </style>
-    <style>
+    <script>
+        if (!firebase.apps.length) firebase.initializeApp(window.QCVApp.firebaseConfig);
+        const auth = firebase.auth();
+        const SYSTEM_PROMPT = 'أنت مساعد QCV المهني باللغة العربية. ساعد المستخدم في إنشاء وتحسين السيرة الذاتية، وتحليل ATS، وكتابة خطابات التقديم والاستعداد للمقابلات. كن عملياً ومحدداً، ولا تختلق خبرات أو مؤهلات غير مذكورة. إذا طلب المستخدم بيانات CV جاهزة للمحرر، أخرج JSON صالحاً داخل كتلة ```json مع الحقول name,title,email,phone,location,linkedin,summary,experience,education,skills.';
+        var l = null;
+    </script>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a class="sidebar-logo" href="/"><span class="logo-icon">Q</span><span><span class="logo-text">QCV</span><span class="logo-sub">مساحة العمل</span></span></a>
+        </div>
+        <button class="new-chat-btn" onclick="newChat()"><i class="fas fa-plus"></i> محادثة جديدة</button>
+        <nav class="sidebar-nav" aria-label="التنقل الرئيسي">
+            <div class="nav-section"><div class="nav-label">مساحة العمل</div>
+                <a class="nav-item" href="/app"><i class="fas fa-grid-2"></i> لوحة التحكم</a>
+                <a class="nav-item" href="editor.html"><i class="far fa-file-lines"></i> سيرتي الذاتية</a>
+                <a class="nav-item" href="templates.html"><i class="fas fa-layer-group"></i> القوالب</a>
+                <a class="nav-item active" href="ai.html"><i class="fas fa-wand-magic-sparkles"></i> مساعد QCV</a>
+                <a class="nav-item" href="ats-checker.html"><i class="fas fa-chart-simple"></i> تحليل ATS</a>
+                <a class="nav-item" href="tracker.html"><i class="fas fa-list-check"></i> تتبع الوظائف</a>
+            </div>
+            <div class="nav-section"><div class="nav-label">المحادثات السابقة</div>
+                <label class="chat-search"><i class="fas fa-magnifying-glass"></i><input id="chatSearch" type="search" placeholder="ابحث في محادثاتك" oninput="filterChats(this.value)"></label>
+                <div id="chatHistoryList"></div>
+            </div>
+        </nav>
+        <footer class="sidebar-footer"><div class="footer-links"><a href="help.html">المساعدة</a><a href="privacy.html">الخصوصية</a><a href="terms.html">الشروط</a></div></footer>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <main class="main">
+        <header class="topbar">
+            <div class="topbar-right"><button class="mobile-menu" aria-label="فتح القائمة" onclick="openSidebar()"><i class="fas fa-bars"></i></button><a href="/" class="logo-icon" style="display:grid;width:32px;height:32px;place-items:center;border-radius:9px;background:#4f46e5;color:#fff;text-decoration:none;font-weight:800">Q</a><button class="topbar-title" id="topbarTitle" onclick="editChatTitle()">محادثة جديدة</button><span class="app-status"><i class="fas fa-circle"></i> مساعد QCV</span></div>
+            <div class="topbar-actions"><button class="tb-btn" onclick="toggleDark()" aria-label="تغيير المظهر"><i class="far fa-moon"></i></button><button class="tb-btn" onclick="exportChat()"><i class="fas fa-download"></i><span>تصدير</span></button><a class="tb-btn accent" href="editor.html"><i class="fas fa-file-pen"></i><span>افتح المحرر</span></a></div>
+        </header>
+        <section class="chat-area" id="chatArea">
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome" id="welcomeScreen">
+                    <div class="welcome-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                    <div class="welcome-badge"><i class="fas fa-sparkles"></i> ذكاء مهني يساعدك على التقدم</div>
+                    <h1>أهلاً بك في مساعد QCV</h1>
+                    <p>اكتب ما تحتاجه: تحسين سيرتك، مطابقة خبرتك مع وظيفة، أو الاستعداد لمقابلتك القادمة.</p>
+                    <div class="quick-grid">
+                        <button class="quick-card" onclick="quickAsk('راجع سيرتي الذاتية واقترح تحسينات محددة لزيادة وضوح الإنجازات وتوافقها مع ATS.')"><span class="qi"><i class="fas fa-magnifying-glass-chart"></i></span><h3>راجع سيرتي</h3><p>ملاحظات عملية على المحتوى</p></button>
+                        <button class="quick-card" onclick="quickAsk('ساعدني في كتابة ملخص مهني قوي. اسألني عن خبرتي ومجالي قبل صياغته.')"><span class="qi"><i class="fas fa-pen-nib"></i></span><h3>اكتب ملخصًا مهنيًا</h3><p>نبذة موجزة تعكس خبرتك</p></button>
+                        <button class="quick-card" onclick="quickAsk('أريد التحضير لمقابلة عمل. اسألني عن المسمى الوظيفي ثم حضّر أسئلة وإجابات تدريبية.')"><span class="qi"><i class="fas fa-comments"></i></span><h3>تدرّب للمقابلة</h3><p>أسئلة مرتبطة بالوظيفة</p></button>
+                        <button class="quick-card" onclick="quickAsk('ساعدني في كتابة خطاب تقديم مخصص. اسألني عن الوظيفة والشركة وخبرتي ذات الصلة.')"><span class="qi"><i class="fas fa-envelope-open-text"></i></span><h3>خطاب تقديم</h3><p>رسالة مرتبطة بالفرصة</p></button>
+                        <button class="quick-card" onclick="quickAsk('حلل مهاراتي وخبرتي واقترح مسميات وظيفية مناسبة مع توضيح السبب.')"><span class="qi"><i class="fas fa-compass"></i></span><h3>اكتشف أدوارًا مناسبة</h3><p>طابق خبرتك مع فرص محتملة</p></button>
+                        <button class="quick-card" onclick="quickAsk('حوّل خبرتي إلى إنجازات واضحة بصيغة فعل + نتيجة. اسألني عن دوري وأرقامي أولاً.')"><span class="qi"><i class="fas fa-arrow-trend-up"></i></span><h3>قوّ إنجازاتك</h3><p>صياغة واضحة وقابلة للقياس</p></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gen-cv-bar" id="genCvBar"><button class="gen-cv-btn" onclick="generateCvFromChat()"><i class="fas fa-file-circle-plus"></i> نقل البيانات إلى محرر السيرة الذاتية</button></div>
+        <section class="input-area">
+            <div class="input-wrap">
+                <input id="fileInput" type="file" accept=".txt,.pdf,.doc,.docx" hidden onchange="handleFileUpload(event)">
+                <button class="tb-btn" id="uploadBtn" type="button" onclick="document.getElementById('fileInput').click()" aria-label="إرفاق ملف"><i class="fas fa-paperclip"></i></button>
+                <button class="tb-btn" type="button" onclick="openVoice()" aria-label="الإملاء الصوتي"><i class="fas fa-microphone"></i></button>
+                <textarea id="userInput" rows="1" placeholder="اكتب سؤالك أو الصق جزءًا من سيرتك الذاتية..." oninput="autoResize(this)"></textarea>
+                <button class="send-btn" id="sendBtn" type="button" onclick="onSendClick()" aria-label="إرسال"><i class="fas fa-arrow-up" id="sendIcon"></i><i class="fas fa-stop" id="stopIcon" style="display:none"></i></button>
+            </div>
+            <div class="ai-app-footer">راجع المعلومات المهمة قبل استخدامها · <a href="privacy.html">تعرّف على الخصوصية</a></div>
+        </section>
+    </main>
+    <nav class="app-mobile-nav" aria-label="التنقل السريع"><a href="/app"><i class="fas fa-grid-2"></i><span>الرئيسية</span></a><a href="editor.html"><i class="far fa-file-lines"></i><span>سيرتي</span></a><a href="templates.html"><i class="fas fa-layer-group"></i><span>القوالب</span></a><a class="active" href="ai.html"><i class="fas fa-wand-magic-sparkles"></i><span>مساعد AI</span></a><a href="tracker.html"><i class="fas fa-list-check"></i><span>الوظائف</span></a></nav>
+    <div id="authGate" style="display:none"><div class="auth-gate-card"><span class="app-brand-mark" style="margin:auto"><i class="fas fa-lock"></i></span><h2>سجّل الدخول لمتابعة مساعد QCV</h2><p>محادثاتك محفوظة على هذا الجهاز، وتسجيل الدخول يتيح لك استخدام مساحة العمل.</p><div class="auth-gate-actions"><a href="login.html">تسجيل الدخول</a><a class="secondary" href="/app">العودة للوحة التحكم</a></div></div></div>
+    <div class="confirm-dialog-overlay" id="confirmDialog"><div class="confirm-dialog"><div class="confirm-dialog-icon"><i class="fas fa-trash"></i></div><h3>حذف المحادثة؟</h3><p>لا يمكن التراجع عن حذف هذه المحادثة.</p><div class="confirm-dialog-actions"><button class="confirm-btn cancel" onclick="closeConfirmDialog()">إلغاء</button><button class="confirm-btn delete" onclick="executeDeleteChat()">حذف</button></div></div></div>
+    <div class="voice-popup-overlay" id="voiceOverlay"><div class="voice-popup"><button class="app-icon-button" onclick="closeVoice()" aria-label="إغلاق"><i class="fas fa-xmark"></i></button><h3 id="voiceTitle">تحدث الآن</h3><p class="sub" id="voiceSub">اضغط على الدائرة وابدأ التحدث</p><button id="voiceOrb" class="voice-orb" onclick="toggleVoiceListening()"><span class="ring"></span><i class="fas fa-microphone"></i></button><div id="voiceWave" class="voice-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></div><div id="voiceTranscript" class="voice-transcript"></div><div class="voice-actions"><button id="voiceSendBtn" class="voice-btn" disabled onclick="sendVoiceMessage()">إرسال</button></div></div></div>
+    <script>
         function saveChats(chats) {
             try { localStorage.setItem('qcv_ai_chats', JSON.stringify(chats)); } catch(e) {}
         }
@@ -1445,11 +1526,12 @@
 
         /* ===== Send / Receive via AI ===== */
         const BLUESMINDS_URL = (window.QCVConfig && window.QCVConfig.bluesmindsEndpoint) || 'https://api.bluesminds.com/v1';
-        const BLUESMINDS_KEY = (window.QCVSettings && window.QCVSettings.bluesmindsKey) || (window.QCVConfig && window.QCVConfig.bluesmindsKey) || '';
-        const OPENROUTER_KEY = (window.QCVSettings && window.QCVSettings.openrouterKey) || (window.QCVConfig && window.QCVConfig.openrouterKey) || '';
+        function getProviderKey(provider) {
+            const settingKey = provider === 'openrouter' ? 'openrouterKey' : 'bluesmindsKey';
+            return (window.QCVSettings && window.QCVSettings[settingKey]) || (window.QCVConfig && window.QCVConfig[settingKey]) || '';
+        }
         const OR_MODELS = ['qwen/qwen3.7-flash', 'openai/gpt-4o-mini', 'anthropic/claude-3-haiku'];
         const BM_MODELS = ['meta/llama-3.1-8b-instruct', 'deepseek-ai/deepseek-v4-flash', 'meta/llama-3.3-70b-instruct'];
-        const AI_MODELS = OPENROUTER_KEY ? OR_MODELS : BM_MODELS;
         let currentModelIndex = 0;
 
         function onSendClick() {
@@ -1490,7 +1572,7 @@
 
         async function callProvider(apiMessages, signal, provider, model) {
             var url = provider === 'openrouter' ? 'https://openrouter.ai/api/v1/chat/completions' : BLUESMINDS_URL + '/chat/completions';
-            var key = provider === 'openrouter' ? OPENROUTER_KEY : BLUESMINDS_KEY;
+            var key = getProviderKey(provider);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
@@ -1543,8 +1625,8 @@
 
             // Try providers: OpenRouter first, then BluesMinds
             const providers = [
-                { name: 'openrouter', models: OR_MODELS, key: OPENROUTER_KEY },
-                { name: 'bluesminds', models: BM_MODELS, key: BLUESMINDS_KEY }
+                { name: 'openrouter', models: OR_MODELS, key: getProviderKey('openrouter') },
+                { name: 'bluesminds', models: BM_MODELS, key: getProviderKey('bluesminds') }
             ];
             for (const p of providers) {
                 if (!p.key) continue;
@@ -1933,11 +2015,13 @@
                 gate.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)';
                 document.querySelector('.sidebar').style.display = 'none';
                 document.querySelector('.chat-area').style.display = 'none';
+                document.querySelector('.input-area').style.display = 'none';
                 return;
             }
             document.getElementById('authGate').style.display = 'none';
             document.querySelector('.sidebar').style.display = '';
             document.querySelector('.chat-area').style.display = '';
+            document.querySelector('.input-area').style.display = '';
             initChat();
         });
 
