@@ -12,6 +12,8 @@
     { "source": "/dashboard", "destination": "/dashboard.html" },
     { "source": "/app", "destination": "/dashboard.html" },
     { "source": "/editor", "destination": "/editor.html" },
+    { "source": "/builder", "destination": "/builder.html" },
+    { "source": "/new-cv", "destination": "/builder.html" },
     { "source": "/mobile-editor", "destination": "/mobile-editor.html" },
     { "source": "/ats-checker", "destination": "/ats-checker.html" },
     { "source": "/ai-tools", "destination": "/ai-tools.html" },
