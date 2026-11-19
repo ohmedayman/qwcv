@@ -16,3 +16,7 @@ functions/node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# service account keys - never commit
+serviceAccountKey.json
+*-firebase-adminsdk-*.json

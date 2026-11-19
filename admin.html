@@ -1161,10 +1161,42 @@ tr:hover td{background:rgba(0,3,201,.02)}
 </div>
 
 <!-- ========== JAVASCRIPT ========== -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script>
 var DB = 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
-var ADMIN_USER = 'admin';
-var ADMIN_PASS = 'Qcv@admin1';
+var CLAIMS_FN_URL = 'https://us-central1-qwcv-1cfad.cloudfunctions.net/setUserClaims'; // adjust to the URL printed by `firebase deploy --only functions`
+
+// ===== AUTH: Firebase Auth + custom claims (no credentials in source) =====
+if (!firebase.apps.length) {
+    firebase.initializeApp({ apiKey: 'AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I', authDomain: 'qwcv-1cfad.firebaseapp.com', projectId: 'qwcv-1cfad', databaseURL: DB });
+}
+var adminAuth = firebase.auth();
+// Every request to the Realtime Database REST API carries the signed-in user's ID token.
+(function () {
+    var nativeFetch = window.fetch.bind(window);
+    window.fetch = async function (input, init) {
+        if (typeof input === 'string' && input.indexOf(DB) === 0 && adminAuth.currentUser) {
+            var token = await adminAuth.currentUser.getIdToken();
+            input += (input.indexOf('?') === -1 ? '?' : '&') + 'auth=' + encodeURIComponent(token);
+        }
+        return nativeFetch(input, init);
+    };
+})();
+function getClaims(user, forceRefresh) {
+    return user.getIdTokenResult(forceRefresh).then(function (r) { return r.claims; });
+}
+async function setUserClaims(email, role) {
+    var token = await adminAuth.currentUser.getIdToken();
+    var resp = await fetch(CLAIMS_FN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ email: email, role: role })
+    });
+    var data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'setUserClaims failed');
+    return data;
+}
 
 // ===== TOAST =====
 function showToast(msg, type) {
@@ -1251,14 +1283,21 @@ document.getElementById('adminLoginForm').addEventListener('submit', function(e)
     var email = document.getElementById('adminEmail').value.trim();
     var pass = document.getElementById('adminPassword').value;
     var err = document.getElementById('loginError');
-    if (email === ADMIN_USER && pass === ADMIN_PASS) {
-        sessionStorage.setItem('qcv_admin', 'true');
-        err.style.display = 'none';
-        initAdmin();
-    } else {
-        err.textContent = 'بيانات الدخول غير صحيحة';
+    err.style.display = 'none';
+    adminAuth.signInWithEmailAndPassword(email, pass).then(function(cred) {
+        return getClaims(cred.user, true).then(function(c) {
+            if (c.admin === true) {
+                sessionStorage.setItem('qcv_admin', 'true');
+                sessionStorage.removeItem('qcv_staff');
+                initAdmin();
+            } else {
+                return adminAuth.signOut().then(function() { throw new Error('NOT_ADMIN'); });
+            }
+        });
+    }).catch(function(ex) {
+        err.textContent = (ex && ex.message === 'NOT_ADMIN') ? 'هذا الحساب ليس لديه صلاحية المدير' : 'بيانات الدخول غير صحيحة';
         err.style.display = 'block';
-    }
+    });
 });
 
 document.getElementById('staffLoginForm').addEventListener('submit', function(e) {
@@ -1267,23 +1306,35 @@ document.getElementById('staffLoginForm').addEventListener('submit', function(e)
     var pass = document.getElementById('staffLoginPassword').value;
     var err = document.getElementById('staffLoginError');
     err.style.display = 'none';
-    fetch(DB + '/staff.json').then(function(r) { return r.json(); }).then(function(data) {
-        if (!data) { err.textContent = 'لا يوجد موظفين مسجلين'; err.style.display = 'block'; return; }
-        var found = null;
-        Object.entries(data).forEach(function(e) {
-            if (e[1].email === email && e[1].password === pass && e[1].active !== false) found = { id: e[0], data: e[1] };
+    function deny(msg) { err.textContent = msg; err.style.display = 'block'; }
+    adminAuth.signInWithEmailAndPassword(email, pass).then(function(cred) {
+        return getClaims(cred.user, true).then(function(c) {
+            if (c.admin !== true && c.staff !== true) {
+                return adminAuth.signOut().then(function() { deny('هذا الحساب ليس موظفاً'); });
+            }
+            return fetch(DB + '/staff.json').then(function(r) { return r.json(); }).then(function(data) {
+                var found = null;
+                Object.entries(data || {}).forEach(function(en) {
+                    if (en[1].email === email && en[1].active !== false) { delete en[1].password; found = { id: en[0], data: en[1] }; }
+                });
+                if (found) {
+                    sessionStorage.setItem('qcv_staff', JSON.stringify(found));
+                    initAdmin();
+                } else if (c.admin === true) {
+                    sessionStorage.setItem('qcv_admin', 'true');
+                    sessionStorage.removeItem('qcv_staff');
+                    initAdmin();
+                } else {
+                    return adminAuth.signOut().then(function() { deny('لا يوجد سجل موظف لهذا الحساب'); });
+                }
+            });
         });
-        if (found) {
-            sessionStorage.setItem('qcv_staff', JSON.stringify(found));
-            initAdmin();
-        } else {
-            err.textContent = 'بيانات الدخول غير صحيحة';
-            err.style.display = 'block';
-        }
-    }).catch(function() { err.textContent = 'خطأ في الاتصال'; err.style.display = 'block'; });
+    }).catch(function() { deny('بيانات الدخول غير صحيحة'); });
 });
 
 function initAdmin() {
+    if (window._adminInited) return;
+    window._adminInited = true;
     document.getElementById('adminLogin').classList.add('hidden');
     document.getElementById('staffLogin').classList.add('hidden');
     document.getElementById('adminLayout').classList.add('show');
@@ -1326,7 +1377,7 @@ function scheduleAdminRefresh() {
 document.getElementById('logoutBtn').addEventListener('click', function() {
     sessionStorage.removeItem('qcv_admin');
     sessionStorage.removeItem('qcv_staff');
-    location.reload();
+    adminAuth.signOut().then(function() { location.reload(); }, function() { location.reload(); });
 });
 
 // ===== REST API =====
@@ -2205,12 +2256,21 @@ window.showAddStaff = function() {
         var name = document.getElementById('staffName').value.trim();
         var email = document.getElementById('staffEmail').value.trim();
         var pass = document.getElementById('staffPass').value.trim();
-        if (!name || !email) { showToast('أدخل الاسم والبريد', 'error'); return; }
-        await restPost('/staff', { name: name, email: email, password: pass, role: document.getElementById('staffRole').value, permissions: [], active: true, createdAt: Date.now() });
+        if (!name || !email || pass.length < 6) { showToast('أدخل الاسم والبريد وكلمة مرور 6 أحرف على الأقل', 'error'); return; }
+        try {
+        var suResp = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: pass, returnSecureToken: true })
+        });
+        var suData = await suResp.json();
+        if (suData.error && suData.error.message !== 'EMAIL_EXISTS') throw new Error(suData.error.message);
+        await setUserClaims(email, 'staff');
+        await restPost('/staff', { name: name, email: email, role: document.getElementById('staffRole').value, permissions: [], active: true, createdAt: Date.now() });
         logAudit('إضافة موظف', 'staff', name + ' — ' + document.getElementById('staffRole').value);
         showToast('تمت إضافة الموظف', 'success');
         closeModal();
         loadAllData();
+        } catch (e) { showToast('خطأ: ' + (e.message || 'فشل إضافة الموظف'), 'error'); }
     };
     document.getElementById('modal').classList.add('show');
 };
@@ -3865,13 +3925,19 @@ function sendNewsletter() {
 // ===== INIT =====
 (function() {
     document.getElementById('blockScreen').classList.add('hidden');
-    if (sessionStorage.getItem('qcv_admin') === 'true') {
-        initAdmin();
-    } else if (sessionStorage.getItem('qcv_staff')) {
-        initAdmin();
-    } else {
-        document.getElementById('blockScreen').classList.add('hidden');
-    }
+    adminAuth.onAuthStateChanged(function(user) {
+        if (!user) { sessionStorage.removeItem('qcv_admin'); sessionStorage.removeItem('qcv_staff'); return; }
+        getClaims(user, false).then(function(c) {
+            if (c.admin === true && !sessionStorage.getItem('qcv_staff')) {
+                sessionStorage.setItem('qcv_admin', 'true');
+                initAdmin();
+            } else if ((c.admin === true || c.staff === true) && sessionStorage.getItem('qcv_staff')) {
+                initAdmin();
+            } else {
+                adminAuth.signOut();
+            }
+        });
+    });
 })();
 
 // ===== NOTIFICATIONS =====
