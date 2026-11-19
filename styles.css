@@ -44,7 +44,7 @@ select {
   padding: 14px 28px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #0003c9, rgb(0, 2.3910447761, 160.2));
+  background: linear-gradient(135deg, #0003c9, rgb(0%, 0.9376646181%, 62.8235294118%));
   color: #fff;
   font-weight: 700;
   cursor: pointer;
@@ -142,7 +142,7 @@ select {
   padding: 14px 28px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #0003c9, rgb(0, 2.3910447761, 160.2));
+  background: linear-gradient(135deg, #0003c9, rgb(0%, 0.9376646181%, 62.8235294118%));
   color: #fff;
   font-weight: 700;
   cursor: pointer;

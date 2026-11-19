@@ -872,7 +872,7 @@
                 الدخول بـ Google
             </button>
             <div class="auth-toggle" id="authToggle">
-                ليس لديك حساب؟ <a href="#" onclick="toggleAuthMode()">سجل الآن</a>
+                ليس لديك حساب؟ <a href="javascript:void(0)" onclick="toggleAuthMode()">سجل الآن</a>
             </div>
         </div>
     </div>
@@ -1136,7 +1136,7 @@
         window.toggleAuthMode = function() {
             isSignUp = !isSignUp;
             document.getElementById('authSubmit').textContent = isSignUp ? 'إنشاء حساب' : 'تسجيل الدخول';
-            document.getElementById('authToggle').innerHTML = isSignUp ? 'لديك حساب بالفعل؟ <a href="#" onclick="toggleAuthMode()">سجّل دخول</a>' : 'ليس لديك حساب؟ <a href="#" onclick="toggleAuthMode()">سجل الآن</a>';
+            document.getElementById('authToggle').innerHTML = isSignUp ? 'لديك حساب بالفعل؟ <a href="javascript:void(0)" onclick="toggleAuthMode()">سجّل دخول</a>' : 'ليس لديك حساب؟ <a href="javascript:void(0)" onclick="toggleAuthMode()">سجل الآن</a>';
         };
 
         onAuthStateChanged(auth, (user) => {

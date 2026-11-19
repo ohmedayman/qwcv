@@ -95,6 +95,26 @@
         "destination": "/pay.html"
       },
       {
+        "source": "/pricing",
+        "destination": "/pricing.html"
+      },
+      {
+        "source": "/ats-checker",
+        "destination": "/ats-checker.html"
+      },
+      {
+        "source": "/mobile-editor",
+        "destination": "/mobile-editor.html"
+      },
+      {
+        "source": "/portfolio",
+        "destination": "/portfolio.html"
+      },
+      {
+        "source": "/portfolio-view",
+        "destination": "/portfolio-view.html"
+      },
+      {
         "source": "/about",
         "destination": "/about.html"
       },

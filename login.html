@@ -1666,6 +1666,7 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user && !isSignUpMode && !isResetting && !location.search.includes('switch=1')) {
+                if (window.QCV && window.QCV.auth) window.QCV.auth.setUser(user);
                 showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
                 setTimeout(() => location.replace(getRedirectPage()), 400);
                 return;
@@ -1984,6 +1985,7 @@
         });
     </script>
     <script defer src="js/site-settings.js"></script>
+    <script defer src="components.js"></script>
     <script defer src="js/auto-reload.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/analytics.js"></script>

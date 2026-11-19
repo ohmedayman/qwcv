@@ -2,8 +2,34 @@
   "rules": {
     "users": {
       "$uid": {
-        ".read": "auth !== null && auth.uid === $uid",
-        ".write": "auth !== null && auth.uid === $uid",
+        ".read": "auth !== null && (auth.uid === $uid || auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
+        ".write": "auth !== null && (auth.uid === $uid || auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
+        "cvData": {
+          ".read": true
+        },
+        "portfolio": {
+          ".read": true,
+          ".validate": "newData.isObject()"
+        },
+        "plan": {
+          ".read": true,
+          ".validate": "!newData.exists() || (data.exists() && newData.val() === data.val()) || auth.token.admin === true"
+        },
+        "registeredAt": {
+          ".read": true
+        },
+        "lastLogin": {
+          ".read": true
+        },
+        "profile": {
+          ".validate": "newData.isObject() && (!newData.child('role').exists() || (data.child('role').exists() && newData.child('role').val() === data.child('role').val()) || auth.token.admin === true)"
+        },
+        "planExpiresAt": {
+          ".validate": "!newData.exists() || (data.exists() && newData.val() === data.val()) || auth.token.admin === true"
+        },
+        "subscription": {
+          ".validate": "!newData.exists() || (data.exists() && newData.val() === data.val()) || auth.token.admin === true"
+        },
         "cvs": {
           "$cvId": {
             ".validate": "newData.hasChildren(['name', 'data']) || newData.val() === null"
@@ -19,9 +45,6 @@
             ".validate": "newData.hasChildren(['type', 'text', 'timestamp']) || newData.child('read').isBoolean()"
           }
         },
-        "profile": {
-          ".validate": "newData.isObject()"
-        },
         "portfolio": {
           ".validate": "newData.isObject()"
         },
@@ -33,44 +56,44 @@
       }
     },
     "staff": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "subscriptions": {
-      ".read": "auth !== null && (root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin' || data.child($subId).child('userId').val() === auth.uid)",
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin' || data.child($subId).child('userId').val() === auth.uid)",
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
       "$subId": {
         ".validate": "newData.hasChildren(['userId', 'plan', 'paymentMethod'])"
       }
     },
     "jobs": {
       ".read": true,
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
       "$jobId": {
         ".validate": "newData.hasChildren(['title', 'category'])"
       }
     },
     "domains": {
       ".read": true,
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "settings": {
       ".read": true,
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "siteSettings": {
       ".read": true,
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "portfolioLinks": {
-      ".read": "auth !== null",
+      ".read": true,
       ".write": "auth !== null",
       "$code": {
         ".validate": "newData.isString() && newData.val().length > 0"
       }
     },
     "messages": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
       ".write": "auth !== null"
     },
     "referrals": {
@@ -81,23 +104,23 @@
       }
     },
     "affiliateCampaigns": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "affiliateCommissions": {
       ".read": "auth !== null",
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "analytics": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
       ".write": "auth !== null"
     },
     "approvedDomains": {
       ".read": true,
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "newsletter": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
       ".write": true,
       "$email": {
         ".validate": "newData.hasChildren(['email'])"
@@ -107,16 +130,16 @@
       ".read": "auth !== null",
       ".write": true,
       "$ticketId": {
-        ".read": "auth !== null && (root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin' || data.child('userId').val() === auth.uid)",
+        ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin' || data.child('userId').val() === auth.uid)",
         ".validate": "newData.hasChildren(['userName', 'userEmail', 'message', 'userId']) || newData.child('status').val() === 'closed' || newData.child('replies').exists()"
       }
     },
     "auditLog": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     },
     "affiliateRequests": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
       ".write": "auth !== null"
     },
     "pointsExchange": {
@@ -127,8 +150,8 @@
       }
     },
     "adminNotifications": {
-      ".read": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
-      ".write": "auth !== null && root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      ".read": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')",
+      ".write": "auth !== null && (auth.token.admin === true || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin')"
     }
   }
 }

@@ -17,7 +17,7 @@ QCV uses Firebase Authentication for user management. Users can sign in with ema
 ### Staff Authentication
 - Staff members login via the admin panel
 - Permissions are stored in Firebase Realtime Database at `/staff/{uid}`
-- Admin credentials: admin / Qcv@admin1
+- Admin credentials: Managed securely via Firebase Authentication & Custom Claims (no hardcoded passwords).
 
 ## API Access
 - Firebase REST API: `https://identitytoolkit.googleapis.com/v1/`

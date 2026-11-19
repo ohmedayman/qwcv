@@ -2,7 +2,7 @@
     "name": "qcv-sass-project",
     "private": true,
     "scripts": {
-        "sass": "sass scss/main.scss styles.css --style=expanded",
+        "sass": "npx sass scss/main.scss styles.css --style=expanded",
         "build": "npm run sass",
         "check": "node scripts/platform-check.js"
     },

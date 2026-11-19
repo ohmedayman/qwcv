@@ -181,12 +181,92 @@
 
     loadSettings();
 
+    const DEFAULT_PLANS = {
+        free: {
+            id: 'free',
+            nameAr: 'مجاني',
+            nameEn: 'Free',
+            price: 0,
+            regularPrice: 0,
+            currency: 'EGP',
+            currencyAr: 'ج.م',
+            periodAr: 'للأبد — بدون بطاقة',
+            periodEn: 'Forever — No card needed',
+            cvLimit: 1,
+            badge: null
+        },
+        pass_48h: {
+            id: 'pass_48h',
+            altId: 'quick48',
+            nameAr: 'تجربة 48 ساعة',
+            nameEn: '48-Hour Pass',
+            price: 30,
+            regularPrice: 30,
+            currency: 'EGP',
+            currencyAr: 'ج.م',
+            periodAr: 'لمرة واحدة (48 ساعة)',
+            periodEn: 'One-time (48 hours)',
+            cvLimit: 3,
+            badge: 'تجربة سريعة'
+        },
+        pro: {
+            id: 'pro',
+            nameAr: 'المحترف (Pro)',
+            nameEn: 'Professional (Pro)',
+            price: 49,
+            regularPrice: 99,
+            annualPrice: 79,
+            currency: 'EGP',
+            currencyAr: 'ج.م/شهر',
+            periodAr: 'شهرياً — خصم 50% لفترة محدودة',
+            periodEn: 'Monthly — 50% Launch Discount',
+            cvLimit: 10,
+            badge: 'الأكثر شعبية'
+        },
+        unlimited: {
+            id: 'unlimited',
+            nameAr: 'غير المحدودة (Unlimited)',
+            nameEn: 'Unlimited VIP',
+            price: 299,
+            regularPrice: 299,
+            annualPrice: 239,
+            currency: 'EGP',
+            currencyAr: 'ج.م/شهر',
+            periodAr: 'شهرياً — وصول غير محدود لكل المزايا',
+            periodEn: 'Monthly — All-access VIP',
+            cvLimit: 9999,
+            badge: 'قيمة قصوى'
+        }
+    };
+
+    window.QCV_PLANS = {
+        list: DEFAULT_PLANS,
+        get: function(id) {
+            if (!id) return DEFAULT_PLANS.free;
+            const norm = String(id).toLowerCase();
+            if (norm === 'quick48' || norm === 'pass_48h') return DEFAULT_PLANS.pass_48h;
+            return DEFAULT_PLANS[norm] || DEFAULT_PLANS.free;
+        },
+        format: function(id, lang) {
+            const p = this.get(id);
+            const isAr = (lang || document.documentElement.lang || 'ar') === 'ar';
+            return {
+                name: isAr ? p.nameAr : p.nameEn,
+                price: p.price,
+                currency: isAr ? p.currencyAr : p.currency,
+                period: isAr ? p.periodAr : p.periodEn,
+                regularPrice: p.regularPrice
+            };
+        }
+    };
+
     window.QCVSettings = {
         get data() { return siteData; },
         get contact() { return siteData.contact || {}; },
         get footer() { return siteData.footer || {}; },
         get hero() { return siteData.hero || {}; },
-        get pricing() { return siteData.pricing || {}; },
+        get pricing() { return siteData.pricing || { plans: DEFAULT_PLANS }; },
+        get plans() { return DEFAULT_PLANS; },
         get notifications() { return siteData.notifications || {}; },
         get colors() { return siteData.colors || {}; },
         get general() { return siteData.general || {}; },

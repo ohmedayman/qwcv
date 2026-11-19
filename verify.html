@@ -164,9 +164,14 @@
                     return;
                 }
 
-                return db.ref('users/' + uid).once('value').then(function(snap2) {
-                    var user = snap2.val();
-                    if (!user) {
+                return Promise.all([
+                    db.ref('users/' + uid + '/cvData').once('value'),
+                    db.ref('users/' + uid + '/plan').once('value'),
+                    db.ref('users/' + uid + '/registeredAt').once('value'),
+                    db.ref('users/' + uid + '/lastLogin').once('value')
+                ]).then(function(snaps) {
+                    var cvData = snaps[0].val();
+                    if (!cvData) {
                         icon.className = 'verify-icon error';
                         icon.innerHTML = '<i class="fas fa-times"></i>';
                         title.textContent = 'البيانات غير موجودة';
@@ -174,6 +179,12 @@
                         btn.disabled = false;
                         return;
                     }
+                    var user = {
+                        cvData: cvData,
+                        plan: snaps[1].val(),
+                        registeredAt: snaps[2].val(),
+                        lastLogin: snaps[3].val()
+                    };
 
                     icon.className = 'verify-icon success';
                     icon.innerHTML = '<i class="fas fa-check"></i>';

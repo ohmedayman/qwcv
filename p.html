@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html><head>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>QCV Portfolio Redirect</title>
 <script>
-var hash = window.location.hash.replace('#','');
-if (hash) {
-    window.location.replace('https://qcv.vexonet.online/portfolio-view.html?code=' + hash);
-} else {
-    window.location.replace('https://qcv.vexonet.online/');
-}
+(function() {
+    var hash = (window.location.hash || '').replace('#', '').trim();
+    if (!hash) {
+        var params = new URLSearchParams(window.location.search);
+        hash = params.get('code') || '';
+    }
+    if (hash) {
+        window.location.replace('/portfolio-view.html?code=' + encodeURIComponent(hash));
+    } else {
+        window.location.replace('/portfolio.html');
+    }
+})();
 </script>
-</head><body></body></html>
+</head>
+<body></body>
+</html>
